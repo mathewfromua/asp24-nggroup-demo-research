@@ -1,0 +1,4 @@
+/* ASP24 / NG Group. Спільні токени інтерфейсу та аналітичних PDF. */
+:root{--font:system-ui,Arial,Helvetica,sans-serif;--font-mono:ui-monospace,SFMono-Regular,Consolas,monospace;--radius:12px;--radius-sm:6px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--max-width:1440px;--paper:#fff;--success:#2f6244;--danger:#964534;--focus:#006d9c}
+:root,[data-brand="asp"]{--ink:#251b17;--surface:#faf6ef;--brand:#f39a45;--brand-deep:#7b391b;--muted:#6f6159;--line:#e3d8ce;--soft:#f3e9dc;--dark:#211a17;--mesh:#773c22;--mesh-light:#a65a24}
+[data-brand="ng"]{--ink:#291b33;--surface:#f7f3fa;--brand:#bfa1dc;--brand-deep:#654675;--muted:#706278;--line:#e1d8e8;--soft:#eee6f4;--dark:#25182e;--mesh:#54326a;--mesh-light:#704d82}

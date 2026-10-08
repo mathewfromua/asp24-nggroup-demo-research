@@ -1,0 +1,92 @@
+name: Перевірка та публікація демо
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.head_ref || 'production' }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      pages: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Офіційні стабільні випуски звірено 09.10.2026; SHA фіксує код action.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Прочитати конфігурацію наявного GitHub Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        with:
+          enablement: false
+      - name: Звірити адресу Pages з конфігурацією проєкту
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: node --input-type=module -e 'import {getDeploymentConfig} from "./scripts/deployment-config.mjs"; if (process.env.PAGES_BASE_URL.replace(/\/$/, "") !== getDeploymentConfig().PUBLIC_BASE_URL.replace(/\/$/, "")) throw new Error("GitHub Pages URL differs from deployment.config.json");'
+      - name: Тести логіки та кореневого й вкладеного розміщення
+        run: npm test
+      - name: Побудова публічних файлів
+        run: npm run build
+      - name: Перевірка складу, посилань і SHA-256
+        run: npm run verify
+      - name: Підготувати тільки dist для Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+          retention-days: 1
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Опублікувати прийняту збірку
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  verify-publication:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm run build
+      - name: Звірити реальні HTTPS-файли, MIME, PDF-сигнатури й SHA-256
+        env:
+          DEPLOYED_PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: python3 scripts/verify-published.py --base-url "$DEPLOYED_PAGE_URL"

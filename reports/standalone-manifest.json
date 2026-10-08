@@ -1,0 +1,20 @@
+[
+  {
+    "html": "output/standalone/ASP24_Review.html",
+    "sha256": "6f3b037192c37a670b0be841404e7bafdc68980582e212cdd978a061ae804c9b",
+    "public_html_sha256": "b9f703576e720bffe2a413f670449a1fbf26a008049253414e9c09e3b8506173",
+    "content_sha256": "d55bed011b54741983f8614f1daa13c103023e20444fa41904b8881951f27e46",
+    "derivation": "Identical generated text; local PNG images embedded for offline reading; home link points to the project origin.",
+    "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
+    "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/"
+  },
+  {
+    "html": "output/standalone/NGGroup_Review.html",
+    "sha256": "5dd7b23ba887fc63ac46c599319f0c8fb86edd0c0ffbe701dc76c8b5c4abd9b7",
+    "public_html_sha256": "1dca1a71a7bd03b7b5f9a02f396bde3b0981279b6e9b0666337c4879fcf77383",
+    "content_sha256": "d55bed011b54741983f8614f1daa13c103023e20444fa41904b8881951f27e46",
+    "derivation": "Identical generated text; local PNG images embedded for offline reading; home link points to the project origin.",
+    "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
+    "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/"
+  }
+]

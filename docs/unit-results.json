@@ -1,0 +1,11 @@
+{
+  "command": "npm test",
+  "summary": {
+    "tests": 89,
+    "pass": 87,
+    "fail": 0,
+    "skipped": 2
+  },
+  "baseline": "80PASS/2SKIP retained; 7 migration checks added",
+  "skip_limit": "Two historical DOM tests remain skipped; fresh browser interaction evidence is separate."
+}

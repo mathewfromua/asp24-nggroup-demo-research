@@ -1,0 +1,22 @@
+[
+  {
+    "path": "public/assets/mini-ups.webp",
+    "original_sha256": "40565614c330e63cf524baae251ba7dbd798e876619fb9b3d2f79046710c1b2b",
+    "reason": "Separate redistribution provenance not established; existing inline category pictogram used instead."
+  },
+  {
+    "path": "public/assets/network-cable.webp",
+    "original_sha256": "bafbfa814baf7bd6385f1295bcacba03847c27f2b274a578479efcdc25b55904",
+    "reason": "Separate redistribution provenance not established; existing inline category pictogram used instead."
+  },
+  {
+    "path": "public/assets/network-switch.webp",
+    "original_sha256": "d83bd97a62ee78a87223104f91be98c4367f5207930ede69d2698cb95773a4d7",
+    "reason": "Separate redistribution provenance not established; existing inline category pictogram used instead."
+  },
+  {
+    "path": "public/assets/optical-transceiver.webp",
+    "original_sha256": "4ec9c564950ac6e5632a03ebac17d9683b1d67eb5a914ff18a85f5b699558e03",
+    "reason": "Separate redistribution provenance not established; existing inline category pictogram used instead."
+  }
+]

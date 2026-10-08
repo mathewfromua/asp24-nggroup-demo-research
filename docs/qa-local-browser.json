@@ -1,0 +1,123 @@
+{
+  "method": "Codex In-app Browser via native HTTP/ESM and UI controls; actual 390x844 viewport; not Safari/physical iPhone",
+  "build": "asp24-nggroup-demo-research-3.1.1-demo.1",
+  "scope": "LOCAL_HTTP_ONLY",
+  "steps": [
+    {
+      "id": "six-pair-modes-reload",
+      "status": "PASS",
+      "initial": [
+        "u01",
+        "u02",
+        "u03",
+        "u04",
+        "u05",
+        "u06"
+      ],
+      "pair": [
+        "u05",
+        "u06"
+      ],
+      "diff": true,
+      "expanded": true,
+      "layout_width": 390,
+      "visual_width": 390,
+      "overflow": false
+    },
+    {
+      "id": "remove-undo-reload",
+      "status": "PASS",
+      "restored_pair": [
+        "u05",
+        "u06"
+      ],
+      "restored_six": [
+        "u01",
+        "u02",
+        "u03",
+        "u04",
+        "u05",
+        "u06"
+      ]
+    },
+    {
+      "id": "explicit-replace-at-six-reload",
+      "status": "PASS",
+      "pair": [
+        "u07",
+        "u06"
+      ],
+      "six": [
+        "u01",
+        "u02",
+        "u03",
+        "u04",
+        "u07",
+        "u06"
+      ]
+    },
+    {
+      "id": "project-draft-add-candidate-save-reload",
+      "status": "PASS",
+      "name": "Перевірка міграції",
+      "note": "Чернетка до додавання кандидата",
+      "models": [
+        "u02",
+        "c04"
+      ]
+    },
+    {
+      "id": "project-native-arrow-quantities-reload",
+      "status": "PASS",
+      "quantities": {
+        "u02": 3,
+        "c04": 2
+      },
+      "line_totals_uah": [
+        6570,
+        10380
+      ],
+      "total_uah": 16950
+    }
+  ],
+  "not_run": [
+    "final HTTPS",
+    "Safari Mac current candidate",
+    "physical iPhone",
+    "clipboard denied",
+    "storage quota browser",
+    "all file import/export UI",
+    "complete keyboard and screen reader coverage"
+  ],
+  "notes": [
+    "Initial fill+Tab automation did not commit quantity; native ArrowUp+Tab verified changes. No app defect inferred from selector/automation failures.",
+    "Screenshots viewed in browser tool; no substituted capture."
+  ],
+  "interaction_runtime_sha256": "b34ee999e90299cb1e1c5b3063851561194ed0f9d45e9720bd781759a6300d98",
+  "note_final_graphics": "Four uncertain full-size images replaced by existing inline icons after interaction run; final smoke recorded separately.",
+  "final_smoke": {
+    "runtime_sha256": "a7e1442ade2dda2d9e4bd23133de54959380c43066b3a92ffe3cfae013b92a23",
+    "project_total_after_reload": 16950,
+    "name_and_note_retained": true,
+    "six": [
+      "u01",
+      "u02",
+      "u03",
+      "u04",
+      "u07",
+      "u06"
+    ],
+    "pair": [
+      "u07",
+      "u06"
+    ],
+    "no_document_overflow_widths": [
+      320,
+      375,
+      390,
+      430,
+      1440
+    ],
+    "back_forward": "PASS"
+  }
+}

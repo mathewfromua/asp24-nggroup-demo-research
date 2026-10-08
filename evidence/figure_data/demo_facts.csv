@@ -1,0 +1,6 @@
+record_type,id,sku,name_or_scope,model_count,category_count,quantity,sales_unit,unit_price_kopecks,total_kopecks,total_uah,length_per_unit_m,total_length_m,source_kind
+catalog,all,,Unique demo catalog,64,8,,,,,,,,synthetic-ui-fixture
+catalog,asp,,ASP-visible demo catalog,64,8,,,,,,,,synthetic-ui-fixture
+catalog,ng,,NG-visible demo catalog,62,8,,,,,,,,synthetic-ui-fixture
+example,u02,DEMO-U02,VOLTYN N36,,,3,шт.,219000,657000,6570,,,synthetic-ui-fixture
+example,c04,DEMO-C04,STRUNEX F6 Core 305,,,2,бухта 305 м,519000,1038000,10380,305,610,synthetic-ui-fixture

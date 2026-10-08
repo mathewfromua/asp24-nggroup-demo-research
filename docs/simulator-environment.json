@@ -1,0 +1,95 @@
+{
+  "checked_at": "2026-10-08T23:32:57.985119+00:00",
+  "scope": "Read-only installed-environment and QA-harness readiness; no simulator boot or application acceptance",
+  "os": {
+    "system": "Darwin",
+    "macOS": "27.2",
+    "build": "26B5101f",
+    "branch": "beta"
+  },
+  "xcode": {
+    "version": "27.0",
+    "build": "27A5252f",
+    "selected_developer_directory": "Xcode-beta.app/Contents/Developer",
+    "simctl_found": true,
+    "developer_directory_changed": false
+  },
+  "simulator": {
+    "status": "BLOCKED",
+    "commands_attempted": [
+      "xcrun simctl list runtimes",
+      "xcrun simctl list devices available",
+      "xcrun simctl help openurl"
+    ],
+    "safe_error": "CoreSimulatorService connection became invalid; NSPOSIXErrorDomain Code=61 Connection refused; runtime image service simdiskimaged unavailable. Simulator log access: Operation not permitted.",
+    "alternative_method": "Read installed runtime Info.plist/SystemVersion.plist and configured device.plist metadata without service calls.",
+    "installed_runtime_metadata": {
+      "name": "iOS 27.0",
+      "build": "24A5423a",
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+    },
+    "configured_ios27_iphone_types": [
+      "iPhone 17 Pro",
+      "iPhone 14 Pro Max",
+      "iPhone Air",
+      "iPhone 17",
+      "iPhone 17e"
+    ],
+    "operational_runtime_availability": "NOT_CONFIRMED",
+    "boot": "NOT_RUN",
+    "openurl": "NOT_RUN",
+    "application_scenarios": "NOT_RUN",
+    "limits": "Installed runtime and device metadata do not prove bootability, Safari behavior, stable iOS acceptance, or a physical iPhone test."
+  },
+  "installed_browsers": [
+    {
+      "name": "Safari",
+      "version": "27.2",
+      "bundle_version": "22625.2.7.1",
+      "application_acceptance_this_task": "NOT_RUN"
+    },
+    {
+      "name": "Google Chrome",
+      "version": "154.0.8037.58",
+      "bundle_version": "8037.58",
+      "application_acceptance_this_task": "NOT_RUN"
+    },
+    {
+      "name": "Firefox",
+      "version": "152.0.4",
+      "bundle_version": "15226.6.29",
+      "application_acceptance_this_task": "NOT_RUN"
+    }
+  ],
+  "qa_harness": {
+    "native_script": "scripts/native-finish-qa.py",
+    "native_method": "HTTP(S), native ES modules, sandboxed Chromium, new nonpersistent contexts, real UI actions and reload",
+    "arguments": [
+      "--base-url",
+      "--out-dir",
+      "--executable",
+      "--viewport (1440x900 or 390x844, repeatable)"
+    ],
+    "coverage": [
+      "catalog filters and sort",
+      "unsaved project draft",
+      "save and reload",
+      "six candidates",
+      "mobile pair slots",
+      "explicit replacement at six",
+      "remove and undo",
+      "comparison mode and reload",
+      "focus",
+      "cart quantities and reload"
+    ],
+    "build_identity_expected": "perspektyva-catalog-2026-10-08",
+    "migration_note": "If build identity changes, update the harness expectation to the candidate identity; preserve behavior assertions.",
+    "excluded_from_acceptance": [
+      "tests/browser/functional_qa.py and layout_qa.py use offline mounting and --no-sandbox; neither was executed."
+    ],
+    "execution": "NOT_RUN"
+  },
+  "settings_changed": false,
+  "runtime_downloads": false,
+  "physical_iphone": "NOT_RUN"
+}

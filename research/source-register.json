@@ -1,0 +1,235 @@
+{
+  "description": "Публічна карта джерел із канонічного тексту оглядів; не нова перевірка зовнішніх сайтів.",
+  "canonical_source": "reports/content.json",
+  "reports": {
+    "ASP24": [
+      {
+        "source_number": "1",
+        "attribution": "[1] DOM 10.09.2026: M1550-C, KP1 Plus, «для роутера», кабель 9→4→2. MED001988, FHP12A, запити потреби та LC/40 км — за попереднім оглядом. Оптичні модулі",
+        "urls": [
+          "https://asp24.ua/aktivne-obladnannja/aktivne-merezheve-obladnannja/optichni-moduli/"
+        ]
+      },
+      {
+        "source_number": "2",
+        "attribution": "[2] GCOM і кабелі — за попереднім оглядом; первинний DOM GCOM відсутній. Збережений стан змішаної групи ONU/UPS також є за 10.09. 10TC · 28TC",
+        "urls": [
+          "https://asp24.ua/komutator-kerovanij-l2-gcom-s5110-10tc-1gb-porti/",
+          "https://asp24.ua/komutator-kerovanij-l2-gcom-s5110-28tc-1gb-porti/"
+        ]
+      },
+      {
+        "source_number": "3",
+        "attribution": "[3] Збережені витяги архівних таблиць трьох SKU; окремі дати на с. 5. Перераховано предметні рядки, не повноту всієї картки. Cu: лютий · Cu: червень",
+        "urls": [
+          "https://web.archive.org/web/20260208234550id_/https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new.html",
+          "https://web.archive.org/web/20260611132657id_/https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new/"
+        ]
+      },
+      {
+        "source_number": "4",
+        "attribution": "[4] Фото й опис M1550-C — ілюстрація та витяг попереднього огляду. Фактичне виконання поставки не перевіряли. Картка",
+        "urls": [
+          "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/"
+        ]
+      },
+      {
+        "source_number": "5",
+        "attribution": "[5] KP1 Plus → XPON — повідомлення попереднього огляду, с. 7. Повний двопрохідний протокол не відновлено; поширеність і причина невідомі. KP1 Plus",
+        "urls": [
+          "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-marsriva-mini-ups-kp1-plus-16000-mah/"
+        ]
+      },
+      {
+        "source_number": "6",
+        "attribution": "[6] 4774, 46 203 грн — читання 28.09 за попереднім оглядом; одиниця, правильна ціна й причина не встановлені. Картка",
+        "urls": [
+          "https://asp24.ua/patchkord-ng-lan-utp-cat-5e-cu-4-2-0-50-0-5m-zhovtij/"
+        ]
+      },
+      {
+        "source_number": "7",
+        "attribution": "[7] Обране й кабінет — опис виходу/повторного входу в попередньому огляді. Порожня історія тестового акаунту не доводить відсутності функції.",
+        "urls": []
+      },
+      {
+        "source_number": "8",
+        "attribution": "[8] Гарантійні FAQ: архівні HTML 19.04 та 17.05.2026. Зміна тексту, не вимір роботи сервісу. Квітень · Травень",
+        "urls": [
+          "https://web.archive.org/web/20260419141254id_/https://asp24.ua/warranty",
+          "https://web.archive.org/web/20260517184724id_/https://asp24.ua/warranty/"
+        ]
+      },
+      {
+        "source_number": "9",
+        "attribution": "[9] Публічне пояснення оплати й роботи з менеджером; фактичне отримання запиту не тестували. Умови",
+        "urls": [
+          "https://asp24.ua/delivery/"
+        ]
+      },
+      {
+        "source_number": "10",
+        "attribution": "[10] DEPS: FoxGate WDM та PDF, 04.10; пошук і SFP+-фасет, 07.10.2026. Збережені протоколи. FoxGate WDM",
+        "urls": [
+          "https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html"
+        ]
+      },
+      {
+        "source_number": "11",
+        "attribution": "[11] ROMSAT: форма ціни 04.10; пошук 581374 й обране 07.10. Без надсилання або входу. Optolink",
+        "urls": [
+          "https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/"
+        ]
+      },
+      {
+        "source_number": "12",
+        "attribution": "[12] Розмітка M1550-C — результат попереднього огляду; трафік та індексацію не вимірювали. Картка",
+        "urls": [
+          "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/"
+        ]
+      },
+      {
+        "source_number": "13",
+        "attribution": "[13] HTML від 09.09.2026 19:48:19.976 UTC: точний витяг обробника add_to_cart. Доставку подій та облік у GA4 не перевіряли.",
+        "urls": []
+      },
+      {
+        "source_number": "14",
+        "attribution": "[14] Google: керування URL фасетної навігації, роль sitemap і robots.txt; методичні джерела, звірено 08.10.2026. Документація Sitemap · Robots.txt",
+        "urls": [
+          "https://developers.google.com/crawling/docs/faceted-navigation",
+          "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview",
+          "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+        ]
+      },
+      {
+        "source_number": "15",
+        "attribution": "[15] Google Analytics: визначення value, items, price і quantity для add_to_cart. Специфікація події",
+        "urls": [
+          "https://developers.google.com/analytics/devguides/collection/ga4/reference/events#add_to_cart"
+        ]
+      },
+      {
+        "source_number": "16",
+        "attribution": "[16] Пристрій M1550-C — УТП002164; акумулятор до нього — УТП002165. Текстові подання карток прочитано 09.10.2026; можливий кеш. Ціни, наявність і виконання пошуку не перевіряли. Пристрій · Акумулятор",
+        "urls": [
+          "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/",
+          "https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/"
+        ]
+      }
+    ],
+    "NGGroup": [
+      {
+        "source_number": "1",
+        "attribution": "[1] DOM 10.09.2026: M1550-C, кабель 10→4→2→1 і повернення через крихту. Пізніші приклади — за попереднім оглядом; спосіб пізнішого повернення невідомий. Кабель · Дільники",
+        "urls": [
+          "https://nggroup.ua/cable/twisted-pair",
+          "https://nggroup.ua/passive-network-components/optical-splitters"
+        ]
+      },
+      {
+        "source_number": "2",
+        "attribution": "[2] Архівні витяги: кабель 05.06.2022 / 29.06.2026 та дев’ять гарантійних FAQ. Збіг тексту не доводить актуальності кожної умови. Кабель 2022 · 2026 · Гарантія 2022 · 2026",
+        "urls": [
+          "https://web.archive.org/web/20220605165727id_/https://nggroup.ua/cable/twisted-pair",
+          "https://web.archive.org/web/20260629025102id_/https://nggroup.ua/cable/twisted-pair",
+          "https://web.archive.org/web/20220605165722id_/https://nggroup.ua/warranty",
+          "https://web.archive.org/web/20260629025102id_/https://nggroup.ua/warranty"
+        ]
+      },
+      {
+        "source_number": "3",
+        "attribution": "[3] PLC: картки та специфікація серії — за попереднім оглядом; повний первинний PDF відсутній. DIN · Специфікація",
+        "urls": [
+          "https://nggroup.ua/ngoptics-din-1x8-sc-upc",
+          "https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf"
+        ]
+      },
+      {
+        "source_number": "4",
+        "attribution": "[4] FHP12A: зіставлення за попереднім оглядом. PDF: фізична с. 1, друковані 31/71; поставка невідома. Повні PDF відсутні. NG · Grandway · PDF 31 · PDF 71",
+        "urls": [
+          "https://nggroup.ua/grandway-fhp12a",
+          "https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html",
+          "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf",
+          "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf"
+        ]
+      },
+      {
+        "source_number": "5",
+        "attribution": "[5] M1550-C: DOM опису 10.09, 10:15:33 UTC. 6 × 3,7 × 2,6; споживання пристроїв «до». Фігура t=E/P — власний умовний розрахунок. Картка",
+        "urls": [
+          "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah"
+        ]
+      },
+      {
+        "source_number": "6",
+        "attribution": "[6] XPON: повний зміст десятисторінкової інструкції описаний у попередньому огляді; збережено кадри, не весь первинний файл. Інструкція Додаткова текстова звірка вебпредставлення десяти сторінок — 08.10.2026, за редакційним дослідженням; без отримання PDF та повного візуального перегляду.",
+        "urls": [
+          "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf"
+        ]
+      },
+      {
+        "source_number": "7",
+        "attribution": "[7] Перелік документів 10.09 підтверджує підпис 13.16.2025. Внутрішні дати й тип комплектів — за аналізом PDF у попередньому огляді. Кабель · NG POWER",
+        "urls": [
+          "https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf",
+          "https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf"
+        ]
+      },
+      {
+        "source_number": "8",
+        "attribution": "[8] CU-8 / CCAG: 30.10.2024, 87,7 / 16,1 м — за попереднім оглядом. Збережено фрагмент CU-8, повних первинних звітів немає. CU-8 · CCAG",
+        "urls": [
+          "https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf",
+          "https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf"
+        ]
+      },
+      {
+        "source_number": "9",
+        "attribution": "[9] Видима форма M1550-C: DOM/кадр 10.09; hidden product: HTML 09.09. Партнерська сторінка — запис 10.09. Форму не надсилали. Модель · Партнерам",
+        "urls": [
+          "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+          "https://nggroup.ua/partneram"
+        ]
+      },
+      {
+        "source_number": "10",
+        "attribution": "[10] Сервіс: збережений видимий зміст 10.09; фактичні ремонти не перевіряли. Сервіс · Гарантія",
+        "urls": [
+          "https://nggroup.ua/service",
+          "https://nggroup.ua/warranty"
+        ]
+      },
+      {
+        "source_number": "11",
+        "attribution": "[11] DEPS: сторінки й текст PDF 04.10.2026. Quattro-II та помилково підписаний MultiPlus-II — окремі файли у протоколі. Quattro-II · FoxGate · Ремонт",
+        "urls": [
+          "https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html",
+          "https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html",
+          "https://deps.ua/ua/service-center/check-order-status.html"
+        ]
+      },
+      {
+        "source_number": "12",
+        "attribution": "[12] ROMSAT: форма Optolink 04.10, партнерські умови; без надсилання чи перевірки закритого процесу. Optolink · Партнерство",
+        "urls": [
+          "https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/",
+          "https://romsat.ua/company/partnership.php"
+        ]
+      },
+      {
+        "source_number": "13",
+        "attribution": "[13] HTML M1550-C від 09.09.2026 19:48:20.165 UTC: Open Graph amount=1. Зовнішнє відображення й реальну індексацію не перевіряли.",
+        "urls": []
+      },
+      {
+        "source_number": "14",
+        "attribution": "[14] Google: методика обходу й індексації, не доказ трафіку NG. Документація",
+        "urls": [
+          "https://developers.google.com/search/docs/crawling-indexing"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,166 @@
+[
+  {
+    "brand": "ASP24",
+    "pages": 14,
+    "sha256": "935a796d65b5288232b28d1e9980c376b0ca856b09847d69e41eb554c8e7ef14",
+    "lang": "uk-UA",
+    "struct_tree": false,
+    "html_source_text_all_blocks": "PASS",
+    "body_pages": [
+      {
+        "page": 2,
+        "characters": 1516,
+        "annotations": 0
+      },
+      {
+        "page": 3,
+        "characters": 1406,
+        "annotations": 1
+      },
+      {
+        "page": 4,
+        "characters": 1236,
+        "annotations": 0
+      },
+      {
+        "page": 5,
+        "characters": 1505,
+        "annotations": 0
+      },
+      {
+        "page": 6,
+        "characters": 1106,
+        "annotations": 1
+      },
+      {
+        "page": 7,
+        "characters": 1520,
+        "annotations": 1
+      },
+      {
+        "page": 8,
+        "characters": 1473,
+        "annotations": 1
+      },
+      {
+        "page": 9,
+        "characters": 1192,
+        "annotations": 0
+      },
+      {
+        "page": 10,
+        "characters": 1495,
+        "annotations": 0
+      },
+      {
+        "page": 11,
+        "characters": 1769,
+        "annotations": 0
+      },
+      {
+        "page": 12,
+        "characters": 1056,
+        "annotations": 1
+      },
+      {
+        "page": 13,
+        "characters": 1566,
+        "annotations": 10
+      },
+      {
+        "page": 14,
+        "characters": 1021,
+        "annotations": 10
+      }
+    ],
+    "pdf_ua": "NOT_CLAIMED",
+    "reading_order": "Untagged PDF; visual review recorded separately in reports/migration-review.json"
+  },
+  {
+    "brand": "NGGroup",
+    "pages": 16,
+    "sha256": "5a593ae974ae596486e94ed76708130c20243eb81539658031f9f21a9acd4a22",
+    "lang": "uk-UA",
+    "struct_tree": false,
+    "html_source_text_all_blocks": "PASS",
+    "body_pages": [
+      {
+        "page": 2,
+        "characters": 1469,
+        "annotations": 0
+      },
+      {
+        "page": 3,
+        "characters": 1514,
+        "annotations": 0
+      },
+      {
+        "page": 4,
+        "characters": 1522,
+        "annotations": 0
+      },
+      {
+        "page": 5,
+        "characters": 1425,
+        "annotations": 0
+      },
+      {
+        "page": 6,
+        "characters": 1399,
+        "annotations": 0
+      },
+      {
+        "page": 7,
+        "characters": 1397,
+        "annotations": 0
+      },
+      {
+        "page": 8,
+        "characters": 1490,
+        "annotations": 0
+      },
+      {
+        "page": 9,
+        "characters": 1588,
+        "annotations": 1
+      },
+      {
+        "page": 10,
+        "characters": 1307,
+        "annotations": 0
+      },
+      {
+        "page": 11,
+        "characters": 1505,
+        "annotations": 0
+      },
+      {
+        "page": 12,
+        "characters": 1580,
+        "annotations": 0
+      },
+      {
+        "page": 13,
+        "characters": 1468,
+        "annotations": 0
+      },
+      {
+        "page": 14,
+        "characters": 1190,
+        "annotations": 1
+      },
+      {
+        "page": 15,
+        "characters": 1689,
+        "annotations": 16
+      },
+      {
+        "page": 16,
+        "characters": 914,
+        "annotations": 12
+      }
+    ],
+    "pdf_ua": "NOT_CLAIMED",
+    "reading_order": "Untagged PDF; visual review recorded separately in reports/migration-review.json"
+  }
+]

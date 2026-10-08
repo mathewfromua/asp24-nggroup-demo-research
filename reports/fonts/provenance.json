@@ -1,0 +1,45 @@
+{
+  "scope": "Fonts embedded by reports/build_editorial.py in regenerated body pages; unchanged original covers retain their original fonts.",
+  "source_bundle": "Codex primary runtime: bundled LibreOfficeDev.app",
+  "fonts": [
+    {
+      "file": "NotoSans-Regular.ttf",
+      "role": "Body: regular Ukrainian text",
+      "bytes": 825628,
+      "sha256": "f5f552c8c5edb61fe6efb824baf4d4de47b1a8689ab4925ff43f7bd6a4ebece5",
+      "source": "LibreOfficeDev.app/Contents/Resources/fonts/truetype/NotoSans-Regular.ttf",
+      "source_bytes_identical": true,
+      "version": [
+        "Version 2.015; ttfautohint (v1.8.4.7-5d5b)"
+      ]
+    },
+    {
+      "file": "NotoSans-Bold.ttf",
+      "role": "Bold: headings and emphasis",
+      "bytes": 838072,
+      "sha256": "3a08a47daa00cade516425c15c57615aef2fd418ec9811a7b9f465088f92cc05",
+      "source": "LibreOfficeDev.app/Contents/Resources/fonts/truetype/NotoSans-Bold.ttf",
+      "source_bytes_identical": true,
+      "version": [
+        "Version 2.015; ttfautohint (v1.8.4.7-5d5b)"
+      ]
+    },
+    {
+      "file": "DejaVuSans.ttf",
+      "role": "Symbols: right-arrow U+2192 fallback",
+      "bytes": 757076,
+      "sha256": "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954",
+      "source": "LibreOfficeDev.app/Contents/Resources/fonts/truetype/DejaVuSans.ttf",
+      "source_bytes_identical": true,
+      "version": [
+        "Version 2.37"
+      ]
+    }
+  ],
+  "license_file": "LICENSE-LibreOffice-bundle.txt",
+  "license_source": "LibreOfficeDev.app/Contents/Resources/LICENSE",
+  "license_sha256": "7b3fed10089170d8e68811e59458d421e11d287c988a2bb58aac9cedf488dbbc",
+  "license_copy_unmodified": true,
+  "installation": "External build dependency: no font binaries bundled. Set REPORT_FONT_DIR to matching font files; PERSPEKTYVA_FONT_DIR remains a compatibility alias. Hashes identify the rendering environment.",
+  "font_binaries_distributed": false
+}

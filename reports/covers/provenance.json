@@ -1,0 +1,22 @@
+[
+  {
+    "file": "reports/covers/ASP24.pdf",
+    "sha256": "7d4b08f8b7d481f032a9cb1b530347636bf1a02e531daa7eff0975911ed920ea",
+    "source_document": "ASP24_Огляд.pdf",
+    "source_document_sha256": "924f98468d0a3207a52ccc8c25f778bdbce9ff1ef55dad865853692139eb2ebb",
+    "source_page": 1,
+    "source_pages": 12,
+    "content_stream_unchanged": true,
+    "availability": "Only cover page included; complete historical source retained in private checkpoint"
+  },
+  {
+    "file": "reports/covers/NGGroup.pdf",
+    "sha256": "9f6e512c9e785c0a06bf85655b7b1b0e74a42ae3930442da54b62e4a7f6a0185",
+    "source_document": "NGGroup_Огляд.pdf",
+    "source_document_sha256": "660ac749a4e66d2ba73e59a14511448cfe0a6d6403f396972af57c2ca5996e64",
+    "source_page": 1,
+    "source_pages": 14,
+    "content_stream_unchanged": true,
+    "availability": "Only cover page included; complete historical source retained in private checkpoint"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "purpose": "Figure inputs for report editing, not final published figures.",
+  "historical_count_method": "Deterministic count of included historical parser rows, with exclusions.",
+  "source_inputs": [
+    {
+      "file": "recovered_sources/recompute_source_measures.py",
+      "sha256": "3493c318dec2756025978b10ea116945aed752aa9050bfe28653048e3a7b029c"
+    },
+    {
+      "file": "recovered_sources/real-data-measures.json",
+      "sha256": "c1927fa990a31d97bd983e3070d2311ba0839b51726619d6199738585c1e7cb9"
+    },
+    {
+      "file": "figure_data/demo_facts.json",
+      "sha256": "39b9c62f1dd9fcf4b9b5fb2b5fb1ba171178ba02513e059b904ca22a9cf93c79"
+    }
+  ],
+  "outputs": {
+    "technical_rows.csv": 6,
+    "filter_paths.csv": 8,
+    "nominal_autonomy.csv": 9
+  },
+  "limits": [
+    "Source JSON is an existing historical HTML parse, not original HTML bytes.",
+    "The three pairs have different capture dates; do not plot them on a common before/after date.",
+    "Counts do not certify the correctness of the published technical values.",
+    "Descriptions, auxiliary filter fields, section headings and cart tables are outside scope.",
+    "No catalogue-wide percentage, user timing, conversion, or UX score follows from these counts.",
+    "Autonomy grid is chosen for illustration, not a measured distribution.",
+    "Demo facts are synthetic fixtures; do not infer market, user or business metrics."
+  ]
+}

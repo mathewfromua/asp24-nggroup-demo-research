@@ -1,0 +1,309 @@
+{
+  "scope": "Project-name and active-demo-URL migration only; E01/E02 preserved; no new research or browser acceptance",
+  "canonical_content_sha256": "d55bed011b54741983f8614f1daa13c103023e20444fa41904b8881951f27e46",
+  "text_changes": [
+    {
+      "path": [
+        "ASP24",
+        0,
+        "blocks",
+        6,
+        1
+      ],
+      "before": "«Перспектива» ілюструє запропоновані механізми на умовних товарах і цінах. Її дії локальні: це не система продажів компанії.",
+      "after": "Демо ілюструє запропоновані механізми на умовних товарах і цінах. Його дії локальні: це не система продажів компанії."
+    },
+    {
+      "path": [
+        "ASP24",
+        1,
+        "blocks",
+        5,
+        1
+      ],
+      "before": "У «Перспективі» запит DEMO-U02 знаходить одну умовну модель; позначка «Точний збіг» відділяє її від ширших результатів.",
+      "after": "У демо запит DEMO-U02 знаходить одну умовну модель; позначка «Точний збіг» відділяє її від ширших результатів."
+    },
+    {
+      "path": [
+        "ASP24",
+        1,
+        "blocks",
+        6,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/asp/catalog?q=DEMO-U02",
+      "after": "{{PUBLIC_BASE_URL}}#/asp/catalog?q=DEMO-U02"
+    },
+    {
+      "path": [
+        "ASP24",
+        4,
+        "blocks",
+        6,
+        1
+      ],
+      "before": "Як це показано в «Перспективі»",
+      "after": "Як це показано в демо"
+    },
+    {
+      "path": [
+        "ASP24",
+        4,
+        "blocks",
+        7,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/asp/product/u02",
+      "after": "{{PUBLIC_BASE_URL}}#/asp/product/u02"
+    },
+    {
+      "path": [
+        "ASP24",
+        5,
+        "blocks",
+        5,
+        1
+      ],
+      "before": "Синтетичні дані «Перспективи». Ці приклади пояснюють правило обліку; вони не підтверджують виправлення реального ASP24.",
+      "after": "Синтетичні дані демо. Ці приклади пояснюють правило обліку; вони не підтверджують виправлення реального ASP24."
+    },
+    {
+      "path": [
+        "ASP24",
+        5,
+        "blocks",
+        7,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/asp/product/c04",
+      "after": "{{PUBLIC_BASE_URL}}#/asp/product/c04"
+    },
+    {
+      "path": [
+        "ASP24",
+        6,
+        "blocks",
+        4,
+        1
+      ],
+      "before": "У «Перспективі» локальний проєкт зберігає назву, примітку, кандидатів і кількості. Після натискання «Зберегти зміни» запис відновлюється при перезавантаженні.",
+      "after": "У демо локальний проєкт зберігає назву, примітку, кандидатів і кількості. Після натискання «Зберегти зміни» запис відновлюється при перезавантаженні."
+    },
+    {
+      "path": [
+        "ASP24",
+        6,
+        "blocks",
+        5,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/asp/projects",
+      "after": "{{PUBLIC_BASE_URL}}#/asp/projects"
+    },
+    {
+      "path": [
+        "ASP24",
+        7,
+        "blocks",
+        4,
+        1
+      ],
+      "before": "Початкове дослідження робочих ASP24 і NG Group виконано в настільних сценаріях. Тут сформульовано рекомендації для мобільного подання; перевірка «Перспективи» на синтетичних даних не є повторним дослідженням мобільних сайтів компаній.",
+      "after": "Початкове дослідження робочих ASP24 і NG Group виконано в настільних сценаріях. Тут сформульовано рекомендації для мобільного подання; перевірка демо на синтетичних даних не є повторним дослідженням мобільних сайтів компаній."
+    },
+    {
+      "path": [
+        "ASP24",
+        8,
+        "blocks",
+        4,
+        1
+      ],
+      "before": "Проєктний список у «Перспективі»",
+      "after": "Проєктний список у демо"
+    },
+    {
+      "path": [
+        "ASP24",
+        8,
+        "blocks",
+        4,
+        2
+      ],
+      "before": "Проєкт у «Перспективі» зберігає кандидатів, кількості та питання. Чи заощаджує таке подання час реальних покупців — гіпотеза, а не результат цього зіставлення.",
+      "after": "Проєкт у демо зберігає кандидатів, кількості та питання. Чи заощаджує таке подання час реальних покупців — гіпотеза, а не результат цього зіставлення."
+    },
+    {
+      "path": [
+        "ASP24",
+        10,
+        "blocks",
+        2,
+        1
+      ],
+      "before": "«Перспектива»: принцип у дії",
+      "after": "Демо: принцип у дії"
+    },
+    {
+      "path": [
+        "ASP24",
+        10,
+        "blocks",
+        3,
+        3
+      ],
+      "before": "Порівняння в «Перспективі»: дві з трьох колонок і кілька параметрів. Ілюстрація подання на умовних даних, не доказ роботи переходів.",
+      "after": "Порівняння в демо: дві з трьох колонок і кілька параметрів. Ілюстрація подання на умовних даних, не доказ роботи переходів."
+    },
+    {
+      "path": [
+        "ASP24",
+        10,
+        "blocks",
+        5,
+        1
+      ],
+      "before": "Відкрити «Перспективу»",
+      "after": "Відкрити демо"
+    },
+    {
+      "path": [
+        "ASP24",
+        10,
+        "blocks",
+        5,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/asp/catalog",
+      "after": "{{PUBLIC_BASE_URL}}#/asp/catalog"
+    },
+    {
+      "path": [
+        "NGGroup",
+        0,
+        "blocks",
+        6,
+        1
+      ],
+      "before": "«Перспектива» показує запропоновані зв’язки на умовних даних. Усі дії локальні; компанія не отримує підготовлених у демо питань.",
+      "after": "Демо показує запропоновані зв’язки на умовних даних. Усі дії локальні; компанія не отримує підготовлених у демо питань."
+    },
+    {
+      "path": [
+        "NGGroup",
+        5,
+        "blocks",
+        6,
+        1
+      ],
+      "before": "У «Перспективі» технічний опис DEMO-U02 прямо називає виконання D1 і демонстраційний статус, а повернення веде до тієї самої моделі.",
+      "after": "У демо технічний опис DEMO-U02 прямо називає виконання D1 і демонстраційний статус, а повернення веде до тієї самої моделі."
+    },
+    {
+      "path": [
+        "NGGroup",
+        7,
+        "blocks",
+        4,
+        1
+      ],
+      "before": "Із документа DEMO-U02/D1 у «Перспективі» відкривається чернетка запитання з назвою моделі. Її можна скопіювати або зберегти; менеджеру вона не надсилається.",
+      "after": "Із документа DEMO-U02/D1 у демо відкривається чернетка запитання з назвою моделі. Її можна скопіювати або зберегти; менеджеру вона не надсилається."
+    },
+    {
+      "path": [
+        "NGGroup",
+        7,
+        "blocks",
+        5,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/ng/document/u02",
+      "after": "{{PUBLIC_BASE_URL}}#/ng/document/u02"
+    },
+    {
+      "path": [
+        "NGGroup",
+        8,
+        "blocks",
+        5,
+        1
+      ],
+      "before": "Початкове дослідження робочих ASP24 і NG Group виконано в настільних сценаріях. Тут сформульовано рекомендації для мобільного подання; перевірка «Перспективи» на синтетичних даних не є повторним дослідженням мобільних сайтів компаній.",
+      "after": "Початкове дослідження робочих ASP24 і NG Group виконано в настільних сценаріях. Тут сформульовано рекомендації для мобільного подання; перевірка демо на синтетичних даних не є повторним дослідженням мобільних сайтів компаній."
+    },
+    {
+      "path": [
+        "NGGroup",
+        11,
+        "blocks",
+        5,
+        1
+      ],
+      "before": "Із документа DEMO-U02/D1 у «Перспективі» можна відкрити чернетку запитання або той самий товар в ASP24. Це переходи всередині демонстрації, а не інтеграція робочих сайтів компаній.",
+      "after": "Із документа DEMO-U02/D1 у демо можна відкрити чернетку запитання або той самий товар в ASP24. Це переходи всередині демонстрації, а не інтеграція робочих сайтів компаній."
+    },
+    {
+      "path": [
+        "NGGroup",
+        12,
+        "blocks",
+        2,
+        1
+      ],
+      "before": "«Перспектива»: видимий зв’язок моделі й документа",
+      "after": "Демо: видимий зв’язок моделі й документа"
+    },
+    {
+      "path": [
+        "NGGroup",
+        12,
+        "blocks",
+        5,
+        1
+      ],
+      "before": "Відкрити документ у «Перспективі»",
+      "after": "Відкрити документ у демо"
+    },
+    {
+      "path": [
+        "NGGroup",
+        12,
+        "blocks",
+        5,
+        2
+      ],
+      "before": "https://perspektyva.mathew-from-ua.chatgpt.site/#/ng/document/u02",
+      "after": "{{PUBLIC_BASE_URL}}#/ng/document/u02"
+    }
+  ],
+  "image_derivation": "reports/image-provenance.json",
+  "cover_derivation": "reports/covers/provenance.json",
+  "publication": "PLANNED_NOT_VERIFIED",
+  "visual_review": {
+    "status": "PASS_CHANGED_PAGES",
+    "rendered_pages": 30,
+    "changed_pages_inspected_individually": 14,
+    "unchanged_page_png_hashes": 16,
+    "page_comparison": "reports/page-render-comparison.json",
+    "method": "Poppler pdftoppm PNG at1600px; each changed full page visually inspected. No clipping, overlaps or unreadable migrated text found.",
+    "limit": "File rendering review is not native Safari/iPhone acceptance."
+  },
+  "regressions": {
+    "ASP24_E01_paragraph": "UNCHANGED",
+    "NGGroup_source_6": "UNCHANGED",
+    "all_source_blocks": "UNCHANGED",
+    "cover_render_pixels": "UNCHANGED",
+    "figure_values": "UNCHANGED",
+    "PDF_pages": {
+      "ASP24": 14,
+      "NGGroup": 16
+    },
+    "same_source_HTML": "PASS",
+    "demo_links": "7 URLs resolved from deployment.config.json; destination publication not verified by this check"
+  },
+  "pdf_manifest": "reports/pdf-manifest.json",
+  "html_manifest": "reports/html-manifest.json",
+  "note": "The prior filename, page numbering, and source evidence were not rewritten as new research. Only the public name, active URLs, exact source-image cropping, source-map linkage, and current-build verification were changed."
+}

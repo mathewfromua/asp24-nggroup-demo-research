@@ -1,0 +1,47 @@
+# Generated builds and local environments
+/dist/
+/output/
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Credentials, local state, browser artefacts
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+cookies*.json
+storage-state*.json
+storageState*.json
+.auth/
+playwright-report/
+test-results/
+.mcp.json
+
+# Private working material and handoff containers
+/backups/
+/inbox/
+/private/
+/tmp/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.log
+
+# External font binaries; retain attribution text and provenance
+*.ttf
+*.otf
+*.woff
+*.woff2
+
+# Hosting credentials and private transport captures
+.openai/
+*.bundle
+*.har

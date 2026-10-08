@@ -1,0 +1,2846 @@
+{
+  "schema": 5,
+  "title": "Карта джерел ASP24 / NG Group — Demo & Research",
+  "created_at": "2026-10-08",
+  "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
+  "manuscript_file": "reports/content.json",
+  "manuscript_sha256": "d55bed011b54741983f8614f1daa13c103023e20444fa41904b8881951f27e46",
+  "baseline": "3.1.1-rc.1 Checkpoint03, preserving E01/E02. Migration changes project name, demo URLs and public packaging only.",
+  "scope": "E01/E02 accepted editorial changes; broader SEO/competitor research pending separate review. No new interactive competitor audit.",
+  "verification": {
+    "scripts": [
+      "evidence/recovered_sources/recompute_source_measures.py",
+      "evidence/figure_data/build_figure_data.py"
+    ],
+    "execution": "2026-10-08; both exit 0; supplied CSV byte-equivalence recorded",
+    "proof_file": "evidence/refinement-20261008/source-repeat-check.json",
+    "original_sources_modified": false,
+    "evidence_availability": "Historical verification retained in private checkpoint; not rerun during name and URL migration."
+  },
+  "deployment_and_demo": {
+    "repository_url": "https://github.com/mathewfromua/asp24-nggroup-demo-research",
+    "configured_public_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
+    "publication_status": "NOT_VERIFIED_BY_REPORT_BUILD",
+    "publication_record": "docs/PUBLICATION.md",
+    "note": "Configured target is not proof of a successful deployment. See current repository release results for actual status.",
+    "native_browser_qa": "Historical partial beta Safari results do not certify this migrated build; no physical iPhone acceptance is claimed."
+  },
+  "sources": {
+    "ASP24:1": {
+      "report": "ASP24",
+      "citation_number": 1,
+      "status": "MIXED_PRIMARY_AND_SECONDARY",
+      "primary_files": [
+        "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt",
+        "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt",
+        "evidence/recovered_sources/asp24-20260910/asp-search-needs-result.txt",
+        "evidence/recovered_sources/asp24-20260910/asp-cable-category.txt",
+        "evidence/recovered_sources/asp24-20260910/asp-cable-cu-settled.txt",
+        "evidence/recovered_sources/asp24-20260910/asp-cable-cu-indoor.txt",
+        "evidence/recovered_sources/asp24-20260910/evidence.json"
+      ],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            3,
+            4
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "M1550-C/KP1 Plus/«для роутера» і 9→4→2 — первинні стани 10.09. MED001988/FHP12A/«інтернет без світла», LC/40 км і конфлікт LC/SC — лише вторинний опис 28.09.",
+        "Первинні протоколи LC/GCOM/пізніших пошукових проходів відсутні; назва моделі та фотографія не встановлюють виконання поставки."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[1]</b> DOM 10.09.2026: M1550-C, KP1 Plus, «для роутера», кабель 9→4→2. MED001988, FHP12A, запити потреби та LC/40 км — за попереднім оглядом. <link href=\"https://asp24.ua/aktivne-obladnannja/aktivne-merezheve-obladnannja/optichni-moduli/\"><u>Оптичні модулі</u></link>",
+      "external_urls": [
+        "https://asp24.ua/aktivne-obladnannja/aktivne-merezheve-obladnannja/optichni-moduli/"
+      ]
+    },
+    "ASP24:2": {
+      "report": "ASP24",
+      "citation_number": 2,
+      "status": "MIXED_PRIMARY_AND_SECONDARY",
+      "primary_files": [
+        "evidence/recovered_sources/asp24-20260910/asp-compare-visible.txt",
+        "evidence/recovered_sources/asp24-20260910/asp-compare-visible.jpg"
+      ],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            5
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "GCOM LAN 8/24, 20/56 Гбіт/с, Combo незаповнено/4 — вторинний опис, первинний DOM GCOM відсутній. Порожнє значення не означає нуль.",
+        "Стан ONU/UPS 10.09 — інший сценарій, не заміна пізнішого кабельного порівняння."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[2]</b> GCOM і кабелі — за попереднім оглядом; первинний DOM GCOM відсутній. Збережений стан змішаної групи ONU/UPS також є за 10.09. <link href=\"https://asp24.ua/komutator-kerovanij-l2-gcom-s5110-10tc-1gb-porti/\"><u>10TC</u></link> · <link href=\"https://asp24.ua/komutator-kerovanij-l2-gcom-s5110-28tc-1gb-porti/\"><u>28TC</u></link>",
+      "external_urls": [
+        "https://asp24.ua/komutator-kerovanij-l2-gcom-s5110-10tc-1gb-porti/",
+        "https://asp24.ua/komutator-kerovanij-l2-gcom-s5110-28tc-1gb-porti/"
+      ]
+    },
+    "ASP24:3": {
+      "report": "ASP24",
+      "citation_number": 3,
+      "status": "RECOMPUTED_FROM_HISTORICAL_PARSED_JSON",
+      "primary_files": [
+        "evidence/recovered_sources/history-v5/parsed/router-20260419145842.json",
+        "evidence/recovered_sources/history-v5/parsed/router-20260517190112.json",
+        "evidence/recovered_sources/history-v5/parsed/xpon-20251208110110.json",
+        "evidence/recovered_sources/history-v5/parsed/xpon-20260611125649.json",
+        "evidence/recovered_sources/history-v5/parsed/copper-20260208234550.json",
+        "evidence/recovered_sources/history-v5/parsed/copper-20260611132657.json",
+        "evidence/recovered_sources/history-v5/retrievals.json",
+        "evidence/recovered_sources/recompute_source_measures.py",
+        "evidence/recovered_sources/provenance.json",
+        "evidence/editorial-20261008/source-recomputation.json",
+        "evidence/figure_data/technical_rows.csv"
+      ],
+      "secondary": [],
+      "limits": [
+        "Лише окремі пари параметр/значення у вибраних таблицях; заголовки, службові поля, кошик і текст опису виключені. Нуль не означає відсутності інформації на сторінці.",
+        "Перераховано збережений історичний парсинг, не первинні HTML-байти. Різні дати пар; немає причинного висновку про міграцію чи узагальнення на каталог."
+      ],
+      "locators": [
+        "features.tables: старі source-line 1110, 1139, 1181; нові таблиці class=product-features__table. Proof: pairs[].before/after.included_rows and table_audit."
+      ],
+      "printed_source_note": "<b>[3]</b> Збережені витяги архівних таблиць трьох SKU; окремі дати на с. 5. Перераховано предметні рядки, не повноту всієї картки. <link href=\"https://web.archive.org/web/20260208234550id_/https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new.html\"><u>Cu: лютий</u></link> · <link href=\"https://web.archive.org/web/20260611132657id_/https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new/\"><u>Cu: червень</u></link>",
+      "external_urls": [
+        "https://web.archive.org/web/20260208234550id_/https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new.html",
+        "https://web.archive.org/web/20260611132657id_/https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new/"
+      ]
+    },
+    "ASP24:4": {
+      "report": "ASP24",
+      "citation_number": 4,
+      "status": "SECONDARY_REPORT_WITH_REUSED_IMAGE",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            6
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Фото й текст — опубліковані матеріали; актуальне виконання складської одиниці невідоме."
+      ],
+      "locators": [
+        "reports/assets/ASP24-p4-1.png: labels 5/5/9/12/12 V; text states one 5 V and two 9 V outputs."
+      ],
+      "printed_source_note": "<b>[4]</b> Фото й опис M1550-C — ілюстрація та витяг попереднього огляду. Фактичне виконання поставки не перевіряли. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Картка</u></link>",
+      "external_urls": [
+        "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/"
+      ]
+    },
+    "ASP24:5": {
+      "report": "ASP24",
+      "citation_number": 5,
+      "status": "INHERITED_SECONDARY",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            7,
+            12
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Два описані проходи одного оператора; не незалежна реплікація. Повний двопрохідний протокол, початковий стан і причина не відновлені. Не стверджувати поточну відтворюваність."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[5]</b> KP1 Plus → XPON — повідомлення попереднього огляду, с. 7. Повний двопрохідний протокол не відновлено; поширеність і причина невідомі. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-marsriva-mini-ups-kp1-plus-16000-mah/\"><u>KP1 Plus</u></link>",
+      "external_urls": [
+        "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-marsriva-mini-ups-kp1-plus-16000-mah/"
+      ]
+    },
+    "ASP24:6": {
+      "report": "ASP24",
+      "citation_number": 6,
+      "status": "INHERITED_SECONDARY",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            7,
+            12
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "4774, 46 203 грн — повідомлене читання; одиниця продажу, правильна ціна та причина не встановлені."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[6]</b> 4774, 46 203 грн — читання 28.09 за попереднім оглядом; одиниця, правильна ціна й причина не встановлені. <link href=\"https://asp24.ua/patchkord-ng-lan-utp-cat-5e-cu-4-2-0-50-0-5m-zhovtij/\"><u>Картка</u></link>",
+      "external_urls": [
+        "https://asp24.ua/patchkord-ng-lan-utp-cat-5e-cu-4-2-0-50-0-5m-zhovtij/"
+      ]
+    },
+    "ASP24:7": {
+      "report": "ASP24",
+      "citation_number": 7,
+      "status": "INHERITED_SECONDARY",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            8
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Збереження M1550-C в обраному — вихід/повторний вхід у тому самому браузері за попереднім оглядом. Не аудит всіх процесів кабінету."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[7]</b> Обране й кабінет — опис виходу/повторного входу в попередньому огляді. Порожня історія тестового акаунту не доводить відсутності функції.",
+      "external_urls": []
+    },
+    "ASP24:8": {
+      "report": "ASP24",
+      "citation_number": 8,
+      "status": "HISTORICAL_PARSED_SOURCE",
+      "primary_files": [
+        "evidence/recovered_sources/history-v5/parsed/warranty-20260419141254.json",
+        "evidence/recovered_sources/history-v5/parsed/warranty-20260517184724.json",
+        "evidence/recovered_sources/history-v5/public-comparisons.json",
+        "evidence/recovered_sources/history-v5/retrievals.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Порівнюється текст довідки 19.04/17.05.2026, не фактична якість сервісу."
+      ],
+      "locators": [
+        "public-comparisons.json: faqExcerpt; parsed files: all_text and features.links."
+      ],
+      "printed_source_note": "<b>[8]</b> Гарантійні FAQ: архівні HTML 19.04 та 17.05.2026. Зміна тексту, не вимір роботи сервісу. <link href=\"https://web.archive.org/web/20260419141254id_/https://asp24.ua/warranty\"><u>Квітень</u></link> · <link href=\"https://web.archive.org/web/20260517184724id_/https://asp24.ua/warranty/\"><u>Травень</u></link>",
+      "external_urls": [
+        "https://web.archive.org/web/20260419141254id_/https://asp24.ua/warranty",
+        "https://web.archive.org/web/20260517184724id_/https://asp24.ua/warranty/"
+      ]
+    },
+    "ASP24:9": {
+      "report": "ASP24",
+      "citation_number": 9,
+      "status": "INHERITED_SECONDARY",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            8,
+            12
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Публічний опис оплати/роботи з менеджером; первинний протокол читання delivery не відновлено, отримання запиту не тестували."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[9]</b> Публічне пояснення оплати й роботи з менеджером; фактичне отримання запиту не тестували. <link href=\"https://asp24.ua/delivery/\"><u>Умови</u></link>",
+      "external_urls": [
+        "https://asp24.ua/delivery/"
+      ]
+    },
+    "ASP24:10": {
+      "report": "ASP24",
+      "citation_number": 10,
+      "status": "PRESERVED_COMPETITOR_CAPTURE",
+      "primary_files": [
+        "evidence/competitors/deps-foxgate.json",
+        "evidence/competitors/foxgate-10km.json",
+        "evidence/competitors/deps-search-20261007.json",
+        "evidence/competitors/deps-filter-result-20261007.json",
+        "evidence/competitors/deps-family-20261007.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Сторінки та текст PDF 04.10; пошук/фасет 07.10. Не візуальний аудит PDF, не повнота видачі, не оцінка компанії."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[10]</b> DEPS: FoxGate WDM та PDF, 04.10; пошук і SFP+-фасет, 07.10.2026. Збережені протоколи. <link href=\"https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html\"><u>FoxGate WDM</u></link>",
+      "external_urls": [
+        "https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html"
+      ]
+    },
+    "ASP24:11": {
+      "report": "ASP24",
+      "citation_number": 11,
+      "status": "PRESERVED_COMPETITOR_CAPTURE",
+      "primary_files": [
+        "evidence/competitors/romsat-price-panel.json",
+        "evidence/competitors/romsat-search-20261007.json",
+        "evidence/competitors/romsat-favorites-result-20261007.json",
+        "evidence/competitors/romsat-shortlist-20261007.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Форма 04.10, пошук/обране 07.10; надсилання, вхід і внутрішню передачу не перевіряли."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[11]</b> ROMSAT: форма ціни 04.10; пошук 581374 й обране 07.10. Без надсилання або входу. <link href=\"https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/\"><u>Optolink</u></link>",
+      "external_urls": [
+        "https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/"
+      ]
+    },
+    "ASP24:12": {
+      "report": "ASP24",
+      "citation_number": 12,
+      "status": "INHERITED_SECONDARY",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/ASP24_Огляд.pdf",
+          "pages": [
+            10
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "ASP24",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Опис розмітки M1550-C за попереднім оглядом; реальні покази, індексацію та трафік не виміряно."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[12]</b> Розмітка M1550-C — результат попереднього огляду; трафік та індексацію не вимірювали. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Картка</u></link>",
+      "external_urls": [
+        "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/"
+      ]
+    },
+    "ASP24:13": {
+      "report": "ASP24",
+      "citation_number": 13,
+      "status": "EXACT_HISTORICAL_CODE_EXCERPT",
+      "primary_files": [
+        "evidence/recovered_sources/static-20260909/asp24-add-to-cart-handler.txt",
+        "evidence/recovered_sources/static-20260909/capture-metadata.json",
+        "evidence/recovered_sources/provenance.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Статичний обробник від 09.09.2026 19:48:19.976 UTC; не виконання 28.09, не мережевий payload і не отриманий GA4-звіт. Дві гілки dataLayer/gtag не доводять дублювання отриманих подій."
+      ],
+      "locators": [
+        "excerpt lines 23–25: model.Cart.total.sum; 31–40: value versus one added-model items entry; original byte interval [13107,14472), lines 64–112."
+      ],
+      "printed_source_note": "<b>[13]</b> HTML від 09.09.2026 19:48:19.976 UTC: точний витяг обробника add_to_cart. Доставку подій та облік у GA4 не перевіряли.",
+      "external_urls": []
+    },
+    "ASP24:14": {
+      "report": "ASP24",
+      "citation_number": 14,
+      "status": "OFFICIAL_METHOD_REFERENCE",
+      "primary_files": [],
+      "secondary": [],
+      "limits": [
+        "Official method reference, sitemap/robots pages read08.10.2026; no evidence of actual indexing of ASP24 orNG."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[14]</b> Google: керування URL фасетної навігації, роль sitemap і robots.txt; методичні джерела, звірено 08.10.2026. <link href=\"https://developers.google.com/crawling/docs/faceted-navigation\"><u>Документація</u></link> <link href=\"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\"><u>Sitemap</u></link> · <link href=\"https://developers.google.com/search/docs/crawling-indexing/robots/intro\"><u>Robots.txt</u></link>",
+      "external_urls": [
+        "https://developers.google.com/crawling/docs/faceted-navigation",
+        "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview",
+        "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+      ]
+    },
+    "ASP24:15": {
+      "report": "ASP24",
+      "citation_number": 15,
+      "status": "OFFICIAL_METHOD_REFERENCE",
+      "primary_files": [],
+      "secondary": [],
+      "limits": [
+        "Документація GA4 задає семантику value/items; не встановлює отримані події ASP24. Локального знімка немає; цей підпрохід не перевіряв зовнішню сторінку."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[15]</b> Google Analytics: визначення value, items, price і quantity для add_to_cart. <link href=\"https://developers.google.com/analytics/devguides/collection/ga4/reference/events#add_to_cart\"><u>Специфікація події</u></link>",
+      "external_urls": [
+        "https://developers.google.com/analytics/devguides/collection/ga4/reference/events#add_to_cart"
+      ]
+    },
+    "NGGroup:1": {
+      "report": "NGGroup",
+      "citation_number": 1,
+      "status": "MIXED_PRIMARY_AND_SECONDARY",
+      "primary_files": [
+        "evidence/recovered_sources/nggroup-20260910/search-m1550.txt",
+        "evidence/recovered_sources/nggroup-20260910/search-full-model.txt",
+        "evidence/recovered_sources/nggroup-20260910/cable-before.txt",
+        "evidence/recovered_sources/nggroup-20260910/cable-cu-success.txt",
+        "evidence/recovered_sources/nggroup-20260910/cable-cu-out.txt",
+        "evidence/recovered_sources/nggroup-20260910/cable-cu-out4.txt",
+        "evidence/recovered_sources/nggroup-20260910/cable-breadcrumb-return.txt",
+        "evidence/recovered_sources/nggroup-20260910/evidence.json",
+        "evidence/figure_data/filter_paths.csv"
+      ],
+      "secondary": [
+        {
+          "file": "reports/baseline/NGGroup_Огляд.pdf",
+          "pages": [
+            3,
+            4
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "NGGroup",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "10→4→2→1, потім 10 через крихту — 10.09; Browser Back не перевірявся. Cu, Ззовні, 4 пари; діаметр не обирався.",
+        "Спосіб повернення у пізнішому описі не деталізований. Немає підстав пояснювати відмінність способом повернення. PLC-відбір — вторинний опис 28.09."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[1]</b> DOM 10.09.2026: M1550-C, кабель 10→4→2→1 і повернення через крихту. Пізніші приклади — за попереднім оглядом; спосіб пізнішого повернення невідомий. <link href=\"https://nggroup.ua/cable/twisted-pair\"><u>Кабель</u></link> · <link href=\"https://nggroup.ua/passive-network-components/optical-splitters\"><u>Дільники</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/cable/twisted-pair",
+        "https://nggroup.ua/passive-network-components/optical-splitters"
+      ]
+    },
+    "NGGroup:2": {
+      "report": "NGGroup",
+      "citation_number": 2,
+      "status": "HISTORICAL_PARSED_SOURCE",
+      "primary_files": [
+        "evidence/recovered_sources/history-v5/parsed/ng-twisted-20220605165727.json",
+        "evidence/recovered_sources/history-v5/parsed/ng-twisted-20260629025102.json",
+        "evidence/recovered_sources/history-v5/parsed/ng-warranty-20220605165722.json",
+        "evidence/recovered_sources/history-v5/parsed/ng-warranty-20260629025102.json",
+        "evidence/recovered_sources/history-v5/retrievals.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Архівний стан не підтверджує історичну runtime-поведінку фільтра. Збіг FAQ не доводить застарілості або чинності всіх умов."
+      ],
+      "locators": [
+        "Warranty: 9 features.links with accordion-item context; normalized all_text from first FAQ to next «Залишились питання?» equal, 5950 chars, SHA256 a2c602161992fd4b0a988d14557fbae97967d29892a5a5ea55e2fc3ba38ba79a."
+      ],
+      "printed_source_note": "<b>[2]</b> Архівні витяги: кабель 05.06.2022 / 29.06.2026 та дев’ять гарантійних FAQ. Збіг тексту не доводить актуальності кожної умови. <link href=\"https://web.archive.org/web/20220605165727id_/https://nggroup.ua/cable/twisted-pair\"><u>Кабель 2022</u></link> · <link href=\"https://web.archive.org/web/20260629025102id_/https://nggroup.ua/cable/twisted-pair\"><u>2026</u></link> · <link href=\"https://web.archive.org/web/20220605165722id_/https://nggroup.ua/warranty\"><u>Гарантія 2022</u></link> · <link href=\"https://web.archive.org/web/20260629025102id_/https://nggroup.ua/warranty\"><u>2026</u></link>",
+      "external_urls": [
+        "https://web.archive.org/web/20220605165727id_/https://nggroup.ua/cable/twisted-pair",
+        "https://web.archive.org/web/20260629025102id_/https://nggroup.ua/cable/twisted-pair",
+        "https://web.archive.org/web/20220605165722id_/https://nggroup.ua/warranty",
+        "https://web.archive.org/web/20260629025102id_/https://nggroup.ua/warranty"
+      ]
+    },
+    "NGGroup:3": {
+      "report": "NGGroup",
+      "citation_number": 3,
+      "status": "INHERITED_SECONDARY_PDF_ABSENT",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/NGGroup_Огляд.pdf",
+          "pages": [
+            4,
+            14
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "NGGroup",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Повна первинна специфікація PLC відсутня; габарити 125×100×25 проти 130×100×25 мм та 10,2/10,7 дБ з умовою без конекторів — за попереднім аналізом. DIN не тлумачити автоматично як звичайну DIN-рейку."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[3]</b> PLC: картки та специфікація серії — за попереднім оглядом; повний первинний PDF відсутній. <link href=\"https://nggroup.ua/ngoptics-din-1x8-sc-upc\"><u>DIN</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf\"><u>Специфікація</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/ngoptics-din-1x8-sc-upc",
+        "https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf"
+      ]
+    },
+    "NGGroup:4": {
+      "report": "NGGroup",
+      "citation_number": 4,
+      "status": "INHERITED_SECONDARY_PDF_ABSENT",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/NGGroup_Огляд.pdf",
+          "pages": [
+            5,
+            14
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "NGGroup",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Повні первинні Grandway PDF відсутні. −10…+70; −65…+10; −70…+10; 850 нм −60…+10 та інші довжини −65…+10 — вторинне зіставлення від 28.09.",
+        "URL /20201102/ та /20260730/ не доводять дати редакції. Конкретне виконання/поставка невідомі; не обирати одну межу як правильну."
+      ],
+      "locators": [
+        "Попередній опис: фізична с.1, друковані с.31/71."
+      ],
+      "printed_source_note": "<b>[4]</b> FHP12A: зіставлення за попереднім оглядом. PDF: фізична с. 1, друковані 31/71; поставка невідома. Повні PDF відсутні. <link href=\"https://nggroup.ua/grandway-fhp12a\"><u>NG</u></link> · <link href=\"https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html\"><u>Grandway</u></link> · <link href=\"https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf\"><u>PDF 31</u></link> · <link href=\"https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf\"><u>PDF 71</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/grandway-fhp12a",
+        "https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html",
+        "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf",
+        "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf"
+      ]
+    },
+    "NGGroup:5": {
+      "report": "NGGroup",
+      "citation_number": 5,
+      "status": "PRIMARY_CAPTURE_AND_CONDITIONAL_CALCULATION",
+      "primary_files": [
+        "evidence/recovered_sources/nggroup-20260910/ups-m1550.txt",
+        "evidence/recovered_sources/nggroup-20260910/ups-description.txt",
+        "evidence/recovered_sources/nggroup-20260910/evidence.json",
+        "evidence/figure_data/nominal_autonomy.csv",
+        "evidence/figure_data/build_figure_data.py"
+      ],
+      "secondary": [],
+      "limits": [
+        "57,72 Вт·год — номінальна енергія наведених елементів; t=E/P — модель сталого навантаження без втрат, старіння й порогів вимкнення.",
+        "Споживання назване «до», а не номінал адаптера чи виміряне середнє. 13/15 Вт — сценарії; 4,44/3,85 год самі не спростовують 6–8 год за меншого навантаження.",
+        "Не змішувати реальний опис з DEMO-U02 60 Вт·год/36 Вт або lab 36 Вт·год/12 Вт."
+      ],
+      "locators": [
+        "ups-description.txt:51 energy; 72–73 «до» loads;75 6–8 hours; ups-m1550.txt technical rows for DC/USB-C and total 35 W."
+      ],
+      "printed_source_note": "<b>[5]</b> M1550-C: DOM опису 10.09, 10:15:33 UTC. 6 × 3,7 × 2,6; споживання пристроїв «до». Фігура t=E/P — власний умовний розрахунок. <link href=\"https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah\"><u>Картка</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah"
+      ]
+    },
+    "NGGroup:6": {
+      "report": "NGGroup",
+      "citation_number": 6,
+      "status": "PARTIAL_PRIMARY_IMAGE_AND_SECONDARY_DOCUMENT_REVIEW",
+      "primary_files": [
+        "evidence/recovered_sources/nggroup-docs-20260910/ng-xpon-manual.jpg",
+        "evidence/recovered_sources/nggroup-docs-20260910/browser-observations.json"
+      ],
+      "secondary": [
+        {
+          "file": "reports/baseline/NGGroup_Огляд.pdf",
+          "pages": [
+            7
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "NGGroup",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Збережені кадри не є повним 10-сторінковим PDF. Повний зміст інструкції переказано за попереднім оглядом; апаратної перевірки немає."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[6]</b> XPON: повний зміст десятисторінкової інструкції описаний у попередньому огляді; збережено кадри, не весь первинний файл. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf\"><u>Інструкція</u></link> Додаткова текстова звірка вебпредставлення десяти сторінок — 08.10.2026, за редакційним дослідженням; без отримання PDF та повного візуального перегляду.",
+      "external_urls": [
+        "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf"
+      ],
+      "editorial_delta": {
+        "source": "evidence/editorial-apple-integration/input/Perspektyva_Editorial_Apple_Pack/research/sources.json",
+        "status": "Provided text-only web reading of ten pages,08.10.2026",
+        "raw_pdf": false,
+        "new_visual_acceptance": false,
+        "hardware_test": false
+      }
+    },
+    "NGGroup:7": {
+      "report": "NGGroup",
+      "citation_number": 7,
+      "status": "MIXED_PRIMARY_LIST_AND_SECONDARY_PDF_CONTENT",
+      "primary_files": [
+        "evidence/recovered_sources/nggroup-docs-20260910/ng-documentation.record.json",
+        "evidence/recovered_sources/nggroup-20260910/ups-ng1550-docs.txt",
+        "evidence/recovered_sources/nggroup-20260910/ng1550-manual.jpg"
+      ],
+      "secondary": [
+        {
+          "file": "reports/baseline/NGGroup_Огляд.pdf",
+          "pages": [
+            7
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "NGGroup",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Підпис 13.16.2025 — збережений перелік; внутрішня дата 13.06.2025 — вторинний опис. Тип усіх частин комплекту NG POWER — за попереднім аналізом; кадр першої сторінки не підтверджує читання всіх сторінок.",
+        "Не правовий висновок про поставку чи відсутність застосовного документа."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[7]</b> Перелік документів 10.09 підтверджує підпис 13.16.2025. Внутрішні дати й тип комплектів — за аналізом PDF у попередньому огляді. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf\"><u>Кабель</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf\"><u>NG POWER</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf",
+        "https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf"
+      ]
+    },
+    "NGGroup:8": {
+      "report": "NGGroup",
+      "citation_number": 8,
+      "status": "INHERITED_SECONDARY_PDF_ABSENT",
+      "primary_files": [],
+      "secondary": [
+        {
+          "file": "reports/baseline/NGGroup_Огляд.pdf",
+          "pages": [
+            8,
+            14
+          ],
+          "evidence_kind": "secondary_report",
+          "reported_observation_date": "2026-09-28",
+          "limit": "Читання попереднього звіту не є повторним спостереженням; URL у ньому не відтворює історичного стану.",
+          "document_identity": "NGGroup",
+          "date_interpretation": "Declared observation slice in the named control report; not the PDF creation date.",
+          "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+        }
+      ],
+      "limits": [
+        "Повних первинних CU-8.pdf/CCAG.pdf немає. 30.10.2024, Pass, 87,7/16,1 м — за попереднім аналізом; відтворено лише фрагмент CU-8.",
+        "Результат конкретного зразка/режиму не є властивістю всіх партій, довжин чи доказом 1 Гбіт/с на 180 м."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[8]</b> CU-8 / CCAG: 30.10.2024, 87,7 / 16,1 м — за попереднім оглядом. Збережено фрагмент CU-8, повних первинних звітів немає. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf\"><u>CU-8</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf\"><u>CCAG</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf",
+        "https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf"
+      ]
+    },
+    "NGGroup:9": {
+      "report": "NGGroup",
+      "citation_number": 9,
+      "status": "PRIMARY_SAVED_FORM_AND_DISTINCT_HISTORICAL_HTML",
+      "primary_files": [
+        "evidence/recovered_sources/nggroup-20260910/ups-consultation.txt",
+        "evidence/recovered_sources/nggroup-20260910/ups-consultation.jpg",
+        "evidence/recovered_sources/nggroup-20260910/evidence.json",
+        "evidence/recovered_sources/static-20260909/nggroup-ups-description-rendered.html",
+        "evidence/recovered_sources/static-20260909/capture-metadata.json",
+        "evidence/recovered_sources/nggroup-docs-20260910/ng-partneram.record.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Видимої назви немає у формі 10.09; hidden product без value — HTML 09.09. Це різні стани. Поле могло змінитися пізнішим JavaScript.",
+        "Форму не надсилали; підготовлений submit-payload, CRM та отримання менеджером невідомі. Партнерська пропозиція не вимірює виконання обіцянок."
+      ],
+      "locators": [
+        "ups-consultation.txt:142–155; HTML:825–829."
+      ],
+      "printed_source_note": "<b>[9]</b> Видима форма M1550-C: DOM/кадр 10.09; hidden product: HTML 09.09. Партнерська сторінка — запис 10.09. Форму не надсилали. <link href=\"https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah\"><u>Модель</u></link> · <link href=\"https://nggroup.ua/partneram\"><u>Партнерам</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+        "https://nggroup.ua/partneram"
+      ]
+    },
+    "NGGroup:10": {
+      "report": "NGGroup",
+      "citation_number": 10,
+      "status": "PRIMARY_PUBLIC_SERVICE_TEXT",
+      "primary_files": [
+        "evidence/recovered_sources/nggroup-docs-20260910/ng-service.record.json",
+        "evidence/recovered_sources/nggroup-docs-20260910/browser-observations.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "Публічні умови, не реальна швидкість/якість ремонту. До 14 днів та 2 тижні–3 місяці мають різні умови; не зводити до єдиного строку."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[10]</b> Сервіс: збережений видимий зміст 10.09; фактичні ремонти не перевіряли. <link href=\"https://nggroup.ua/service\"><u>Сервіс</u></link> · <link href=\"https://nggroup.ua/warranty\"><u>Гарантія</u></link>",
+      "external_urls": [
+        "https://nggroup.ua/service",
+        "https://nggroup.ua/warranty"
+      ]
+    },
+    "NGGroup:11": {
+      "report": "NGGroup",
+      "citation_number": 11,
+      "status": "PRESERVED_COMPETITOR_CAPTURE",
+      "primary_files": [
+        "evidence/competitors/deps-foxgate.json",
+        "evidence/competitors/foxgate-10km.json",
+        "evidence/competitors/deps-quattro.json",
+        "evidence/competitors/quattro-labeled-multiplus.json",
+        "evidence/competitors/quattro-correct.json",
+        "evidence/competitors/deps-repair.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "04.10.2026: сторінки й текст PDF, не візуальний PDF-аудит; Quattro-II/MultiPlus-II — конкретна пара посилань зі збереженим правильним сусіднім документом.",
+        "Пошук ремонту за реальним кодом і фактичний сервіс не перевіряли."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[11]</b> DEPS: сторінки й текст PDF 04.10.2026. Quattro-II та помилково підписаний MultiPlus-II — окремі файли у протоколі. <link href=\"https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html\"><u>Quattro-II</u></link> · <link href=\"https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html\"><u>FoxGate</u></link> · <link href=\"https://deps.ua/ua/service-center/check-order-status.html\"><u>Ремонт</u></link>",
+      "external_urls": [
+        "https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html",
+        "https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html",
+        "https://deps.ua/ua/service-center/check-order-status.html"
+      ]
+    },
+    "NGGroup:12": {
+      "report": "NGGroup",
+      "citation_number": 12,
+      "status": "PRESERVED_COMPETITOR_CAPTURE",
+      "primary_files": [
+        "evidence/competitors/romsat-price-panel.json",
+        "evidence/competitors/romsat-partnership.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "04.10.2026: видима форма моделі/кількості й партнерські умови. Без надсилання й перевірки внутрішнього процесу."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[12]</b> ROMSAT: форма Optolink 04.10, партнерські умови; без надсилання чи перевірки закритого процесу. <link href=\"https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/\"><u>Optolink</u></link> · <link href=\"https://romsat.ua/company/partnership.php\"><u>Партнерство</u></link>",
+      "external_urls": [
+        "https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/",
+        "https://romsat.ua/company/partnership.php"
+      ]
+    },
+    "NGGroup:13": {
+      "report": "NGGroup",
+      "citation_number": 13,
+      "status": "PRIMARY_HISTORICAL_RENDERED_HTML",
+      "primary_files": [
+        "evidence/recovered_sources/static-20260909/nggroup-ups-description-rendered.html",
+        "evidence/recovered_sources/static-20260909/capture-metadata.json"
+      ],
+      "secondary": [],
+      "limits": [
+        "09.09.2026 19:48:20.165 UTC: product:price:amount=1 — Open Graph, не Google Offer чи підтверджена ціна. Зовнішнє відображення та індексація не встановлені."
+      ],
+      "locators": [
+        "meta[property=\"product:price:amount\"]"
+      ],
+      "printed_source_note": "<b>[13]</b> HTML M1550-C від 09.09.2026 19:48:20.165 UTC: Open Graph amount=1. Зовнішнє відображення й реальну індексацію не перевіряли.",
+      "external_urls": []
+    },
+    "NGGroup:14": {
+      "report": "NGGroup",
+      "citation_number": 14,
+      "status": "OFFICIAL_METHOD_REFERENCE",
+      "primary_files": [],
+      "secondary": [],
+      "limits": [
+        "Методична документація Google; не доказ трафіку/індексації NG. Локального знімка немає; у цьому підпроході мережеве читання не виконувалось."
+      ],
+      "locators": [],
+      "printed_source_note": "<b>[14]</b> Google: методика обходу й індексації, не доказ трафіку NG. <link href=\"https://developers.google.com/search/docs/crawling-indexing\"><u>Документація</u></link>",
+      "external_urls": [
+        "https://developers.google.com/search/docs/crawling-indexing"
+      ]
+    },
+    "ASP24:16": {
+      "report": "ASP24",
+      "citation_number": 16,
+      "status": "OFFICIAL_PRODUCT_PAGE_TEXT_REPRESENTATIONS",
+      "primary_files": [],
+      "evidence_record": "evidence/editorial-decision-20261009/integration.json",
+      "external_urls": [
+        "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/",
+        "https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/"
+      ],
+      "text_readings": [
+        {
+          "id": "W6",
+          "url": "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/",
+          "method": "Search-service text representation search/open",
+          "read_at_utc": "2026-10-08T22:21:20.479412+00:00",
+          "source_capture_date": "not independently established; service said today at open",
+          "object": "M1550-C device",
+          "sku": "УТП002164",
+          "locator": "open text heading line142; article line146",
+          "retrieval_ref": "turn8view0",
+          "evidence_scope": "Published identity in retrieved text; not raw HTTP/interactive acceptance"
+        },
+        {
+          "id": "W7",
+          "url": "https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/",
+          "method": "Search-service text representation search/open/find",
+          "read_at_utc": "2026-10-08T22:21:20.479412+00:00",
+          "source_capture_date": "not independently established; service labels differed between open (last month) and find (today)",
+          "object": "battery for M1550-C",
+          "sku": "УТП002165",
+          "locator": "description line82; heading line95; article line99",
+          "retrieval_ref": "turn9view0",
+          "evidence_scope": "Published identity in retrieved text; not raw HTTP/interactive acceptance"
+        }
+      ],
+      "printed_source_note": "<b>[16]</b> Пристрій M1550-C — УТП002164; акумулятор до нього — УТП002165. Текстові подання карток прочитано 09.10.2026; можливий кеш. Ціни, наявність і виконання пошуку не перевіряли. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Пристрій</u></link> · <link href=\"https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Акумулятор</u></link>",
+      "limits": [
+        "Possibly cached text representations; no raw HTTP or live button test.",
+        "No current price/stock, Google visibility, demand frequency or equivalence to NG-1550-6 inferred."
+      ]
+    }
+  },
+  "major_claims": [
+    {
+      "id": "historical-technical-rows",
+      "pages": {
+        "ASP24": [
+          5
+        ]
+      },
+      "sources": [
+        "ASP24:3"
+      ],
+      "data": [
+        {
+          "sku": "MED001988",
+          "model": "Reyee RG-EW1200G Pro",
+          "before": {
+            "count": 16,
+            "capture_utc": "2026-04-19T14:58:42Z",
+            "file": "evidence/recovered_sources/history-v5/parsed/router-20260419145842.json"
+          },
+          "after": {
+            "count": 9,
+            "capture_utc": "2026-05-17T19:01:12Z",
+            "file": "evidence/recovered_sources/history-v5/parsed/router-20260517190112.json"
+          }
+        },
+        {
+          "sku": "MED005534",
+          "model": "NG PON xPON Stick SFP",
+          "before": {
+            "count": 14,
+            "capture_utc": "2025-12-08T11:01:10Z",
+            "file": "evidence/recovered_sources/history-v5/parsed/xpon-20251208110110.json"
+          },
+          "after": {
+            "count": 0,
+            "capture_utc": "2026-06-11T12:56:49Z",
+            "file": "evidence/recovered_sources/history-v5/parsed/xpon-20260611125649.json"
+          }
+        },
+        {
+          "sku": "MED000715",
+          "model": "NG LAN UTP CAT-5e Cu 4*2*0.5, 305m",
+          "before": {
+            "count": 30,
+            "capture_utc": "2026-02-08T23:45:50Z",
+            "file": "evidence/recovered_sources/history-v5/parsed/copper-20260208234550.json"
+          },
+          "after": {
+            "count": 0,
+            "capture_utc": "2026-06-11T13:26:57Z",
+            "file": "evidence/recovered_sources/history-v5/parsed/copper-20260611132657.json"
+          }
+        }
+      ]
+    },
+    {
+      "id": "filter-routes",
+      "pages": {
+        "ASP24": [
+          4
+        ],
+        "NGGroup": [
+          3
+        ]
+      },
+      "sources": [
+        "ASP24:1",
+        "NGGroup:1"
+      ],
+      "data": {
+        "ASP24": [
+          9,
+          4,
+          2
+        ],
+        "ASP24_conditions": [
+          "Уся категорія",
+          "Cu",
+          "Cu + У приміщеннях"
+        ],
+        "NGGroup": [
+          10,
+          4,
+          2,
+          1,
+          10
+        ],
+        "NGGroup_conditions": [
+          "Уся категорія",
+          "Cu",
+          "Cu + Ззовні",
+          "Cu + Ззовні + 4 пари",
+          "Повернення через крихту Вита пара"
+        ]
+      },
+      "capture_date": "2026-09-10",
+      "method": "ASP24: count Артикул labels; NG: unique /nglan-utp- product URLs; not conversion or recall."
+    },
+    {
+      "id": "nominal-energy-and-autonomy",
+      "pages": {
+        "NGGroup": [
+          6
+        ]
+      },
+      "sources": [
+        "NGGroup:5"
+      ],
+      "formula": "E=6*3.7*2.6=57.72 Wh; t=E/P",
+      "results": {
+        "13_W_hours": 4.44,
+        "15_W_hours": 3.848,
+        "DC_12V_2A_W": 24,
+        "USBC_12V_1_5A_W": 18,
+        "total_limit_W": 35
+      },
+      "loads_are": "Conditional constant-load scenarios based on source wording «до», not measured means or adapter nameplates."
+    },
+    {
+      "id": "ng-faq-equality",
+      "pages": {
+        "NGGroup": [
+          11
+        ]
+      },
+      "sources": [
+        "NGGroup:2"
+      ],
+      "question_count": 9,
+      "normalized_body_characters": 5950,
+      "normalized_body_sha256": "a2c602161992fd4b0a988d14557fbae97967d29892a5a5ea55e2fc3ba38ba79a",
+      "verified_2026_10_08": true,
+      "limit": "Text equality does not establish current applicability or actual service."
+    },
+    {
+      "id": "consultation-levels",
+      "pages": {
+        "NGGroup": [
+          9,
+          13
+        ]
+      },
+      "sources": [
+        "NGGroup:9"
+      ],
+      "distinctions": [
+        "Visible model absent in saved modal on 10.09",
+        "hidden product has no value attribute in different HTML 09.09",
+        "submit-time value and actual receipt NOT TESTED"
+      ]
+    },
+    {
+      "id": "ga4-scope",
+      "pages": {
+        "ASP24": [
+          11
+        ]
+      },
+      "sources": [
+        "ASP24:13",
+        "ASP24:15"
+      ],
+      "capture_utc": "2026-09-09T19:48:19.976Z",
+      "value_source": "model.Cart.total.sum",
+      "items_source": "model.article, model.quantity, model.price",
+      "runtime_status": "NOT_TESTED",
+      "double_delivery_status": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "demo-units-synthetic",
+      "pages": {
+        "ASP24": [
+          7
+        ]
+      },
+      "sources": [],
+      "fixture_files": [
+        "data.js",
+        "evidence/figure_data/demo_facts.json"
+      ],
+      "calculations": [
+        "3*2190=6570 UAH",
+        "2*305=610 m",
+        "2*5190=10380 UAH"
+      ],
+      "status": "SYNTHETIC_ARITHMETIC",
+      "limit": "Does not establish real ASP24 price, corrected cart behavior or manufacturer data."
+    },
+    {
+      "id": "mobile-recommendations",
+      "pages": {
+        "ASP24": [
+          9
+        ],
+        "NGGroup": [
+          10
+        ]
+      },
+      "status": "RECOMMENDATION_ONLY",
+      "source": "evidence/editorial-apple-integration/input/editorial/APPLE_REPORT_INSERTS_UA.md",
+      "limit": "Not a new real-company or physical-phone test"
+    },
+    {
+      "id": "m1550-device-vs-battery",
+      "pages": {
+        "ASP24": [
+          11
+        ]
+      },
+      "sources": [
+        "ASP24:16"
+      ],
+      "claim": "Device M1550-C and its battery have distinct offer articles УТП002164 and УТП002165 in retrieved official page text.",
+      "recommendation": "Distinguish offers in title/description; measure search demand separately.",
+      "not_inferred": [
+        "current price or stock",
+        "interactive search PASS",
+        "Google indexing or positions"
+      ]
+    }
+  ],
+  "page_source_map": [
+    {
+      "report": "ASP24",
+      "pdf_page": 2,
+      "html_anchor": "asp24-02",
+      "section": "Роль сайту",
+      "title": "Від знайденої моделі до правильного рядка кошика",
+      "source_ids": [
+        "ASP24:1",
+        "ASP24:2",
+        "ASP24:3",
+        "ASP24:4",
+        "ASP24:5",
+        "ASP24:6",
+        "ASP24:7"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 3,
+      "html_anchor": "asp24-03",
+      "section": "Пошук",
+      "title": "Знайти модель і уточнити потребу",
+      "source_ids": [
+        "ASP24:1"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 4,
+      "html_anchor": "asp24-04",
+      "section": "Відбір",
+      "title": "Чи залишає фільтр усі придатні моделі",
+      "source_ids": [
+        "ASP24:1"
+      ],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/ASP24-p4-0.png",
+          "caption": "Фото MED000418 у попередньому огляді: маркування «20LC BIDI». Воно підтверджує зміст зображення, а не виконання кожної складської одиниці. [1]",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 5,
+      "html_anchor": "asp24-05",
+      "section": "Порівняння",
+      "title": "Зміст таблиці важливіший за її наявність",
+      "source_ids": [
+        "ASP24:2",
+        "ASP24:3"
+      ],
+      "figures": [
+        "history"
+      ],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 6,
+      "html_anchor": "asp24-06",
+      "section": "Товарна інформація",
+      "title": "Фото й опис не мають суперечити одне одному",
+      "source_ids": [
+        "ASP24:4"
+      ],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/ASP24-p4-1.png",
+          "caption": "Фрагмент опублікованого фото з попереднього огляду. Зліва направо: 5 В, 5 В, 9 В, 12 В, 12 В. Зображення не ретушовано. [4]",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 7,
+      "html_anchor": "asp24-07",
+      "section": "Кошик",
+      "title": "Артикул, одиниця, кількість і підсумок",
+      "source_ids": [
+        "ASP24:5",
+        "ASP24:6"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 8,
+      "html_anchor": "asp24-08",
+      "section": "Збереження роботи",
+      "title": "Зберегти товар і задум закупівлі",
+      "source_ids": [
+        "ASP24:7",
+        "ASP24:8",
+        "ASP24:9"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 9,
+      "html_anchor": "asp24-09",
+      "section": "Вибір на телефоні",
+      "title": "Порівняти пару й зберегти весь добір",
+      "source_ids": [],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 10,
+      "html_anchor": "asp24-10",
+      "section": "Конкурентний контекст",
+      "title": "Від технічного добору до закупівлі",
+      "source_ids": [
+        "ASP24:10",
+        "ASP24:11"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 11,
+      "html_anchor": "asp24-11",
+      "section": "Видимість і вимірювання",
+      "title": "Точний товар у пошуку й аналітиці",
+      "source_ids": [
+        "ASP24:12",
+        "ASP24:13",
+        "ASP24:14",
+        "ASP24:15",
+        "ASP24:16"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 12,
+      "html_anchor": "asp24-12",
+      "section": "Висновок",
+      "title": "Що варто змінити насамперед",
+      "source_ids": [],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/compare-report-crop.png",
+          "caption": "Порівняння в демо: дві з трьох колонок і кілька параметрів. Ілюстрація подання на умовних даних, не доказ роботи переходів.",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 13,
+      "html_anchor": "asp24-13",
+      "section": "Джерела",
+      "title": "Джерела та межі доказів",
+      "source_ids": [
+        "ASP24:1",
+        "ASP24:2",
+        "ASP24:3",
+        "ASP24:4",
+        "ASP24:5",
+        "ASP24:6",
+        "ASP24:7",
+        "ASP24:8"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "ASP24",
+      "pdf_page": 14,
+      "html_anchor": "asp24-14",
+      "section": "Джерела",
+      "title": "Джерела та межі доказів · продовження",
+      "source_ids": [
+        "ASP24:9",
+        "ASP24:10",
+        "ASP24:11",
+        "ASP24:12",
+        "ASP24:13",
+        "ASP24:14",
+        "ASP24:15",
+        "ASP24:16"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 2,
+      "html_anchor": "nggroup-02",
+      "section": "Роль сайту",
+      "title": "Вибрати виконання й знайти його документацію",
+      "source_ids": [
+        "NGGroup:1",
+        "NGGroup:3",
+        "NGGroup:4",
+        "NGGroup:5",
+        "NGGroup:6",
+        "NGGroup:7",
+        "NGGroup:8",
+        "NGGroup:9",
+        "NGGroup:10"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 3,
+      "html_anchor": "nggroup-03",
+      "section": "Пошук і відбір",
+      "title": "Від позначення моделі до умов використання",
+      "source_ids": [
+        "NGGroup:1",
+        "NGGroup:2"
+      ],
+      "figures": [
+        "filter"
+      ],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 4,
+      "html_anchor": "nggroup-04",
+      "section": "Відмінності моделей",
+      "title": "Дільники: технологія і фізичне виконання",
+      "source_ids": [
+        "NGGroup:1",
+        "NGGroup:3"
+      ],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/NGGroup-p4-0.jpg",
+          "caption": "Ілюстрація касетного виконання зі специфікації, відтворена з попереднього огляду. Це не фотографія трьох відібраних товарів. [3]",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 5,
+      "html_anchor": "nggroup-05",
+      "section": "Точність інформації",
+      "title": "Якому виконанню відповідає характеристика",
+      "source_ids": [
+        "NGGroup:4"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 6,
+      "html_anchor": "nggroup-06",
+      "section": "Умови застосування",
+      "title": "Потужність виходу та час роботи — різні параметри",
+      "source_ids": [
+        "NGGroup:5"
+      ],
+      "figures": [
+        "autonomy"
+      ],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 7,
+      "html_anchor": "nggroup-07",
+      "section": "Документація",
+      "title": "Назва файла має пояснювати його призначення",
+      "source_ids": [
+        "NGGroup:6",
+        "NGGroup:7"
+      ],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/NGGroup-p4-2.png",
+          "caption": "Фрагмент с. 2 інструкції з попереднього огляду. Це запис документа; апаратної перевірки сумісності не проводили. [6]",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 8,
+      "html_anchor": "nggroup-08",
+      "section": "Докази характеристик",
+      "title": "Що саме підтверджує випробування",
+      "source_ids": [
+        "NGGroup:8"
+      ],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/NGGroup-p4-3-crop.png",
+          "caption": "Фрагмент CU-8 із попереднього огляду: схема пар, 87,7 м і результат Pass. Зображено ліву частину; повний файл не відновлено. [8]",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 9,
+      "html_anchor": "nggroup-09",
+      "section": "Консультація й партнерство",
+      "title": "Консультація починається з назви моделі",
+      "source_ids": [
+        "NGGroup:9"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 10,
+      "html_anchor": "nggroup-10",
+      "section": "Документ на телефоні",
+      "title": "Прочитати документ і повернутися до моделі",
+      "source_ids": [],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 11,
+      "html_anchor": "nggroup-11",
+      "section": "Сервіс",
+      "title": "Що підготувати до звернення в сервіс",
+      "source_ids": [
+        "NGGroup:2",
+        "NGGroup:10"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 12,
+      "html_anchor": "nggroup-12",
+      "section": "Конкурентний контекст",
+      "title": "Від підпису документа до його застосовності",
+      "source_ids": [
+        "NGGroup:11",
+        "NGGroup:12"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 13,
+      "html_anchor": "nggroup-13",
+      "section": "Видимість і продовження",
+      "title": "Та сама модель після кожного переходу",
+      "source_ids": [
+        "NGGroup:9",
+        "NGGroup:13",
+        "NGGroup:14"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 14,
+      "html_anchor": "nggroup-14",
+      "section": "Висновок",
+      "title": "Пов’язати характеристику, документ і консультацію",
+      "source_ids": [],
+      "figures": [],
+      "images": [
+        {
+          "file": "reports/assets/document-report-crop.png",
+          "caption": "Демонстраційний технічний опис DEMO-U02, виконання D1. Ілюстрація подання, не документ реального виробу й не доказ роботи переходів.",
+          "crop": null
+        }
+      ],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 15,
+      "html_anchor": "nggroup-15",
+      "section": "Джерела",
+      "title": "Джерела та межі доказів",
+      "source_ids": [
+        "NGGroup:1",
+        "NGGroup:2",
+        "NGGroup:3",
+        "NGGroup:4",
+        "NGGroup:5",
+        "NGGroup:6",
+        "NGGroup:7"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    },
+    {
+      "report": "NGGroup",
+      "pdf_page": 16,
+      "html_anchor": "nggroup-16",
+      "section": "Джерела",
+      "title": "Джерела та межі доказів · продовження",
+      "source_ids": [
+        "NGGroup:8",
+        "NGGroup:9",
+        "NGGroup:10",
+        "NGGroup:11",
+        "NGGroup:12",
+        "NGGroup:13",
+        "NGGroup:14"
+      ],
+      "figures": [],
+      "images": [],
+      "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
+    }
+  ],
+  "file_catalog": {
+    "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt",
+      "bytes": 46154,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:13:53.179Z",
+      "source_url": "https://asp24.ua/",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-search-exact.txt",
+      "original_recorded_sha256": "866828da416c4dd9034b937bea06f6a08b5947ee35334db1f228d4c627087357",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt",
+      "bytes": 25288,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:14:58.232Z",
+      "source_url": "https://asp24.ua/katalog/search/?q=%D0%B4%D0%BB%D1%8F+%D1%80%D0%BE%D1%83%D1%82%D0%B5%D1%80%D0%B0",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-search-kp1.txt",
+      "original_recorded_sha256": "f63506cc3b901ccbd6758f18634921ab23e6a7a6174c774bbefd0155bf3e266b",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-search-needs-result.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-search-needs-result.txt",
+      "bytes": 22247,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:14:53.724Z",
+      "source_url": "https://asp24.ua/katalog/search/?q=%D0%B4%D0%BB%D1%8F+%D1%80%D0%BE%D1%83%D1%82%D0%B5%D1%80%D0%B0",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-search-needs-result.txt",
+      "original_recorded_sha256": "e4bcdba3db11e91248963196d5e32c9400f72cd73f5d9a589b4edda7142410fe",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-cable-category.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-cable-category.txt",
+      "bytes": 14246,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:16:29.440Z",
+      "source_url": "https://asp24.ua/pasivne-obladnannja/kabelna-produkcija/kabel-vita-para/",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-cable-category.txt",
+      "original_recorded_sha256": "ce1161a277e5caf3ad995526ade49ae8b8006d6a869c23f12e18cde401389e6b",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-cable-cu-settled.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-cable-cu-settled.txt",
+      "bytes": 15007,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:16:44.152Z",
+      "source_url": "https://asp24.ua/pasivne-obladnannja/kabelna-produkcija/kabel-vita-para/filter/materalProvdnika=1/",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-cable-cu-settled.txt",
+      "original_recorded_sha256": "f5e2371800ff44ea386e3ab78e7f891c346c3c77ab3bd7de3260206248a961d2",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-cable-cu-indoor.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-cable-cu-indoor.txt",
+      "bytes": 14327,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:16:53.794Z",
+      "source_url": "https://asp24.ua/pasivne-obladnannja/kabelna-produkcija/kabel-vita-para/filter/materalProvdnika=1;zastosuvannnja=1/",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-cable-cu-indoor.txt",
+      "original_recorded_sha256": "55004b28ca4fc025885531c81fd7797514d39046af1123f28bf7469542d8f3c5",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/evidence.json": {
+      "path": "evidence/recovered_sources/asp24-20260910/evidence.json",
+      "bytes": 12010,
+      "evidence_kind": "capture_registry",
+      "original_capture_date": "2026-09-10",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/evidence.json",
+      "original_recorded_sha256": "bbc72be77e1728ea815a8ed5060f2b074056a3f2d93d7e2e64b9c6496c6603e3",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "reports/baseline/ASP24_Огляд.pdf": {
+      "path": "reports/baseline/ASP24_Огляд.pdf",
+      "bytes": 687387,
+      "original_recorded_sha256": "924f98468d0a3207a52ccc8c25f778bdbce9ff1ef55dad865853692139eb2ebb",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-compare-visible.txt": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-compare-visible.txt",
+      "bytes": 24913,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:15:34.175Z",
+      "source_url": "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-marsriva-mini-ups-kp1-plus-16000-mah/",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-compare-visible.txt",
+      "original_recorded_sha256": "dc69a83cc67779a16dec20337d933f52b3087359c184bb2488a5d417298a1b7e",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/asp24-20260910/asp-compare-visible.jpg": {
+      "path": "evidence/recovered_sources/asp24-20260910/asp-compare-visible.jpg",
+      "bytes": 45898,
+      "evidence_kind": "browser_screenshot",
+      "original_capture_date": "2026-09-10T10:15:34.175Z",
+      "source_url": "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-marsriva-mini-ups-kp1-plus-16000-mah/",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/asp24/asp-compare-visible.jpg",
+      "original_recorded_sha256": "ab6ce498657c28985a97b0f6387e307278f766a095733218239e6ad3db17baeb",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/router-20260419145842.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/router-20260419145842.json",
+      "bytes": 52039,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260419145842",
+      "source_url": "https://asp24.ua/bezdrotovij-marshrutizator-reyee-rg-ew1200g-pro.html",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/router-20260419145842.json",
+      "original_recorded_sha256": "96e432e1df569b3dd332872bbec7bb7227bd3ca4022fe0d534867462fd6ea1f4",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/router-20260517190112.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/router-20260517190112.json",
+      "bytes": 46048,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260517190112",
+      "source_url": "https://asp24.ua/bezdrotovij-marshrutizator-reyee-rg-ew1200g-pro/",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/router-20260517190112.json",
+      "original_recorded_sha256": "b2bb102ec38822c8cc9f037abe48adce91641a242280bc7429d2a9d377e9ae87",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/xpon-20251208110110.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/xpon-20251208110110.json",
+      "bytes": 60393,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20251208110110",
+      "source_url": "https://asp24.ua/abonents-kij-terminal-onu-ng-pon-xpon-stick-sfp.html",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/xpon-20251208110110.json",
+      "original_recorded_sha256": "b15461e476c86937fbfbe0b52f41d9923824c446a0690298f44311362dd3d84d",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/xpon-20260611125649.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/xpon-20260611125649.json",
+      "bytes": 52726,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260611125649",
+      "source_url": "https://asp24.ua/abonents-kij-terminal-onu-ng-pon-xpon-stick-sfp/",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/xpon-20260611125649.json",
+      "original_recorded_sha256": "4d791d1a1cd440b89c42604fdc6bd7f5a2ee6776c1cf9c7b29283a0a5ac2e028",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/copper-20260208234550.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/copper-20260208234550.json",
+      "bytes": 59918,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260208234550",
+      "source_url": "https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new.html",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/copper-20260208234550.json",
+      "original_recorded_sha256": "8868c8687c23c760746a300f1c6875ca0f965f23dbd463c08579f6a73a44381e",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/copper-20260611132657.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/copper-20260611132657.json",
+      "bytes": 44713,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260611132657",
+      "source_url": "https://asp24.ua/vita-para-midna-vnutrishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new/",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/copper-20260611132657.json",
+      "original_recorded_sha256": "4a62d377692b91f3ad9237f74f4881cc048d5a99301705572f4b4349429a9d9d",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/retrievals.json": {
+      "path": "evidence/recovered_sources/history-v5/retrievals.json",
+      "bytes": 15967,
+      "evidence_kind": "historical_analysis_or_registry",
+      "original_capture_date": "2026-09-10",
+      "claim_scope_ua": "Реєстр восьми історичних пар і меж їх тлумачення.",
+      "limitations_ua": "Вісім пар сторінок та вісім записів висновків — різні одиниці; не незалежна суцільна вибірка.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/retrievals.json",
+      "original_recorded_sha256": "d77e0b2f966d0cf4054ea404992b72488798f04d2acf5bbfc4b6549ec3115de9",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/recompute_source_measures.py": {
+      "path": "evidence/recovered_sources/recompute_source_measures.py",
+      "bytes": 9441,
+      "original_recorded_sha256": "3493c318dec2756025978b10ea116945aed752aa9050bfe28653048e3a7b029c",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/provenance.json": {
+      "path": "evidence/recovered_sources/provenance.json",
+      "bytes": 74547,
+      "original_recorded_sha256": "857183d6bdf1163fcd7ed21eadc2d048ad826de3a77e63101bd2169a2b67732c",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-20261008/source-recomputation.json": {
+      "path": "evidence/editorial-20261008/source-recomputation.json",
+      "bytes": 63784,
+      "original_recorded_sha256": "61306f4882b34c9a909a49d2092fdf05dc4a6bf67b77f450f2a3536c4e2be0fd",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/figure_data/technical_rows.csv": {
+      "path": "evidence/figure_data/technical_rows.csv",
+      "bytes": 1877,
+      "evidence_kind": "source_data_or_generator",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "eccff9876f97279954ca817bc8d0470094ae0ac723e955e6c047dc1598215a2d",
+      "public_file_sha256": "eccff9876f97279954ca817bc8d0470094ae0ac723e955e6c047dc1598215a2d",
+      "public_bytes": 1877,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "evidence/recovered_sources/history-v5/parsed/warranty-20260419141254.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/warranty-20260419141254.json",
+      "bytes": 34545,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260419141254",
+      "source_url": "https://asp24.ua/warranty",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/warranty-20260419141254.json",
+      "original_recorded_sha256": "e94734f8102dc715593e131c328ef786248ecc9e186d6146ab0c86899641e144",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/warranty-20260517184724.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/warranty-20260517184724.json",
+      "bytes": 36284,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260517184724",
+      "source_url": "https://asp24.ua/warranty/",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/warranty-20260517184724.json",
+      "original_recorded_sha256": "d21d2b75b9001c2547b1556ba4a993636e10a37a634887dc95c0bb819cb1d061",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/public-comparisons.json": {
+      "path": "evidence/recovered_sources/history-v5/public-comparisons.json",
+      "bytes": 18042,
+      "evidence_kind": "historical_analysis_or_registry",
+      "original_capture_date": "2026-09-10",
+      "claim_scope_ua": "Реєстр восьми історичних пар і меж їх тлумачення.",
+      "limitations_ua": "Вісім пар сторінок та вісім записів висновків — різні одиниці; не незалежна суцільна вибірка.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/public-comparisons.json",
+      "original_recorded_sha256": "ce58da640ee1d04bbbd3493a36b532e19d7c2803ade229c9850e0a8444dcb720",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/deps-foxgate.json": {
+      "path": "evidence/competitors/deps-foxgate.json",
+      "bytes": 146142,
+      "evidence_kind": "Firecrawl Scrape maxAge=0",
+      "original_capture_date": "2026-10-04T07:17:03.100Z",
+      "original_recorded_sha256": "bc46381ce851de4ecf76b16dbc2d0343f564c945d324068d1d5877e76f702169",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/foxgate-10km.json": {
+      "path": "evidence/competitors/foxgate-10km.json",
+      "bytes": 20680,
+      "evidence_kind": "Firecrawl PDF Scrape",
+      "original_capture_date": "2026-10-04T07:20:34.491Z",
+      "source_url": "https://deps.ua/downloads/Documentation/FoxGate/SFP_1SM_1550_1310nm_10_SC_LC.pdf",
+      "original_recorded_sha256": "79d0714ede6e4b6b0a582580bd00534ebbb504f5917dc17fc5a3f3af50cb4ea1",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/deps-search-20261007.json": {
+      "path": "evidence/competitors/deps-search-20261007.json",
+      "bytes": 6211,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-07T19:27:50.109Z",
+      "original_recorded_sha256": "37f89d4d78af548c9a3f754aa1f206f22c1c9696200aba5e72f86aff46f52cc6",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/deps-filter-result-20261007.json": {
+      "path": "evidence/competitors/deps-filter-result-20261007.json",
+      "bytes": 21892,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-07T19:27:11.844Z",
+      "original_recorded_sha256": "6a68fe87e2b1e5462add79b2009c6c68d9cf7ba003fafc3799b8cf510dfd1f87",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/deps-family-20261007.json": {
+      "path": "evidence/competitors/deps-family-20261007.json",
+      "bytes": 69841,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-07T19:29:36.258Z",
+      "original_recorded_sha256": "4096305ccd1b045a1fe9ecde61760cfccc96aa53fded2c95be1d2803aa8741da",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/romsat-price-panel.json": {
+      "path": "evidence/competitors/romsat-price-panel.json",
+      "bytes": 9565,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-04T07:20:38.844Z",
+      "source_url": "https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/",
+      "original_recorded_sha256": "a8e487e2bec67b917b2fa6538efd7def56fa4b0a46a1bb7f5dbaf7a979c19a41",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/romsat-search-20261007.json": {
+      "path": "evidence/competitors/romsat-search-20261007.json",
+      "bytes": 4494,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-07T19:25:13.591Z",
+      "original_recorded_sha256": "310ef7b263b12032b02ba974732c974c4e7d81c29e0af5d6876379e66c20fd84",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/romsat-favorites-result-20261007.json": {
+      "path": "evidence/competitors/romsat-favorites-result-20261007.json",
+      "bytes": 14082,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-07T19:28:30.010Z",
+      "original_recorded_sha256": "1129b93fcb51858c7b0de3ab6b4238931ed2f9a0a074e9f3b099294767f1eab7",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/romsat-shortlist-20261007.json": {
+      "path": "evidence/competitors/romsat-shortlist-20261007.json",
+      "bytes": 12666,
+      "evidence_kind": "Firecrawl Interact",
+      "original_capture_date": "2026-10-07T19:27:52.493Z",
+      "original_recorded_sha256": "ab6e3d85eec01b323be18c934a042466b48361606c1835b4842f20a225cdf11c",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/static-20260909/asp24-add-to-cart-handler.txt": {
+      "path": "evidence/recovered_sources/static-20260909/asp24-add-to-cart-handler.txt",
+      "bytes": 1365,
+      "evidence_kind": "exact_primary_byte_excerpt",
+      "original_capture_date": "2026-09-09T19:48:19.976Z",
+      "source_url": "https://asp24.ua/vita-para-midna-zovnishnja-ng-lan-utp-cat-5e-cu-4-2-0-5-305m-new/",
+      "claim_scope_ua": "Статично збережений обробник add_to_cart бере value з model.Cart.total.sum, а items формує з доданої моделі; є окремі гілки dataLayer.push та gtag.",
+      "limitations_ua": "Не runtime-виконання, не доставка мережевої події, не дубль GA4-звіту, не протокол 28.09. Повний файл не переноситься через непорожній GLOBAL_CSRF_TOKEN; незмінений оригінал доступний у handoff source archive.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!previous/ASP24-NGGroup-research-v3.zip!previous-v2/ASP24-NGGroup-research-v2/live/asp24-cable-product-rendered.html",
+      "original_recorded_sha256": "0d4dd0b95395d6a554594825ed75eba228fe60eef5489cbf062275a0b8caed53",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/static-20260909/capture-metadata.json": {
+      "path": "evidence/recovered_sources/static-20260909/capture-metadata.json",
+      "bytes": 2564,
+      "evidence_kind": "capture_metadata",
+      "original_capture_date": "2026-09-09",
+      "claim_scope_ua": "Час UTC, URL і спосіб зняття первинного rendered HTML; без заголовків cookie/session.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!previous/ASP24-NGGroup-research-v3.zip!previous-v2/ASP24-NGGroup-research-v2/live/capture-metadata.json",
+      "original_recorded_sha256": "1e8136013807e65ec09d67dbd1c0efc25714ccfefe90a5487cb3f97d49927a1d",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/search-m1550.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/search-m1550.txt",
+      "bytes": 24405,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:14:39.669Z",
+      "source_url": "https://nggroup.ua/catalogsearch/result/?q=M1550-C",
+      "claim_scope_ua": "Typed M1550-C in header and pressed Enter; 151 results exact model first.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/search-m1550.txt",
+      "original_recorded_sha256": "5fff39a1cde5b4aaeaa967262ded683c6596b8b2d6a7ebf10d1d1481611c17e3",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/search-full-model.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/search-full-model.txt",
+      "bytes": 34122,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:15:39.948Z",
+      "source_url": "https://nggroup.ua/catalogsearch/result/?q=NG+POWER+M1550-C",
+      "claim_scope_ua": "Full model query NG POWER M1550-C.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/search-full-model.txt",
+      "original_recorded_sha256": "b2167105791ed02913e8f40f9c42a5aed8a15a1d02f91c3eb58443fdd9bf2ba9",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/cable-before.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/cable-before.txt",
+      "bytes": 7742,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:17:00.645Z",
+      "source_url": "https://nggroup.ua/cable/twisted-pair",
+      "claim_scope_ua": "10 product cards before filtering, Cu and Al-Cu controls.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/cable-before.txt",
+      "original_recorded_sha256": "b0b3e1d4f16739a2577a5c346d2439eb924f9c7284518d070d43f4c2a3e7646f",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/cable-cu-success.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/cable-cu-success.txt",
+      "bytes": 5729,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:17:25.612Z",
+      "source_url": "https://nggroup.ua/cable/twisted-pair?a_ngg_twisted_pair_material=34",
+      "claim_scope_ua": "After loading finished: Cu checked, URL material=34, 4 Cu cards. Previous filter defect not reproduced.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/cable-cu-success.txt",
+      "original_recorded_sha256": "dd87203ad1e2b09885014833f3743d7b1e7d6cab8a59e5323a23624a0da8a77e",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/cable-cu-out.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/cable-cu-out.txt",
+      "bytes": 5168,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:17:34.633Z",
+      "source_url": "https://nggroup.ua/cable/twisted-pair?a_ngg_twisted_pair_application=37&a_ngg_twisted_pair_material=34",
+      "claim_scope_ua": "Combined Cu+outside filters: result state.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/cable-cu-out.txt",
+      "original_recorded_sha256": "354127e8a3c01c181058e489c095f143fab3ad065e0a097c2bca982ad6620144",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/cable-cu-out4.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/cable-cu-out4.txt",
+      "bytes": 5045,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:17:45.998Z",
+      "source_url": "https://nggroup.ua/cable/twisted-pair?a_ngg_twisted_pair_application=37&a_ngg_twisted_pair_material=34&a_ngg_twisted_pair_pairs=39",
+      "claim_scope_ua": "Combined Cu+outside+4 pairs yields single matching card.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/cable-cu-out4.txt",
+      "original_recorded_sha256": "d328c215af85c94a79ddc5c2ba3a4f29d1bc85f211cabf58778d45fa51a43293",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/cable-breadcrumb-return.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/cable-breadcrumb-return.txt",
+      "bytes": 7742,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:18:27.358Z",
+      "source_url": "https://nggroup.ua/cable/twisted-pair",
+      "claim_scope_ua": "Breadcrumb Вита пара returns unfiltered category rather than preserves selected Cu/outside/four pairs. Browser Back remains alternative not tested.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/cable-breadcrumb-return.txt",
+      "original_recorded_sha256": "b0b3e1d4f16739a2577a5c346d2439eb924f9c7284518d070d43f4c2a3e7646f",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/evidence.json": {
+      "path": "evidence/recovered_sources/nggroup-20260910/evidence.json",
+      "bytes": 8828,
+      "evidence_kind": "capture_registry",
+      "original_capture_date": "2026-09-10",
+      "claim_scope_ua": "Датований експертний браузерний прохід; конкретний збережений стан або його реєстр.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/evidence.json",
+      "original_recorded_sha256": "2ebcae08bcd0bd35387b06056a0b9582bf4a36f989c5f03f0ab902f8d24a1d97",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/figure_data/filter_paths.csv": {
+      "path": "evidence/figure_data/filter_paths.csv",
+      "bytes": 2562,
+      "original_recorded_sha256": "1555b92861117db9d649071f9c5ffde0bc8f21746db94551cb0236117179ffc0",
+      "public_file_sha256": "1555b92861117db9d649071f9c5ffde0bc8f21746db94551cb0236117179ffc0",
+      "public_bytes": 2562,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/baseline/NGGroup_Огляд.pdf": {
+      "path": "reports/baseline/NGGroup_Огляд.pdf",
+      "bytes": 460384,
+      "original_recorded_sha256": "660ac749a4e66d2ba73e59a14511448cfe0a6d6403f396972af57c2ca5996e64",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/ng-twisted-20220605165727.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/ng-twisted-20220605165727.json",
+      "bytes": 25494,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20220605165727",
+      "source_url": "https://nggroup.ua/cable/twisted-pair",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/ng-twisted-20220605165727.json",
+      "original_recorded_sha256": "a9a7161dcec4b48d461f1d4da6889debac36ae18fb77bd49259542a9b05ec49f",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/ng-twisted-20260629025102.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/ng-twisted-20260629025102.json",
+      "bytes": 30763,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260629025102",
+      "source_url": "https://nggroup.ua/cable/twisted-pair",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/ng-twisted-20260629025102.json",
+      "original_recorded_sha256": "09856c8410b9360ee52571a589baa6cb21e5864b9b75e9c9fa545e8d8298c783",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/ng-warranty-20220605165722.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/ng-warranty-20220605165722.json",
+      "bytes": 32686,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20220605165722",
+      "source_url": "https://nggroup.ua/warranty",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/ng-warranty-20220605165722.json",
+      "original_recorded_sha256": "5125c3657494b911492f081c51ecba4b3409578ff0f25db34403d9df821d09be",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/history-v5/parsed/ng-warranty-20260629025102.json": {
+      "path": "evidence/recovered_sources/history-v5/parsed/ng-warranty-20260629025102.json",
+      "bytes": 35034,
+      "evidence_kind": "archived_html_parsed_record",
+      "original_capture_date": "20260629025102",
+      "source_url": "https://nggroup.ua/warranty",
+      "claim_scope_ua": "Структура й текст конкретного архівного HTML; придатні для зіставлення полів, фільтрів і відповідей у межах зразка.",
+      "limitations_ua": "Похідний парсинг HTML, не весь сайт. Оригінальні HTML не переносяться через непорожні form_key/CSRF; SHA-256 і archive URL збережено в retrievals.json.",
+      "source_archive_chain": "handoff.zip!evidence/v5-history/parsed/ng-warranty-20260629025102.json",
+      "original_recorded_sha256": "c4a3224751a5e6d4b704d4854a5d534e47ccaa383d9a462c8602eaec3eb19649",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/ups-m1550.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/ups-m1550.txt",
+      "bytes": 6611,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:15:05.063Z",
+      "source_url": "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+      "claim_scope_ua": "Exact search leads to full product technical table and consultation, but only general ASP header link.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/ups-m1550.txt",
+      "original_recorded_sha256": "bb648678f59529c7fde16f1d39df5ca9fd913ab28e54d36c310426fe996a0c73",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/ups-description.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/ups-description.txt",
+      "bytes": 6539,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:15:33.397Z",
+      "source_url": "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+      "claim_scope_ua": "Description tab works. Gives use cases, ports, expected 6–8h alongside assumed ONU3W/router10–12W; not measured runtime or model-specific compatibility.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/ups-description.txt",
+      "original_recorded_sha256": "258f4fb62f8cfd23f6ab4b467c8050d3ebf6132129a512150e173179314fec3b",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/figure_data/nominal_autonomy.csv": {
+      "path": "evidence/figure_data/nominal_autonomy.csv",
+      "bytes": 2726,
+      "original_recorded_sha256": "cf641e027cb6a67d974f193c8771c0ab0e6d92c822199a3d9390f0f5741dcaae",
+      "public_file_sha256": "cf641e027cb6a67d974f193c8771c0ab0e6d92c822199a3d9390f0f5741dcaae",
+      "public_bytes": 2726,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "evidence/figure_data/build_figure_data.py": {
+      "path": "evidence/figure_data/build_figure_data.py",
+      "bytes": 6134,
+      "original_recorded_sha256": "da1b9cad9f4fd9fa6b3b22d913509d870b605a2a49583ecbb7a9dc56c1d42a9d",
+      "public_file_sha256": "da1b9cad9f4fd9fa6b3b22d913509d870b605a2a49583ecbb7a9dc56c1d42a9d",
+      "public_bytes": 6134,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-xpon-manual.jpg": {
+      "path": "evidence/recovered_sources/nggroup-docs-20260910/ng-xpon-manual.jpg",
+      "bytes": 70707,
+      "evidence_kind": "browser_screenshot",
+      "original_capture_date": "2026-09-10T09:04:41.790Z",
+      "source_url": "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf",
+      "claim_scope_ua": "Clicked actual instruction link from Документація",
+      "limitations_ua": "Посилання й видимий перший кадр PDF; повні PDF-байти/усі сторінки не включені. Публічна пропозиція сервісу не доводить виконання послуги.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!research-v4/current/ng-xpon-manual.jpg",
+      "original_recorded_sha256": "7530316e1ebf9aa054d48a2de8bbc5d0e4f7b69c583a0148f0ba929b53dc3d47",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-docs-20260910/browser-observations.json": {
+      "path": "evidence/recovered_sources/nggroup-docs-20260910/browser-observations.json",
+      "bytes": 172787,
+      "evidence_kind": "browser_capture_registry_with_dom",
+      "original_capture_date": "2026-09-10",
+      "claim_scope_ua": "Повні первинні записи V4 з часом, URL, діями, DOM і посиланням на XPON screenshot; потрібні для дати 09:04:41.790 UTC.",
+      "limitations_ua": "Без надсилання форм; статус текстів і відкриття першого кадру, не весь аналіз PDF.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!research-v4/current/browser-observations.json",
+      "original_recorded_sha256": "292936a06be8c2fa9b9c2353690f29dbb91e09623aa9927da93154284890c043",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-documentation.record.json": {
+      "path": "evidence/recovered_sources/nggroup-docs-20260910/ng-documentation.record.json",
+      "bytes": 20276,
+      "evidence_kind": "browser_dom_record",
+      "original_capture_date": "2026-09-10T09:04:23.142Z",
+      "source_url": "https://nggroup.ua/dokumentacija",
+      "claim_scope_ua": "Clicked visible header link Документація",
+      "limitations_ua": "Посилання й видимий перший кадр PDF; повні PDF-байти/усі сторінки не включені. Публічна пропозиція сервісу не доводить виконання послуги.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!research-v4/current/ng-documentation.record.json",
+      "original_recorded_sha256": "f00ee1de85d33768420ec0d92f100aad634745e19fa3f528b7f07148b67dcdc2",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/ups-ng1550-docs.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/ups-ng1550-docs.txt",
+      "bytes": 3852,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:16:11.257Z",
+      "source_url": "https://nggroup.ua/dbzh-mini-ups-ng-power-ng-1550-6-35w-15600-mah-li-ion-poe",
+      "claim_scope_ua": "Documentation tab exposes model-specific PDF and general catalogue.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/ups-ng1550-docs.txt",
+      "original_recorded_sha256": "641175dab639cf238af62bcc9b6098b2f9fd896a5457ef8e1c3b5bbe076caeab",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/ng1550-manual.jpg": {
+      "path": "evidence/recovered_sources/nggroup-20260910/ng1550-manual.jpg",
+      "bytes": 242083,
+      "evidence_kind": "browser_screenshot",
+      "original_capture_date": "2026-09-10T10:16:22.564Z",
+      "source_url": "https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf",
+      "claim_scope_ua": "Despite product link under Specifications, PDF is 3-page certificate of conformity. First page validity29.08.2024–28.08.2025. Not a tested manual.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/ng1550-manual.jpg",
+      "original_recorded_sha256": "bc6ba600bb1a194510e0e812d08829a367ac61bc9da1ff68c458c0e3c0073295",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/ups-consultation.txt": {
+      "path": "evidence/recovered_sources/nggroup-20260910/ups-consultation.txt",
+      "bytes": 7223,
+      "evidence_kind": "browser_dom_snapshot",
+      "original_capture_date": "2026-09-10T10:15:18.398Z",
+      "source_url": "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+      "claim_scope_ua": "Consultation opens with name, phone, email, comment; small/large batch choices default small; no visible model reminder and no submission.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/ups-consultation.txt",
+      "original_recorded_sha256": "746068e7314ff1eab297f0e704b0dadf40c435bae118c04854003accd1294a53",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-20260910/ups-consultation.jpg": {
+      "path": "evidence/recovered_sources/nggroup-20260910/ups-consultation.jpg",
+      "bytes": 68962,
+      "evidence_kind": "browser_screenshot",
+      "original_capture_date": "2026-09-10T10:15:18.398Z",
+      "source_url": "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+      "claim_scope_ua": "Consultation opens with name, phone, email, comment; small/large batch choices default small; no visible model reminder and no submission.",
+      "limitations_ua": "Не є записом 28.09; не вимірює конверсію, реальних користувачів чи отримання даних внутрішніми системами.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!research-v5/nggroup/ups-consultation.jpg",
+      "original_recorded_sha256": "9850fc1deb4baf9515a2a3b69e759b8fa4430a44a00d3f3797189e3120ec4539",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/static-20260909/nggroup-ups-description-rendered.html": {
+      "path": "evidence/recovered_sources/static-20260909/nggroup-ups-description-rendered.html",
+      "bytes": 75459,
+      "evidence_kind": "rendered_html",
+      "original_capture_date": "2026-09-09T19:48:20.165Z",
+      "source_url": "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
+      "claim_scope_ua": "M1550-C: опублікований опис, OG amount=1 та hidden product без атрибута value у зафіксованому HTML.",
+      "limitations_ua": "Без надсилання форми; не встановлює product у момент submit, роботу зовнішнього JS або стан CRM. Відображення Open Graph іншими платформами не перевірене.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!previous/ASP24-NGGroup-research-v3.zip!previous-v2/ASP24-NGGroup-research-v2/live/nggroup-ups-description-rendered.html",
+      "original_recorded_sha256": "5398301d2586a2c2449a3dad81c467bb83e8ef22144d86fd7859e7d3b54d2c24",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-partneram.record.json": {
+      "path": "evidence/recovered_sources/nggroup-docs-20260910/ng-partneram.record.json",
+      "bytes": 9416,
+      "evidence_kind": "browser_dom_record",
+      "original_capture_date": "2026-09-10T09:04:02.514Z",
+      "source_url": "https://nggroup.ua/partneram",
+      "claim_scope_ua": "Clicked visible header link Партнерам",
+      "limitations_ua": "Посилання й видимий перший кадр PDF; повні PDF-байти/усі сторінки не включені. Публічна пропозиція сервісу не доводить виконання послуги.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!research-v4/current/ng-partneram.record.json",
+      "original_recorded_sha256": "3f87a993441dc73f7b0da4ec4089b50847f562c5a7f4ebb4c584469386682a1a",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-service.record.json": {
+      "path": "evidence/recovered_sources/nggroup-docs-20260910/ng-service.record.json",
+      "bytes": 10665,
+      "evidence_kind": "browser_dom_record",
+      "original_capture_date": "2026-09-10T09:04:11.146Z",
+      "source_url": "https://nggroup.ua/service",
+      "claim_scope_ua": "Clicked visible footer link Сервіс",
+      "limitations_ua": "Посилання й видимий перший кадр PDF; повні PDF-байти/усі сторінки не включені. Публічна пропозиція сервісу не доводить виконання послуги.",
+      "source_archive_chain": "handoff.zip!sources/ASP24-NGGroup-research-v5.zip!previous/ASP24-NGGroup-research-v4.zip!research-v4/current/ng-service.record.json",
+      "original_recorded_sha256": "1260849e45643070a009b8b3bc8be872a4459caaeeb2dfa4a0c0b236ac5157fc",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/deps-quattro.json": {
+      "path": "evidence/competitors/deps-quattro.json",
+      "bytes": 107279,
+      "evidence_kind": "Firecrawl Scrape maxAge=0",
+      "original_capture_date": "2026-10-04T07:19:44.113Z",
+      "source_url": "https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html",
+      "original_recorded_sha256": "3fad1b294f6605b2ba927403153689e25e4cde1a9b39431075bcb1d94fa276cb",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/quattro-labeled-multiplus.json": {
+      "path": "evidence/competitors/quattro-labeled-multiplus.json",
+      "bytes": 9292,
+      "evidence_kind": "Firecrawl PDF Scrape",
+      "original_capture_date": "2026-10-04T07:20:22.692Z",
+      "source_url": "https://deps.ua/downloads/Documentation/Victron-Energy/Datasheet-MultiPlus-II-inverter-charger-EN.pdf",
+      "original_recorded_sha256": "9c93d42b7dab49516818b94bd066ede22b909c4412e3f2ecfba678c93a929a81",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/quattro-correct.json": {
+      "path": "evidence/competitors/quattro-correct.json",
+      "bytes": 10196,
+      "evidence_kind": "Firecrawl PDF Scrape",
+      "original_capture_date": "2026-10-04T07:20:25.852Z",
+      "source_url": "https://deps.ua/downloads/Documentation/Victron-Energy/Datasheet-Quattro-II-inverter-charger-EN.pdf",
+      "original_recorded_sha256": "59aa8e02222421b134e65e4df5b785a34b78f5b63a26442f972f2235aa3cb12a",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/deps-repair.json": {
+      "path": "evidence/competitors/deps-repair.json",
+      "bytes": 6090,
+      "evidence_kind": "Firecrawl Scrape maxAge=0",
+      "original_capture_date": "2026-10-04T07:17:56.274Z",
+      "source_url": "https://deps.ua/ua/service-center/check-order-status.html",
+      "original_recorded_sha256": "fa04faedeaa1d8335577d8c32f708f4f829ee0814ae3fdf69f13ab3843ab064d",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/competitors/romsat-partnership.json": {
+      "path": "evidence/competitors/romsat-partnership.json",
+      "bytes": 2267,
+      "evidence_kind": "Firecrawl Scrape maxAge=0",
+      "original_capture_date": "2026-10-04T07:18:07.850Z",
+      "source_url": "https://romsat.ua/company/partnership.php",
+      "original_recorded_sha256": "a8747f8f3a17b3f14149bb9cfae2e04e6887d4cc4c84106f2ee2b04f737a2f5b",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "reports/assets/ASP24-p4-0.png": {
+      "path": "reports/assets/ASP24-p4-0.png",
+      "bytes": 82467,
+      "original_recorded_sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+      "public_file_sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+      "public_bytes": 82467,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/assets/ASP24-p4-1.png": {
+      "path": "reports/assets/ASP24-p4-1.png",
+      "bytes": 74960,
+      "original_recorded_sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+      "public_file_sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+      "public_bytes": 74960,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/demo-compare.jpg": {
+      "path": "reports/demo-compare.jpg",
+      "bytes": 69650,
+      "original_recorded_sha256": "9aef9cf72680f2c9cc3bac062292b08ebb780eef39aac2c99366b25a98f18ea8",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "reports/assets/NGGroup-p4-0.jpg": {
+      "path": "reports/assets/NGGroup-p4-0.jpg",
+      "bytes": 4643,
+      "original_recorded_sha256": "47564e97da2b26c623f143241cc896d5b4d9175e799b6131c1d80ff4e68dad24",
+      "public_file_sha256": "47564e97da2b26c623f143241cc896d5b4d9175e799b6131c1d80ff4e68dad24",
+      "public_bytes": 4643,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/assets/NGGroup-p4-2.png": {
+      "path": "reports/assets/NGGroup-p4-2.png",
+      "bytes": 44675,
+      "original_recorded_sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+      "public_file_sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+      "public_bytes": 44675,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/assets/NGGroup-p4-3.png": {
+      "path": "reports/assets/NGGroup-p4-3.png",
+      "bytes": 24481,
+      "original_recorded_sha256": "5485d4fa791814b87198a24964b4bd1ecc33819093bad95bd48f441859f70010",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "reports/demo-document.jpg": {
+      "path": "reports/demo-document.jpg",
+      "bytes": 110081,
+      "original_recorded_sha256": "83ec0add52efbb454c6b44633005ed3c28b4c30807dac697b12982ee25a73a1c",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "data.js": {
+      "path": "data.js",
+      "bytes": 162114,
+      "original_recorded_sha256": "babd38558d6c97b81177d63b7a6c8114c7150d42144ecf34ef69c646f394c356",
+      "public_file_sha256": "babd38558d6c97b81177d63b7a6c8114c7150d42144ecf34ef69c646f394c356",
+      "public_bytes": 162114,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "evidence/figure_data/demo_facts.json": {
+      "path": "evidence/figure_data/demo_facts.json",
+      "bytes": 1823,
+      "original_recorded_sha256": "39b9c62f1dd9fcf4b9b5fb2b5fb1ba171178ba02513e059b904ca22a9cf93c79",
+      "public_file_sha256": "39b9c62f1dd9fcf4b9b5fb2b5fb1ba171178ba02513e059b904ca22a9cf93c79",
+      "public_bytes": 1823,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/content.py": {
+      "path": "reports/content.py",
+      "bytes": 191,
+      "original_recorded_sha256": "748a9be920882eb28a8599c12a27d6f01cfc24f0caf02962e75b0e0ec028301f",
+      "public_file_sha256": "461af87a5ffdfd2b2775e3ff2b2ae82eae2f079c9de5f1cd7584ad884a48a9f0",
+      "public_bytes": 1003,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": false
+    },
+    "reports/source_links.json": {
+      "path": "reports/source_links.json",
+      "bytes": 3426,
+      "original_recorded_sha256": "729c3e6f927057fb3ddb5a45c7832b452bb3a6a1270c091d67c9503f84c3fcc4",
+      "public_file_sha256": "ad577ae01f64dc857da2fc079b164a630002e4bb37f4b0d62309a46c1c758590",
+      "public_bytes": 3541,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": false
+    },
+    "catalog-expanded.js": {
+      "path": "catalog-expanded.js",
+      "bytes": 827118,
+      "evidence_kind": "synthetic_fixture",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "a844dd652b000bbbe4bdebd671f8d01e6990d1a7623ba233c81b6783189f1212",
+      "public_file_sha256": "a844dd652b000bbbe4bdebd671f8d01e6990d1a7623ba233c81b6783189f1212",
+      "public_bytes": 827118,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "evidence/refinement-20261008/catalog-summary.json": {
+      "path": "evidence/refinement-20261008/catalog-summary.json",
+      "bytes": 505,
+      "evidence_kind": "source_data_or_generator",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "b98a6869e54bf22052f911b313625e4cf3a867e49e470844458f762ea017f4aa",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "scripts/generate-catalog.py": {
+      "path": "scripts/generate-catalog.py",
+      "bytes": 15296,
+      "evidence_kind": "source_data_or_generator",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "8a7f5345573f9c101180609144f9bc30dabeb95c6e9814cb7a6241ae171e0d5e",
+      "public_file_sha256": "8a7f5345573f9c101180609144f9bc30dabeb95c6e9814cb7a6241ae171e0d5e",
+      "public_bytes": 15296,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": true
+    },
+    "reports/assets/compare-report.png": {
+      "path": "reports/assets/compare-report.png",
+      "bytes": 76848,
+      "evidence_kind": "local_offline_demo_screenshot",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "c9ffe4e3fec1664c198ffc78d6b9b3cc08f4945bafd94a57463048e29ba39e3a",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "reports/assets/document-report.png": {
+      "path": "reports/assets/document-report.png",
+      "bytes": 113620,
+      "evidence_kind": "local_offline_demo_screenshot",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "50efa342b2abdf5cfa72590d6fae30b694c98b3a84186050abe6c231f5dcf4f3",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "reports/build_editorial.py": {
+      "path": "reports/build_editorial.py",
+      "bytes": 10020,
+      "evidence_kind": "source_data_or_generator",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "1e4cd135d64c326ec75fe55b01568d7a7b75d29f29cb043e38b791e3f0b5792b",
+      "public_file_sha256": "bcbd79ce55e34bcbe348c766b3e72a4f807e6ff0b4293bd0f5ebd4647686ceb5",
+      "public_bytes": 10272,
+      "availability": "IN_PUBLIC_REPOSITORY",
+      "same_bytes_as_original": false
+    },
+    "evidence/refinement-20261008/screens/compare-report.png": {
+      "path": "evidence/refinement-20261008/screens/compare-report.png",
+      "bytes": 76848,
+      "evidence_kind": "local_offline_demo_screenshot",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "c9ffe4e3fec1664c198ffc78d6b9b3cc08f4945bafd94a57463048e29ba39e3a",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/refinement-20261008/screens/document-report.png": {
+      "path": "evidence/refinement-20261008/screens/document-report.png",
+      "bytes": 113620,
+      "evidence_kind": "local_offline_demo_screenshot",
+      "capture_or_verification_date": "2026-10-08",
+      "scope_limit": "Not a new primary observation of production ASP24/NGGroup.",
+      "original_recorded_sha256": "50efa342b2abdf5cfa72590d6fae30b694c98b3a84186050abe6c231f5dcf4f3",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/http-assets.json": {
+      "path": "evidence/editorial-decision-20261009/http-assets.json",
+      "bytes": 7471,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "3f53b67c6872b27b8ca132287c2fb1e17140aeeccd07eabc1a8a79a0a2ded2b8",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/page-comparison.json": {
+      "path": "evidence/editorial-decision-20261009/page-comparison.json",
+      "bytes": 7833,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "a7d6b82cf03007dc11d60e8611348c846c53f7ac363163434de7c107fb101b83",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/apple-qa.json": {
+      "path": "evidence/editorial-decision-20261009/apple-qa.json",
+      "bytes": 2879,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "44b2578d447bc7a58a495f61319d69d1e1143c593fc8af087b22a727df420ea4",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/build-identity.json": {
+      "path": "evidence/editorial-decision-20261009/build-identity.json",
+      "bytes": 5907,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "31bd69265975679f13c161c8adbcc1c500f8b2527a283ec4bb8dadae3f87b8b4",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/REVIEW_UA.md": {
+      "path": "evidence/editorial-decision-20261009/REVIEW_UA.md",
+      "bytes": 1699,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "2e0c43571177917c1ee38c5cef793e76dbfa4598c1ac7b701d9ab801345e1d80",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/REJECTED_INPUTS.md": {
+      "path": "evidence/editorial-decision-20261009/REJECTED_INPUTS.md",
+      "bytes": 764,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "e6c29262a35c65d7c4fbfea11782c365dacb0cda15f584aba1bc226c27d72675",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/EDITORIAL_DECISION_UA.md": {
+      "path": "evidence/editorial-decision-20261009/EDITORIAL_DECISION_UA.md",
+      "bytes": 11092,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "391015ad28e446f3a3766dc3551188e159e890b14ad8c5b735822aaee0d26ec4",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/RESEARCH_DELTA_UA.md": {
+      "path": "evidence/editorial-decision-20261009/RESEARCH_DELTA_UA.md",
+      "bytes": 16010,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "49e4eec41ad1140184d302acd70b7a7f9be3fe492ca7a3024687542792f5126d",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/content-freeze.json": {
+      "path": "evidence/editorial-decision-20261009/content-freeze.json",
+      "bytes": 1977,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "b355200ad88c85f1eee8abb47259574c041bd7cd02a9596ae9d8d0a5ac294a0e",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/IPHONE_NEXT_STEP_UA.md": {
+      "path": "evidence/editorial-decision-20261009/IPHONE_NEXT_STEP_UA.md",
+      "bytes": 4707,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "4500bbc5980aff9e0f8fd479443be92fa03ac1639c5b9e64b1d29cc773a0f0da",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/integration.json": {
+      "path": "evidence/editorial-decision-20261009/integration.json",
+      "bytes": 4520,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "ece3000fe5d804eade88b308eadcffedf59805394ee5c8323c062050997fdc1e",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/unit-tests.txt": {
+      "path": "evidence/editorial-decision-20261009/unit-tests.txt",
+      "bytes": 21622,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "00f5355c540cfdc8153d1bea30d3702afed32bf7915372968572c88a48e1f0e3",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/pdf-html-structure.json": {
+      "path": "evidence/editorial-decision-20261009/pdf-html-structure.json",
+      "bytes": 3224,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "99c010baa0cfd87a3c79c3859ea1ea19f1bce980db86ec3c7b7f62bbdec2142f",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/render/ASP24/page-11.png": {
+      "path": "evidence/editorial-decision-20261009/render/ASP24/page-11.png",
+      "bytes": 287590,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "52ac0180f010be4e62ee411379df6becefff0117283ab8be333e7f79fa92aed1",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/render/ASP24/page-14.png": {
+      "path": "evidence/editorial-decision-20261009/render/ASP24/page-14.png",
+      "bytes": 164793,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "b2dd43025d8caae0d26688e86ee592e42c2198b82d1aa3ee88f06cb16c51903f",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/render/NGGroup/page-07.png": {
+      "path": "evidence/editorial-decision-20261009/render/NGGroup/page-07.png",
+      "bytes": 310745,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "a73d521dd559a25ae44ed91c9cb05f528debbb93790ce35c27e10fc3c0852201",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "evidence/editorial-decision-20261009/targeted-links.json": {
+      "path": "evidence/editorial-decision-20261009/targeted-links.json",
+      "bytes": 376,
+      "evidence_kind": "current_editorial_decision_or_bounded_verification",
+      "limitations_ua": "Метод і статус зазначені у файлі; не є автоматичним live PASS.",
+      "original_recorded_sha256": "036379ce722aca858874d9c844874c931c13698a95ea7af42323b4d17384caae",
+      "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
+      "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    }
+  },
+  "global_limits": [
+    "Historical observation date, archive date, retrieval date and editorial verification date are distinct.",
+    "Secondary inherited report claims remain secondary even when cited URL still exists.",
+    "Manufacturer/technical PDFs explicitly marked absent are not treated as newly read documents.",
+    "No user conversion, timing, attention, failure-rate, representative sample or company-quality score is inferred.",
+    "No real target orders or contact forms submitted; no CRM receipt verification.",
+    "A manuscript hash binds this map to its snapshot; later source edits require updating the map or recording the newer manuscript hash.",
+    "384 products and 13 manufacturer labels are synthetic demo fixtures, not a market-representative sample or verified real manufacturers.",
+    "Offline screenshot fonts use the system fallback; live Google Fonts loading was not tested.",
+    "Origin change does not automatically migrate localStorage; no cross-origin state transfer is claimed.",
+    "Historical partial beta Safari results are retained privately; this report migration does not add physical iPhone or complete stable-branch acceptance.",
+    "PDF Lang assigned; untagged output, semantic HTML alternative.",
+    "Editorial decision received and E01/E02 accepted; pasted DR text rejected as direct evidence; broader research pending separate review."
+  ],
+  "final_pdf_manifest": "reports/pdf-manifest.json",
+  "final_pdf_review": "reports/migration-review.json",
+  "final_pdf_structural_check": "scripts/verify-acceptance-pdfs.py",
+  "secondary_document_identity": {
+    "ASP24": {
+      "title": "ASP24. Огляд сайту. Від пошуку до підготовки закупівлі",
+      "pages": 12,
+      "file": "reports/baseline/ASP24_Огляд.pdf",
+      "sha256": "924f98468d0a3207a52ccc8c25f778bdbce9ff1ef55dad865853692139eb2ebb",
+      "package_version": "Science Edition 3.0.0 / v13",
+      "package_date": "2026-10-07",
+      "date_evidence": [
+        "reports/baseline/RESULTS_baseline.md",
+        "evidence/editorial-20261008/legacy/manifest.json"
+      ],
+      "reported_observation_slice": "2026-09-28",
+      "pdf_creation_date": null,
+      "pdf_creation_date_limit": "No CreationDate or ModDate in PDF metadata; observation slice is not PDF creation date.",
+      "earlier_copy": {
+        "file": "input/Perspektyva_Science_Edition/inputs/ASP24_Огляд.pdf",
+        "sha256": "b15f3e13136336dad3364ee1ff435c9171eaae77d3a08681589e51392b59a47a",
+        "metadata": "WeasyPrint 68.0; no creation/modification date",
+        "R1_date_record": "recovered/r2/Perspektyva-R2/evidence/history-r1/REPORT_NOTES.md",
+        "date_record_text": "Перевірено 28.09.2026",
+        "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+      },
+      "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+    },
+    "NGGroup": {
+      "title": "NG Group. Огляд сайту. Від технічної інформації до вибору рішення",
+      "pages": 14,
+      "file": "reports/baseline/NGGroup_Огляд.pdf",
+      "sha256": "660ac749a4e66d2ba73e59a14511448cfe0a6d6403f396972af57c2ca5996e64",
+      "package_version": "Science Edition 3.0.0 / v13",
+      "package_date": "2026-10-07",
+      "date_evidence": [
+        "reports/baseline/RESULTS_baseline.md",
+        "evidence/editorial-20261008/legacy/manifest.json"
+      ],
+      "reported_observation_slice": "2026-09-28",
+      "pdf_creation_date": null,
+      "pdf_creation_date_limit": "No CreationDate or ModDate in PDF metadata; observation slice is not PDF creation date.",
+      "earlier_copy": {
+        "file": "input/Perspektyva_Science_Edition/inputs/NGGroup_Огляд.pdf",
+        "sha256": "2d62205f00b13ce3507324bbe2fb1c15f8dbd3796032bcd6025eb40e53aae20b",
+        "metadata": "WeasyPrint 68.0; no creation/modification date",
+        "R1_date_record": "recovered/r2/Perspektyva-R2/evidence/history-r1/REPORT_NOTES.md",
+        "date_record_text": "Перевірено 28.09.2026",
+        "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+      },
+      "availability": "HISTORICAL_FILE_NOT_PUBLICLY_DISTRIBUTED"
+    }
+  },
+  "acceptance": {
+    "editorial": "E01_E02_ACCEPTED_BROAD_RESEARCH_PENDING",
+    "all_30_pages_rendered_and_reviewed": false,
+    "native_browser": "NOT_RUN_BY_REPORT_MIGRATION",
+    "public_release": "NOT_VERIFIED_BY_REPORT_BUILD",
+    "pdf_ua": "NOT_CLAIMED",
+    "figure_data": [
+      {
+        "file": "evidence/figure_data/demo_facts.csv",
+        "sha256": "18e4561ffb2131be0069f9effcb0495141c569bb6632934a636682645f861805",
+        "unchanged_in_this_pass": true
+      },
+      {
+        "file": "evidence/figure_data/filter_paths.csv",
+        "sha256": "1555b92861117db9d649071f9c5ffde0bc8f21746db94551cb0236117179ffc0",
+        "unchanged_in_this_pass": true
+      },
+      {
+        "file": "evidence/figure_data/nominal_autonomy.csv",
+        "sha256": "cf641e027cb6a67d974f193c8771c0ab0e6d92c822199a3d9390f0f5741dcaae",
+        "unchanged_in_this_pass": true
+      },
+      {
+        "file": "evidence/figure_data/technical_rows.csv",
+        "sha256": "eccff9876f97279954ca817bc8d0470094ae0ac723e955e6c047dc1598215a2d",
+        "unchanged_in_this_pass": true
+      }
+    ],
+    "current_visual_review": "All 30 pages rendered. Each of 14 changed pages inspected individually; 16 unchanged PNG hashes, including both covers, match Checkpoint03."
+  },
+  "local_version": "3.1.1-rc.1",
+  "file_catalog_missing": [
+    "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt",
+    "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt",
+    "evidence/recovered_sources/asp24-20260910/asp-search-needs-result.txt",
+    "evidence/recovered_sources/asp24-20260910/asp-cable-category.txt",
+    "evidence/recovered_sources/asp24-20260910/asp-cable-cu-settled.txt",
+    "evidence/recovered_sources/asp24-20260910/asp-cable-cu-indoor.txt",
+    "evidence/recovered_sources/asp24-20260910/evidence.json",
+    "reports/baseline/ASP24_Огляд.pdf",
+    "evidence/recovered_sources/asp24-20260910/asp-compare-visible.txt",
+    "evidence/recovered_sources/asp24-20260910/asp-compare-visible.jpg",
+    "evidence/recovered_sources/history-v5/parsed/router-20260419145842.json",
+    "evidence/recovered_sources/history-v5/parsed/router-20260517190112.json",
+    "evidence/recovered_sources/history-v5/parsed/xpon-20251208110110.json",
+    "evidence/recovered_sources/history-v5/parsed/xpon-20260611125649.json",
+    "evidence/recovered_sources/history-v5/parsed/copper-20260208234550.json",
+    "evidence/recovered_sources/history-v5/parsed/copper-20260611132657.json",
+    "evidence/recovered_sources/history-v5/retrievals.json",
+    "evidence/recovered_sources/recompute_source_measures.py",
+    "evidence/recovered_sources/provenance.json",
+    "evidence/editorial-20261008/source-recomputation.json",
+    "evidence/recovered_sources/history-v5/parsed/warranty-20260419141254.json",
+    "evidence/recovered_sources/history-v5/parsed/warranty-20260517184724.json",
+    "evidence/recovered_sources/history-v5/public-comparisons.json",
+    "evidence/competitors/deps-foxgate.json",
+    "evidence/competitors/foxgate-10km.json",
+    "evidence/competitors/deps-search-20261007.json",
+    "evidence/competitors/deps-filter-result-20261007.json",
+    "evidence/competitors/deps-family-20261007.json",
+    "evidence/competitors/romsat-price-panel.json",
+    "evidence/competitors/romsat-search-20261007.json",
+    "evidence/competitors/romsat-favorites-result-20261007.json",
+    "evidence/competitors/romsat-shortlist-20261007.json",
+    "evidence/recovered_sources/static-20260909/asp24-add-to-cart-handler.txt",
+    "evidence/recovered_sources/static-20260909/capture-metadata.json",
+    "evidence/recovered_sources/nggroup-20260910/search-m1550.txt",
+    "evidence/recovered_sources/nggroup-20260910/search-full-model.txt",
+    "evidence/recovered_sources/nggroup-20260910/cable-before.txt",
+    "evidence/recovered_sources/nggroup-20260910/cable-cu-success.txt",
+    "evidence/recovered_sources/nggroup-20260910/cable-cu-out.txt",
+    "evidence/recovered_sources/nggroup-20260910/cable-cu-out4.txt",
+    "evidence/recovered_sources/nggroup-20260910/cable-breadcrumb-return.txt",
+    "evidence/recovered_sources/nggroup-20260910/evidence.json",
+    "reports/baseline/NGGroup_Огляд.pdf",
+    "evidence/recovered_sources/history-v5/parsed/ng-twisted-20220605165727.json",
+    "evidence/recovered_sources/history-v5/parsed/ng-twisted-20260629025102.json",
+    "evidence/recovered_sources/history-v5/parsed/ng-warranty-20220605165722.json",
+    "evidence/recovered_sources/history-v5/parsed/ng-warranty-20260629025102.json",
+    "evidence/recovered_sources/nggroup-20260910/ups-m1550.txt",
+    "evidence/recovered_sources/nggroup-20260910/ups-description.txt",
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-xpon-manual.jpg",
+    "evidence/recovered_sources/nggroup-docs-20260910/browser-observations.json",
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-documentation.record.json",
+    "evidence/recovered_sources/nggroup-20260910/ups-ng1550-docs.txt",
+    "evidence/recovered_sources/nggroup-20260910/ng1550-manual.jpg",
+    "evidence/recovered_sources/nggroup-20260910/ups-consultation.txt",
+    "evidence/recovered_sources/nggroup-20260910/ups-consultation.jpg",
+    "evidence/recovered_sources/static-20260909/nggroup-ups-description-rendered.html",
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-partneram.record.json",
+    "evidence/recovered_sources/nggroup-docs-20260910/ng-service.record.json",
+    "evidence/competitors/deps-quattro.json",
+    "evidence/competitors/quattro-labeled-multiplus.json",
+    "evidence/competitors/quattro-correct.json",
+    "evidence/competitors/deps-repair.json",
+    "evidence/competitors/romsat-partnership.json",
+    "reports/demo-compare.jpg",
+    "reports/assets/NGGroup-p4-3.png",
+    "reports/demo-document.jpg",
+    "evidence/refinement-20261008/catalog-summary.json",
+    "reports/assets/compare-report.png",
+    "reports/assets/document-report.png",
+    "evidence/refinement-20261008/screens/compare-report.png",
+    "evidence/refinement-20261008/screens/document-report.png",
+    "evidence/editorial-decision-20261009/http-assets.json",
+    "evidence/editorial-decision-20261009/page-comparison.json",
+    "evidence/editorial-decision-20261009/apple-qa.json",
+    "evidence/editorial-decision-20261009/build-identity.json",
+    "evidence/editorial-decision-20261009/REVIEW_UA.md",
+    "evidence/editorial-decision-20261009/REJECTED_INPUTS.md",
+    "evidence/editorial-decision-20261009/EDITORIAL_DECISION_UA.md",
+    "evidence/editorial-decision-20261009/RESEARCH_DELTA_UA.md",
+    "evidence/editorial-decision-20261009/content-freeze.json",
+    "evidence/editorial-decision-20261009/IPHONE_NEXT_STEP_UA.md",
+    "evidence/editorial-decision-20261009/integration.json",
+    "evidence/editorial-decision-20261009/unit-tests.txt",
+    "evidence/editorial-decision-20261009/pdf-html-structure.json",
+    "evidence/editorial-decision-20261009/render/ASP24/page-11.png",
+    "evidence/editorial-decision-20261009/render/ASP24/page-14.png",
+    "evidence/editorial-decision-20261009/render/NGGroup/page-07.png",
+    "evidence/editorial-decision-20261009/targeted-links.json"
+  ],
+  "external_dependencies": {
+    "fonts": {
+      "bundled_binary_files": false,
+      "instructions": "reports/fonts/README.md",
+      "provenance": "reports/fonts/provenance.json"
+    }
+  },
+  "updated_at": "2026-10-09",
+  "public_evidence_summary": "docs/RESEARCH.md",
+  "deployment_configuration": "deployment.config.json",
+  "file_catalog_missing_meaning": "Not distributed in the public repo. This list does not newly disprove or authenticate the inherited observations.",
+  "deployment_configuration_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0"
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "power-energy",
+    "group": "ups",
+    "example": "Навчальна модель: 36 Вт·год ÷ 12 Вт = 3 год без урахування втрат.",
+    "source": {
+      "title": "NIST: одиниці енергії та потужності",
+      "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9"
+    }
+  },
+  {
+    "id": "sales-unit",
+    "group": "cable",
+    "example": "2 бухти × 305 м = 610 м; у кошику — 2 бухти.",
+    "source": {
+      "title": "Schema.org: UnitPriceSpecification",
+      "url": "https://schema.org/UnitPriceSpecification"
+    }
+  },
+  {
+    "id": "unknown-zero",
+    "group": "switches",
+    "example": "0 Вт → відоме значення; «не вказано» → даних недостатньо.",
+    "source": {
+      "title": "RFC 8259, розділ 3: значення JSON",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259#section-3"
+    }
+  },
+  {
+    "id": "lc-sc",
+    "group": "optics",
+    "example": "LC або SC → далі полірування, волокно й вимоги обладнання.",
+    "source": {
+      "title": "Fluke Networks: Know Your Fiber Connectors",
+      "url": "https://www.flukenetworks.com/blog/cabling-chronicles/101-series-know-your-fiber-connectors"
+    }
+  },
+  {
+    "id": "simplex-duplex",
+    "group": "optics",
+    "example": "Simplex: 1 волокно. Duplex: 2 волокна. Напрям передавання звіряємо окремо.",
+    "source": {
+      "title": "Fluke Networks: типи та виконання оптичних роз’ємів",
+      "url": "https://www.flukenetworks.com/blog/cabling-chronicles/101-series-know-your-fiber-connectors"
+    }
+  },
+  {
+    "id": "wdm-pair",
+    "group": "optics",
+    "example": "Кінець A: Tx 1310 → Rx 1310 кінця B; у зворотний бік — 1490 нм.",
+    "source": {
+      "title": "Cisco: 1000BASE-BX10-D/U, одноволоконна пара",
+      "url": "https://www.cisco.com/c/en/us/products/collateral/interfaces-modules/gigabit-ethernet-gbic-sfp-modules/datasheet-c78-366584.html"
+    }
+  },
+  {
+    "id": "plc-housing",
+    "group": "splitters",
+    "example": "1×8 + виконання + роз’єми + креслення → предметний добір.",
+    "source": {
+      "title": "Corning: PLC Splitters і варіанти корпусів",
+      "url": "https://www.corning.com/oem-solutions/worldwide/en/home/products-solutions/optical-communication-components/taps-couplers-splitters/plc-splitters.html"
+    }
+  },
+  {
+    "id": "poe-budget",
+    "group": "switches",
+    "example": "Навчальний приклад: 4 × 15 Вт = 60 Вт; портові обмеження перевіряються окремо.",
+    "source": {
+      "title": "Cisco: Catalyst 1000, порти та PoE-бюджети",
+      "url": "https://www.cisco.com/c/en/us/products/collateral/switches/catalyst-1000-series-switches/nb-06-cat1k-ser-switch-ds-cte-en.html"
+    }
+  },
+  {
+    "id": "wifi-task",
+    "group": "wifi",
+    "example": "Задача → клієнти й простір → добір точки → вимірювання в умовах використання.",
+    "source": {
+      "title": "Cisco: перевірка пропускної здатності Wi-Fi",
+      "url": "https://www.cisco.com/c/en/us/support/docs/wireless/catalyst-9800-series-wireless-controllers/221766-validate-wi-fi-throughput-testing-and.html"
+    }
+  },
+  {
+    "id": "photo-revision",
+    "group": "ups",
+    "example": "Ілюстрація → впізнавання; артикул і версія → точне виконання.",
+    "source": {
+      "title": "Cisco: Product Identification Standard",
+      "url": "https://www.cisco.com/site/us/en/products/unique-device-identifier-udi/index.html"
+    }
+  },
+  {
+    "id": "document-model",
+    "group": "optics",
+    "example": "Артикул → рядок документа → умова → питання або підтверджений вибір.",
+    "source": {
+      "title": "Cisco: модельні таблиці та умови SFP",
+      "url": "https://www.cisco.com/c/en/us/products/collateral/interfaces-modules/gigabit-ethernet-gbic-sfp-modules/datasheet-c78-366584.html"
+    }
+  },
+  {
+    "id": "candidates-cart",
+    "group": "ups",
+    "example": "Кандидати → обраний варіант → кількість у кошику; альтернативи лишаються в проєкті.",
+    "source": {
+      "title": "WHATWG HTML: локальне сховище браузера",
+      "url": "https://html.spec.whatwg.org/multipage/webstorage.html"
+    }
+  }
+]

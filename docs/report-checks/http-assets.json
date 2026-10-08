@@ -1,0 +1,206 @@
+{
+  "status": "PASS",
+  "scope": "SUPPLIED_HTTP_BASE_BYTES",
+  "base_url": "http://127.0.0.1:8012/asp24-nggroup-demo-research/",
+  "browser_interactions": "NOT_TESTED_BY_THIS_SCRIPT",
+  "files": [
+    {
+      "path": "assets/app-a7e1442ade2d.js",
+      "bytes": 85656,
+      "sha256": "a7e1442ade2dda2d9e4bd23133de54959380c43066b3a92ffe3cfae013b92a23",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/asp24-original.webp",
+      "bytes": 3628,
+      "sha256": "239569042b9c6c6a4cee30474488030f36f7573fd126d2d828c65f325b748aa5",
+      "content_type": "image/webp"
+    },
+    {
+      "path": "assets/asset-url-8a2056570dc5.js",
+      "bytes": 621,
+      "sha256": "8a2056570dc5be119e8e3ccf0e38cd1a124438a9f287735540fa4cd5471a7aac",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/catalog-87d665393f6d.css",
+      "bytes": 17627,
+      "sha256": "87d665393f6d7a4151535994855812a437b1aab8ce7b5e931f1c763ffc8fd2de",
+      "content_type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "assets/catalog-expanded-a844dd652b00.js",
+      "bytes": 827118,
+      "sha256": "a844dd652b000bbbe4bdebd671f8d01e6990d1a7623ba233c81b6783189f1212",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/catalog-ui-c4aca3c73a60.js",
+      "bytes": 10610,
+      "sha256": "c4aca3c73a60a4705fdd12cf65c2ec039602844e6f9742c03c49b37f33ef695e",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/data-03c68e635594.js",
+      "bytes": 162127,
+      "sha256": "03c68e6355944b5ed9ea4eb22f3b043f59c1f81689687e7e720f72bf13c53298",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/finish-2e5ec56d460a.css",
+      "bytes": 16242,
+      "sha256": "2e5ec56d460ac7fb8a143b9a8fe575daa2eba3d6a04b237da89ace1df453cc56",
+      "content_type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "assets/lab-bfdc476972b1.js",
+      "bytes": 20356,
+      "sha256": "bfdc476972b15183dea546b85701c83079fe00f074c85e21261630bca4d36422",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/logic-6082b105e977.js",
+      "bytes": 15182,
+      "sha256": "6082b105e9776188661be41c57f6ee9e050229639bf1f0e0ee2def55f51f7cd2",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/ng-original.svg",
+      "bytes": 36597,
+      "sha256": "7de9307b5caad8396130dd643f33976a0092217f66316d98d85f3d0a655a578c",
+      "content_type": "image/svg+xml"
+    },
+    {
+      "path": "assets/orders-fde12f085572.js",
+      "bytes": 10244,
+      "sha256": "fde12f085572fb32c88297a5928c36ac67b08a933523b606278582bc1170c5c6",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/presentation-d41a6c1e4f53.js",
+      "bytes": 660,
+      "sha256": "d41a6c1e4f5366a49315934b2f07e54ca6acf9754d956c871063708319e2164a",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/scenarios-7cb2b1de24d1.js",
+      "bytes": 2611,
+      "sha256": "7cb2b1de24d1bd38d210cf8f79560835da69213927c73269363b67b8e915febb",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/science-8ba5d4a00924.css",
+      "bytes": 11473,
+      "sha256": "8ba5d4a00924a1bfb58a56e5023720d7130c1f37acdc9a49bfc84aa6a499078c",
+      "content_type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "assets/science-cb4be5cd7aa0.js",
+      "bytes": 38535,
+      "sha256": "cb4be5cd7aa0a2ffcf010abef350eeb1de3392be8985bedf10f00e5ae1d5b29a",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "assets/style-0dcd671612eb.css",
+      "bytes": 46784,
+      "sha256": "0dcd671612eb7669367d49edc27e46f933287fa5679c43a5f8001ff361dcd767",
+      "content_type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "assets/validation-9968f0f1e45a.js",
+      "bytes": 325,
+      "sha256": "9968f0f1e45a17083a718e8e56bc45b6441951dd1c08718ac705bde4b4caa4a8",
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "build-config.json",
+      "bytes": 135,
+      "sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "path": "design-tokens.css",
+      "bytes": 810,
+      "sha256": "19df13687030a9669a467f8ef07af2453027c41fc948a9d451aad521ffdcc3a1",
+      "content_type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 5024,
+      "sha256": "024b0d811d334270557967762d486c3a55c087f5aa15aace937906ed22b0889d",
+      "content_type": "image/svg+xml"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1443,
+      "sha256": "46da97cd5ae66a7f7b95c6a7a76dbeaaf40e8d0045f04053f458f6fab6f90c05",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "reports/ASP24_Review.html",
+      "bytes": 47783,
+      "sha256": "b9f703576e720bffe2a413f670449a1fbf26a008049253414e9c09e3b8506173",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "reports/ASP24_Review.pdf",
+      "bytes": 1121425,
+      "sha256": "935a796d65b5288232b28d1e9980c376b0ca856b09847d69e41eb554c8e7ef14",
+      "content_type": "application/pdf"
+    },
+    {
+      "path": "reports/NGGroup_Review.html",
+      "bytes": 57162,
+      "sha256": "1dca1a71a7bd03b7b5f9a02f396bde3b0981279b6e9b0666337c4879fcf77383",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "reports/NGGroup_Review.pdf",
+      "bytes": 951321,
+      "sha256": "5a593ae974ae596486e94ed76708130c20243eb81539658031f9f21a9acd4a22",
+      "content_type": "application/pdf"
+    },
+    {
+      "path": "reports/assets/ASP24-asp24-04-4.png",
+      "bytes": 82467,
+      "sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+      "content_type": "image/png"
+    },
+    {
+      "path": "reports/assets/ASP24-asp24-06-1.png",
+      "bytes": 74960,
+      "sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+      "content_type": "image/png"
+    },
+    {
+      "path": "reports/assets/ASP24-asp24-12-3.png",
+      "bytes": 22871,
+      "sha256": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
+      "content_type": "image/png"
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-04-4.png",
+      "bytes": 25099,
+      "sha256": "8ad16689ef02fdd49184247b2da6596657e085fad1da8103d2c9d8a54508a77c",
+      "content_type": "image/png"
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-07-1.png",
+      "bytes": 44675,
+      "sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+      "content_type": "image/png"
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-08-1.png",
+      "bytes": 12824,
+      "sha256": "c81bde45170c688427a3b30797423aca0d2cd83ba0be54bfec33a01a85ef808a",
+      "content_type": "image/png"
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-14-3.png",
+      "bytes": 21778,
+      "sha256": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
+      "content_type": "image/png"
+    }
+  ]
+}

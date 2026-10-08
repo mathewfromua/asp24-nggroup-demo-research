@@ -1,0 +1,14 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unpublished comparison fixture</title><link rel="stylesheet" href="/design-tokens.css"><link rel="stylesheet" href="/style.css"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></head><body data-brand="asp"><a class="skip" href="#main">До основного вмісту</a><div id="app"></div><dialog id="modal" aria-labelledby="dialog-title"></dialog><div id="toast" role="status" aria-live="polite"></div><script type="module">
+// Never imported by index.html or included in public/dist.
+import {products,groups} from '../data.js';
+import {initialState,STATE_KEY} from '../logic.js';
+const params=new URLSearchParams(location.search);
+if(params.has('long')){
+ products[0].name='Резерв DC 18 — лабораторне виконання з навмисно довгою назвою для перевірки перенесення';
+ for(let i=7;i<=25;i++){const key=`Тестовий параметр ${i}`;groups.ups.keys.push(key);products.filter(p=>p.group==='ups').forEach((p,j)=>p.props[key]=i%3===0?'Спільне умовне значення':`${i*10+j} ум. од.`);}
+}
+if(params.has('seventh'))products.push({...products[0],id:'u07',sku:'FIXTURE-U07',name:'Тестовий сьомий кандидат',props:{...products[0].props}});
+if(params.has('seed')){const s=initialState();s.compareByGroup.ups=products.filter(p=>p.group==='ups').slice(0,Number(params.get('seed'))).map(p=>p.id);s.view.pairs.ups=['u02','u04'].filter(id=>s.compareByGroup.ups.includes(id));s.compareByGroup.optics=['o01','o02'];localStorage.setItem(STATE_KEY,JSON.stringify(s));}
+params.delete('seed');history.replaceState(null,'',location.pathname+'?'+params+location.hash);
+await import('../app.js');
+</script></body></html>

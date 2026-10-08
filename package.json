@@ -1,0 +1,16 @@
+{
+  "name": "asp24-nggroup-demo-research",
+  "version": "3.1.1-demo.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build-static.mjs && node scripts/serve.mjs",
+    "build": "node scripts/build-static.mjs",
+    "preview": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.js",
+    "verify": "node scripts/verify-build.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

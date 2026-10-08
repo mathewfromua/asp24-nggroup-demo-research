@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "source_build": "perspektyva-science-2026-10-07",
+  "method": "Read-only import of existing data.js and pure functions filterProducts, quantityLabel, cartTotal; no browser, network, checkout submission or full test run.",
+  "scope": "Synthetic demo inventory and deterministic arithmetic only. These are not sales, demand, revenue, conversion or quality metrics for real ASP24/NG websites.",
+  "sources": [
+    {
+      "file": "data.js",
+      "sha256": "df292550eb0c417454bff64213fb88116f3e03196692ea451b9e8624fa7cdf9e"
+    },
+    {
+      "file": "logic.js",
+      "sha256": "2574b2a1c0e069d50ac39f11af4060754d139e5364a6f80e4280a7c318922a65"
+    }
+  ],
+  "catalog": {
+    "unique_total_models": 64,
+    "asp_visible_models": 64,
+    "ng_visible_models": 62,
+    "category_count": 8,
+    "models_per_category": 8,
+    "all_synthetic": true,
+    "ng_excluded_ids": [
+      "s01",
+      "c03"
+    ]
+  },
+  "examples": [
+    {
+      "id": "u02",
+      "sku": "DEMO-U02",
+      "name": "VOLTYN N36",
+      "quantity": 3,
+      "sales_unit": "шт.",
+      "unit_price_kopecks": 219000,
+      "total_kopecks": 657000,
+      "total_uah": 6570,
+      "length_per_unit_m": null,
+      "total_length_m": null,
+      "quantity_display": "3 шт.",
+      "total_display": "6 570 грн",
+      "source_kind": "synthetic-ui-fixture"
+    },
+    {
+      "id": "c04",
+      "sku": "DEMO-C04",
+      "name": "STRUNEX F6 Core 305",
+      "quantity": 2,
+      "sales_unit": "бухта 305 м",
+      "unit_price_kopecks": 519000,
+      "total_kopecks": 1038000,
+      "total_uah": 10380,
+      "length_per_unit_m": 305,
+      "total_length_m": 610,
+      "quantity_display": "2 бухти · 610 м",
+      "total_display": "10 380 грн",
+      "source_kind": "synthetic-ui-fixture"
+    }
+  ]
+}

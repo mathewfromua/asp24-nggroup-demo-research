@@ -1,0 +1,11 @@
+{
+  "input_zip_sha256": "f71dd4ce9ed53195294ddc7c11cdf661025f7ba4b48504b212ec2452a8c6df1c",
+  "input_version": "3.1.1-rc.1 Checkpoint03",
+  "input_manifest_files_verified": 725,
+  "input_manifest_mismatches": 0,
+  "import_type": "New selected public Git history; not previous complete development history",
+  "retained": "384 synthetic models; 64 stable original IDs/SKUs; E01/E02; palettes and covers",
+  "excluded": "Private dossier, hosting metadata, complete historical PDFs, source ZIPs, font binaries, browser caches, unused illustrations",
+  "backup": "Original working tree and available Sites Git history preserved outside public tree",
+  "old_sites_untouched": true
+}

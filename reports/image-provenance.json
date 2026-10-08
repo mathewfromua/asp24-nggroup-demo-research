@@ -1,0 +1,101 @@
+[
+  {
+    "file": "reports/assets/ASP24-p4-0.png",
+    "sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+    "original_file": "reports/assets/ASP24-p4-0.png",
+    "original_sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+    "crop": null,
+    "pixels": [
+      471,
+      245
+    ],
+    "method": "Unchanged source image"
+  },
+  {
+    "file": "reports/assets/ASP24-p4-1.png",
+    "sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+    "original_file": "reports/assets/ASP24-p4-1.png",
+    "original_sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+    "crop": null,
+    "pixels": [
+      604,
+      242
+    ],
+    "method": "Unchanged source image"
+  },
+  {
+    "file": "reports/assets/compare-report-crop.png",
+    "sha256": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
+    "original_file": "reports/assets/compare-report.png",
+    "original_sha256": "c9ffe4e3fec1664c198ffc78d6b9b3cc08f4945bafd94a57463048e29ba39e3a",
+    "crop": [
+      24,
+      156,
+      741,
+      455
+    ],
+    "pixels": [
+      717,
+      299
+    ],
+    "method": "Existing report crop, no pixel retouching or new browser capture"
+  },
+  {
+    "file": "reports/assets/NGGroup-p4-0.jpg",
+    "sha256": "47564e97da2b26c623f143241cc896d5b4d9175e799b6131c1d80ff4e68dad24",
+    "original_file": "reports/assets/NGGroup-p4-0.jpg",
+    "original_sha256": "47564e97da2b26c623f143241cc896d5b4d9175e799b6131c1d80ff4e68dad24",
+    "crop": null,
+    "pixels": [
+      262,
+      262
+    ],
+    "method": "Unchanged source image"
+  },
+  {
+    "file": "reports/assets/NGGroup-p4-2.png",
+    "sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+    "original_file": "reports/assets/NGGroup-p4-2.png",
+    "original_sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+    "crop": null,
+    "pixels": [
+      805,
+      200
+    ],
+    "method": "Unchanged source image"
+  },
+  {
+    "file": "reports/assets/NGGroup-p4-3-crop.png",
+    "sha256": "c81bde45170c688427a3b30797423aca0d2cd83ba0be54bfec33a01a85ef808a",
+    "original_file": "reports/assets/NGGroup-p4-3.png",
+    "original_sha256": "5485d4fa791814b87198a24964b4bd1ecc33819093bad95bd48f441859f70010",
+    "crop": [
+      0,
+      0,
+      260,
+      140
+    ],
+    "pixels": [
+      260,
+      140
+    ],
+    "method": "Existing report crop, no pixel retouching or new browser capture"
+  },
+  {
+    "file": "reports/assets/document-report-crop.png",
+    "sha256": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
+    "original_file": "reports/assets/document-report.png",
+    "original_sha256": "50efa342b2abdf5cfa72590d6fae30b694c98b3a84186050abe6c231f5dcf4f3",
+    "crop": [
+      250,
+      262,
+      1190,
+      508
+    ],
+    "pixels": [
+      940,
+      246
+    ],
+    "method": "Existing report crop, no pixel retouching or new browser capture"
+  }
+]
