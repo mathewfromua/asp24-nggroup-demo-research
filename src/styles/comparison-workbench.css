@@ -83,6 +83,9 @@ body:has(.comparison-workbench) .footer button {max-width:100%;white-space:norma
 .comparison-workbench .wb-primary[aria-expanded=true] {box-shadow:inset 0 0 0 2px var(--wb-ink)}
 .wb-modes label:has(input:checked) {color:var(--wb-accent)}
 .comparison-workbench :is(input,select):focus-visible {border-color:var(--wb-accent)}
+/* Bound the closed selected value to its control at enlarged text sizes.
+   The native option menu, keyboard behavior and accessible name stay intact. */
+.comparison-workbench select {appearance:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline-end:26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23645a52' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
 .wb-results article:focus-within,.wb-candidate-grid article:focus-within {box-shadow:inset 0 0 0 2px var(--wb-accent)}
 @media(hover:hover) and (pointer:fine) {
  .comparison-workbench .wb-primary:hover:not(:disabled) {background:color-mix(in srgb,var(--wb-accent) 82%,var(--wb-ink));box-shadow:0 2px 7px #251b1726}
@@ -99,6 +102,6 @@ body:has(.comparison-workbench) .footer button {max-width:100%;white-space:norma
 .comparison-workbench button:disabled {box-shadow:none;filter:none}
 .wb-results article[data-selected=true] button:disabled {opacity:1;color:var(--wb-muted);background:transparent;border-color:var(--wb-line)}
 @media(pointer:coarse) {
- .comparison-workbench :is(button,select,summary),.wb-candidate-grid .wb-text {min-height:44px}
+ .comparison-workbench :is(button[class],select,summary),.wb-candidate-grid .wb-text {min-height:44px}
  .wb-modes label {min-height:44px}
 }

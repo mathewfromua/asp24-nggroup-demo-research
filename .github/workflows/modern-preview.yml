@@ -131,6 +131,18 @@ jobs:
           fi
           python scripts/browser-modern.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts/modern "${browser_args[@]}" || status=$?
           exit "$status"
+      # Failure traces can exceed connector download limits. Keep a compact,
+      # directly reviewable set of actual renders/results as well as full traces.
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: modern-visual-review-${{ matrix.browser }}-${{ github.sha }}
+          path: |
+            browser-artifacts/modern/results.json
+            browser-artifacts/modern/*interaction*.png
+            browser-artifacts/modern/*viewport.png
+          if-no-files-found: warn
+          retention-days: 7
       - if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
