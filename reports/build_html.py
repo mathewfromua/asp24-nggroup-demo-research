@@ -36,6 +36,7 @@ def figure(kind):
             earlier,later=data[2*i:2*i+2]
             y=28+i*96
             model,sku=earlier[0].split(' · ')
+            model={'MED001988':'RG-EW1200G Pro','MED005534':'XPON Stick','MED000715':'Cu-кабель'}[sku]
             svg+=f'<text x="0" y="{y}">{html.escape(model)}</text><text x="0" y="{y+23}" font-size="13">{sku}</text>'
             for j,row in enumerate([earlier,later]):
                 count=int(row[2]);by=y-15+j*32;bar_width=count/30*280
