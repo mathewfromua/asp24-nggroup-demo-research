@@ -4,7 +4,7 @@
   "created_at": "2026-10-08",
   "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
   "manuscript_file": "reports/content.json",
-  "manuscript_sha256": "35f18a56e1ec4df15df80b3045dc89e993f7f825a08fce78b2a60e57c9da5b44",
+  "manuscript_sha256": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
   "baseline": "Checkpoint03 після E01/E02; редакція R01–R44 09.10.2026.",
   "scope": "Адресна редакція та нове читання визначених сторінок 11 PDF; історичні дії не повторено. Широке SEO очікує окремого приймання.",
   "verification": {
@@ -2657,7 +2657,7 @@
     "Editorial decision received and E01/E02 accepted; pasted DR text rejected as direct evidence; broader research pending separate review."
   ],
   "final_pdf_manifest": "reports/pdf-manifest.json",
-  "final_pdf_review": "reports/migration-review.json",
+  "final_pdf_review": "reports/editorial-validation.json",
   "final_pdf_structural_check": "scripts/verify-acceptance-pdfs.py",
   "secondary_document_identity": {
     "ASP24": {
@@ -2711,8 +2711,8 @@
   },
   "acceptance": {
     "editorial": "E01_E02_ACCEPTED_BROAD_RESEARCH_PENDING",
-    "all_30_pages_rendered_and_reviewed": false,
-    "native_browser": "NOT_RUN_BY_REPORT_MIGRATION",
+    "all_30_pages_rendered_and_reviewed": true,
+    "native_browser": "See exact-commit candidate-manifest.json and Actions artifacts; old beta Safari not inherited",
     "public_release": "NOT_VERIFIED_BY_REPORT_BUILD",
     "pdf_ua": "NOT_CLAIMED",
     "figure_data": [
@@ -2737,9 +2737,9 @@
         "unchanged_in_this_pass": true
       }
     ],
-    "current_visual_review": "All 30 pages rendered. Each of 14 changed pages inspected individually; 16 unchanged PNG hashes, including both covers, match Checkpoint03."
+    "current_visual_review": "reports/editorial-validation.json: final 30 pages rendered; 22 changed and 8 identical against main, covers identical. Implementation review, independent acceptance pending."
   },
-  "local_version": "3.1.1-rc.1",
+  "local_version": "3.2.0-rc.1",
   "file_catalog_missing": [
     "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt",
     "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt",

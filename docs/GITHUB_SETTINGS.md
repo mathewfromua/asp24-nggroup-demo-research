@@ -9,3 +9,5 @@
 Одна вебоперація після погодження: [Settings → Rules → Rulesets](https://github.com/mathewfromua/asp24-nggroup-demo-research/settings/rules) → імпортувати/звірити зазначений JSON для main, попередньо перевіривши чинний branch protection. PAT у чат не потрібний.
 
 Dependabot підготовлено для Actions та Python; npm-пакетів немає. Це не доказ увімкнених alerts/push protection. CodeQL/code scanning належить перевірити в Security окремо: конфігурація сканера, доступ token до findings і merge gate — різні кроки.
+
+CodeQL: `.github/workflows/code-scan.yml` запускає JS/TS та Python через офіційний action v4.32.0, pinned `b20883b0cd1f46c72ae0ba6d1090936928f9fa30`. `upload: false`: SARIF зберігається в Actions artifact; workflow має лише contents:read і не налаштовує repository code-scanning alerts або merge gate. Результат сканування треба читати у фактичному run, не виводити PASS з наявності YAML.

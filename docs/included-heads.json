@@ -1,0 +1,22 @@
+{
+  "base_main": "d7d9545b9d3052a3f056514277e40e37e9c36c8a",
+  "candidate_branch": "release/reports-first-rc",
+  "integration": "ordinary no-ff merges; candidate commit is recorded at packaging time (no self-referential SHA)",
+  "branches": [
+    {
+      "branch": "chore/cloud-editorial-foundation",
+      "pr": 3,
+      "head": "83a3d475ce4e5804b911bb8a54b0ac1cd50f826e"
+    },
+    {
+      "branch": "feat/report-demo-paths",
+      "pr": 6,
+      "head": "133338a1bf3cc5467035177a1e0738be79ea12d9"
+    },
+    {
+      "branch": "fix/prerelease-integrity",
+      "pr": 5,
+      "head": "cfc46ab3e64769ab7fd7528cca570d36ab74ec85"
+    }
+  ]
+}

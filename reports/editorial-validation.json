@@ -1,17 +1,180 @@
 {
   "date": "2026-10-09",
-  "scope": "A editorial candidate before demo routes",
+  "scope": "Integrated manuscript A+B; final PDF/HTML generated for 3.2.0-rc.1",
   "visual_review": {
-    "method": "Poppler 65 dpi render; all 30 pages inspected in six contact sheets; dense pages checked with extracted text and layout bounds",
+    "method": "Poppler -scale-to 900; all 30 final pages inspected in six contact sheets, dense pages inspected separately; pixel-byte comparison to rendered origin/main PDFs with same Poppler invocation",
+    "baseline_commit": "d7d9545b9d3052a3f056514277e40e37e9c36c8a",
     "pages": {
       "ASP24": 14,
       "NGGroup": 16
     },
-    "observed": "No clipped text, table collision or missing arrows in inspected renders; preserved brand covers. NG p4 illustration height adjusted 100→85 pt to retain legibility without reducing body font."
+    "observed": "No visible clipping, table collision or missing arrows; 22 changed and 8 identical renders; both covers unchanged. NG p4 illustration 100→85 pt, body font retained. Active case links fit.",
+    "comparison": {
+      "ASP24": [
+        {
+          "page": 1,
+          "equal_to_main": true,
+          "sha256": "6546c1d226b0e8eaf40e8cd394fb91166688a09178739dc5e214c51231293541"
+        },
+        {
+          "page": 2,
+          "equal_to_main": false,
+          "sha256": "5bb38f45ee8051b2e27ebce53d944f09788d7a245c2f13fc17483459723a1a75"
+        },
+        {
+          "page": 3,
+          "equal_to_main": false,
+          "sha256": "c6437d372b50160da91dfaec2c3d09315ca4cb72e0e9b956f8acef00a2346d20"
+        },
+        {
+          "page": 4,
+          "equal_to_main": false,
+          "sha256": "bee948bb1ad7e4f975ce02c03c26cff8774ec112d22c2896399ffa63fa6a217e"
+        },
+        {
+          "page": 5,
+          "equal_to_main": false,
+          "sha256": "af38b3c9c6e4a9b0b634c76798eda340c1f7e96153eee185de6b2dba44f548a3"
+        },
+        {
+          "page": 6,
+          "equal_to_main": false,
+          "sha256": "4e95dbff807868402704ffcd86501d7ffb3abc08aca015d70cb7de11a3be7643"
+        },
+        {
+          "page": 7,
+          "equal_to_main": false,
+          "sha256": "f2ffa068c2718952afe7e10cb8acc81d0a9a051ba3c928a927a67c38513883ee"
+        },
+        {
+          "page": 8,
+          "equal_to_main": false,
+          "sha256": "6c96540f27468a689d48354d4458804c7bc51ae7e66bd9831269866d53148e81"
+        },
+        {
+          "page": 9,
+          "equal_to_main": false,
+          "sha256": "9d450ad28f1ccb2011a537cdeaa923b48581472391ea25e7c877be091eedb51e"
+        },
+        {
+          "page": 10,
+          "equal_to_main": true,
+          "sha256": "750d6ba832c6571aaff75a26c5f6a5a4906fed5f2611c0f5516aa2989625f712"
+        },
+        {
+          "page": 11,
+          "equal_to_main": false,
+          "sha256": "cabe020add56461090fe233d686f8b1a10606f46fee01b8360521f158756becb"
+        },
+        {
+          "page": 12,
+          "equal_to_main": false,
+          "sha256": "3e877e0080393441b0c7490035126e75acb8b7c500c9cb5bef7ea21d79531540"
+        },
+        {
+          "page": 13,
+          "equal_to_main": true,
+          "sha256": "70ab28887835d59c011ed0133f33d8c37ad1a790e06dcec55425a468319bfcdb"
+        },
+        {
+          "page": 14,
+          "equal_to_main": false,
+          "sha256": "da843cc1bc04a2877ef57b4f7e515a6bd393ac650fac5869d4eea01742718a53"
+        }
+      ],
+      "NGGroup": [
+        {
+          "page": 1,
+          "equal_to_main": true,
+          "sha256": "4486aacf32be61a902e1f56acbf2ec093ad3b410c2174fe03aba7f4c07bc401c"
+        },
+        {
+          "page": 2,
+          "equal_to_main": true,
+          "sha256": "066f1dd2bfb54a1418ce18e52d14f14747de6af6b143a6080c74d2927116c45e"
+        },
+        {
+          "page": 3,
+          "equal_to_main": false,
+          "sha256": "c6cbbda5c19659825bd905dd2df17f5b18fb01fd27ee75656f3ba45652bfc48c"
+        },
+        {
+          "page": 4,
+          "equal_to_main": false,
+          "sha256": "124657216e5025b6219f71b24b0ac7ae4736b528a54284f5d9fed307066b73f6"
+        },
+        {
+          "page": 5,
+          "equal_to_main": false,
+          "sha256": "6f3111e9798717f61f878cb73f2f1151a4bb445cb9f2cb53a5bbe7480ab571cf"
+        },
+        {
+          "page": 6,
+          "equal_to_main": true,
+          "sha256": "8c9323b40b78acfb92abd14691e544d2d84bd90e818af9c6a965c7013a181c59"
+        },
+        {
+          "page": 7,
+          "equal_to_main": false,
+          "sha256": "d59995e311368d17e2059569f7b385696653415953f624d914404ef4ee509c24"
+        },
+        {
+          "page": 8,
+          "equal_to_main": false,
+          "sha256": "20a8873a837bac703e7e81af9696b40a99714b436d9f679c92e82202a9e4018a"
+        },
+        {
+          "page": 9,
+          "equal_to_main": false,
+          "sha256": "77f4bceb5d96c3ec01bca556042c2051314f77f115381d19647ce096fb5587aa"
+        },
+        {
+          "page": 10,
+          "equal_to_main": false,
+          "sha256": "972fe907dfe84099bac380c4c7628b6876d2736dcdd16b0513a7b9a3ecc12f21"
+        },
+        {
+          "page": 11,
+          "equal_to_main": false,
+          "sha256": "6f5cb5cff3315ec917af578e1e2eebb1bad746f1362c4d6b19944f3a09d5c819"
+        },
+        {
+          "page": 12,
+          "equal_to_main": true,
+          "sha256": "4cd0a2f3e24f0b5d3368dc4569a3e7f4919e00126c32c57e2b11aec39f8d6a03"
+        },
+        {
+          "page": 13,
+          "equal_to_main": false,
+          "sha256": "a9f1357bae3fd9aa95a374531faf8ac107ab3953aa418605bbc312ff8e757619"
+        },
+        {
+          "page": 14,
+          "equal_to_main": true,
+          "sha256": "876ac1edd34dde10e01580904df2e2b155f3d80b6b6a43669cf798db40185faa"
+        },
+        {
+          "page": 15,
+          "equal_to_main": false,
+          "sha256": "3998bc0812b23ac45b6b974689b5993704c3f29e69f81861d51bdbe613888fb2"
+        },
+        {
+          "page": 16,
+          "equal_to_main": false,
+          "sha256": "ce8f30ace1bb0cba393bd0c3c29c9807b78fdc12daf1de8d8094d5bc6364e584"
+        }
+      ]
+    },
+    "reviewer": "Implementation agent; not independent acceptance"
   },
   "text_parity": "All manuscript text blocks and table cells found in corresponding PDF page and semantic HTML",
   "r42": "Untagged; no PDF/UA claim",
   "fonts": "Exact historical font hashes; official LibreOffice download archives verified",
   "source_reading": "research/editorial-source-register.json",
-  "content_sha256": "35f18a56e1ec4df15df80b3045dc89e993f7f825a08fce78b2a60e57c9da5b44"
+  "content_sha256": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
+  "input_digest": "476f6c551d4127d93ee619e295ba5ae2d34600475c63df55c32daa7cb7d0cce7",
+  "pdf_sha256": {
+    "ASP24": "ea3332fff90516512a9afceba644720ffcb2c85ca4aa3d7de56cd61430c6aca7",
+    "NGGroup": "ac342f4d9bc550197f5996a1cb5510b11ccedc8a4271d779924e6f8f7f475560"
+  }
 }
