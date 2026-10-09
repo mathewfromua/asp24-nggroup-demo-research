@@ -18,6 +18,7 @@ p.add_argument('--url',required=True)
 p.add_argument('--browser',choices=['chromium','firefox','webkit'],default='chromium')
 p.add_argument('--executable')
 p.add_argument('--output',type=Path,required=True)
+p.add_argument('--probe-only',action='store_true',help='Capture reversible WebKit layout probes only; never substitutes for the regression suite')
 a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
 root=Path(__file__).resolve().parents[1]
 base=a.url.rstrip('/')+'/'
@@ -218,8 +219,50 @@ def case_isolation_failure(page):
     assert page.evaluate('(key)=>localStorage.getItem(key)',key)==personal
 
 
+def layout_probe(page):
+    seed(page,state(True))
+    page.set_viewport_size({'width':320,'height':844})
+    settle="() => { scrollTo(0,0); return new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))); }"
+    page.evaluate(settle)
+    inspect="""() => {
+      const read=e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {tag:e.tagName,className:e.className,testid:e.dataset.testid,text:e.tagName==='SELECT'?e.selectedOptions[0]?.textContent:e.textContent.slice(0,60),left:r.left,right:r.right,width:r.width,client:e.clientWidth,scroll:e.scrollWidth,css:Object.fromEntries(['display','position','left','right','top','width','minWidth','maxWidth','boxSizing','overflowX','clip','clipPath','appearance','gridTemplateColumns','gap','paddingLeft','paddingRight'].map(k=>[k,s[k]]))};};
+      return {viewport:innerWidth,pageScroll:document.documentElement.scrollWidth,controls:read(document.querySelector('.wb-pair-controls')),labels:[...document.querySelectorAll('.wb-pair-select')].map(e=>({self:read(e),children:[...e.children].map(read)}))};
+    }"""
+    original=page.evaluate(inspect)
+    page.reload(wait_until='networkidle');page.evaluate(settle)
+    fresh_320=page.evaluate(inspect)
+    page.set_viewport_size({'width':1440,'height':900});page.evaluate(settle)
+    page.set_viewport_size({'width':320,'height':844});page.evaluate(settle)
+    resized_again=page.evaluate(inspect)
+    probes=[]
+    changes=[
+      ('select-display-none','.wb-pair-select select{display:none!important}'),
+      ('hidden-label-display-none','.wb-pair-select>.sr-only{display:none!important}'),
+      ('hidden-label-explicit-origin','.wb-pair-select{position:relative!important}.wb-pair-select>.sr-only{left:0!important;top:0!important}'),
+      ('label-relative-only','.wb-pair-select{position:relative!important}'),
+      ('native-appearance-none','.wb-pair-select select{appearance:none!important;-webkit-appearance:none!important}'),
+      ('select-fixed-119px','.wb-pair-select select{width:119px!important;min-width:0!important;max-width:119px!important}'),
+      ('select-zero-min-percent','.wb-pair-select select{width:0!important;min-width:100%!important}'),
+      ('select-auto-grid-stretch','.wb-pair-select select{width:auto!important;justify-self:stretch!important}'),
+      ('select-inline-block','.wb-pair-select select{display:block!important}'),
+      ('badge-display-none','.wb-pair-select>[aria-hidden]{display:none!important}'),
+    ]
+    for name,css in changes:
+        style=page.add_style_tag(content=css)
+        page.evaluate(settle)
+        measured=page.evaluate(inspect)
+        style.evaluate('(element)=>element.remove()')
+        page.evaluate(settle)
+        restored=page.evaluate('document.documentElement.scrollWidth')
+        probes.append({'name':name,'css':css,'measurement':measured,'restored_page_scroll':restored})
+        print('LAYOUT_PROBE',name,'page',measured['pageScroll'],'labels',[x['self']['scroll'] for x in measured['labels']],'restored',restored,flush=True)
+    results['layout_probe']={'interpretation':'Diagnostic observations only. Every temporary stylesheet is removed; regression status is reported by the separate full suite.','original':original,'fresh_320':fresh_320,'resized_again':resized_again,'probes':probes}
+    page.screenshot(path=str(a.output/'restored-320.png'),full_page=True)
+
+
 checks=[('search-six-pair-replace-remove-undo-shortlist-save-reload',flow),('legacy-pilot-share-schema4-pair-drafts-back-forward',legacy_parity),
  ('both-brands-320-390-430-1440-keyboard-focus-text200',responsive_keyboard),('modern-case-memory-warning-export-isolation-return-history',case_isolation_failure),('full-capacity-undo-is-truthful-and-keeps-current-selection',undo_full_capacity)]
+if a.probe_only:checks=[('reversible-native-layout-diagnostic',layout_probe)]
 with sync_playwright() as pw:
     try:
         options={'chromium_sandbox':True} if a.browser=='chromium' else {}
