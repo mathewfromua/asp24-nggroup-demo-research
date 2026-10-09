@@ -172,9 +172,10 @@
   "fonts": "Exact historical font hashes; official LibreOffice download archives verified",
   "source_reading": "research/editorial-source-register.json",
   "content_sha256": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
-  "input_digest": "476f6c551d4127d93ee619e295ba5ae2d34600475c63df55c32daa7cb7d0cce7",
+  "input_digest": "44295211fd70f21b99a3fba33fe5f02d3a2a53fc1573f91d27a0e0bf4a1a3187",
   "pdf_sha256": {
     "ASP24": "ea3332fff90516512a9afceba644720ffcb2c85ca4aa3d7de56cd61430c6aca7",
     "NGGroup": "ac342f4d9bc550197f5996a1cb5510b11ccedc8a4271d779924e6f8f7f475560"
-  }
+  },
+  "html_followup": "Paired historical SVG bars added beside semantic data table; shared contour/filled caption now matches HTML illustration. Both final PDF hashes unchanged."
 }
