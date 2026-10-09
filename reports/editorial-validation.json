@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-09",
+  "scope": "A editorial candidate before demo routes",
+  "visual_review": {
+    "method": "Poppler 65 dpi render; all 30 pages inspected in six contact sheets; dense pages checked with extracted text and layout bounds",
+    "pages": {
+      "ASP24": 14,
+      "NGGroup": 16
+    },
+    "observed": "No clipped text, table collision or missing arrows in inspected renders; preserved brand covers. NG p4 illustration height adjusted 100→85 pt to retain legibility without reducing body font."
+  },
+  "text_parity": "All manuscript text blocks and table cells found in corresponding PDF page and semantic HTML",
+  "r42": "Untagged; no PDF/UA claim",
+  "fonts": "Exact historical font hashes; official LibreOffice download archives verified",
+  "source_reading": "research/editorial-source-register.json",
+  "content_sha256": "35f18a56e1ec4df15df80b3045dc89e993f7f825a08fce78b2a60e57c9da5b44"
+}

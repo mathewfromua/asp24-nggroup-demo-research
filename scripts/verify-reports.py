@@ -34,7 +34,10 @@ for brand,pages in d.items():
  for i,page in enumerate(pages,2):
   assert plain(page['title']) in ph,(brand,i,'title');pt=plain(pdf.pages[i-1].extract_text());assert '\ufffd' not in pt
   for block in page['blocks']:
-   for t in texts(block):assert plain(t) in ph,(brand,i,t[:60])
+   for t in texts(block):
+    assert plain(t) in ph,(brand,i,t[:60])
+    compact=lambda v:re.sub(r'\s+','',plain(v))
+    assert compact(t) in compact(pt),(brand,i,'PDF text missing',t[:80])
   htext.append({'page':i,'characters':len(pt),'annotations':len(pdf.pages[i-1].get('/Annots',[]))})
  records.append({'brand':brand,'pages':len(pdf.pages),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'lang':'uk-UA','struct_tree':False,'html_source_text_all_blocks':'PASS','body_pages':htext,'pdf_ua':'NOT_CLAIMED','reading_order':'Untagged PDF; visual review recorded separately in reports/migration-review.json'})
 (E/'pdf-html-structure.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n')

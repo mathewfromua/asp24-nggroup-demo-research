@@ -38,6 +38,10 @@ function snapshot() {
   mkdirSync(join(dir,'scripts')); mkdirSync(join(dir,'reports'));
   for (const name of ['build-static.mjs','verify-build.mjs','deployment-config.mjs','serve.mjs']) cpSync(join(root,'scripts',name),join(dir,'scripts',name));
   for (const name of ['content.json','pdf-manifest.json','html-manifest.json','html-public-assets.json']) cpSync(join(root,'reports',name),join(dir,'reports',name));
+  const inputs=JSON.parse(readFileSync(join(root,'reports/input-manifest.json'),'utf8'));
+  for(const name of ['reports/input-manifest.json',...Object.keys(inputs.files)]) {
+    mkdirSync(dirname(join(dir,name)),{recursive:true});cpSync(join(root,name),join(dir,name));
+  }
   return dir;
 }
 async function freePort() {

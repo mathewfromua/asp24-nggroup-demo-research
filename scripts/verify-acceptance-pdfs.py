@@ -27,7 +27,8 @@ for brand,expected_pages in [('ASP24',14),('NGGroup',16)]:
                 assert '{{' not in url and 'perspektyva.mathew-from-ua.chatgpt.site' not in url
                 links.append({'page':n,'url':url})
     demo=[x for x in links if x['url'].startswith(PUBLIC_BASE_URL)]
-    assert demo and all(x['url'].startswith(PUBLIC_BASE_URL+'#/') for x in demo)
+    assert demo and all(x['url'].startswith(PUBLIC_BASE_URL) for x in demo)
+    assert any(x['url'].startswith(PUBLIC_BASE_URL+'reports/'+brand+'_Review.html') for x in demo)
     if brand=='ASP24':
         assert all(s in texts[10] for s in ['УТП002164','УТП002165'])
         assert 'https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/' in [x['url'] for x in links]
