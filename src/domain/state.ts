@@ -8,7 +8,7 @@ export function validRoute(value: unknown, catalogOnly = false): value is string
   return typeof value === 'string' && value.length < 2000 && (catalogOnly ? /^#\/(asp|ng)\/catalog(?:\?[^#]*)?$/ : /^#\/(asp|ng)\/(?:(?:catalog|compare|cart|favorites|documents|partners|service|checkout|orders|projects|templates|lab|model-map)|(?:product|document|order|project|lab)\/[a-z0-9-]+)(?:\?[^#]*)?$/).test(value);
 }
 export function initialState(): DemoState {
-  return {version: 4, science: {}, recovery: null, orders: [], checkout: defaultCheckout(), cart: {}, favorites: [], compareByGroup: Object.fromEntries(GROUP_IDS.map(g => [g, [] as string[]])) as Record<GroupId, string[]>, listName: 'Мій об’єкт', note: '', catalogs: {asp: '', ng: ''}, drafts: {}, view: {catalogViews: {asp: 'cards', ng: 'cards'}, comparisonDialog: null, group: 'ups', differences: false, expanded: false, compareBrand: 'asp', research: Object.fromEntries(GROUP_IDS.map(g => [g, {scroll: 0, x: 0, row: '', offset: 0}])) as DemoState['view']['research'], pairs: Object.fromEntries(GROUP_IDS.map(g => [g, [] as string[]])) as Record<GroupId, string[]>, pages: {}}};
+  return {version: 4, science: {}, recovery: null, orders: [], checkout: defaultCheckout(), cart: {}, favorites: [], compareByGroup: Object.fromEntries(GROUP_IDS.map(g => [g, [] as string[]])) as Record<GroupId, string[]>, listName: 'Мій об’єкт', note: '', catalogs: {asp: '', ng: ''}, drafts: {}, view: {catalogViews: {asp: 'cards', ng: 'cards'}, comparisonDialog: null, group: 'ups', differences: false, expanded: false, compareBrand: 'asp', compareExperience: 'classic', research: Object.fromEntries(GROUP_IDS.map(g => [g, {scroll: 0, x: 0, row: '', offset: 0}])) as DemoState['view']['research'], pairs: Object.fromEntries(GROUP_IDS.map(g => [g, [] as string[]])) as Record<GroupId, string[]>, pages: {}}};
 }
 export function migrateState(raw: unknown, catalog: readonly Product[] = products): DemoState {
   const s = record(raw), result = initialState(), byId = (id: unknown) => catalog.find(p => p.id === id);
@@ -41,6 +41,7 @@ export function migrateState(raw: unknown, catalog: readonly Product[] = product
   result.view.differences = view.differences === true;
   result.view.expanded = view.expanded === true;
   result.view.compareBrand = view.compareBrand === 'ng' ? 'ng' : 'asp';
+  result.view.compareExperience = view.compareExperience === 'modern' ? 'modern' : 'classic';
   for (const group of GROUP_IDS) {
     const r = record(record(view.research)[group]);
     result.view.research[group] = {scroll: Math.max(0, Math.min(100000, Number(r.scroll) || 0)), x: Math.max(0, Math.min(10000, Number(r.x) || 0)), row: typeof r.row === 'string' ? r.row.slice(0, 200) : '', offset: Math.max(-1000, Math.min(1000, Number(r.offset) || 0))};

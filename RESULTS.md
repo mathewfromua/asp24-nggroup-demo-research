@@ -1,3 +1,32 @@
+# RC3 — інтегрований кандидат 3.2.0-rc.3
+
+**Локальні перевірки PASS; exact-SHA browser/CI результат і статус готовності — у workflow RC3 та draft PR. PREVIEW_NOT_DEPLOYED. Незалежне приймання ще не виконано.**
+
+Гілка `release/review-integrated-rc3` походить від перевіреного PR #8 / `a659d2f9e8d923a7bc64a3f91133cfed959e9181`; база draft PR — `feat/modern-experience`. Main `d7d9545…`, RC2 PR #7 та Modern PR #8 не змінено. [Рішення рецензій](docs/RC3_REVIEW_DECISIONS.md) · [Читання й післяпублікаційний контроль](docs/RC3_REVIEW.md) · [Preflight](docs/rc3-preflight.json).
+
+Виправлено DC/USB, уточнено FHP12A як розбіжність публікацій, розділено історичну опору й нове отримання PDF. Реально отримано вісім PDF і два вебподання; actual SHA/date/page/read scope записано в source register, історію не переписано. Для недоступних давніх DOM збережена явна атрибуція технічному рецензентові. Покращено контраст, джерела, HTML headings/tables/charts/citations і український hub. Modern case має компактний контекст, повернення з картки/документа зберігає modern, undo заміни відновлює слот і пару без зміни іншого стану.
+
+| Перевірка цього робочого дерева, 09.10.2026 | Фактичний результат |
+|---|---|
+| Toolchain | PASS: npm ci; Node24.19.0/npm11.9.0, Python3.12.14, pinned ReportLab4.4.9/pypdf6.10.0/Pillow12.3.0, exact font hashes. |
+| TypeScript / Node | PASS: strict typecheck; 122 PASS / 0 FAIL / 2 історичні SKIP. Нових SKIP немає. |
+| Build / verify / HTTP | PASS: root і Pages subpath; Node HTTP/case routes; локальний HTTP byte check усіх 40 активів, PDF signatures і MIME. |
+| PDF / HTML | PASS: 14+16 сторінок з одного рукопису; усі text blocks/table cells, source anchors, input digest, побайтова контрольна регенерація; stale manuscript і template відхилено. |
+| PDF visual | PASS: усі 30 baseline/current pages rendered; 21 змінену сторінку переглянуто у повному рендері, 9 незмінних, включно з обкладинками. ASP p2 геометрія збережена, NG p2 незмінна. Hash-bound evidence: reports/rc3-visual-review.json. |
+| Локальні Chromium / Firefox / WebKit | BLOCKED: Chromium launch/crashpad/sandbox; Firefox uid_map read-only і timeout; WebKit host libraries missing. Захисти не змінювалися. Історичний CI PASS не перенесено. |
+| Exact-SHA Actions | Результат записує rc3-manifest.json успішного artifact; workflow перевіряє всі шість suites на кожному engine, actual served bytes, geometry/screenshots 1440×900/390×844, reports 320/390/1440 та поточні hashes visual review. |
+| Публікація | PREVIEW_NOT_DEPLOYED. Merge/main/Pages/settings не змінено; live абсолютні PDF URLs ще можуть давати 404/старі bytes. |
+
+`rc3-preview.yml` використовує exact push SHA, готовий dist і окремі browser jobs; packaging дозволяє `READY_FOR_INDEPENDENT_REVIEW` тільки після PASS усіх gates. Поточні SHA, run і artifact наведені у draft PR, щоб результати перевірки не вимагали зміни самих перевірених байтів. Scoped performance вимірює кандидата, без baseline чи заяви про прискорення/конверсію.
+
+R34 і R42 OPEN. Фінальні PDF untagged, HTML — семантична альтернатива. Native Safari, фізичний iPhone, native zoom, VoiceOver, PDF/UA — NOT_RUN. Немає реальних цін, замовлень, CRM або інтеграції робочих сайтів.
+
+Наступна дія власника після успішного artifact: незалежно переглянути exact-SHA RC3 і залишити рішення про приймання у draft PR.
+
+---
+
+## Історичні контрольні точки — не результати RC3
+
 # Modern Experience — окрема перевірка
 
 Гілка `feat/modern-experience` походить від завершеного технічного RC2 `0034b000bd1bad42f0c3ffb222a0ec58308a42bc`. [PR №7](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/7) та [artifact 11601089917](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37897909570/artifacts/11601089917) залишаються окремим результатом A: Chromium/Firefox/WebKit по 23 PASS, 111 Node PASS, перевірені PDF/HTML; незалежне приймання очікується.

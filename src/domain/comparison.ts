@@ -66,6 +66,13 @@ export function addComparison(state: DemoState, id: string, replaceId = '', cata
   state.view.pairs[p.group] = visiblePair(ids, state.view.pairs[p.group]);
   return 'ok';
 }
+/** One reversible replacement: capture only the affected slot and pair, never the whole application state. */
+export function replaceComparison(state: DemoState, id: string, replaceId: string): ComparisonUndo | null {
+  const group = (Object.keys(groups) as GroupId[]).find(g => state.compareByGroup[g].includes(replaceId));
+  if (!group || products.find(p => p.id === id)?.group !== group) return null;
+  const undo = {group, id: replaceId, at: state.compareByGroup[group].indexOf(replaceId), pair: [...state.view.pairs[group]], replacementId: id};
+  return addComparison(state, id, replaceId) === 'ok' ? undo : null;
+}
 export function removeComparison(state: DemoState, id: string): ComparisonUndo | null {
   const group = (Object.keys(groups) as GroupId[]).find(g => state.compareByGroup[g].includes(id));
   if (!group) return null;
@@ -78,6 +85,13 @@ export function removeComparison(state: DemoState, id: string): ComparisonUndo |
 export function undoComparison(state: DemoState, undo: ComparisonUndo | null): boolean {
   if (!undo || !isGroup(undo.group)) return false;
   const ids = state.compareByGroup[undo.group];
+  if (undo.replacementId) {
+    // Do not overwrite an intervening edit or resurrect a duplicate candidate.
+    if (ids[undo.at] !== undo.replacementId || ids.includes(undo.id)) return false;
+    ids.splice(undo.at, 1, undo.id);
+    state.view.pairs[undo.group] = visiblePair(ids, undo.pair);
+    return true;
+  }
   if (ids.includes(undo.id) || ids.length >= COMPARE_LIMIT) return false;
   ids.splice(Math.min(undo.at, ids.length), 0, undo.id);
   state.view.pairs[undo.group] = visiblePair(ids, undo.pair);

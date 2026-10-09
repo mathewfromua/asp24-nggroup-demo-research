@@ -4,9 +4,9 @@
     "html": "public/reports/ASP24_Review.html",
     "sections": 13,
     "blocks": 102,
-    "sha256": "44c1bd753cf3a4d5ea3e45ac82088359095a9d9cf733eab0433f1eb14e16db44",
-    "input_digest": "a32d32fe666bc1b8781cf1903bb7d05d969080ee8bdbed1b37dd742a71da3b21",
-    "content_sha256": "42b46ba1b84cfe0db9d96e6a3e3b07845d93cdc34f4ed3461789184cb3c031d0",
+    "sha256": "5e00977fb7559f6e9c2d9c83e68a89e3fbb9c45ef82fd25709e990fb53b3e49d",
+    "input_digest": "2dd37b63b83b79fbb3fabdcdd30aac51c7156bf50344940340efb5a5d65c7ed2",
+    "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/"
   },
@@ -15,9 +15,9 @@
     "html": "public/reports/NGGroup_Review.html",
     "sections": 15,
     "blocks": 109,
-    "sha256": "3e7e7d8e5f518f448fd4f131246dd4ecde0ee166af9d7a6db180e58763420612",
-    "input_digest": "a32d32fe666bc1b8781cf1903bb7d05d969080ee8bdbed1b37dd742a71da3b21",
-    "content_sha256": "42b46ba1b84cfe0db9d96e6a3e3b07845d93cdc34f4ed3461789184cb3c031d0",
+    "sha256": "b2d8896e70fd717f4156832107c5334de7a6bf28a336424f5f9e0eb0886ac9b3",
+    "input_digest": "2dd37b63b83b79fbb3fabdcdd30aac51c7156bf50344940340efb5a5d65c7ed2",
+    "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/"
   }

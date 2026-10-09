@@ -110,35 +110,5 @@
   "limitations": [
     "Visual implementation review is not independent acceptance or proof of source truth.",
     "Final PDF untagged; PDF-UA and assistive reading NOT_RUN."
-  ],
-  "candidate_version": "3.2.0-rc.3",
-  "scope": "Targeted editorial, provenance and presentation corrections; 14/16 pages, fixed section IDs and covers retained.",
-  "text_parity": "PASS: every manuscript text block and table cell verified in its PDF page and semantic HTML; explicit image alternatives, 55 citation targets and uniquely named table/chart regions verified.",
-  "environment": {
-    "python": "3.12.14",
-    "packages": {
-      "reportlab": "4.4.9",
-      "pypdf": "6.10.0",
-      "Pillow": "12.3.0"
-    }
-  },
-  "r34": "OPEN",
-  "r42": "OPEN; final PDFs untagged, semantic HTML alternative",
-  "source_reading": "research/editorial-source-register.json#rc3_reverification; independent retrieval with actual hashes, dates, physical pages and read scope; historical attribution preserved",
-  "checks": [
-    {
-      "command": "build_editorial.py + build_html.py + export_standalone.py + build_inputs.py --write",
-      "status": "PASS"
-    },
-    {
-      "command": "scripts/verify-reports.py",
-      "status": "PASS",
-      "http": "checked separately by candidate HTTP suite"
-    },
-    {
-      "command": "scripts/check-report-reproduction.py",
-      "status": "PASS",
-      "result": "Byte-identical regeneration and two negative stale-output checks"
-    }
   ]
 }

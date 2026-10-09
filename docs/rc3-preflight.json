@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-10-09T11:53:17.521944+00:00",
+  "status": "PASS_WITH_COORDINATION_LIMIT",
+  "repository": "mathewfromua/asp24-nggroup-demo-research",
+  "archive_sha256": "b8290ab0540703a6d7f50d3350e54d4ff657ffdb5fee44fa75927999e113d031",
+  "archive_member_checksums": "ALL_PASS",
+  "input_files": {
+    "00_START_HERE_UA.md": "477447c9b6f07fd416add24f41826d1897785b38d68146971ee800268769cb7c",
+    "01_CODEX_RC3_IMPLEMENTATION_UA.md": "688680858f911ce8a561822f79afef266cfed62eeb5d67a4a29f022394bea689",
+    "02_REVIEW_DECISIONS_UA.md": "edcf897cdb2803ee5fce4dd7519349029328e28a131f22eb23a07947f2a2d5b8",
+    "03_MESSAGE_FOR_NEW_CODEX_CHAT_UA.txt": "db61aa09b74420b286ff7912490fbc6442b0bf3ea7dba500e5b7337f4e099918",
+    "HANDOFF_MANIFEST.json": "7c7f1d50d21ebce2740161c3c96f4cf40167c62552f298e289ec41083662132e",
+    "SHA256SUMS.txt": "b5d000e094bc85ed0b560cd5bf8a06beaf623cd87f5c8019069f09b71379b029",
+    "documents/ASP24_Review_RC2.html": "44c1bd753cf3a4d5ea3e45ac82088359095a9d9cf733eab0433f1eb14e16db44",
+    "documents/ASP24_Review_RC2.pdf": "ea3332fff90516512a9afceba644720ffcb2c85ca4aa3d7de56cd61430c6aca7",
+    "documents/NGGroup_Review_RC2.html": "3e7e7d8e5f518f448fd4f131246dd4ecde0ee166af9d7a6db180e58763420612",
+    "documents/NGGroup_Review_RC2.pdf": "2bff88177656bc320cc1fee207c8972363441860a3de6ff55986172e5d2d49ba",
+    "reviews/DESIGN_ACCESSIBILITY_RC2_UA.md": "de864708148e1a07c1776e971f1c9e1b79633c75432794b0749e57d6548ce3ce",
+    "reviews/PRODUCT_PUBLICATION_RC2_UA.md": "95e140c55944478d3c588ab483fb3391ebcbaaeadf821ea86aefc5f8a89cb2aa",
+    "reviews/TECHNICAL_EVIDENCE_RC2_UA.md": "417c5f89c8f6d99a87cd2114ba1ee5e2bb3b8f20cee110864506277449eaa12d"
+  },
+  "main": "d7d9545b9d3052a3f056514277e40e37e9c36c8a",
+  "rc2": {
+    "pr": 7,
+    "head": "0034b000bd1bad42f0c3ffb222a0ec58308a42bc",
+    "draft": true,
+    "merged": false
+  },
+  "modern": {
+    "pr": 8,
+    "head": "a659d2f9e8d923a7bc64a3f91133cfed959e9181",
+    "base": "release/reports-first-rc",
+    "draft": true,
+    "merged": false,
+    "checkpoint": "READY_FOR_REVIEW in live PR description"
+  },
+  "integration": {
+    "existing_rc3_branch_or_pr": false,
+    "branch": "release/review-integrated-rc3",
+    "base": "feat/modern-experience",
+    "base_sha": "a659d2f9e8d923a7bc64a3f91133cfed959e9181"
+  },
+  "working_tree_before": "clean work branch at d7d9545; git fetch and switch to new RC3 branch; no reset/clean/force",
+  "coordination": "PR8 live completed checkpoint and repeated unchanged remote SHA. App-wide thread inspection unavailable on this host; no claim of observing another executor local work. Integration uses separate branch; remote base rechecked before push.",
+  "permissions": "No merge/main/Pages/settings/deployment authorized or performed.",
+  "inputs_scope": "Handoff files are frozen RC2 review material, not the live repository. No separate completed architectural composition review supplied."
+}

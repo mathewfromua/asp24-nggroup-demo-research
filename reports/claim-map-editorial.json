@@ -4,9 +4,9 @@
   "created_at": "2026-10-08",
   "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
   "manuscript_file": "reports/content.json",
-  "manuscript_sha256": "42b46ba1b84cfe0db9d96e6a3e3b07845d93cdc34f4ed3461789184cb3c031d0",
+  "manuscript_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
   "baseline": "Checkpoint03 після E01/E02; редакція R01–R44 09.10.2026.",
-  "scope": "Адресна редакція та нове читання визначених сторінок 11 PDF; історичні дії не повторено. Широке SEO очікує окремого приймання.",
+  "scope": "RC3 targeted editorial reconciliation and independent reading of eight PDFs/two FHP12A pages; historic UI actions remain separately attributed. No wider SEO synthesis.",
   "verification": {
     "scripts": [
       "evidence/recovered_sources/recompute_source_measures.py",
@@ -148,15 +148,25 @@
         }
       ],
       "limits": [
-        "Фото й текст — опубліковані матеріали; актуальне виконання складської одиниці невідоме."
+        "Фото й текст — опубліковані матеріали; актуальне виконання складської одиниці невідоме.",
+        "DC/USB distinction is additionally supported by the supplied technical reviewer’s historical DOM reading, not by a new RC3 historical capture."
       ],
       "locators": [
         "reports/assets/ASP24-p4-1.png: labels 5/5/9/12/12 V; text states one 5 V and two 9 V outputs."
       ],
-      "printed_source_note": "<b>[4]</b> Фото й опис M1550-C — ілюстрація та витяг попереднього огляду. Фактичне виконання поставки не перевіряли. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Картка</u></link>",
+      "printed_source_note": "<b>[4]</b> Фото й опис M1550-C — ілюстрація та витяг попереднього огляду. DC/USB — уточнення технічної рецензії за DOM 10.09.2026. Поставку не перевіряли. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Картка</u></link>",
       "external_urls": [
         "https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/"
-      ]
+      ],
+      "rc3_reviewer_evidence": {
+        "file_name": "TECHNICAL_EVIDENCE_RC2_UA.md",
+        "sha256": "417c5f89c8f6d99a87cd2114ba1ee5e2bb3b8f20cee110864506277449eaa12d",
+        "review_date": "2026-10-09",
+        "evidence_kind": "secondary_review_of_historical_primary",
+        "status": "NOT_INDEPENDENTLY_REREAD_IN_RC3",
+        "locator": "ASP24 p6 / T01; matrix and section 3",
+        "scope": "Reviewer read asp-ups-product.txt from 2026-09-10: five compared DC outputs, USB-A and Type-C separately named."
+      }
     },
     "ASP24:5": {
       "report": "ASP24",
@@ -484,7 +494,7 @@
     "NGGroup:3": {
       "report": "NGGroup",
       "citation_number": 3,
-      "status": "INHERITED_SECONDARY_PDF_ABSENT",
+      "status": "HISTORICAL_EVIDENCE_AND_CURRENT_DIRECT_READING",
       "primary_files": [],
       "secondary": [
         {
@@ -502,19 +512,48 @@
         }
       ],
       "limits": [
-        "Повна первинна специфікація PLC відсутня; габарити 125×100×25 проти 130×100×25 мм та 10,2/10,7 дБ з умовою без конекторів — за попереднім аналізом. DIN не тлумачити автоматично як звичайну DIN-рейку."
+        "Historical card/filter scenario remains secondary. Current PLC PDF physical page 2 was retrieved and read independently on 2026-10-09; original historical PDF identity is not established.",
+        "125×100×25 versus 130×100×25 mm and 10.7 versus 10.2 dB do not establish equivalent supply variants or connector conditions. DIN is not automatically an electrical DIN rail."
       ],
-      "locators": [],
-      "printed_source_note": "<b>[3]</b> PLC: картки та специфікація серії — за попереднім оглядом; повний первинний PDF відсутній. <link href=\"https://nggroup.ua/ngoptics-din-1x8-sc-upc\"><u>DIN</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf\"><u>Специфікація</u></link>",
+      "locators": [
+        "research/editorial-source-register.json#rc3_reverification/readings/Д04"
+      ],
+      "printed_source_note": "<b>[3]</b> PLC: історичні картки — за попереднім оглядом. PDF отримано 09.10.2026; прочитано таблицю на фізичній с. 2: 130×100×25 мм, 10,2 дБ без конекторів для 1×8. Поставка невідома. <link href=\"https://nggroup.ua/ngoptics-din-1x8-sc-upc\"><u>DIN</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf\"><u>Специфікація</u></link>",
       "external_urls": [
         "https://nggroup.ua/ngoptics-din-1x8-sc-upc",
         "https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf"
+      ],
+      "historical_evidence": {
+        "status": "INHERITED_SECONDARY_PDF_ABSENT",
+        "limits": [
+          "Повна первинна специфікація PLC відсутня; габарити 125×100×25 проти 130×100×25 мм та 10,2/10,7 дБ з умовою без конекторів — за попереднім аналізом. DIN не тлумачити автоматично як звичайну DIN-рейку."
+        ],
+        "interpretation": "Historical capture/file availability only; superseded as an overall statement about current PDF retrieval. The later copy does not establish historical identity."
+      },
+      "current_readings": [
+        {
+          "id": "Д04",
+          "url": "https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf",
+          "actual_sha256": "0f39542292088586d148148e390c805a3a73da746a845a2692dcec16d5ba8438",
+          "retrieved_at_utc": "2026-10-09T11:51:45.378380+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; pypdf text extraction and reading",
+          "verified": "1×8 maximum insertion loss 10.2 dB without connectors; DIN cassette 130×100×25 mm; no new reading of page 1.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            2
+          ],
+          "total_physical_pages": 2,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        }
       ]
     },
     "NGGroup:4": {
       "report": "NGGroup",
       "citation_number": 4,
-      "status": "INHERITED_SECONDARY_PDF_ABSENT",
+      "status": "HISTORICAL_EVIDENCE_AND_CURRENT_DIRECT_READING",
       "primary_files": [],
       "secondary": [
         {
@@ -532,18 +571,94 @@
         }
       ],
       "limits": [
-        "Повні первинні Grandway PDF відсутні. −10…+70; −65…+10; −70…+10; 850 нм −60…+10 та інші довжини −65…+10 — вторинне зіставлення від 28.09.",
-        "URL /20201102/ та /20260730/ не доводять дати редакції. Конкретне виконання/поставка невідомі; не обирати одну межу як правильну."
+        "Current NG and Grandway web parameter tables and both one-page PDFs were retrieved and read on 2026-10-09; publication disagreement is directly supported. Earlier historical card state remains separate.",
+        "FHP12A/FHP12-A spelling does not identify the supplied revision. URL dates do not establish document revision dates; no exact supplied range is selected."
       ],
       "locators": [
-        "Попередній опис: фізична с.1, друковані с.31/71."
+        "Попередній опис: фізична с.1, друковані с.31/71.",
+        "research/editorial-source-register.json#rc3_reverification/readings/Д02",
+        "research/editorial-source-register.json#rc3_reverification/readings/Д03",
+        "research/editorial-source-register.json#rc3_reverification/readings/ng-fhp12a",
+        "research/editorial-source-register.json#rc3_reverification/readings/grandway-fhp12a"
       ],
-      "printed_source_note": "<b>[4]</b> FHP12A: зіставлення за попереднім оглядом. PDF: фізична с. 1, друковані 31/71; поставка невідома. Повні PDF відсутні. <link href=\"https://nggroup.ua/grandway-fhp12a\"><u>NG</u></link> · <link href=\"https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html\"><u>Grandway</u></link> · <link href=\"https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf\"><u>PDF 31</u></link> · <link href=\"https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf\"><u>PDF 71</u></link>",
+      "printed_source_note": "<b>[4]</b> FHP12A: сторінки NG/Grandway й обидва PDF отримано та прочитано 09.10.2026. PDF мають по одній фізичній сторінці, друковані 31/71. Розбіжність публікацій підтверджено; паспорт поставки невідомий. <link href=\"https://nggroup.ua/grandway-fhp12a\"><u>NG</u></link> · <link href=\"https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html\"><u>Grandway</u></link> · <link href=\"https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf\"><u>PDF 31</u></link> · <link href=\"https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf\"><u>PDF 71</u></link>",
       "external_urls": [
         "https://nggroup.ua/grandway-fhp12a",
         "https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html",
         "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf",
         "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf"
+      ],
+      "historical_evidence": {
+        "status": "INHERITED_SECONDARY_PDF_ABSENT",
+        "limits": [
+          "Повні первинні Grandway PDF відсутні. −10…+70; −65…+10; −70…+10; 850 нм −60…+10 та інші довжини −65…+10 — вторинне зіставлення від 28.09.",
+          "URL /20201102/ та /20260730/ не доводять дати редакції. Конкретне виконання/поставка невідомі; не обирати одну межу як правильну."
+        ],
+        "interpretation": "Historical capture/file availability only; superseded as an overall statement about current PDF retrieval. The later copy does not establish historical identity."
+      },
+      "current_readings": [
+        {
+          "id": "Д02",
+          "url": "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf",
+          "actual_sha256": "bce58f5e48ae251f703ae5d568077411d7a29b6cc7c48f9215480dc18b9b6970",
+          "retrieved_at_utc": "2026-10-09T11:51:46.428383+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; PyMuPDF raster rendering and visual reading",
+          "verified": "FHP12-A Test Range −70…+10 dBm; printed page 31.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            1
+          ],
+          "total_physical_pages": 1,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        },
+        {
+          "id": "Д03",
+          "url": "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf",
+          "actual_sha256": "b8bc82d214f8131fcef0eab3cf6c213c0ccc02d4c1488f2f86e53814552ae08b",
+          "retrieved_at_utc": "2026-10-09T11:51:47.134298+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; pypdf text extraction and reading",
+          "verified": "FHP12-A Test Range: 850 nm −60…+10; 1300/1310/1550/1490/1625 nm −65…+10 dBm; printed page 71.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            1
+          ],
+          "total_physical_pages": 1,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        },
+        {
+          "id": "ng-fhp12a",
+          "url": "https://nggroup.ua/grandway-fhp12a",
+          "actual_sha256": "a5c9d18b62bcb8201e585da8c433ef6ffd1e28003682e898160e052ff74613cb",
+          "retrieved_at_utc": "2026-10-09T11:51:46.927104+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS HTML retrieval; read description/parameter table as static text; no JavaScript execution or interaction",
+          "verified": "NG FHP12A description: від -10 до +70 дБм; table: -10 ~ +70 дБм.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "locator": "NG description and table row Діапазон потужності",
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        },
+        {
+          "id": "grandway-fhp12a",
+          "url": "https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html",
+          "actual_sha256": "0c84a96b2c04699c2e5b3391e928f9cc21ec322dcf09b92ee8b88bba24d7fe56",
+          "retrieved_at_utc": "2026-10-09T11:51:47.719182+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS HTML retrieval; read description/parameter table as static text; no JavaScript execution or interaction",
+          "verified": "Grandway Test Range FHP12-A: -65~+10dBm; FHP12-B is a distinct column/variant.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "locator": "Items/Specifications table, Test Range row",
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        }
       ]
     },
     "NGGroup:5": {
@@ -574,7 +689,7 @@
     "NGGroup:6": {
       "report": "NGGroup",
       "citation_number": 6,
-      "status": "PARTIAL_PRIMARY_IMAGE_AND_SECONDARY_DOCUMENT_REVIEW",
+      "status": "HISTORICAL_EVIDENCE_AND_CURRENT_DIRECT_READING",
       "primary_files": [
         "evidence/recovered_sources/nggroup-docs-20260910/ng-xpon-manual.jpg",
         "evidence/recovered_sources/nggroup-docs-20260910/browser-observations.json"
@@ -594,10 +709,13 @@
         }
       ],
       "limits": [
-        "Збережені кадри не є повним 10-сторінковим PDF. Повний зміст інструкції переказано за попереднім оглядом; апаратної перевірки немає."
+        "Historical captures and secondary ten-page account remain separate. Current ten-page PDF was retrieved; only physical pages 2, 4, 9, 10 were read in RC3.",
+        "Document instructions do not establish equipment, OLT/ONU/host compatibility or execution of the described actions."
       ],
-      "locators": [],
-      "printed_source_note": "<b>[6]</b> XPON: повний зміст десятисторінкової інструкції описаний у попередньому огляді; збережено кадри, не весь первинний файл. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf\"><u>Інструкція</u></link> Додаткова текстова звірка вебпредставлення десяти сторінок — 08.10.2026, за редакційним дослідженням; без отримання PDF та повного візуального перегляду.",
+      "locators": [
+        "research/editorial-source-register.json#rc3_reverification/readings/Д05"
+      ],
+      "printed_source_note": "<b>[6]</b> XPON: повний зміст десятисторінкової інструкції описаний у попередньому огляді; збережено кадри, не весь первинний файл. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf\"><u>Інструкція</u></link> Додаткова текстова звірка вебпредставлення десяти сторінок — 08.10.2026, за редакційним дослідженням; без отримання PDF та повного візуального перегляду. Окремо 09.10.2026 отримано PDF: текстово прочитано с. 2, 4, 9, 10; не заявляємо нового читання всіх десяти сторінок.",
       "external_urls": [
         "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf"
       ],
@@ -607,12 +725,41 @@
         "raw_pdf": false,
         "new_visual_acceptance": false,
         "hardware_test": false
-      }
+      },
+      "historical_evidence": {
+        "status": "PARTIAL_PRIMARY_IMAGE_AND_SECONDARY_DOCUMENT_REVIEW",
+        "limits": [
+          "Збережені кадри не є повним 10-сторінковим PDF. Повний зміст інструкції переказано за попереднім оглядом; апаратної перевірки немає."
+        ],
+        "interpretation": "Historical capture/file availability only; superseded as an overall statement about current PDF retrieval. The later copy does not establish historical identity."
+      },
+      "current_readings": [
+        {
+          "id": "Д05",
+          "url": "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf",
+          "actual_sha256": "19f02d8b3d388b04a9e277519116f1ea8adefcd81992ff35d0d8ff0c71322150",
+          "retrieved_at_utc": "2026-10-09T11:51:45.493918+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; pypdf text extraction and reading",
+          "verified": "Interfaces and SFP/SFP+ rates; GPON Setting for OLT authentication; Backup/Restore; Firmware software. Only listed pages read.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            2,
+            4,
+            9,
+            10
+          ],
+          "total_physical_pages": 10,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        }
+      ]
     },
     "NGGroup:7": {
       "report": "NGGroup",
       "citation_number": 7,
-      "status": "MIXED_PRIMARY_LIST_AND_SECONDARY_PDF_CONTENT",
+      "status": "HISTORICAL_EVIDENCE_AND_CURRENT_DIRECT_READING",
       "primary_files": [
         "evidence/recovered_sources/nggroup-docs-20260910/ng-documentation.record.json",
         "evidence/recovered_sources/nggroup-20260910/ups-ng1550-docs.txt",
@@ -633,20 +780,70 @@
         }
       ],
       "limits": [
-        "Підпис 13.16.2025 — збережений перелік; внутрішня дата 13.06.2025 — вторинний опис. Тип усіх частин комплекту NG POWER — за попереднім аналізом; кадр першої сторінки не підтверджує читання всіх сторінок.",
-        "Не правовий висновок про поставку чи відсутність застосовного документа."
+        "Historical list label 13.16.2025 is separate from newly read twisted.pdf interval 14.06.2024–13.06.2025. Both pages of twisted.pdf and all three _2024_.pdf pages were visually read in RC3.",
+        "NG-1550-6 is not an established synonym for M1550-C. Reading the NG POWER conformity documents does not establish applicability or legal sufficiency for a specific supply."
       ],
-      "locators": [],
-      "printed_source_note": "<b>[7]</b> Перелік документів 10.09 підтверджує підпис 13.16.2025. Внутрішні дати й тип комплектів — за аналізом PDF у попередньому огляді. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf\"><u>Кабель</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf\"><u>NG POWER</u></link>",
+      "locators": [
+        "research/editorial-source-register.json#rc3_reverification/readings/Д06",
+        "research/editorial-source-register.json#rc3_reverification/readings/Д07"
+      ],
+      "printed_source_note": "<b>[7]</b> Перелік документів 10.09 підтверджує підпис 13.16.2025. 09.10.2026 візуально прочитано twisted.pdf (2 с.) та _2024_.pdf (3 с.): 13.06.2025 — кінець строку; другий файл містить документи про відповідність. Нове читання не доводить історичної незмінності. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf\"><u>Кабель</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf\"><u>NG POWER</u></link>",
       "external_urls": [
         "https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf",
         "https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf"
+      ],
+      "historical_evidence": {
+        "status": "MIXED_PRIMARY_LIST_AND_SECONDARY_PDF_CONTENT",
+        "limits": [
+          "Підпис 13.16.2025 — збережений перелік; внутрішня дата 13.06.2025 — вторинний опис. Тип усіх частин комплекту NG POWER — за попереднім аналізом; кадр першої сторінки не підтверджує читання всіх сторінок.",
+          "Не правовий висновок про поставку чи відсутність застосовного документа."
+        ],
+        "interpretation": "Historical capture/file availability only; superseded as an overall statement about current PDF retrieval. The later copy does not establish historical identity."
+      },
+      "current_readings": [
+        {
+          "id": "Д06",
+          "url": "https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf",
+          "actual_sha256": "0c3f78c690a9c3d392db01361f12dbe787367ab5f85b13ac047b5df38a3487a9",
+          "retrieved_at_utc": "2026-10-09T11:51:45.933555+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; PyMuPDF raster rendering and visual reading",
+          "verified": "Page 1 certificate and validity interval 14.06.2024–13.06.2025; page 2 annex listing 22 cable/patchcord items. The interval end is not a revision date.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            1,
+            2
+          ],
+          "total_physical_pages": 2,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        },
+        {
+          "id": "Д07",
+          "url": "https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf",
+          "actual_sha256": "8b117786e185654eafe1cd80f90c879a52c70a2d66a47055dd8edbb5433a8868",
+          "retrieved_at_utc": "2026-10-09T11:51:45.944573+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; PyMuPDF raster rendering and visual reading",
+          "verified": "Certificate, declaration and registration concerning mini UPS NG POWER; not a technical specification or proof of applicability to M1550-C.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            1,
+            2,
+            3
+          ],
+          "total_physical_pages": 3,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        }
       ]
     },
     "NGGroup:8": {
       "report": "NGGroup",
       "citation_number": 8,
-      "status": "INHERITED_SECONDARY_PDF_ABSENT",
+      "status": "HISTORICAL_EVIDENCE_AND_CURRENT_DIRECT_READING",
       "primary_files": [],
       "secondary": [
         {
@@ -664,14 +861,61 @@
         }
       ],
       "limits": [
-        "Повних первинних CU-8.pdf/CCAG.pdf немає. 30.10.2024, Pass, 87,7/16,1 м — за попереднім аналізом; відтворено лише фрагмент CU-8.",
-        "Результат конкретного зразка/режиму не є властивістю всіх партій, довжин чи доказом 1 Гбіт/с на 180 м."
+        "Both current one-page files were obtained and fully text-read in RC3. CCAG printed page 4 does not establish the original set completeness. Historical file identity is not established.",
+        "87.7/16.1 m and Pass apply to the named sample and TIA Cat 5e Permanent Link conditions, not all batches, arbitrary lengths, PoE or 1 Gbit/s at 180 m."
       ],
-      "locators": [],
-      "printed_source_note": "<b>[8]</b> CU-8 / CCAG: 30.10.2024, 87,7 / 16,1 м — за попереднім оглядом. Збережено фрагмент CU-8, повних первинних звітів немає. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf\"><u>CU-8</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf\"><u>CCAG</u></link>",
+      "locators": [
+        "research/editorial-source-register.json#rc3_reverification/readings/Д08",
+        "research/editorial-source-register.json#rc3_reverification/readings/Д09"
+      ],
+      "printed_source_note": "<b>[8]</b> CU-8 / CCAG отримано й текстово прочитано 09.10.2026: по 1 фізичній сторінці, CCAG має друкований номер 4. 30.10.2024, 87,7 / 16,1 м, Pass за TIA Cat 5e Permanent Link; повнота первинного комплекту невідома. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf\"><u>CU-8</u></link> · <link href=\"https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf\"><u>CCAG</u></link>",
       "external_urls": [
         "https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf",
         "https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf"
+      ],
+      "historical_evidence": {
+        "status": "INHERITED_SECONDARY_PDF_ABSENT",
+        "limits": [
+          "Повних первинних CU-8.pdf/CCAG.pdf немає. 30.10.2024, Pass, 87,7/16,1 м — за попереднім аналізом; відтворено лише фрагмент CU-8.",
+          "Результат конкретного зразка/режиму не є властивістю всіх партій, довжин чи доказом 1 Гбіт/с на 180 м."
+        ],
+        "interpretation": "Historical capture/file availability only; superseded as an overall statement about current PDF retrieval. The later copy does not establish historical identity."
+      },
+      "current_readings": [
+        {
+          "id": "Д08",
+          "url": "https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf",
+          "actual_sha256": "9de383b814d712699ba0ae8a1f6e803413fad91794c1aa7654b0327bfb4d100b",
+          "retrieved_at_utc": "2026-10-09T11:51:47.069017+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; pypdf text extraction and reading",
+          "verified": "CU-8: Pass; 30.10.2024; TIA Cat 5e Permanent Link; 87.7 m; Wx-500; NVP 68%; printed page 1.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            1
+          ],
+          "total_physical_pages": 1,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        },
+        {
+          "id": "Д09",
+          "url": "https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf",
+          "actual_sha256": "32804873908431359be234dd6fb15856df15f0a5130c75b055300a763b060c35",
+          "retrieved_at_utc": "2026-10-09T11:51:46.302982+00:00",
+          "read_at_utc": "2026-10-09T11:54:59.354008+00:00",
+          "status": "DIRECT_CURRENT_CONTENT_READ",
+          "method": "HTTPS retrieval; pypdf text extraction and reading",
+          "verified": "CCAG: Pass; 30.10.2024; TIA Cat 5e Permanent Link; 16.1 m; Wx-500; NVP 68%; printed page 4 on the only physical page.",
+          "archival_identity": "NOT_ESTABLISHED",
+          "public_copy": "NOT_REDISTRIBUTED",
+          "physical_pages": [
+            1
+          ],
+          "total_physical_pages": 1,
+          "registry": "research/editorial-source-register.json#rc3_reverification/readings"
+        }
       ]
     },
     "NGGroup:9": {
@@ -689,16 +933,26 @@
       "secondary": [],
       "limits": [
         "Видимої назви немає у формі 10.09; hidden product без value — HTML 09.09. Це різні стани. Поле могло змінитися пізнішим JavaScript.",
-        "Форму не надсилали; підготовлений submit-payload, CRM та отримання менеджером невідомі. Партнерська пропозиція не вимірює виконання обіцянок."
+        "Форму не надсилали; підготовлений submit-payload, CRM та отримання менеджером невідомі. Партнерська пропозиція не вимірює виконання обіцянок.",
+        "Button data-product model name is reviewer-reported from the 09.09 historical HTML, not independently reread in RC3; it does not prove field population or receipt."
       ],
       "locators": [
         "ups-consultation.txt:142–155; HTML:825–829."
       ],
-      "printed_source_note": "<b>[9]</b> Видима форма M1550-C: DOM/кадр 10.09; hidden product: HTML 09.09. Партнерська сторінка — запис 10.09. Форму не надсилали. <link href=\"https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah\"><u>Модель</u></link> · <link href=\"https://nggroup.ua/partneram\"><u>Партнерам</u></link>",
+      "printed_source_note": "<b>[9]</b> Видима форма M1550-C: DOM/кадр 10.09; hidden product: HTML 09.09. data-product із назвою моделі — за технічною рецензією цього HTML; тут повторно не читали. Партнерська сторінка — запис 10.09. Форму не надсилали. <link href=\"https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah\"><u>Модель</u></link> · <link href=\"https://nggroup.ua/partneram\"><u>Партнерам</u></link>",
       "external_urls": [
         "https://nggroup.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah",
         "https://nggroup.ua/partneram"
-      ]
+      ],
+      "rc3_reviewer_evidence": {
+        "file_name": "TECHNICAL_EVIDENCE_RC2_UA.md",
+        "sha256": "417c5f89c8f6d99a87cd2114ba1ee5e2bb3b8f20cee110864506277449eaa12d",
+        "review_date": "2026-10-09",
+        "evidence_kind": "secondary_review_of_historical_primary",
+        "status": "NOT_INDEPENDENTLY_REREAD_IN_RC3",
+        "locator": "NG p9 / source [9]; section 5 item 4",
+        "scope": "Reviewer read static HTML 2026-09-09: button data-product contains M1550-C model name; submit-time product and receipt not tested."
+      }
     },
     "NGGroup:10": {
       "report": "NGGroup",
@@ -832,11 +1086,20 @@
           "evidence_scope": "Published identity in retrieved text; not raw HTTP/interactive acceptance"
         }
       ],
-      "printed_source_note": "<b>[16]</b> Пристрій M1550-C — УТП002164; акумулятор до нього — УТП002165. Текстові подання карток прочитано 09.10.2026; можливий кеш. Ціни, наявність і виконання пошуку не перевіряли. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Пристрій</u></link> · <link href=\"https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Акумулятор</u></link>",
+      "printed_source_note": "<b>[16]</b> Пристрій M1550-C — УТП002164; акумулятор до нього — УТП002165. Текстові подання карток прочитано 09.10.2026; можливий кеш. Технічна рецензія також підтверджує ці коди в DOM пошукової підказки 10.09; тут його повторно не читали. Ціни, наявність і виконання пошуку не перевіряли. <link href=\"https://asp24.ua/dzherelo-bezperebijnogo-zhivlennja-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Пристрій</u></link> · <link href=\"https://asp24.ua/akumuliator-dlia-dbzh-mini-ups-ng-power-m1550-c-35w-15600-mah/\"><u>Акумулятор</u></link>",
       "limits": [
         "Possibly cached text representations; no raw HTTP or live button test.",
         "No current price/stock, Google visibility, demand frequency or equivalence to NG-1550-6 inferred."
-      ]
+      ],
+      "rc3_reviewer_evidence": {
+        "file_name": "TECHNICAL_EVIDENCE_RC2_UA.md",
+        "sha256": "417c5f89c8f6d99a87cd2114ba1ee5e2bb3b8f20cee110864506277449eaa12d",
+        "review_date": "2026-10-09",
+        "evidence_kind": "secondary_review_of_historical_primary",
+        "status": "NOT_INDEPENDENTLY_REREAD_IN_RC3",
+        "locator": "ASP24 p11 / source [16]; section 5 item 3",
+        "scope": "Reviewer read search suggestion DOM 2026-09-10: M1550-C article УТП002164 and battery article УТП002165."
+      }
     }
   },
   "major_claims": [
@@ -988,6 +1251,7 @@
       "distinctions": [
         "Visible model absent in saved modal on 10.09",
         "hidden product has no value attribute in different HTML 09.09",
+        "button data-product carries the model name according to technical reviewer’s reading of 09.09 historical HTML; not independently reread in RC3",
         "submit-time value and actual receipt NOT TESTED"
       ]
     },
@@ -1058,7 +1322,8 @@
         "current price or stock",
         "interactive search PASS",
         "Google indexing or positions"
-      ]
+      ],
+      "historical_corroboration": "Technical reviewer reports the same two article codes in the 2026-09-10 search suggestion DOM; not independently reread in RC3."
     }
   ],
   "page_source_map": [
@@ -1142,7 +1407,7 @@
       "images": [
         {
           "file": "reports/assets/ASP24-p4-1.png",
-          "caption": "Фрагмент опублікованого фото з попереднього огляду. Зліва направо: 5 В, 5 В, 9 В, 12 В, 12 В. Зображення не ретушовано. [4]",
+          "caption": "Фрагмент фото з попереднього огляду: DC-гнізда 5 В, 5 В, 9 В, 12 В, 12 В зліва направо; USB не враховано. Зображення не ретушовано. [4]",
           "crop": null
         }
       ],
@@ -1395,7 +1660,7 @@
       "images": [
         {
           "file": "reports/assets/NGGroup-p4-3-crop.png",
-          "caption": "Фрагмент CU-8 із попереднього огляду: схема пар, 87,7 м і результат Pass. Зображено ліву частину; повний файл не відновлено. [8]",
+          "caption": "Фрагмент CU-8 із попереднього огляду: схема пар, 87,7 м і Pass. Зображено ліву частину; доступний односторінковий PDF отримано й прочитано 09.10.2026. [8]",
           "crop": null
         }
       ],
@@ -1406,7 +1671,7 @@
       "pdf_page": 9,
       "html_anchor": "nggroup-09",
       "section": "Консультація й партнерство",
-      "title": "Консультація починається з назви моделі",
+      "title": "Звернення зі сторінки товару має зберігати назву моделі",
       "source_ids": [
         "NGGroup:9"
       ],
@@ -2641,6 +2906,14 @@
       "original_recorded_sha256": "036379ce722aca858874d9c844874c931c13698a95ea7af42323b4d17384caae",
       "availability": "NOT_INCLUDED_IN_PUBLIC_REPOSITORY",
       "reason": "Historical evidence or superseded build artifact retained separately in the private Checkpoint03."
+    },
+    "research/editorial-source-register.json": {
+      "path": "research/editorial-source-register.json",
+      "bytes": 28272,
+      "sha256": "204eb7b4039096d4b51b9c7d3e1dcb108beee3cc0f44a19b6d21c83098da56c3",
+      "evidence_kind": "bounded_retrieval_and_reading_log",
+      "availability": "INCLUDED_IN_PUBLIC_REPOSITORY",
+      "limit": "Log/excerpts, not redistribution of full third-party PDFs; hashes establish bytes, not truth or historical identity."
     }
   },
   "global_limits": [
@@ -2738,9 +3011,14 @@
         "unchanged_in_this_pass": true
       }
     ],
-    "current_visual_review": "reports/editorial-validation.json: final 30 pages rendered; 22 changed and 8 identical against main, covers identical. Implementation review, independent acceptance pending."
+    "current_visual_review": "RC3 PASS: reports/rc3-visual-review.json binds source/input/PDF/HTML hashes; all 30 rendered, 21 changed full pages visually reviewed, 9 unchanged including covers. Implementation review; independent acceptance pending.",
+    "historical_visual_review": {
+      "all_30_pages_rendered_and_reviewed": true,
+      "review": "reports/editorial-validation.json: final 30 pages rendered; 22 changed and 8 identical against main, covers identical. Implementation review, independent acceptance pending.",
+      "scope": "Previous report candidate; not an RC3 acceptance result."
+    }
   },
-  "local_version": "3.2.0-rc.1",
+  "local_version": "3.2.0-rc.3",
   "file_catalog_missing": [
     "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt",
     "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt",
@@ -2845,5 +3123,5 @@
   "file_catalog_missing_meaning": "Not distributed in the public repo. This list does not newly disprove or authenticate the inherited observations.",
   "deployment_configuration_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
   "current_editorial_decisions": "research/editorial-decisions.json",
-  "current_direct_source_reading": "research/editorial-source-register.json"
+  "current_direct_source_reading": "research/editorial-source-register.json#rc3_reverification"
 }

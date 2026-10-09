@@ -116,13 +116,16 @@ export async function prepareCase() {
   caseContext.record=record;
   let backing;try{backing=window.sessionStorage;}catch{}
   caseContext.storage=isolatedStorage(backing,`asp24-nggroup-case:${record.caseId}:v${record.caseVersion}`,seedCase(record));
-  text('strong',record.title+' · приклад v'+record.caseVersion);
-  text('p',record.purpose);
-  text('small','Окремий навчальний стан цієї вкладки. Ваші кошик, проєкти й чернетки не змінюються.');
+  const disclosure=text('details','');disclosure.className='case-context-details';
+  const summary=document.createElement('summary');summary.textContent=record.title+' · v'+record.caseVersion+' · контекст і дії';disclosure.append(summary);
+  const purpose=text('p',record.purpose);disclosure.append(purpose);
+  const isolation=text('small','Окремий навчальний стан цієї вкладки. Ваші кошик, проєкти й чернетки не змінюються.');disclosure.append(isolation);
+  text('p','Навчальний приклад · товари й ціни умовні.').className='case-demo-notice';
   const status=text('p','');status.id='case-storage-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.setAttribute('aria-atomic','true');
-  caseContext.storage.subscribe(value=>{status.dataset.storageKind=value.kind;const message=caseStorageMessage(value);if(status.textContent!==message)status.textContent=message;});
+  caseContext.storage.subscribe(value=>{status.dataset.storageKind=value.kind;const message=value.persisted?caseSaveLabel(value):caseStorageMessage(value);if(status.textContent!==message)status.textContent=message;});
   const nav=text('nav','');nav.setAttribute('aria-label','Дії та повернення з прикладу');
-  const a=document.createElement('a');a.textContent='Повернутися до розділу огляду';a.href=assetUrl(`reports/${record.reportId}_Review.html`)+`#${record.sectionId}`;nav.append(a);
+  disclosure.append(nav);
+  const a=text('a','Повернутися до розділу огляду');a.href=assetUrl(`reports/${record.reportId}_Review.html`)+`#${record.sectionId}`;
   const exportButton=document.createElement('button');exportButton.id='case-export';exportButton.textContent='Експортувати стан прикладу (JSON)';
   const exportStatus=text('p','');exportStatus.id='case-export-status';exportStatus.setAttribute('role','status');
   exportButton.addEventListener('click',()=>{
@@ -134,8 +137,10 @@ export async function prepareCase() {
     }catch(error){exportStatus.textContent='Експорт не створено: '+error.message;}
   });nav.append(exportButton);
   const resetStatus=text('p','');resetStatus.id='case-reset-status';resetStatus.setAttribute('role','status');
-  const reset=document.createElement('button');reset.id='case-reset';reset.textContent='Почати приклад спочатку';reset.addEventListener('click',()=>{if(!caseContext.storage.reset().ok){resetStatus.textContent='Приклад не скинуто: очищення сховища не вдалося. Поточні зміни залишено; можна експортувати JSON.';return;}location.hash=record.route;location.reload();});nav.append(reset);
+  const reset=document.createElement('button');reset.id='case-reset';reset.textContent='Почати приклад спочатку';reset.addEventListener('click',()=>{if(!caseContext.storage.reset().ok){resetStatus.textContent='Приклад не скинуто: очищення сховища не вдалося. Поточні зміни залишено; можна експортувати JSON.';return;}const modern=new URLSearchParams(location.hash.split('?')[1]||'').get('experience')==='modern';location.hash=record.route+(modern&&record.route.endsWith('/compare')?'?experience=modern':'');location.reload();});nav.append(reset);
   document.body.prepend(banner);
   if(!location.hash)history.replaceState(null,'',location.pathname+location.search+record.route);
+  const syncDisclosure=()=>{disclosure.open=!/\/compare\?/.test(location.hash)||new URLSearchParams(location.hash.split('?')[1]||'').get('experience')!=='modern';};
+  syncDisclosure();window.addEventListener('hashchange',syncDisclosure);
   return true;
 }

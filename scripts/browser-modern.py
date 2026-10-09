@@ -208,6 +208,7 @@ def case_isolation_failure(page):
     page.get_by_test_id('wb-save').click()
     expect(page.get_by_test_id('wb-save-status')).to_contain_text('Лише в пам’яті')
     expect(page.locator('#case-storage-status')).to_contain_text(re.compile('перезавантаж',re.I))
+    page.locator('.case-context-details > summary').click()
     with page.expect_download() as event:page.locator('#case-export').click()
     path=a.output/'modern-memory-case-export.json';event.value.save_as(path);payload=json.loads(path.read_text())
     assert payload['state']['view']['pairs']['ups'][0]=='u03' and payload['stateSchemaVersion']==4

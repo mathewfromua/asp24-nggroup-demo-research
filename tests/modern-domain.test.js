@@ -83,3 +83,41 @@ test('project limit is atomic at 64; unknown cable length never becomes a claime
   const cableProject=createProject(normalizeScience(null),{candidates:[cable.id]});
   const text=projectText(cableProject,[uncertain]);assert.match(text,/Метраж не уточнено/);assert.doesNotMatch(text,/· 0 м/);
 });
+
+test('one replacement snapshot restores U05 in its original slot and pair without reverting unrelated edits', () => {
+  const state=selected();state.view.pairs.ups=['u05','u06'];
+  comparison.addComparison(state,'c04');state.view.group='ups';
+  state.cart={u02:3,c04:2};state.drafts.u02={purpose:'Тест',quantity:'2',question:'  Зберегти чернетку\nD1  '};
+  const ids=[...state.compareByGroup.ups];
+  const undo=comparison.replaceComparison(state,'u07','u05');
+  assert.ok(undo);assert.deepEqual(state.compareByGroup.ups,['u01','u02','u03','u04','u07','u06']);
+  assert.deepEqual(state.view.pairs.ups,['u07','u06']);
+  // Edits made after replacement are independent of this undo.
+  state.cart.u02=4;state.drafts.u02.question+=' Питання';comparison.addComparison(state,'c05');
+  const unrelated=structuredClone({cart:state.cart,drafts:state.drafts,cable:state.compareByGroup.cable,pair:state.view.pairs.cable,group:state.view.group});
+  assert.equal(comparison.undoComparison(state,undo),true);
+  assert.deepEqual(state.compareByGroup.ups,ids);assert.deepEqual(state.view.pairs.ups,['u05','u06']);
+  assert.deepEqual({cart:state.cart,drafts:state.drafts,cable:state.compareByGroup.cable,pair:state.view.pairs.cable,group:state.view.group},unrelated);
+  assert.equal(comparison.undoComparison(state,undo),false);
+});
+
+test('replacement undo refuses an intervening slot edit and invalid replacements are atomic', () => {
+  const state=selected(),original=structuredClone(state);
+  for(const [id,old] of [['c04','u05'],['u06','u05'],['u07','absent']]) {
+    assert.equal(comparison.replaceComparison(state,id,old),null);assert.deepEqual(state,original);
+  }
+  const undo=comparison.replaceComparison(state,'u07','u05');
+  comparison.moveComparison(state,'ups','u07',-1);
+  const edited=structuredClone(state);
+  assert.equal(comparison.undoComparison(state,undo),false);assert.deepEqual(state,edited);
+});
+
+test('schema 4 persists comparison experience and safely defaults historical or untrusted values to classic', () => {
+  const state=selected();state.view.compareExperience='modern';state.view.compareBrand='ng';state.view.pairs.ups=['u05','u06'];state.view.differences=true;
+  const restored=migrateState(JSON.parse(JSON.stringify(state)));
+  assert.equal(restored.version,4);assert.equal(restored.view.compareExperience,'modern');
+  assert.deepEqual(restored.view.pairs,state.view.pairs);assert.equal(restored.view.compareBrand,'ng');assert.equal(restored.view.differences,true);
+  for(const value of [undefined,'classic','modern&injected=true',{},null]) {
+    state.view.compareExperience=value;assert.equal(migrateState(state).view.compareExperience,'classic');
+  }
+});

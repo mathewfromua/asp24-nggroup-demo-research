@@ -101,6 +101,29 @@ body:has(.comparison-workbench) .footer button {max-width:100%;white-space:norma
 .comparison-workbench :is(.wb-text,.wb-model-title):active:not(:disabled) {color:var(--wb-ink);background:var(--wb-soft)}
 .comparison-workbench button:disabled {box-shadow:none;filter:none}
 .wb-results article[data-selected=true] button:disabled {opacity:1;color:var(--wb-muted);background:transparent;border-color:var(--wb-line)}
+/* A case starts with the comparison. Context and destructive/export controls
+   remain in native disclosure; failed-storage warnings always stay outside it. */
+body[data-experience="modern"] .case-banner {padding:8px 32px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 20px;font-size:13px;line-height:1.4}
+body[data-experience="modern"] .case-banner .case-context-details {grid-column:1}
+body[data-experience="modern"] .case-banner summary {cursor:pointer;min-height:32px;padding:6px 0;font-weight:650}
+body[data-experience="modern"] .case-banner>p {margin:0}
+body[data-experience="modern"] .case-banner>.case-demo-notice {grid-column:1}
+body[data-experience="modern"] .case-banner>#case-storage-status {grid-column:1}
+body[data-experience="modern"] .case-banner>a {grid-column:2;grid-row:1/4;align-self:center;min-height:44px}
+body[data-experience="modern"] .case-banner :is(#case-export-status,#case-reset-status):empty {display:none}
+body[data-experience="modern"] .case-banner :is(#case-export-status,#case-reset-status) {grid-column:1/-1}
+body[data-experience="modern"] .case-banner summary:focus-visible {outline:3px solid #914000;outline-offset:2px}
+.comparison-workbench[data-case="true"] .wb-heading {margin-bottom:12px}
+.comparison-workbench[data-case="true"] .wb-candidates:not([open])>.wb-candidate-grid {display:none}
+@media(max-width:700px) {
+ body[data-experience="modern"] .case-banner {display:block;padding:7px 12px;font-size:12px}
+ body[data-experience="modern"] .case-banner summary {min-height:36px;padding:7px 0}
+ body[data-experience="modern"] .case-banner>a {min-height:32px}
+ .comparison-workbench[data-case="true"] .wb-heading h1 {font-size:19px}
+ .comparison-workbench[data-case="true"] .wb-pair-controls {padding:8px 0;gap:5px 10px}
+ .comparison-workbench[data-case="true"] .wb-pair-select {grid-template-columns:23px minmax(0,1fr);align-items:center}
+ .comparison-workbench[data-case="true"] .wb-toolbar {padding-bottom:9px}
+}
 @media(pointer:coarse) {
  .comparison-workbench :is(button[class],select,summary),.wb-candidate-grid .wb-text {min-height:44px}
  .wb-modes label {min-height:44px}

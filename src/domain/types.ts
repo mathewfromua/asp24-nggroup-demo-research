@@ -23,7 +23,7 @@ export interface ProductGroup {
   numericFacetDefinitions: [string, string, string][];
 }
 export interface ConsultationDraft { purpose: string; quantity: string; question: string }
-export interface ComparisonUndo { group: GroupId; id: string; at: number; pair: string[] }
+export interface ComparisonUndo { group: GroupId; id: string; at: number; pair: string[]; replacementId?: string }
 export interface Checkout { alias: string; delivery: string; payment: string; note: string }
 export interface Recovery { version: 1; rawState: string; quarantinedOrders: unknown[] }
 export interface DemoState {
@@ -34,7 +34,7 @@ export interface DemoState {
   view: {
     catalogViews: Record<Brand, 'cards' | 'list' | 'series'>;
     comparisonDialog: {type: 'details'; id: string} | null;
-    group: GroupId; differences: boolean; expanded: boolean; compareBrand: Brand;
+    group: GroupId; differences: boolean; expanded: boolean; compareBrand: Brand; compareExperience: 'classic' | 'modern';
     research: Record<GroupId, {scroll: number; x: number; row: string; offset: number}>;
     pairs: Record<GroupId, string[]>;
     pages: Record<string, {scroll: number; details: boolean[]; focus: string}>;

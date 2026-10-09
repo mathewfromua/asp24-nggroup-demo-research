@@ -22,12 +22,12 @@
   {
     "brand": "ASP24",
     "page": 6,
-    "content_bottom": 57.4
+    "content_bottom": 74.4
   },
   {
     "brand": "ASP24",
     "page": 7,
-    "content_bottom": 88.27
+    "content_bottom": 82.27
   },
   {
     "brand": "ASP24",
@@ -42,7 +42,7 @@
   {
     "brand": "ASP24",
     "page": 10,
-    "content_bottom": 165.28
+    "content_bottom": 138.81
   },
   {
     "brand": "ASP24",
@@ -57,12 +57,12 @@
   {
     "brand": "ASP24",
     "page": 13,
-    "content_bottom": 340.59
+    "content_bottom": 279.09
   },
   {
     "brand": "ASP24",
     "page": 14,
-    "content_bottom": 393.59
+    "content_bottom": 326.39
   },
   {
     "brand": "NGGroup",
@@ -92,7 +92,7 @@
   {
     "brand": "NGGroup",
     "page": 7,
-    "content_bottom": 50.15
+    "content_bottom": 67.15
   },
   {
     "brand": "NGGroup",
@@ -102,7 +102,7 @@
   {
     "brand": "NGGroup",
     "page": 9,
-    "content_bottom": 90.96
+    "content_bottom": 75.19
   },
   {
     "brand": "NGGroup",
@@ -112,7 +112,7 @@
   {
     "brand": "NGGroup",
     "page": 11,
-    "content_bottom": 153.49
+    "content_bottom": 135.28
   },
   {
     "brand": "NGGroup",
@@ -122,21 +122,21 @@
   {
     "brand": "NGGroup",
     "page": 13,
-    "content_bottom": 133.32
+    "content_bottom": 127.32
   },
   {
     "brand": "NGGroup",
     "page": 14,
-    "content_bottom": 120.23
+    "content_bottom": 103.23
   },
   {
     "brand": "NGGroup",
     "page": 15,
-    "content_bottom": 288.39
+    "content_bottom": 192.09
   },
   {
     "brand": "NGGroup",
     "page": 16,
-    "content_bottom": 444.99
+    "content_bottom": 383.39
   }
 ]

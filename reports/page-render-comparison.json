@@ -9,93 +9,93 @@
   {
     "brand": "ASP24",
     "page": 2,
-    "sha256": "aab7aa4d8ddb145d6d6ce50f82dbff4886024509ad507ebf6a5ddaa6f06a027c",
+    "sha256": "2d4df492114e9844bf87624697fbe8b0838ccbaf2ba4dcc731fac77f01af1db3",
     "previous_sha256": "aab7aa4d8ddb145d6d6ce50f82dbff4886024509ad507ebf6a5ddaa6f06a027c",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 3,
-    "sha256": "62252649f70fee2bace181e74ebf9f9b3d721ec9fe3e5812ee18b5942aa57589",
+    "sha256": "d2ec063a96a30739fc99e374dec75706890f5820850696937c8f1ab51ef573e9",
     "previous_sha256": "62252649f70fee2bace181e74ebf9f9b3d721ec9fe3e5812ee18b5942aa57589",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 4,
-    "sha256": "f61da518669c40900500bbdab157c3acf2ab1a860e3fe05a5e3e5aa9e1fb183b",
+    "sha256": "a2cfc58fb7540c590b9e6f3a636e10229f28f1bd6fd350a060eba6975e765134",
     "previous_sha256": "f61da518669c40900500bbdab157c3acf2ab1a860e3fe05a5e3e5aa9e1fb183b",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 5,
-    "sha256": "a69d5a501ec29aa45406ced3f7e9453d386c1926a69eaf645288eafbdd8f66f2",
+    "sha256": "469278193d0b567f0f2e3c7f3c25d639194f1bd506c15e0f60a12816460b9260",
     "previous_sha256": "a69d5a501ec29aa45406ced3f7e9453d386c1926a69eaf645288eafbdd8f66f2",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 6,
-    "sha256": "90a3ff0c9902708c8ec2af5f0a235dca6deeb8650f2346acce59501500e693aa",
+    "sha256": "024ddd08a9fbfc808c7acbd07df6aa593747871ae552dc94b4b9f6e71cea0d12",
     "previous_sha256": "90a3ff0c9902708c8ec2af5f0a235dca6deeb8650f2346acce59501500e693aa",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 7,
-    "sha256": "1df99e8116ab877b42601490dcc470e25404080048aae2b3ece4b5204cd502c5",
+    "sha256": "d676ed38a9570030864c23f2198a8163a65a7b682f8af534c1fc63472e7aa359",
     "previous_sha256": "1df99e8116ab877b42601490dcc470e25404080048aae2b3ece4b5204cd502c5",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 8,
-    "sha256": "a8a5f5930f08234f92b29c02035b44f825aae7ea2902ffef8e8c72197102235d",
+    "sha256": "9eb62eb56ed80ccc346693c6ced981c8d3ce5628fceb71e51c9cfa71ad5517c3",
     "previous_sha256": "a8a5f5930f08234f92b29c02035b44f825aae7ea2902ffef8e8c72197102235d",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 9,
-    "sha256": "dd6e9d2f02c7faaf6bc13dec972099529b0902d21c0d3a5295497db2d3ca229b",
+    "sha256": "16d14181436971458087f89e4cb712c84e6245a72cd6f9627edf65488df49bf2",
     "previous_sha256": "dd6e9d2f02c7faaf6bc13dec972099529b0902d21c0d3a5295497db2d3ca229b",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 10,
-    "sha256": "dbb0efb249b5a0cb1bcee829524ee1a28cc6425d87c8b0a5e29d0a786e8bf82a",
+    "sha256": "463c7a342df151c654ad2a65486865a01441990164f7971279f7ed6484191f8d",
     "previous_sha256": "dbb0efb249b5a0cb1bcee829524ee1a28cc6425d87c8b0a5e29d0a786e8bf82a",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 11,
-    "sha256": "68c37bf3e0eb1147cc862961e31da9fa2e36c98f91898887057103a7d1777275",
+    "sha256": "53fe4d2151d204cf0fc18abcd561c23bc04388041fc439c5b4bd42ba84273775",
     "previous_sha256": "68c37bf3e0eb1147cc862961e31da9fa2e36c98f91898887057103a7d1777275",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 12,
-    "sha256": "dcc4fc56e7b0cb54447a22581b9b44478d315accd446a629b68fb6561ebe48f8",
+    "sha256": "ecca89a70066ad4cb77b0c346190b6ee98ae799903ff84ad0d07d003172dd3a6",
     "previous_sha256": "dcc4fc56e7b0cb54447a22581b9b44478d315accd446a629b68fb6561ebe48f8",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 13,
-    "sha256": "afaa01ddae5c0b26229d8a5d15d5b19982614ca5036cfe3023f486787dca828d",
+    "sha256": "3182aab4077911a740501b2cce692061dceb043adb44daf523a3b58213067e24",
     "previous_sha256": "afaa01ddae5c0b26229d8a5d15d5b19982614ca5036cfe3023f486787dca828d",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "ASP24",
     "page": 14,
-    "sha256": "b99bbc824ffb98f559615455540590711c6e645e42d09c6f7403848de16512ad",
+    "sha256": "553cbe82b6afd91699840c994a6feb83871a8bee7c0d645de8932245e89f1145",
     "previous_sha256": "b99bbc824ffb98f559615455540590711c6e645e42d09c6f7403848de16512ad",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
@@ -128,9 +128,9 @@
   {
     "brand": "NGGroup",
     "page": 5,
-    "sha256": "8719cb1b376188f1080c938385aa27d5ef427a71b8cc3b8c933e724771eb5f19",
+    "sha256": "97c9b255c3b2cf284358b82d491aa3d0c1e75194c94fe8557be672e2af93d187",
     "previous_sha256": "8719cb1b376188f1080c938385aa27d5ef427a71b8cc3b8c933e724771eb5f19",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
@@ -142,9 +142,9 @@
   {
     "brand": "NGGroup",
     "page": 7,
-    "sha256": "64633341498496c32fa0d346fc9a6e3e6507049145e3c9ea8dcc09aabe407a07",
+    "sha256": "6500f7e36b278da25b611cb68a36bf0ccb5d6e03f887b32b7afeab1ed219fbbb",
     "previous_sha256": "64633341498496c32fa0d346fc9a6e3e6507049145e3c9ea8dcc09aabe407a07",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
@@ -156,9 +156,9 @@
   {
     "brand": "NGGroup",
     "page": 9,
-    "sha256": "c1a366429c8ce3178ecad19abc6d88594277bd6da5fb723e5839e2e9be33e6ba",
+    "sha256": "30255c71fac37749849a3ecf56d5f45d2b0ac9e62be23a0dfde219a9b1d719b5",
     "previous_sha256": "c1a366429c8ce3178ecad19abc6d88594277bd6da5fb723e5839e2e9be33e6ba",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
@@ -170,8 +170,8 @@
   {
     "brand": "NGGroup",
     "page": 11,
-    "sha256": "15d7707ce27292666a1f168591bad6aff5689866e9ba736e55d14d0e567a23e4",
-    "previous_sha256": "3df57700e3ef01e7e2c1e48a05033ed65df1cf62b2f0b61b877085014876c748",
+    "sha256": "efd8c4fb6a98a1f981eaef992c1903c7f6fad493d5565328692a96a3bb10b9ed",
+    "previous_sha256": "15d7707ce27292666a1f168591bad6aff5689866e9ba736e55d14d0e567a23e4",
     "pixels_unchanged": false
   },
   {
@@ -184,29 +184,29 @@
   {
     "brand": "NGGroup",
     "page": 13,
-    "sha256": "d1d8ab8cf47d6a9c3a73e94c035c8a96750ac18226996c7a6bc9d184da6e83a7",
+    "sha256": "30cf2ccea6fc9fa6b2edb64eb1933d84b7c1af9a8d8fb5ff469b845367fdddc2",
     "previous_sha256": "d1d8ab8cf47d6a9c3a73e94c035c8a96750ac18226996c7a6bc9d184da6e83a7",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
     "page": 14,
-    "sha256": "fa93769849fa2fc391a22bdb2c19df4631ba7da7bee28e8a6b2e28125392438a",
+    "sha256": "f7793b0e2d46a5f1e7b986153b6d57be630bc30b4fbe168a1bb3708be5b2db30",
     "previous_sha256": "fa93769849fa2fc391a22bdb2c19df4631ba7da7bee28e8a6b2e28125392438a",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
     "page": 15,
-    "sha256": "be5a5f2358f4229e40d39e61de98342aefbc2530e729e91b3cb8b14ff44d210a",
+    "sha256": "1de2ae643dd3b060d2470be240ce3f19212a8dbae1f852ddfa8eaef1c4800f71",
     "previous_sha256": "be5a5f2358f4229e40d39e61de98342aefbc2530e729e91b3cb8b14ff44d210a",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   },
   {
     "brand": "NGGroup",
     "page": 16,
-    "sha256": "c03cd7dc781dc8625a2470186f552b35a96485eab67efc0034038035324ffd00",
+    "sha256": "a7604b5f56d0fd68d6bcfafe76c286b34224829fe4fca56e9f033dde1f6cf325",
     "previous_sha256": "c03cd7dc781dc8625a2470186f552b35a96485eab67efc0034038035324ffd00",
-    "pixels_unchanged": true
+    "pixels_unchanged": false
   }
 ]

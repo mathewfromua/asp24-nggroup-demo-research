@@ -89,3 +89,18 @@ Interaction polish зберігає видимі дії на touch: hover діє
 `modern-preview.yml` будує обидва base paths, запускає всі suites і порівнює fixed RC2 із новою збіркою на одному runner. `scripts/performance-sample.py` робить п’ять почергових холодних запусків кожного сценарію та три Lighthouse-повтори. JSON зберігає середовище, сирі виміри, медіани, ресурси й обмеження. Це loopback-лабораторія, не польовий INP або швидкість на реальному мобільному інтернеті.
 
 HTTP-preview artifact містить вже перевірений dist, evidence, `modern-manifest.json` і мінімальний `node scripts/serve.mjs`; npm install для його перегляду не потрібний. Повна збірка з джерел вимагає Node 24 і npm ci. Release artifact RC2 залишається окремим checkpoint.
+
+## Інтегрований RC3
+
+`rc3-preview.yml` запускається на push у `release/review-integrated-rc3` та перевіряє exact `github.sha`, не тимчасовий PR merge ref. Build перевіряє root і Pages subpath, повний Node/typecheck, обидва PDF/HTML, побайтове відтворення й два негативні stale-output сценарії. Той самий dist передається трьом browser jobs без повторного build. Попередні generic PR jobs пропускають лише цю пару head/base, бо їхні перевірки включені в RC3 workflow; CodeQL лишається окремим.
+
+```sh
+bash scripts/run-rc3-browser-checks.sh chromium /tmp/rc3-chromium
+python scripts/package-rc3.py --build rc3-build --evidence rc3-evidence --output output/rc3-preview
+```
+
+Browser runner запускає шість suites: regression, cases, case-storage, modern, rc3 та reports-rc3. Нові сценарії перевіряють видимість повного технічного рядка саме у кейсі на 1440×900/390×844, undo заміни та ізоляцію, повернення modern/Back, видимі storage warnings, вузькі HTML графіки й таблиці, джерельні якорі, hub і frozen section returns. Для Chromium використовують доступний захищений Google Chrome; sandbox не вимикається. Локальне середовище без придатного sandbox/бібліотек позначається BLOCKED, незалежний результат Actions записується окремо.
+
+Scoped performance виконує дев'ять холодних запусків: три повтори hub та modern case на desktop/mobile. Записуються передані JS/CSS bytes, LCP і середовище. Це вимір кандидата на loopback без baseline і без висновку про прискорення чи конверсію.
+
+Пакування перевіряє exact SHA всіх шести suites на кожному engine, source/output manifests, inventories обох збірок, standalone hashes і фактичний PDF visual review. `rc3-manifest.json` та самодостатній ZIP містять source, готові reports/dist, результати й скриншоти; ZIP обмежено 32 MiB. Шрифти, браузерні профілі й приватний handoff не входять до пакета. Статус — `PREVIEW_NOT_DEPLOYED`; публікаційний контроль описано в `docs/RC3_REVIEW.md`.

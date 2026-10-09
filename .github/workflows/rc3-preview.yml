@@ -1,0 +1,174 @@
+name: RC3 exact-SHA preview
+on:
+  push:
+    branches: [release/review-integrated-rc3]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: rc3-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    if: github.ref == 'refs/heads/release/review-integrated-rc3'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - name: Install the pinned candidate toolchains
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p rc3-build/build-evidence rc3-build/pages rc3-build/root
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          npm ci | tee rc3-build/build-evidence/npm-ci.txt
+          python -m pip install -r reports/requirements.txt
+          python scripts/fetch-report-fonts.py "$RUNNER_TEMP/report-fonts"
+      - name: Verify source, both static paths, reports and meaningful stale-output failures
+        shell: bash
+        env:
+          REPORT_FONT_DIR: ${{ runner.temp }}/report-fonts
+        run: |
+          set -euo pipefail
+          npm run typecheck | tee rc3-build/build-evidence/typecheck.txt
+          npm test | tee rc3-build/build-evidence/node-tests.txt
+          python scripts/verify-reports.py | tee rc3-build/build-evidence/reports.txt
+          python scripts/check-report-reproduction.py | tee rc3-build/build-evidence/reproduction.txt
+          cp -R output/verification rc3-build/build-evidence/
+          BASE_PATH=/asp24-nggroup-demo-research/ npm run build | tee rc3-build/build-evidence/pages-build.txt
+          npm run verify | tee rc3-build/build-evidence/pages-verify.txt
+          cp -R dist rc3-build/pages/dist
+          BASE_PATH=/ npm run build | tee rc3-build/build-evidence/root-build.txt
+          npm run verify | tee rc3-build/build-evidence/root-verify.txt
+          cp -R dist rc3-build/root/dist
+          python reports/export_standalone.py
+          cp -R output/standalone rc3-build/standalone
+          git diff --exit-code
+          python - <<'PY'
+          import hashlib,json,os,platform,subprocess
+          from pathlib import Path
+          evidence=Path('rc3-build/build-evidence')
+          for base in ['pages','root']:
+              directory=Path('rc3-build')/base/'dist'
+              hashes={p.relative_to(directory).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(directory.rglob('*')) if p.is_file()}
+              (evidence/(base+'-sha256.json')).write_text(json.dumps(hashes,indent=2)+'\n')
+          result={'status':'PASS','commit':os.environ['GITHUB_SHA'],'run_url':f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}",'python':platform.python_version(),'node':subprocess.check_output(['node','--version'],text=True).strip(),'checks':['npm ci','strict TypeScript','full Node suite including real root/subpath HTTP and eight case URLs','root and Pages-subpath build + verify','report source/HTML/PDF integrity','independent byte-identical report generation','negative source/template stale-output rejection','standalone exports match committed manifests','git diff --exit-code'],'environment':'Ubuntu 24.04 GitHub Actions; exact push SHA checkout; retained dist bytes are never rebuilt by browser/package jobs','publication':'PREVIEW_NOT_DEPLOYED'}
+          (evidence/'build-result.json').write_text(json.dumps(result,indent=2)+'\n')
+          PY
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: rc3-build-${{ github.sha }}
+          path: rc3-build/
+          if-no-files-found: error
+          retention-days: 30
+  browser:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: rc3-build-${{ github.sha }}
+          path: rc3-build
+      - name: Use the immutable dist and install only the browser test toolchain
+        env:
+          BROWSER: ${{ matrix.browser }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -R rc3-build/pages/dist dist
+          python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt
+          if [ "$BROWSER" = chromium ] && command -v google-chrome >/dev/null; then
+            google-chrome --version
+          else
+            python -m playwright install --with-deps "$BROWSER"
+          fi
+      - name: Run all six HTTP/DOM suites, screenshots and scoped Chromium bytes/LCP
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: bash scripts/run-rc3-browser-checks.sh "$BROWSER" browser-artifacts
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: rc3-visual-review-${{ matrix.browser }}-${{ github.sha }}
+          path: |
+            browser-artifacts/rc3/*.png
+            browser-artifacts/rc3/results.json
+            browser-artifacts/reports-rc3/*.png
+            browser-artifacts/reports-rc3/results.json
+          if-no-files-found: warn
+          retention-days: 30
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: rc3-browser-${{ matrix.browser }}-${{ github.sha }}
+          path: browser-artifacts/
+          if-no-files-found: error
+          retention-days: 30
+  package:
+    needs: [build, browser]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: rc3-build-${{ github.sha }}
+          path: rc3-build
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: rc3-browser-*-${{ github.sha }}
+          path: browser-downloads
+      - name: Package source, reports, tested dist and exact-SHA evidence without rebuilding
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p rc3-evidence
+          for browser in chromium firefox webkit; do
+            mv "browser-downloads/rc3-browser-$browser-$GITHUB_SHA" "rc3-evidence/$browser"
+          done
+          python scripts/package-rc3.py --build rc3-build --evidence rc3-evidence --output output/rc3-preview
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: rc3-review-preview-${{ github.sha }}
+          path: |
+            output/rc3-preview/*.zip
+            output/rc3-preview/rc3-manifest.json
+            output/rc3-preview/bundle-sha256.txt
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30

@@ -8,6 +8,8 @@ permissions:
   contents: read
 jobs:
   report-integrity:
+    # RC3 includes this gate once, alongside its immutable build and browser evidence.
+    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'release/review-integrated-rc3' && github.base_ref == 'feat/modern-experience') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
