@@ -1,16 +1,35 @@
 [
   {
+    "brand": "ASP24",
     "file": "ASP24_Огляд.pdf",
-    "input_digest": "2dd37b63b83b79fbb3fabdcdd30aac51c7156bf50344940340efb5a5d65c7ed2",
+    "pages": 14,
+    "sha256": "07e5e8bf7244a935a41becaea88524352c6cb3f64729c60df8544cc9d682e8d9",
+    "input_digest": "49db6ef82b245976e3d004726584c0861a96fc4fa9964d7fa3d0af2781a5e4d8",
     "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
-    "pages": 14,
-    "sha256": "ed3eaac30315748452b1c55e06ac05066cbec0bbd0ee4fe5e0414a4898c39cd4",
-    "retained_pages": [
+    "renderer": "WeasyPrint 70.0 + semantically tagged original vector cover",
+    "pdf_ua_claim": false,
+    "section_pages": {
+      "asp24-02": 2,
+      "asp24-03": 3,
+      "asp24-04": 4,
+      "asp24-05": 5,
+      "asp24-06": 6,
+      "asp24-07": 7,
+      "asp24-08": 8,
+      "asp24-09": 9,
+      "asp24-10": 10,
+      "asp24-11": 11,
+      "asp24-12": 12,
+      "asp24-13": 13,
+      "asp24-14": 14
+    },
+    "retained_vector_cover_pages": [
       1
     ],
-    "regenerated_pages": [
+    "regenerated_structure_pages": [
+      1,
       2,
       3,
       4,
@@ -27,17 +46,38 @@
     ]
   },
   {
+    "brand": "NGGroup",
     "file": "NGGroup_Огляд.pdf",
-    "input_digest": "2dd37b63b83b79fbb3fabdcdd30aac51c7156bf50344940340efb5a5d65c7ed2",
+    "pages": 16,
+    "sha256": "3183f605aa6a0ad40af091dabd21be26a5aa8068746cc5ed98b89259ecd5673e",
+    "input_digest": "49db6ef82b245976e3d004726584c0861a96fc4fa9964d7fa3d0af2781a5e4d8",
     "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
-    "pages": 16,
-    "sha256": "6238e8982b89d3084bc6d62e54deaecd3ef16a519eb1fa7154ecb9cecdfeafe6",
-    "retained_pages": [
+    "renderer": "WeasyPrint 70.0 + semantically tagged original vector cover",
+    "pdf_ua_claim": false,
+    "section_pages": {
+      "nggroup-02": 2,
+      "nggroup-03": 3,
+      "nggroup-04": 4,
+      "nggroup-05": 5,
+      "nggroup-06": 6,
+      "nggroup-07": 7,
+      "nggroup-08": 8,
+      "nggroup-09": 9,
+      "nggroup-10": 10,
+      "nggroup-11": 11,
+      "nggroup-12": 12,
+      "nggroup-13": 13,
+      "nggroup-14": 14,
+      "nggroup-15": 15,
+      "nggroup-16": 16
+    },
+    "retained_vector_cover_pages": [
       1
     ],
-    "regenerated_pages": [
+    "regenerated_structure_pages": [
+      1,
       2,
       3,
       4,

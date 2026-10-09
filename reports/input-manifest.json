@@ -17,9 +17,10 @@
     "reports/assets/NGGroup-p4-3-crop.png": "c81bde45170c688427a3b30797423aca0d2cd83ba0be54bfec33a01a85ef808a",
     "reports/assets/compare-report-crop.png": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
     "reports/assets/document-report-crop.png": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
-    "reports/build_editorial.py": "4ea088047bc8e34453a01b48665f2377e05fa975f01355222a0177469beff541",
+    "reports/build_editorial.py": "b486c86a607d7a85d74ddbb52a9734334e1fa8cebf4b68b5ae77b9452f0f37b8",
     "reports/build_html.py": "417933a197396ba686d5bb38ba72ae6bc4cd1ecff2b7ab7dbc420f0ec4537371",
-    "reports/build_inputs.py": "d76b21b0c5e9239e1b7d3fce9dc9ef4e3dbb14da4e3f9bca3c89116f060b484f",
+    "reports/build_inputs.py": "9d0cb4d0a064faff20558ac944cddb2d7ec515bf7a4692c0230fcf1af526a3e3",
+    "reports/build_tagged.py": "58a436c438a0beca9d20ae287fd391735259df8ac022af6f2bdeeadf6b3973b7",
     "reports/content.json": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
     "reports/content.py": "73ff61d03689d9b5401665be70c6409d67a26aa314a5e44c130f701689697b37",
     "reports/covers/ASP24.pdf": "7d4b08f8b7d481f032a9cb1b530347636bf1a02e531daa7eff0975911ed920ea",
@@ -28,7 +29,9 @@
     "reports/export_standalone.py": "21f40d39d199cecc6b577a0b1534dfb3c966abff951358a1128454f1ac96a2e9",
     "reports/fonts/downloads.json": "ba61ea8afbd6375a46416ea4ae9cc0196f536120896e0aadb0a2470d1692d83e",
     "reports/fonts/provenance.json": "3ea81860ad8a673426703f2dfa41a86297e9532bb7b71e37158579712a19363c",
-    "reports/requirements.txt": "40b14b63562432bfa42d682317efacc2835ff92d9b76c56696645edf5ed20976"
+    "reports/native-runtime.json": "7544c703593246373d91098f4f6d1b1728c810284f743f87b5e1f3a0670d10e7",
+    "reports/requirements.txt": "57e978e34c59ecb048131f1e4479cecdc14a78aa63da053991a52ba8f1675548",
+    "scripts/install-report-runtime.py": "23aba619563a576040d4417b87def874a67632a93c08b5904d4b99faf451435a"
   },
-  "digest": "2dd37b63b83b79fbb3fabdcdd30aac51c7156bf50344940340efb5a5d65c7ed2"
+  "digest": "49db6ef82b245976e3d004726584c0861a96fc4fa9964d7fa3d0af2781a5e4d8"
 }

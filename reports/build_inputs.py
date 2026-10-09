@@ -4,7 +4,7 @@ import hashlib,json,platform,importlib.metadata,os
 ROOT=Path(__file__).resolve().parent.parent
 
 def inventory():
-    paths=['deployment.config.json','reports/content.json','reports/content.py','reports/build_editorial.py','reports/build_html.py','reports/export_standalone.py','reports/build_inputs.py','reports/requirements.txt','reports/fonts/provenance.json','reports/fonts/downloads.json']
+    paths=['deployment.config.json','reports/content.json','reports/content.py','reports/build_editorial.py','reports/build_tagged.py','reports/build_html.py','reports/export_standalone.py','reports/build_inputs.py','reports/requirements.txt','reports/native-runtime.json','scripts/install-report-runtime.py','reports/fonts/provenance.json','reports/fonts/downloads.json']
     if (ROOT/'publication.json').exists(): paths.append('publication.json')
     for directory in ['reports/assets','reports/covers','evidence/figure_data']:
         paths += [p.relative_to(ROOT).as_posix() for p in (ROOT/directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts]

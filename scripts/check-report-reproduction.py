@@ -30,6 +30,6 @@ with tempfile.TemporaryDirectory(prefix='report-control-') as temp:
     run(['node','scripts/build-static.mjs']);run(['node','scripts/verify-build.mjs'])
     for name in ['reports/content.json','reports/build_html.py']:
         p=target/name;original=p.read_bytes();p.write_bytes(original+b'\n');run(['node','scripts/verify-build.mjs'],ok=False);p.write_bytes(original)
-    result={'status':'PASS','control_generation':'byte-identical with pinned Python/packages/fonts','compared':compared,'negative_checks':['content change rejected','template change rejected'],'normalization':'No output byte normalization. ReportLab invariant=1 fixes timestamps/IDs; paths are relative. Different renderer/font bytes are not equivalent.','source_authenticity':'NOT_TESTED_BY_INTEGRITY'}
+    result={'status':'PASS','control_generation':'byte-identical with pinned Python/packages/fonts','compared':compared,'negative_checks':['content change rejected','template change rejected'],'normalization':'No output byte normalization. WeasyPrint/pypdf output and retained ReportLab invariant cover artwork are deterministic in the recorded renderer environment; paths are relative. Different renderer/font bytes are not equivalent.','source_authenticity':'NOT_TESTED_BY_INTEGRITY'}
     out=R/'output/verification';out.mkdir(parents=True,exist_ok=True);(out/'report-reproduction.json').write_text(json.dumps(result,indent=2)+'\n')
 print('PASS independent control generation and two negative stale-output checks')

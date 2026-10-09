@@ -37,7 +37,9 @@ export interface DemoState {
     group: GroupId; differences: boolean; expanded: boolean; compareBrand: Brand; compareExperience: 'classic' | 'modern';
     research: Record<GroupId, {scroll: number; x: number; row: string; offset: number}>;
     pairs: Record<GroupId, string[]>;
-    pages: Record<string, {scroll: number; details: boolean[]; focus: string}>;
+    pages: Record<string, {scroll: number; details: boolean[]; focus: string; modern?: {
+      group: GroupId; pairFocus: boolean; full: {x: number; y: number}; pair: {x: number; y: number};
+    }}>;
   };
 }
 export interface ProjectReference { title: string; url: string; productId?: string }

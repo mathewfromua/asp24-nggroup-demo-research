@@ -44,8 +44,19 @@ def texts(block):
  return []
 records=[]
 for brand,pages in d.items():
- f=R/f'public/reports/{brand}_Review.pdf';pdf=PdfReader(f);ht=(R/f'public/reports/{brand}_Review.html').read_text();ph=plain(ht);assert len(pdf.pages)==len(pages)+1
- assert pdf.trailer['/Root']['/Lang']=='uk-UA';assert not pdf.trailer['/Root'].get('/StructTreeRoot')
+ f=R/f'public/reports/{brand}_Review.pdf';pdf=PdfReader(f);ht=(R/f'public/reports/{brand}_Review.html').read_text();ph=plain(ht)
+ assert len(pdf.pages)>1,(brand,'Cover and complete report required')
+ assert pdf.trailer['/Root']['/Lang']=='uk-UA'
+ assert pdf.trailer['/Root'].get('/StructTreeRoot'),(brand,'Logical structure missing')
+ marked=pdf.trailer['/Root'].get('/MarkInfo',{}).get('/Marked')
+ assert getattr(marked,'value',marked) is True,(brand,'Tagged document marker missing')
+ # Physical page numbers may change in the accessible export. Frozen section IDs,
+ # full text and section order remain the contract; the separate structured-PDF
+ # gate validates the actual tag tree, tables, alternatives and reading sequence.
+ compact=lambda v:re.sub(r'\s+','',plain(v).replace('\u00ad',''))
+ physical_text=[plain(page.extract_text()) for page in pdf.pages]
+ pdf_text=compact(' '.join(physical_text));last_title=-1
+ assert all('\ufffd' not in text and '\x00' not in text for text in physical_text)
  assert '{{PUBLIC_BASE_URL}}' not in ht and 'perspektyva.mathew-from-ua.chatgpt.site' not in ht
  assert 'href="../">До оглядів і прикладів' in ht
  semantics=Semantics();semantics.feed(ht)
@@ -65,17 +76,19 @@ for brand,pages in d.items():
   assert region.get('aria-label') and region['aria-label']!='Таблиця, доступна для горизонтального прокручування',(brand,'Scroll region lacks a subject')
  htext=[]
  for i,page in enumerate(pages,2):
-  assert plain(page['title']) in ph,(brand,i,'title');pt=plain(pdf.pages[i-1].extract_text());assert '\ufffd' not in pt
+  assert plain(page['title']) in ph,(brand,i,'title')
+  title_position=pdf_text.find(compact(page['title']),last_title+1)
+  assert title_position>last_title,(brand,i,'PDF section title/order',page['title'])
+  last_title=title_position
   for block in page['blocks']:
    if block[0]=='image' and len(block)>5:
     assert f'alt="{escape(block[5],quote=True)}"' in ht,(brand,i,'Explicit image alternative missing')
     assert plain(block[5])!=plain(block[3]),(brand,i,'Image alternative duplicates caption')
    for t in texts(block):
     assert plain(t) in ph,(brand,i,t[:60])
-    compact=lambda v:re.sub(r'\s+','',plain(v))
-    assert compact(t) in compact(pt),(brand,i,'PDF text missing',t[:80])
-  htext.append({'page':i,'characters':len(pt),'annotations':len(pdf.pages[i-1].get('/Annots',[]))})
- records.append({'brand':brand,'pages':len(pdf.pages),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'lang':'uk-UA','struct_tree':False,'html_source_text_all_blocks':'PASS','html_semantics':{'status':'PASS','citation_links':len(semantics.citations),'source_anchors':len(expected_sources),'named_scroll_regions':len(semantics.regions)},'body_pages':htext,'pdf_ua':'NOT_CLAIMED','reading_order':'Untagged PDF; visual review recorded separately in reports/migration-review.json'})
+    assert compact(t) in pdf_text,(brand,i,'PDF text missing',t[:80])
+  htext.append({'section':page.get('id',page['title']),'title':page['title'],'all_source_blocks_present':True})
+ records.append({'brand':brand,'pages':len(pdf.pages),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'lang':'uk-UA','struct_tree':True,'html_source_text_all_blocks':'PASS','html_semantics':{'status':'PASS','citation_links':len(semantics.citations),'source_anchors':len(expected_sources),'named_scroll_regions':len(semantics.regions)},'sections':htext,'physical_pages':[{'page':i+1,'characters':len(text),'annotations':len(pdf.pages[i].get('/Annots',[]))} for i,text in enumerate(physical_text)],'pdf_ua':'NOT_CONFIRMED_BY_THIS_SCRIPT','reading_order':'Section text order checked here; tag sequence, table associations and alternatives require verify-structured-pdfs.py'})
 (E/'pdf-html-structure.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n')
 if not args.base_url:
  print('PASS same-source HTML blocks and PDF structural checks; HTTP NOT_RUN (no --base-url).')

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Six suites, one existing dist and one local HTTP server. Never rebuild here.
+# Nine suites, one existing dist and one local HTTP server. Never rebuild here.
 set -euo pipefail
 browser=${1:?browser required}
 output=${2:?output directory required}
@@ -54,10 +54,14 @@ python scripts/browser-case-storage.py --url "$preview_url" --browser "$browser"
 python scripts/browser-modern.py --url "$preview_url" --browser "$browser" --output "$output/modern" "${browser_args[@]}" || status=$?
 python scripts/browser-rc3.py --url "$preview_url" --browser "$browser" --output "$output/rc3" "${browser_args[@]}" || status=$?
 python scripts/browser-reports-rc3.py --url "$preview_url" --browser "$browser" --output "$output/reports-rc3" "${browser_args[@]}" || status=$?
+python scripts/browser-hardening.py --url "$preview_url" --browser "$browser" --output "$output/hardening" "${browser_args[@]}" || status=$?
+python scripts/browser-workbench-hardening.py --url "$preview_url" --browser "$browser" --output "$output/workbench-hardening" "${browser_args[@]}" || status=$?
+python scripts/browser-lazy-science.py --url "$preview_url" --browser "$browser" --output "$output/lazy-science" "${browser_args[@]}" || status=$?
 # The changed entry/case views warrant scoped observations, not another full
 # Lighthouse/baseline campaign. These lab observations make no speedup claim.
 if [ "$browser" = chromium ]; then
   python scripts/rc3-performance.py --url "$preview_url" --output "$output/performance" "${browser_args[@]}" || status=$?
+  python scripts/hardening-performance.py --baseline-dist rc3-build/baseline/dist --candidate-dist dist --output "$output/performance" "${browser_args[@]}" || status=$?
 fi
 RC3_BROWSER="$browser" RC3_OUTPUT="$output" RC3_STATUS="$status" python - <<'PY'
 import hashlib,json,os,subprocess

@@ -21,7 +21,7 @@ npm run preview -- --host 127.0.0.1 --port 8000
 
 Зміст двох оглядів зберігається в `reports/content.json`. `content.py` завантажує його для генераторів. Готові PDF/HTML у `public/reports/` включаються в звичайний static build без повторної генерації та без доступу до шрифтів.
 
-Для редакційної генерації потрібні Python 3.12, залежності з `reports/requirements.txt` та власні доступні файли Noto Sans Regular/Bold і DejaVu Sans. Їхні версії, походження й контрольні суми записані в `reports/fonts/provenance.json`. Файли шрифтів не входять до репозиторію. Обкладинки беруться з односторінкових `reports/covers/ASP24.pdf` і `reports/covers/NGGroup.pdf`; їхня типографіка зберігається. `reports/covers/provenance.json` містить походження цих сторінок, а `reports/image-provenance.json` — походження й межі кадрування використаних ілюстрацій.
+Для редакційної генерації потрібні Python 3.12.14, залежності з `reports/requirements.txt` та доступні файли Noto Sans Regular/Bold і DejaVu Sans. Їхні версії, походження й контрольні суми записані в `reports/fonts/provenance.json`. Файли шрифтів не входять до репозиторію. `reports/build_editorial.py` тепер викликає семантичний HTML-експорт і `reports/build_tagged.py`: WeasyPrint 70.0 формує структурований PDF, pypdf переносить початкові векторні/текстові обкладинки з `reports/covers/ASP24.pdf` і `NGGroup.pdf` та їхню логічну структуру. ReportLab збережено для векторних графіків. Обкладинки не раструються; їхнє походження — у `reports/covers/provenance.json`, ілюстрацій — у `reports/image-provenance.json`.
 
 ```sh
 python3 -m venv .venv
@@ -35,11 +35,13 @@ npm run build
 npm run verify
 ```
 
-Назва змінної середовища збережена для сумісності генератора; це не поточна назва проєкту. Інші версії шрифтів можуть змінити переноси й байти PDF. Не можна підтверджувати тотожність файлів лише однаковою сторінковістю.
+Назва `PERSPEKTYVA_FONT_DIR` збережена для сумісності; рекомендований еквівалент — `REPORT_FONT_DIR`. Інші версії шрифтів можуть змінити переноси й байти PDF. Не можна підтверджувати тотожність файлів лише однаковою сторінковістю.
+
+WeasyPrint потребує native Pango, HarfBuzz із subset-підтримкою, Fontconfig/FreeType та їхніх транзитивних бібліотек. Python requirements не фіксують ці системні компоненти. Для побайтового відтворення потрібен той самий pinned native-профіль або образ із зафіксованим digest; записуйте `python -m weasyprint --info`, версії системних пакетів і hashes шрифтів. Зміна Linux-дистрибутива або системних бібліотек потребує окремої звірки байтів, тексту, структури й рендерів. До проходження такої звірки cross-environment reproducibility — не PASS. Остаточний CI не повинен послаблювати byte comparison для обходу розбіжностей.
 
 Після редагування слід перевірити відповідність обох форматів джерелу, посилання, обсяг, рендери зачеплених сторінок та актуальні manifests. Табличні альтернативи графіків у HTML можуть містити пояснювальні рядки, яких немає серед декоративних підписів PDF; буквальний пошук кожного рядка не замінює змістовної звірки.
 
-PDF: `Lang=uk-UA`; надійне структурне тегування не підтверджене. HTML містить семантичні заголовки, таблиці, підписи й альтернативи зображень. PDF/UA та повної WCAG-сертифікації немає.
+Поточний PDF має `Lang=uk-UA`, StructTreeRoot/MarkInfo, семантичні заголовки й абзаци, списки, Table/TR/TH/TD з асоціаціями заголовків, Figure/Alt, закладки та активні посилання. Обидві обкладинки мають виділюваний текст і логічну структуру. Поточна пагінація — 14/16; зміст і читабельність мають пріоритет над фіксованою кількістю сторінок. HTML залишається самостійною семантичною альтернативою. Допоміжне читання й повна WCAG/PDF/UA-сертифікація не випливають із наявності тегів.
 
 ## Контрольне складання кандидата
 
@@ -53,10 +55,16 @@ python reports/build_html.py
 python reports/export_standalone.py
 python reports/build_inputs.py --write
 python scripts/verify-reports.py
+python scripts/test-structured-pdfs.py
+python scripts/fetch-verapdf.py --output /tmp/verapdf
+python scripts/verify-structured-pdfs.py --pdf-dir public/reports --output output/verification/reports/structured-pdf-validation.json --verapdf /tmp/verapdf/verapdf
+python scripts/verify-acceptance-pdfs.py
 python scripts/check-report-reproduction.py
 ```
 
-`reports/input-manifest.json` охоплює джерело, шаблони, код генерації, CSV, ілюстрації, covers, deployment-конфігурацію, профіль шрифтів і pinned залежності. Нормалізовано лише час/ID ReportLab через invariant=1; manifests мають відносні шляхи. Різні байти за іншого renderer не називаються однаковими. Control generation створює outputs у тимчасовому дереві, зіставляє байти й перевіряє, що зміна тексту або шаблону без outputs відхиляється. Report integrity перевіряє структуру та узгодженість, а не правдивість джерел.
+`reports/input-manifest.json` охоплює джерело, шаблони, код генерації включно з `build_tagged.py`, CSV, ілюстрації, covers, deployment-конфігурацію, профіль шрифтів і pinned залежності. PDF-порівняння не нормалізує відмінні outputs; ReportLab `invariant=1` стосується його векторних графіків, а не гарантії тотожності WeasyPrint між різними native-профілями. Control generation створює outputs у тимчасовому дереві, зіставляє байти й перевіряє, що зміна тексту або шаблону без outputs відхиляється. Report integrity перевіряє структуру та узгодженість, а не правдивість джерел.
+
+`verify-structured-pdfs.py` незалежний від генератора: перевіряє повноту рукопису, MCID/ParentTree, логічний порядок, текстові обкладинки, заголовки таблиць, альтернативи зображень і links. `test-structured-pdfs.py` перевіряє, що валідатор відхиляє контрольовані дефекти. `fetch-verapdf.py` отримує офіційний veraPDF 1.30.3 із перевіркою SHA-256 в окремий каталог; потрібна Java, бінарники не комітяться. Використовується явний `--flavour ua1`, не типовий PDF/A-профіль. Машинний PASS UA-1 обліковується окремо від незалежного перегляду всіх сторінок і перевірки допоміжними технологіями. Для поточних 14/16 PDF є машинний PASS та незалежний огляд усіх 30 сторінок; VoiceOver/допоміжне читання — NOT_RUN. Після регенерації попередній результат не переноситься на нові bytes автоматично.
 
 ## Браузерні регресії
 
@@ -70,7 +78,7 @@ python scripts/check-report-reproduction.py
 
 `bash scripts/run-browser-checks.sh chromium /tmp/rc2-chromium` запускає всі три suites проти вже побудованого dist: загальний regression, маршрути кейсів і `browser-case-storage.py`. Для Firefox/WebKit змініть перший аргумент. Новий suite працює з синтетичним особистим fixture, примусовими помилками sessionStorage та реальним JSON-download; результати в `case-storage/results.json` входять у candidate manifest. Не запускайте тестові fault injection у профілі з особистими даними.
 
-У кейсі кнопка «Експортувати стан прикладу (JSON)» зберігає поточний навчальний стан із case ID/version та schema 4. Це окремий формат `asp24-nggroup-case-state` exportVersion 1; він не передається до імпорту особистих проєктів. У разі memory-only збережіть файл перед reload/закриттям. Успіх очищення є передумовою автоматичного reload; за відмови поточний стан залишається доступним для експорту.
+У кейсі кнопка «Експортувати стан прикладу (JSON)» готує поточний навчальний стан із case ID/version та schema 4. Це окремий формат `asp24-nggroup-case-state` exportVersion 1; він не передається до імпорту особистих проєктів. `browser-export.js` одночасно залишає точний JSON/TXT на сторінці: feature detection не може підтвердити, що in-app browser справді зберіг файл. При відмові Clipboard доступне ручне виділення. У разі memory-only збережіть файл або текстову копію перед reload/закриттям. Для особистого стану попередження також пропонує JSON-копію; це не новий формат імпорту проєктів. Успіх очищення є передумовою автоматичного reload; за відмови поточний стан залишається доступним для експорту.
 
 ## Modern Experience
 
@@ -78,7 +86,7 @@ python scripts/check-report-reproduction.py
 
 Для повної перевірки зміни: `npm ci`, `npm run typecheck`, `npm test`, `npm run build`, `npm run verify`. `BASE_PATH=/ npm run build` дає кореневий dist; стандартний build — Pages subpath. Preview навмисно не використовує SPA fallback: вкладені кейси мають власний index.html. Вихідний Vite manifest і SHA-256 inventory також перевіряються. React і його CSS — окремі dynamic chunks; hub не імпортує каталог.
 
-Контрольна генерація звітів копіює tracked source до тимчасового дерева та використовує вже встановлений lockfile toolchain через локальне посилання на node_modules. Перед нею виконайте `npm ci`; нові вхідні файли мають бути tracked. Прийняті PDF/HTML залишаються побайтово відтворюваними.
+Контрольна генерація звітів копіює tracked source до тимчасового дерева та використовує вже встановлений lockfile toolchain через локальне посилання на node_modules. Перед нею виконайте `npm ci`; нові вхідні файли мають бути tracked. Тотожність PDF/HTML підтверджується фактичною контрольною генерацією в тому самому pinned renderer/native-профілі.
 
 Після build і запуску preview додатковий suite: `python scripts/browser-modern.py --url http://127.0.0.1:8000/asp24-nggroup-demo-research/ --browser chromium --output /tmp/modern-checks` (або firefox/webkit). Він не замінює три попередні browser suites. Захищений Chromium може потребувати `--executable /usr/bin/google-chrome` у CI; sandbox не вимикається.
 
@@ -99,8 +107,26 @@ bash scripts/run-rc3-browser-checks.sh chromium /tmp/rc3-chromium
 python scripts/package-rc3.py --build rc3-build --evidence rc3-evidence --output output/rc3-preview
 ```
 
-Browser runner запускає шість suites: regression, cases, case-storage, modern, rc3 та reports-rc3. Нові сценарії перевіряють видимість повного технічного рядка саме у кейсі на 1440×900/390×844, undo заміни та ізоляцію, повернення modern/Back, видимі storage warnings, вузькі HTML графіки й таблиці, джерельні якорі, hub і frozen section returns. Для Chromium використовують доступний захищений Google Chrome; sandbox не вимикається. Локальне середовище без придатного sandbox/бібліотек позначається BLOCKED, незалежний результат Actions записується окремо.
+Browser runner запускає дев’ять suites: regression, cases, case-storage, modern, rc3, reports-rc3, hardening, workbench-hardening та lazy-science. Попередні перевірки збережено; нові додають відмови download/clipboard/storage/React, контекст довгих таблиць і фокус активної пари, text-size/reflow та відмови/запізніле завершення лінивого завантаження project/lab UI. Для Chromium використовують доступний захищений Chrome/Chromium; sandbox не вимикається. Локальне середовище без придатного sandbox/бібліотек позначається BLOCKED, незалежний результат Actions записується окремо. Число перевірок береться з фактичного JSON, а не з історичного `46 PASS`.
 
-Scoped performance виконує дев'ять холодних запусків: три повтори hub та modern case на desktop/mobile. Записуються передані JS/CSS bytes, LCP і середовище. Це вимір кандидата на loopback без baseline і без висновку про прискорення чи конверсію.
+Під час реалізації запускайте лише потрібний suite, наприклад `python scripts/browser-hardening.py --url http://127.0.0.1:8000/asp24-nggroup-demo-research/ --browser chromium --executable /usr/bin/chromium --output /tmp/p1-checks`. Спільний повний gate запускається після інтеграції всіх блоків. Browser fault injection використовує окремі синтетичні контексти. `--only` у P1 призначений для адресного повтору; у повному gate його не передають.
 
-Пакування перевіряє exact SHA всіх шести suites на кожному engine, source/output manifests, inventories обох збірок, standalone hashes і фактичний PDF visual review. `rc3-manifest.json` та самодостатній ZIP містять source, готові reports/dist, результати й скриншоти; ZIP обмежено 32 MiB. Шрифти, браузерні профілі й приватний handoff не входять до пакета. Статус — `PREVIEW_NOT_DEPLOYED`; публікаційний контроль описано в `docs/RC3_REVIEW.md`.
+При відмові React chunk основна оболонка пропонує класичне порівняння, каталог, документи й HTML/PDF. Відмова лінивого project/lab chunk не змінює проєкти; повтор потребує справжнього reload, бо браузер може кешувати невдалий dynamic import. Автоматичний reload дозволений лише після фактичного успіху збереження; memory-only лишається доступним для копії. Нативні Safari/iOS/Telegram/WebView та екранна клавіатура мають окремий [smoke-test власника](FINAL_HARDENING.md); WebKit CI не зараховується замість нього.
+
+Попередній `rc3-performance.py` зберігає scoped спостереження кандидата. Для hardening `scripts/hardening-performance.py` зіставляє прийнятий b320 і новий dist на одному runner: холодні сценарії desktop/mobile, JS/CSS, LCP і click-to-two-frames, сирі повтори та медіани. Project/lab UI і CSS завантажуються за потреби, доменна логіка залишається спільною; preload Modern виконується лише для explicit modern route. Це loopback-лабораторія конкретного середовища, не польові Web Vitals і не загальна гарантія прискорення. Точні команди та результати входять у новий artifact; історичні метрики не переносяться на новий SHA.
+
+Пакування перевіряє exact SHA всіх дев’яти suites на кожному engine, source/output manifests, inventories обох збірок, standalone hashes і фактичний PDF visual review. `rc3-manifest.json` та самодостатній ZIP містять source, готові reports/dist, результати й скриншоти; ZIP обмежено 32 MiB. Шрифти, браузерні профілі й приватний handoff не входять до пакета. Статус — `PREVIEW_NOT_DEPLOYED`; публікаційний контроль описано в `docs/RC3_REVIEW.md`. Поточний hardening до завершення нового exact-SHA gate має статус PRE_GATE, незалежно від прийнятого b320.
+
+## Зафіксоване середовище structured PDF
+
+Build job `rc3-preview.yml` виконується в офіційному Python 3.12.14 / Debian trixie
+container за immutable digest. `reports/native-runtime.json` фіксує image та
+версії 35 системних пакетів; `scripts/install-report-runtime.py` застосовується
+лише всередині цього контейнера. Чинні TLS/GPG та перевірки строків дії APT
+збережені. `native-renderer.json` у build evidence записує встановлені версії.
+
+Локальний контроль цього контейнера дав побайтово тотожні незалежно прийнятим
+PDF результати. Інші шляхи checkout і шрифтів також не змінюють байти: print
+адаптер передає ілюстрації як data URI, щоб абсолютний шлях не впливав на
+WeasyPrint resource IDs. Ці зміни не нормалізують готові PDF й не послаблюють
+контрольне порівняння. Свідчення — `reports/hardening-renderer-acceptance.json`.

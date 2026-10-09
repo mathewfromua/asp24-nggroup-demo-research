@@ -2,8 +2,9 @@
 import {initialState, STATE_KEY} from './logic.js';
 import {byId, groups} from './data.js';
 import {inspectOrders} from './orders.js';
-import {validateProject} from './science.js';
+import {validateProject} from './src/domain/projects.ts';
 import {assetUrl} from './asset-url.js';
+import {presentTextExport} from './browser-export.js';
 export const caseContext={active:false,storage:null,record:null,getState:null};
 export function seedCase(record) {
   const state=initialState(),seed=record.seed;
@@ -131,9 +132,9 @@ export async function prepareCase() {
   exportButton.addEventListener('click',()=>{
     try{
       const state=caseContext.getState?.()||JSON.parse(caseContext.storage.getItem(STATE_KEY));
-      const json=createCaseExport(record,state),url=URL.createObjectURL(new Blob([json],{type:'application/json'})),link=document.createElement('a');
-      link.href=url;link.download=`ASP24-NGGroup-case-${record.caseId}-v${record.caseVersion}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
-      exportStatus.textContent='JSON поточного навчального стану підготовлено для завантаження. Перевірте файл у завантаженнях; особисті проєкти не включено.';
+      const json=createCaseExport(record,state);
+      presentTextExport(disclosure,json,`ASP24-NGGroup-case-${record.caseId}-v${record.caseVersion}.json`);
+      exportStatus.textContent='JSON поточного навчального стану підготовлено. Особисті проєкти не включено. Якщо файл не з’явився, скористайтеся текстовою копією в контексті прикладу.';
     }catch(error){exportStatus.textContent='Експорт не створено: '+error.message;}
   });nav.append(exportButton);
   const resetStatus=text('p','');resetStatus.id='case-reset-status';resetStatus.setAttribute('role','status');

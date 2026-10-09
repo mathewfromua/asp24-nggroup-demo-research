@@ -1,142 +1,170 @@
 [
   {
     "brand": "ASP24",
+    "section": "asp24-02",
     "page": 2,
-    "content_bottom": 124.26
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-03",
     "page": 3,
-    "content_bottom": 139.06
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-04",
     "page": 4,
-    "content_bottom": 116.0
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-05",
     "page": 5,
-    "content_bottom": 60.54
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-06",
     "page": 6,
-    "content_bottom": 74.4
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-07",
     "page": 7,
-    "content_bottom": 82.27
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-08",
     "page": 8,
-    "content_bottom": 172.94
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-09",
     "page": 9,
-    "content_bottom": 307.04
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-10",
     "page": 10,
-    "content_bottom": 138.81
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-11",
     "page": 11,
-    "content_bottom": 49.22
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-12",
     "page": 12,
-    "content_bottom": 122.09
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-13",
     "page": 13,
-    "content_bottom": 279.09
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "ASP24",
+    "section": "asp24-14",
     "page": 14,
-    "content_bottom": 326.39
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-02",
     "page": 2,
-    "content_bottom": 141.26
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-03",
     "page": 3,
-    "content_bottom": 132.99
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-04",
     "page": 4,
-    "content_bottom": 51.49
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-05",
     "page": 5,
-    "content_bottom": 62.62
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-06",
     "page": 6,
-    "content_bottom": 48.16
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-07",
     "page": 7,
-    "content_bottom": 67.15
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-08",
     "page": 8,
-    "content_bottom": 55.82
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-09",
     "page": 9,
-    "content_bottom": 75.19
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-10",
     "page": 10,
-    "content_bottom": 262.04
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-11",
     "page": 11,
-    "content_bottom": 135.28
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-12",
     "page": 12,
-    "content_bottom": 136.03
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-13",
     "page": 13,
-    "content_bottom": 127.32
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-14",
     "page": 14,
-    "content_bottom": 103.23
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-15",
     "page": 15,
-    "content_bottom": 192.09
+    "renderer": "WeasyPrint 70.0"
   },
   {
     "brand": "NGGroup",
+    "section": "nggroup-16",
     "page": 16,
-    "content_bottom": 383.39
+    "renderer": "WeasyPrint 70.0"
   }
 ]

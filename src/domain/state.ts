@@ -1,7 +1,7 @@
 import type {Brand, GroupId, Product, DemoState} from './types.ts';
 import {products, groups, GROUP_IDS} from '../data/catalog.ts';
 import {inspectOrders, defaultCheckout, sanitizeCheckout} from '../../orders.js';
-import {COMPARE_LIMIT, quantity, normalizeGroup, catalogCategory} from './common.ts';
+import {COMPARE_LIMIT, quantity, normalizeGroup, catalogCategory, isGroup} from './common.ts';
 import {record, uniqueStrings} from './validation.ts';
 import {visiblePair} from './comparison.ts';
 export function validRoute(value: unknown, catalogOnly = false): value is string {
@@ -51,6 +51,12 @@ export function migrateState(raw: unknown, catalog: readonly Product[] = product
     if (!validRoute(url)) continue;
     const p = record(rawPage);
     result.view.pages[url] = {scroll: Math.max(0, Math.min(100000, Number(p.scroll) || 0)), details: Array.isArray(p.details) ? p.details.slice(0, 10).map(Boolean) : [], focus: typeof p.focus === 'string' ? p.focus.slice(0, 300) : ''};
+    const modern = record(p.modern);
+    if (/^#\/(asp|ng)\/compare\?/.test(url) && new URLSearchParams(url.split('?')[1]).get('experience') === 'modern' && isGroup(modern.group)) {
+      const bounded = (value: unknown, max: number) => typeof value === 'number' && Number.isFinite(value) ? Math.max(0, Math.min(max, value)) : 0;
+      const position = (value: unknown) => {const point = record(value);return {x: bounded(point.x, 10000), y: bounded(point.y, 100000)};};
+      result.view.pages[url].modern = {group: modern.group, pairFocus: modern.pairFocus === true, full: position(modern.full), pair: position(modern.pair)};
+    }
   }
   return result;
 }

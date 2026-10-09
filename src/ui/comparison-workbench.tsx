@@ -8,6 +8,8 @@ import type {Brand, GroupId, Product} from '../domain/types.ts';
 import '../styles/comparison-workbench.css';
 
 export interface WorkbenchSnapshot {
+  pairFocus?: boolean;
+  tablePositions?: {full: {x: number; y: number}; pair: {x: number; y: number}};
   caseActive: boolean;
   brand: Brand;
   group: GroupId;
@@ -44,6 +46,9 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
   const [query, setQuery] = useState('');
   const [replaceId, setReplaceId] = useState('');
   const [message, setMessage] = useState('');
+  // Presentation only: the active pair and all candidates remain in the shared state.
+  const [pairFocus, setPairFocus] = useState(s.pairFocus === true);
+  const workbenchRef = useRef<HTMLElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const addRef = useRef<HTMLButtonElement>(null);
   const candidateDetails = useRef<HTMLDetailsElement>(null);
@@ -55,6 +60,22 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
   useEffect(() => {const media=matchMedia('(max-width: 700px)');const changed=()=>{mobile.current=media.matches;if(candidateDetails.current)candidateDetails.current.open=!s.caseActive&&!media.matches;};media.addEventListener('change',changed);return ()=>media.removeEventListener('change',changed);}, [s.caseActive]);
   useEffect(() => {if (discovery) searchRef.current?.focus();}, [discovery, replaceId]);
   useEffect(() => {setQuery('');setReplaceId('');setDiscovery(false);}, [s.group]);
+  useEffect(() => {
+    const variant = pairFocus || mobile.current ? 'pair' : 'full';
+    const table = workbenchRef.current?.querySelector<HTMLElement>(`.wb-${variant}`), point = s.tablePositions?.[variant];
+    if (table && point) {table.scrollLeft = point.x;table.scrollTop = point.y;}
+  }, [pairFocus]);
+  useEffect(() => {
+    const tables = Array.from(workbenchRef.current?.querySelectorAll<HTMLElement>('.wb-table-wrap') || []);
+    const measure = () => tables.forEach(table => {
+      table.style.setProperty('--wb-header-height', `${table.querySelector('thead')?.getBoundingClientRect().height || 0}px`);
+    });
+    measure();
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    tables.forEach(table => {const heading = table.querySelector('thead');if (heading) observer?.observe(heading);});
+    window.addEventListener('resize', measure);
+    return () => {observer?.disconnect();window.removeEventListener('resize', measure);};
+  }, [s.candidates.length]);
   function openDiscovery(id = '') {setReplaceId(id);setDiscovery(true);}
   function closeDiscovery() {setDiscovery(false);setReplaceId('');addRef.current?.focus();}
   function add(p: Product) {
@@ -82,11 +103,29 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
   }
   function table(models: Product[], variant: 'full'|'pair') {
     const rows = comparisonRows(models, s.differences && models.length > 1);
-    return <div className={`wb-table-wrap wb-${variant}`} tabIndex={0} aria-label={`Параметри: ${variant === 'pair' ? 'активна пара' : 'усі кандидати'}`}>
+    return <div className={`wb-table-wrap wb-${variant}`} data-wb-focus={`table-${variant}`} role="region" tabIndex={0} aria-label={`Параметри: ${variant === 'pair' ? 'активна пара' : 'усі кандидати'}`} aria-describedby={`wb-scroll-help-${variant}`} onFocusCapture={event => {
+      // Native focus can scroll both the region and the page. After it settles,
+      // retain the model headings and keep targets clear of both sticky axes.
+      const target = event.target;
+      const region = event.currentTarget;
+      if (target === region || workbenchRef.current?.dataset.restoringView === 'true') return;
+      requestAnimationFrame(() => {
+        if (!region.isConnected || document.activeElement !== target) return;
+        const bounds = region.getBoundingClientRect();
+        if (bounds.height <= innerHeight && (bounds.top < 0 || bounds.bottom > innerHeight)) region.scrollIntoView({block:'nearest',inline:'nearest'});
+        const headings = Array.from(region.querySelectorAll('thead th'));
+        const headerBottom = Math.max(...headings.map(heading => heading.getBoundingClientRect().bottom));
+        const parameterRight = headings[0]?.getBoundingClientRect().right;
+        const box = target.getBoundingClientRect();
+        if (!target.closest('thead') && headings.length && box.top < headerBottom + 8) region.scrollTop += box.top - headerBottom - 8;
+        if (parameterRight != null && box.left < parameterRight + 8) region.scrollLeft += box.left - parameterRight - 8;
+      });
+    }}>
+      <p className="sr-only" id={`wb-scroll-help-${variant}`}>Таблицю можна прокручувати клавішами зі стрілками. Заголовки моделей і назви параметрів залишаються на місці. Tab переводить до наступної дії.</p>
       <table className="wb-table">
         <caption className="sr-only">{activeGroup}. {variant === 'pair' ? 'Активна пара' : 'Усі кандидати'}. {s.differences ? 'Відмінності та неповні дані' : 'Усі параметри'}</caption>
         <thead><tr><th scope="col" className="wb-parameter-heading">Параметр<span>Значення для конкретного виконання</span></th>{models.map(p => <th scope="col" key={p.id} data-pair={s.pair[0] === p.id ? 'A' : s.pair[1] === p.id ? 'B' : undefined}>
-          <button type="button" className="wb-model-title" onClick={() => a.details(p.id)} aria-label={`Докладніше: ${p.name}`}>{p.name}</button>
+          <button type="button" className="wb-model-title" data-wb-focus={`model-${variant}-${p.id}`} onClick={() => a.details(p.id)} aria-label={`Докладніше: ${p.name}`}>{p.name}</button>
           <span className="wb-sku">{p.sku} · {p.revision}</span>
           <span className="wb-pair-marker">{s.pair[0] === p.id ? 'A · активна пара' : s.pair[1] === p.id ? 'B · активна пара' : 'Кандидат'}</span>
         </th>)}</tr></thead>
@@ -98,11 +137,11 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
           </tr>)}
           {!rows.length && <tr><td colSpan={models.length + 1}>Відомих відмінностей і прогалин у технічних параметрах немає.</td></tr>}
         </tbody>
-        <tfoot><tr><th scope="row">Короткий список</th>{models.map(p => <td key={p.id}><button type="button" className="wb-secondary" onClick={() => a.shortlist([p.id])} aria-label={`У проєкт: ${p.name}`}>У проєкт</button><button type="button" className="wb-text" disabled={!p.available} onClick={() => cart(p)} aria-label={`До кошика: ${p.name}`}>До кошика{s.cart[p.id] ? ` · ${s.cart[p.id]} ${p.unit}` : ''}</button></td>)}</tr></tfoot>
+        <tfoot><tr><th scope="row">Короткий список</th>{models.map(p => <td key={p.id}><button type="button" className="wb-secondary" data-wb-focus={`project-${variant}-${p.id}`} onClick={() => a.shortlist([p.id])} aria-label={`У проєкт: ${p.name}`}>У проєкт</button><button type="button" className="wb-text" disabled={!p.available} data-wb-focus={`cart-${variant}-${p.id}`} onClick={() => cart(p)} aria-label={`До кошика: ${p.name}`}>До кошика{s.cart[p.id] ? ` · ${s.cart[p.id]} ${p.unit}` : ''}</button></td>)}</tr></tfoot>
       </table>
     </div>;
   }
-  return <section className="comparison-workbench" data-testid="comparison-workbench" data-group={s.group} data-case={s.caseActive} aria-labelledby="wb-title">
+  return <section ref={workbenchRef} className="comparison-workbench" data-testid="comparison-workbench" data-group={s.group} data-case={s.caseActive} data-pair-focus={pairFocus} aria-labelledby="wb-title">
     <div className="wb-heading"><div><a href={s.catalogHref} className="wb-back">← До добору</a><h1 id="wb-title">Робочий простір порівняння</h1></div><div className="wb-heading-side"><span className="wb-count">{s.candidates.length}<small> / 6 кандидатів</small></span><a href={s.legacyHref}>Класичне порівняння</a></div></div>
     <div className="wb-toolbar"><label className="wb-field">Категорія<select data-testid="wb-group" id="wb-group" value={s.group} onChange={event => a.group(event.target.value as GroupId)}>{s.groups.map(group => <option key={group.id} value={group.id}>{group.name} · {group.count}</option>)}</select></label><button type="button" className="wb-primary" data-testid="wb-add" ref={addRef} aria-expanded={discovery} aria-controls="wb-discovery" onClick={() => discovery ? closeDiscovery() : openDiscovery()}>+ Додати / замінити</button><button type="button" className="wb-secondary" data-testid="wb-shortlist" disabled={!s.candidates.length} onClick={() => a.shortlist(s.candidates.map(p => p.id))}>Зберегти в проєкті</button></div>
     {discovery && <section id="wb-discovery" className="wb-discovery" aria-label="Додавання та заміна кандидатів"><div className="wb-discovery-heading"><h2>{replaceId ? 'Замінити кандидата' : 'Додати до порівняння'}</h2><button type="button" className="wb-secondary" onClick={closeDiscovery}>Готово</button></div>
@@ -114,7 +153,7 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
     {!!s.candidates.length && <>
       <div className="wb-pair-controls" role="group" aria-label="Активна пара"><span>Активна пара</span>{[0,1].map(slot => <label key={slot} className="wb-pair-select"><span aria-hidden="true">{slot === 0 ? 'A' : 'B'}</span><span className="sr-only">Модель {slot === 0 ? 'A' : 'B'}</span><select data-testid={slot === 0 ? 'wb-pair-a' : 'wb-pair-b'} value={s.pair[slot] || ''} onChange={event => {a.pair(slot,event.target.value);setMessage(`Модель ${slot === 0 ? 'A' : 'B'}: ${s.candidates.find(p => p.id === event.target.value)?.name || 'не вибрано'}.`);}}>{!s.pair[slot] && <option value="">Додайте другу модель</option>}{s.candidates.map(p => <option key={p.id} value={p.id}>{name(p)}</option>)}</select></label>)}</div>
       <details className="wb-candidates" ref={candidateDetails} open={!s.caseActive&&!mobile.current}><summary>Керувати кандидатами · {s.candidates.length} із 6</summary><div className="wb-candidate-grid">{s.candidates.map(p => <article key={p.id} data-testid={`wb-candidate-${p.id}`} data-pair={s.pair[0] === p.id ? 'A' : s.pair[1] === p.id ? 'B' : undefined}><strong>{p.name}</strong><span className="wb-sku">{p.sku}</span>{s.pair.includes(p.id) && <span className="wb-candidate-pair">{s.pair[0] === p.id ? 'A' : 'B'} · активна пара</span>}<div><button type="button" className="wb-text" data-testid={`wb-replace-${p.id}`} onClick={() => openDiscovery(p.id)}>Замінити</button><button type="button" className="wb-text" data-testid={`wb-remove-${p.id}`} aria-label={`Прибрати ${p.name}`} onClick={() => remove(p)}>Прибрати</button></div></article>)}</div></details>
-      <div className="wb-modes"><label><input type="checkbox" data-testid="wb-differences" checked={s.differences} onChange={event => a.differences(event.target.checked)}/> Лише відмінності</label><span>{s.differences ? 'Відмінності та неповні дані' : 'Усі параметри'}</span><button type="button" className="wb-text" data-testid="wb-undo" disabled={!s.undoAvailable} onClick={undo}>↶ {undoLabel}</button></div>
+      <div className="wb-modes"><label><input type="checkbox" data-testid="wb-differences" checked={s.differences} onChange={event => a.differences(event.target.checked)}/> Лише відмінності</label><button type="button" className="wb-pair-focus wb-secondary" data-testid="wb-pair-focus" aria-pressed={pairFocus} onClick={() => {setPairFocus(!pairFocus);setMessage(pairFocus ? `Показано всіх кандидатів: ${s.candidates.length}.` : `Показано активну пару A/B. Усі ${s.candidates.length} кандидатів збережені.`);}}>Лише пара A/B</button><span>{pairFocus ? `У доборі збережено ${s.candidates.length} кандидатів` : s.differences ? 'Відмінності та неповні дані' : 'Усі параметри'}</span><button type="button" className="wb-text" data-testid="wb-undo" disabled={!s.undoAvailable} onClick={undo}>↶ {undoLabel}</button></div>
       {table(s.candidates,'full')}{table(pair,'pair')}
     </>}
     {!s.candidates.length && <div className="wb-empty"><span aria-hidden="true">A ↔ B</span><h2>Знайдіть обладнання для свого завдання</h2><p>Додайте до шести моделей однієї категорії. Виберіть активну пару, зіставте параметри та збережіть потрібні позиції в проєкті.</p><button type="button" className="wb-primary" onClick={() => openDiscovery()}>Обрати першу модель</button>{s.undoAvailable && <button type="button" className="wb-secondary" data-testid="wb-undo" onClick={undo}>{undoLabel}</button>}</div>}

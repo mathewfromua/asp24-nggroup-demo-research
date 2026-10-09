@@ -11,7 +11,7 @@ import tarfile
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = 'a659d2f9e8d923a7bc64a3f91133cfed959e9181'
+BASELINE = 'b320abc302ed895704db2437ce7dbe3a6964e603'
 SUITES = {
     'regression': 'results.json',
     'cases': 'cases/results.json',
@@ -19,6 +19,9 @@ SUITES = {
     'modern': 'modern/results.json',
     'rc3': 'rc3/results.json',
     'reports_rc3': 'reports-rc3/results.json',
+    'hardening': 'hardening/results.json',
+    'workbench_hardening': 'workbench-hardening/results.json',
+    'lazy_science': 'lazy-science/results.json',
 }
 
 
@@ -54,7 +57,7 @@ def selected_browser_evidence(relative):
     """Keep every result/log and the screenshots addressing RC3's changed views."""
     return relative.suffix.lower() in {'.json', '.log', '.txt'} or (
         relative.suffix.lower() == '.png' and len(relative.parts) >= 3
-        and relative.parts[1] in {'rc3', 'reports-rc3'}
+        and relative.parts[1] in {'rc3', 'reports-rc3', 'hardening', 'workbench-hardening', 'lazy-science'}
     )
 
 
@@ -69,11 +72,22 @@ def main():
     subprocess.run(['git', 'merge-base', '--is-ancestor', BASELINE, sha], cwd=ROOT, check=True)
     build = read(args.build / 'build-evidence/build-result.json')
     assert build['commit'] == sha and build['status'] == 'PASS', 'Build evidence must identify the exact successful commit'
-    for base in ['pages', 'root']:
+    native = read(args.build / 'build-evidence/native-renderer.json')
+    native_profile = read(ROOT / 'reports/native-runtime.json')
+    assert native['status'] == 'PASS' and native['packages'] == native_profile['packages']
+    assert native['base_image'] == native_profile['base_image'], 'Wrong native PDF renderer'
+    for base in ['pages', 'root', 'baseline']:
         assert inventory(args.build / base / 'dist') == read(args.build / f'build-evidence/{base}-sha256.json'), f'{base} dist differs from tested bytes'
     reproduction = read(args.build / 'build-evidence/verification/report-reproduction.json')
     assert reproduction['status'] == 'PASS' and len(reproduction['compared']) >= 4
     assert set(reproduction['negative_checks']) == {'content change rejected', 'template change rejected'}, 'Both meaningful stale-output checks are required'
+    structured = read(args.build / 'build-evidence/verification/reports/structured-pdf-validation.json')
+    assert structured['status'] == 'PASS', 'Structured PDFs must pass the independent machine gate'
+    assert structured['manuscript_sha256'] == digest(ROOT / 'reports/content.json')
+    for brand in ['ASP24', 'NGGroup']:
+        report = structured['reports'][brand]
+        assert report['status'] == 'PASS' and report['verapdf_ua1']['status'] == 'PASS', (brand, 'Structural or veraPDF UA-1 validation failed')
+        assert report['sha256'] == digest(args.build / 'pages/dist/reports' / f'{brand}_Review.pdf'), (brand, 'Different PDF validation bytes')
     browsers = {}
     for browser in ['chromium', 'firefox', 'webkit']:
         run = read(args.evidence / browser / 'browser-run.json')
@@ -93,6 +107,12 @@ def main():
     assert performance['commit'] == sha and performance['status'] == 'PASS', 'Scoped performance observation did not finish'
     assert len(performance['samples']) == 9, 'Three repeats of hub and both case viewports required'
     assert {name: info['sha256'] for name, info in performance['dist_files'].items()} == inventory(args.build / 'pages/dist'), 'Performance used different dist bytes'
+    comparison = read(args.evidence / 'chromium/performance/hardening-comparison.json')
+    assert comparison['commit'] == sha and comparison['baseline_sha'] == BASELINE and comparison['status'] == 'PASS'
+    assert not comparison['working_tree_changes'], 'Comparative performance used modified source'
+    assert {path: info['sha256'] for path, info in comparison['dist_files']['candidate'].items()} == inventory(args.build / 'pages/dist'), 'Comparative performance used different candidate bytes'
+    assert {path: info['sha256'] for path, info in comparison['dist_files']['baseline'].items()} == inventory(args.build / 'baseline/dist'), 'Comparative performance used different baseline bytes'
+    assert len(comparison['samples']) == 30, 'Five paired repeats of desktop/mobile comparison and hub required'
 
     pages_dist = args.build / 'pages/dist'
     standalone = args.build / 'standalone'
@@ -132,7 +152,7 @@ def main():
             shutil.copy2(path, destination)
     editorial = bundle / 'evidence/editorial'
     editorial.mkdir()
-    for name in ['reports/rc3-visual-review.json', 'reports/editorial-validation.json',
+    for name in ['reports/rc3-visual-review.json', 'reports/hardening-pdf-acceptance.json', 'reports/hardening-renderer-acceptance.json', 'reports/editorial-validation.json',
                  'research/editorial-decisions.json', 'research/editorial-source-register.json']:
         shutil.copy2(ROOT / name, editorial / Path(name).name)
     (bundle / 'scripts').mkdir()
@@ -164,18 +184,22 @@ HTTPS-публікацію. До дозволеної публікації ко�
 потрібні Node 24, npm ci, pinned Python 3.12.14/packages і перевірені зовнішні шрифти.
 Шрифти, кеші, приватний handoff-архів і профілі браузерів не включені.
 `evidence/` — фактичні build/HTTP/Node/report/browser результати та скриншоти.
-Усі JSON-результати й журнали шести suites збережені. Компактний пакет включає
-всі скриншоти нових перевірок `rc3/` і `reports-rc3/`; повні скриншоти попередніх
+Усі JSON-результати й журнали дев'яти suites збережені. Компактний пакет включає
+скриншоти `rc3/`, `reports-rc3/` та нових hardening suites; повні скриншоти попередніх
 suites доступні в артефактах `rc3-browser-<engine>-{sha}` точного CI-запуску:
 {build['run_url']}
-Звужено лише склад зображень пакета; gates для всіх шести suites залишаються повними.
+Звужено лише склад зображень пакета; gates для всіх дев’яти suites залишаються повними.
 Коренева збірка перевірена окремо; її SHA inventory є в evidence/build.
 `rc3-manifest.json` містить SHA-256 файлів. Контроль суми доводить байти, а не істинність джерел.
 
-R34 залишається OPEN; фінальні PDF untagged (R42), HTML — семантична альтернатива.
-Stable Safari, фізичний iPhone, native zoom, VoiceOver і PDF/UA — NOT_RUN.
-WebKit не замінює ці перевірки. Performance PASS означає завершений локальний
-вимір bytes/LCP; прискорення, польовий INP чи ефект конверсії не стверджуються.
+R34 — OPEN_EXTERNAL_SOURCE. R42 закрито щодо структурного тегування після
+структурної, текстової та візуальної перевірки обох PDF. veraPDF UA-1 PASS —
+результат машинного профілю; читання допоміжною технологією — NOT_RUN.
+Native Safari/macOS/iOS, фізичний iPhone, Chrome Android, Telegram iOS/Android,
+WKWebView/Android WebView, native zoom та VoiceOver — NOT_RUN.
+WebKit не замінює ці перевірки. Performance містить порівняння з прийнятим RC3
+на одному runner; висновки обмежені виміряними лабораторними метриками.
+Інструкція власнику та питання R34: `source/docs/FINAL_HARDENING.md`.
 ''')
     files = {}
     for path in sorted(bundle.rglob('*')):
@@ -183,28 +207,36 @@ WebKit не замінює ці перевірки. Performance PASS означ�
             safe_file(path, bundle)
             files[path.relative_to(bundle).as_posix()] = {'sha256': digest(path), 'bytes': path.stat().st_size}
     manifest = {
-        'schema': 1, 'kind': 'integrated-rc3-http-preview', 'commit': sha,
+        'schema': 1, 'kind': 'integrated-rc3-hardening-http-preview', 'commit': sha,
         'baseline_sha': BASELINE, 'status': 'READY_FOR_INDEPENDENT_REVIEW',
         'publication': 'PREVIEW_NOT_DEPLOYED', 'independent_review': 'PENDING',
         'build': build, 'browsers': browsers,
         'evidence_scope': {
-            'included': 'All build evidence; all browser JSON/results/logs; all rc3 and reports-rc3 PNG screenshots for each engine',
+            'included': 'All build and structured-PDF evidence; all browser JSON/results/logs; rc3, reports-rc3 and hardening PNG screenshots for each engine',
             'complete_browser_screenshots': {
                 'run_url': build['run_url'],
                 'artifact_names': [f'rc3-browser-{browser}-{sha}' for browser in ['chromium', 'firefox', 'webkit']],
             },
-            'gates': 'All six suites per engine must pass on this SHA before any evidence selection; no failures are omitted or reclassified',
+            'gates': 'All nine suites per engine must pass on this SHA before any evidence selection; no failures are omitted or reclassified',
         },
         'report_version': read(ROOT / 'publication.json')['reportVersion'],
         'report_input_digest': read(ROOT / 'reports/input-manifest.json')['digest'],
         'report_source_sha256': digest(ROOT / 'reports/content.json'),
         'performance': {'status': performance['status'], 'path': 'evidence/browser/chromium/performance/performance.json',
-                        'interpretation': performance['interpretation']},
+                        'interpretation': performance['interpretation'],
+                        'comparison_path': 'evidence/browser/chromium/performance/hardening-comparison.json',
+                        'comparison_baseline_sha': BASELINE},
+        'pdf_accessibility': {'status': 'STRUCTURAL_TAGGING_VERIFIED',
+                              'r42': 'CLOSED_STRUCTURAL_TAGGING',
+                              'machine_profile': 'veraPDF PDF/UA-1 PASS for both PDFs',
+                              'assistive_reading': 'NOT_RUN',
+                              'evidence': 'evidence/build/verification/reports/structured-pdf-validation.json'},
         'contracts': {'state_schema': 4, 'project_import_version': 1, 'personal_key': 'perspective-demo-v1',
                       'max_candidates': 6, 'project_limit': 64, 'catalogue_models': 384,
                       'manufacturers': 13, 'categories': 8},
-        'limitations': ['R34 service-time origin unresolved', 'R42 final PDFs untagged; semantic HTML alternative',
-                        'Stable Safari / physical iPhone / native zoom / VoiceOver / PDF-UA NOT_RUN',
+        'limitations': ['R34 OPEN_EXTERNAL_SOURCE: service-time origin unresolved',
+                        'Native Safari macOS/iOS / physical iPhone / Chrome Android / Telegram iOS/Android / WKWebView / Android WebView NOT_RUN',
+                        'Assistive PDF reading / native zoom / VoiceOver NOT_RUN; machine PDF/UA-1 validation is a separate result',
                         'Synthetic catalogue; no real commerce or conversion claim', 'Public release not verified or authorized'],
         'file_hash_scope': 'Every bundle file except this manifest; no self-referential checksum',
         'files': files,

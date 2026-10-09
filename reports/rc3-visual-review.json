@@ -1,12 +1,12 @@
 {
   "status": "PASS",
   "date": "2026-10-09",
-  "baseline_sha": "0034b000bd1bad42f0c3ffb222a0ec58308a42bc",
+  "baseline_sha": "b320abc302ed895704db2437ce7dbe3a6964e603",
   "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
-  "input_digest": "2dd37b63b83b79fbb3fabdcdd30aac51c7156bf50344940340efb5a5d65c7ed2",
+  "input_digest": "49db6ef82b245976e3d004726584c0861a96fc4fa9964d7fa3d0af2781a5e4d8",
   "pdf_sha256": {
-    "ASP24": "ed3eaac30315748452b1c55e06ac05066cbec0bbd0ee4fe5e0414a4898c39cd4",
-    "NGGroup": "6238e8982b89d3084bc6d62e54deaecd3ef16a519eb1fa7154ecb9cecdfeafe6"
+    "ASP24": "07e5e8bf7244a935a41becaea88524352c6cb3f64729c60df8544cc9d682e8d9",
+    "NGGroup": "3183f605aa6a0ad40af091dabd21be26a5aa8068746cc5ed98b89259ecd5673e"
   },
   "html_sha256": {
     "ASP24": "5e00977fb7559f6e9c2d9c83e68a89e3fbb9c45ef82fd25709e990fb53b3e49d",
@@ -52,63 +52,21 @@
       16
     ]
   },
-  "method": "Rendered all 30 RC2 baseline and all 30 final RC3 pages with Poppler pdftoppm -png -scale-to 1100. Compared PNG hashes; viewed both contact sheets and every one of 21 changed full-page PNGs with image tools. Nine unchanged PNGs including both covers match byte-for-byte. Implementation team review; independent acceptance pending.",
-  "changed_pages": {
-    "ASP24": [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14
-    ],
-    "NGGroup": [
-      5,
-      7,
-      9,
-      11,
-      13,
-      14,
-      15,
-      16
-    ]
-  },
-  "unchanged_pages": {
-    "ASP24": [
-      1
-    ],
-    "NGGroup": [
-      1,
-      2,
-      3,
-      4,
-      6,
-      8,
-      10,
-      12
-    ]
-  },
+  "method": "All 30 pages were previously rendered and manually viewed in full. Independently rendered every revised page at the same 1.25 scale and compared all RGB pixels against the accepted full-page renders. All 14 ASP24 and 16 NG Group pages are pixel-identical. Unchanged pages were not redundantly reread.",
   "observations": [
-    "No clipped or overlapping text found on changed pages; layout guards pass. ASP24 p11 remains dense but body and footer are separate.",
-    "ASP24 p2 geometry unchanged; changed pixels only at small brand, box title and method heading. NGGroup p2 unchanged. Both covers unchanged.",
-    "DC photo/table 2+1+2 versus 1+2+2 retained, USB separately stated; technical source limitations readable.",
-    "ASP24 text accent #a84000 on #fbefe3: 5.46:1. Sources 11.2pt/16pt leading; historical chart dates 10.5pt; larger target table spacing without body font reduction.",
-    "NGGroup changed pages preserve FHP12 publication discrepancy, document applicability limits, static data-product distinction, R34 and historical/current provenance."
+    "All 14 ASP24 and 16 NG Group pages have legible text, unbroken tables/captions, coherent hierarchy and no overlap, clipping or short spill pages.",
+    "Accepted vector covers preserve all pixels at 72 dpi and selectable text; logical H1/P order matches the top-to-bottom layout.",
+    "ASP24 p. 6 keeps five DC outputs separate from USB; E01 distinguishes device and battery; quantities, units and prices remain unchanged.",
+    "NG Group p. 5 retains the confirmed publication discrepancy and unknown delivery passport; p. 6 conditional energy/time values and historical E02 attribution remain intact.",
+    "R34 remains open; no service process facts were invented."
   ],
-  "comparison_file": "reports/page-render-comparison.json",
+  "independent_pdf_acceptance": "reports/hardening-pdf-acceptance.json",
   "contact_sheets": [
     "reports/rc3-review/ASP24.png",
     "reports/rc3-review/NGGroup.png"
   ],
   "limitations": [
-    "Visual implementation review is not independent acceptance or proof of source truth.",
-    "Final PDF untagged; PDF-UA and assistive reading NOT_RUN."
+    "Machine PDF/UA-1 profile PASS does not substitute for assistive-technology reading.",
+    "This acceptance is bound to PDF SHA-256, not an uncommitted Git SHA or published HTTPS."
   ]
 }

@@ -1,0 +1,240 @@
+{
+  "status": "PASS",
+  "scope": "Independent revalidation of path-stable PDF resource identities; local drafts, not deployed",
+  "accepted_preview_baseline_sha": "b320abc302ed895704db2437ce7dbe3a6964e603",
+  "r42": "STRUCTURAL_TAGGING_VERIFIED",
+  "pdf_ua": "PASS_MACHINE_VALIDATION",
+  "assistive_reading": "NOT_RUN",
+  "voiceover": "NOT_RUN",
+  "pdf_ua_full_conformance_claim": false,
+  "visual_method": "All 30 pages were previously rendered and manually viewed in full. Independently rendered every revised page at the same 1.25 scale and compared all RGB pixels against the accepted full-page renders. All 14 ASP24 and 16 NG Group pages are pixel-identical. Unchanged pages were not redundantly reread.",
+  "visual_findings": [
+    "All 14 ASP24 and 16 NG Group pages have legible text, unbroken tables/captions, coherent hierarchy and no overlap, clipping or short spill pages.",
+    "Accepted vector covers preserve all pixels at 72 dpi and selectable text; logical H1/P order matches the top-to-bottom layout.",
+    "ASP24 p. 6 keeps five DC outputs separate from USB; E01 distinguishes device and battery; quantities, units and prices remain unchanged.",
+    "NG Group p. 5 retains the confirmed publication discrepancy and unknown delivery passport; p. 6 conditional energy/time values and historical E02 attribution remain intact.",
+    "R34 remains open; no service process facts were invented."
+  ],
+  "reports": {
+    "ASP24": {
+      "sha256": "07e5e8bf7244a935a41becaea88524352c6cb3f64729c60df8544cc9d682e8d9",
+      "pages": 14,
+      "prior_full_visual_review_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "independent_pixel_comparison_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "exact_manuscript_blocks": 226,
+      "tags": {
+        "/Document": 1,
+        "/Sect": 14,
+        "/P": 97,
+        "/H1": 1,
+        "/NonStruct": 28,
+        "/Part": 13,
+        "/Span": 427,
+        "/H2": 13,
+        "/Div": 12,
+        "/Table": 11,
+        "/THead": 11,
+        "/TR": 41,
+        "/TH": 58,
+        "/TBody": 11,
+        "/TD": 45,
+        "/H3": 14,
+        "/Link": 51,
+        "/Figure": 4,
+        "/Caption": 3
+      },
+      "tables": {
+        "data_cells_checked": 45,
+        "errors": []
+      },
+      "links": {
+        "annotations": 51,
+        "external_unique": 26,
+        "internal_unique": 16,
+        "missing_external": [],
+        "missing_internal": []
+      },
+      "chart_data": [
+        {
+          "label": "Кількість предметних рядків у вибраних архівних таблицях: 16 до 9, 14 до 0, 30 до 0. Контур — раніший стан, заповнена смуга — пізніший. Точні дати та значення:",
+          "values_checked": 22,
+          "missing": []
+        }
+      ],
+      "cover": {
+        "selectable_text": true,
+        "vector_pixels_match": "PASS",
+        "logical_text_blocks": 5
+      },
+      "verapdf": {
+        "version": "1.30.3",
+        "profile": "PDF/UA-1 validation profile",
+        "compliant": true,
+        "passed_rules": 106,
+        "failed_rules": 0,
+        "passed_checks": 54029,
+        "failed_checks": 0
+      },
+      "all_pages_pixel_identical_to_reviewed": true
+    },
+    "NGGroup": {
+      "sha256": "3183f605aa6a0ad40af091dabd21be26a5aa8068746cc5ed98b89259ecd5673e",
+      "pages": 16,
+      "prior_full_visual_review_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "independent_pixel_comparison_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "exact_manuscript_blocks": 252,
+      "tags": {
+        "/Document": 1,
+        "/Sect": 16,
+        "/P": 101,
+        "/H1": 1,
+        "/NonStruct": 31,
+        "/Part": 15,
+        "/Span": 536,
+        "/H2": 15,
+        "/Div": 15,
+        "/Table": 14,
+        "/THead": 14,
+        "/TR": 58,
+        "/TH": 76,
+        "/TBody": 14,
+        "/TD": 54,
+        "/H3": 16,
+        "/Link": 64,
+        "/Caption": 5,
+        "/Figure": 5
+      },
+      "tables": {
+        "data_cells_checked": 54,
+        "errors": []
+      },
+      "links": {
+        "annotations": 64,
+        "external_unique": 31,
+        "internal_unique": 14,
+        "missing_external": [],
+        "missing_internal": []
+      },
+      "chart_data": [
+        {
+          "label": "Semantic figure data table",
+          "values_checked": 11,
+          "missing": []
+        },
+        {
+          "label": "Час роботи зменшується зі зростанням сталого навантаження. Точні значення:",
+          "values_checked": 15,
+          "missing": []
+        }
+      ],
+      "cover": {
+        "selectable_text": true,
+        "vector_pixels_match": "PASS",
+        "logical_text_blocks": 5
+      },
+      "verapdf": {
+        "version": "1.30.3",
+        "profile": "PDF/UA-1 validation profile",
+        "compliant": true,
+        "passed_rules": 106,
+        "failed_rules": 0,
+        "passed_checks": 67253,
+        "failed_checks": 0
+      },
+      "all_pages_pixel_identical_to_reviewed": true
+    }
+  },
+  "negative_validation_tests": {
+    "executed": 6,
+    "passed": 6,
+    "coverage": [
+      "Both actual PDF baselines pass",
+      "Missing StructTreeRoot rejected",
+      "False MarkInfo rejected",
+      "Missing Figure Alt rejected",
+      "Existing but wrong TH header reference rejected",
+      "Removed logical text owner rejected"
+    ]
+  },
+  "validator_tooling": [
+    "scripts/verify-structured-pdfs.py",
+    "scripts/test-structured-pdfs.py",
+    "scripts/fetch-verapdf.py"
+  ],
+  "limits": [
+    "Machine PDF/UA-1 profile PASS does not substitute for assistive-technology reading.",
+    "This acceptance is bound to PDF SHA-256, not an uncommitted Git SHA or published HTTPS."
+  ],
+  "prior_acceptance": "pdf-independent-acceptance.json",
+  "machine_evidence": "path-stable-structural.json",
+  "pixel_evidence": "path-stable-pixel-comparison.json",
+  "implementation_change": "Print images are embedded as data URIs so WeasyPrint resource names no longer depend on the checkout path.",
+  "reported_reproduction_evidence": {
+    "path": "/workspace/hardening-evidence/pdf-path-stable/reproduction-evidence.json",
+    "attribution": "Implementation agent reports byte-identical output from different checkout and font directories; this revalidation independently checked structural quality, UA-1 and all rendered pixels."
+  }
+}
