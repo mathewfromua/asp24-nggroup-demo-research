@@ -1,0 +1,68 @@
+name: Browser regression
+on:
+  pull_request:
+  push:
+    branches: [release/reports-first-rc]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    name: browser (${{ matrix.browser }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12.14'
+      - name: Install pinned browser test dependencies
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt
+          python -m playwright install --with-deps "$BROWSER"
+      - name: Build the artifact under test
+        run: npm run build && npm run verify
+      - name: Test actual HTTP and DOM interactions
+        env:
+          BROWSER: ${{ matrix.browser }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p browser-artifacts
+          preview_path=$(node -p "JSON.parse(require('node:fs').readFileSync('dist/build-config.json','utf8')).BASE_PATH")
+          preview_url="http://127.0.0.1:8000${preview_path}"
+          npm run preview -- --host 127.0.0.1 --port 8000 > browser-artifacts/preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..50}; do
+            if curl --fail --silent --output /dev/null "$preview_url"; then break; fi
+            sleep 0.2
+          done
+          curl --fail --silent --output /dev/null "$preview_url"
+          browser_args=()
+          if [ -f dist/demo.html ]; then browser_args+=(--demo-path demo.html); fi
+          # The runner's Chrome has its installed sandbox helper. Never disable it.
+          if [ "$BROWSER" = chromium ] && command -v google-chrome >/dev/null; then
+            browser_args+=(--executable "$(command -v google-chrome)")
+          fi
+          python scripts/browser-regression.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts "${browser_args[@]}"
+      - name: Retain browser results and sanitized failure traces
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: browser-${{ matrix.browser }}-${{ github.event.pull_request.head.sha || github.sha }}
+          path: browser-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
