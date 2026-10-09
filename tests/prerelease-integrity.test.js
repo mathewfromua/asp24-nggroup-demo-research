@@ -77,7 +77,7 @@ test('research resize restores replace scroll subscriptions and leaving the page
  const restore=app.slice(app.indexOf('function restoreResearch()'),app.indexOf('function updateContextSize()'));
  const scroll=new EventTarget(),header=new EventTarget();scroll.scrollLeft=0;header.scrollLeft=0;
  let saves=0,captures=0;
- const scope={AbortController,route:{page:'compare'},state:{view:{group:'ups',research:{ups:{x:10,scroll:0}}}},researchScrollController:null,restoringResearch:false,
+ const scope={AbortController,modern:false,modernComparisonActive(){return scope.modern;},route:{page:'compare'},state:{view:{group:'ups',research:{ups:{x:10,scroll:0}}}},researchScrollController:null,restoringResearch:false,
   $:selector=>selector==='.research-scroll'?scroll:header,researchRows:()=>[],scrollY:0,contextHeight:()=>0,
   window:{scrollTo(){}},document:{documentElement:{scrollHeight:1000}},innerHeight:900,
   captureResearch(){captures++;},save(){saves++;},updateContextSize(){}};
@@ -88,4 +88,6 @@ test('research resize restores replace scroll subscriptions and leaving the page
  header.scrollLeft=200;header.dispatchEvent(new Event('scroll'));assert.equal(scroll.scrollLeft,200);
  scope.route.page='catalog';scope.restore();scroll.dispatchEvent(new Event('scroll'));
  assert.equal(saves,1);
+ scope.route.page='compare';scope.restore();scope.modern=true;scope.restore();
+ scroll.dispatchEvent(new Event('scroll'));assert.equal(saves,1,'entering React pilot also aborts legacy subscriptions');
 });

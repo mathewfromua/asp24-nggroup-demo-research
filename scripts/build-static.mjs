@@ -1,41 +1,29 @@
-// Reproducible native-ESM build; no runtime or build dependencies and no network.
-import {readFileSync, writeFileSync, rmSync, mkdirSync, cpSync} from 'node:fs';
+// Vite owns the module graph, transforms, CSS splitting and asset fingerprinting.
+// This small wrapper adds the existing static publication contract after compilation.
+import {readFileSync, writeFileSync, readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {resolve, dirname, basename, extname, relative} from 'node:path';
+import {build} from 'vite';
 import {getDeploymentConfig} from './deployment-config.mjs';
 import {buildPublication} from './build-publication.mjs';
-import {assetUrl} from '../asset-url.js';
 
-const root = resolve('.'), out = resolve('dist'), emitted = new Map();
 const config = getDeploymentConfig();
-rmSync(out, {recursive: true, force: true});
-mkdirSync(resolve(out, 'assets'), {recursive: true});
-cpSync(resolve(root, 'public'), out, {recursive: true});
-const fingerprint = text => createHash('sha256').update(text).digest('hex').slice(0, 12);
-function emit(source) {
-  const path = resolve(root, source);
-  if (!path.startsWith(root + '/')) throw new Error('Invalid local dependency');
-  if (emitted.has(path)) return emitted.get(path);
-  let text = readFileSync(path, 'utf8');
-  if (extname(path) === '.js') {
-    text = text.replace(/(\bfrom\s*['"])(\.\.?\/[^'"]+)(['"])/g, (_, start, dependency, end) =>
-      `${start}./${emit(relative(root, resolve(dirname(path), dependency)))}${end}`);
-  }
-  if (extname(path) === '.js') text = text.replace(/(\bimport\(['"])(\.\.?\/[^'"]+)(['"]\))/g, (_, start, dependency, end) => `${start}./${emit(relative(root, resolve(dirname(path), dependency)))}${end}`);
-  const extension = extname(path), name = `${basename(path, extension)}-${fingerprint(text)}${extension}`;
-  writeFileSync(resolve(out, 'assets', name), text);
-  emitted.set(path, name);
-  return name;
-}
-let html = readFileSync('index.html', 'utf8');
-for (const file of ['style.css', 'finish.css', 'catalog.css', 'science.css', 'demo-entry.js']) {
-  html = html.replace(`/${file}`, `/assets/${emit(file)}`);
-}
-html = html.replace(/((?:src|href)=")\/(?!\/)([^"#]+)(")/g, (_, start, path, end) =>
-  `${start}${assetUrl(path, config.BASE_PATH)}${end}`);
+await build();
+const manifest = JSON.parse(readFileSync('dist/vite-manifest.json', 'utf8'));
+const entry = name => {
+  const record = manifest[name];
+  if (!record?.isEntry || !record.file.startsWith('assets/')) throw new Error(`Missing compiled entry: ${name}`);
+  return record.file.slice('assets/'.length);
+};
+let html = readFileSync('dist/index.html', 'utf8');
 if (html.includes('name="app-base-path"')) throw new Error('Build owns app-base-path metadata');
 html = html.replace('</head>', `<meta name="app-base-path" content="${config.BASE_PATH}"></head>`);
-writeFileSync(resolve(out, 'demo.html'), html);
-buildPublication(config,emit('hub.css'),emit('legacy-entry.js'));
-writeFileSync(resolve(out, 'build-config.json'), JSON.stringify(config, null, 2) + '\n');
-console.log(`Static build: ${emitted.size} fingerprinted source files; base ${config.BASE_PATH}.`);
+writeFileSync('dist/demo.html', html);
+buildPublication(config, entry('hub.css'), entry('legacy-entry.js'));
+writeFileSync('dist/build-config.json', JSON.stringify(config, null, 2) + '\n');
+const generated = readdirSync('dist/assets').filter(name => /-[a-f0-9]{12}\.(?:js|css)$/.test(name)).sort();
+const files = Object.fromEntries(generated.map(name => {
+  const bytes = readFileSync(`dist/assets/${name}`);
+  return [`assets/${name}`, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')}];
+}));
+writeFileSync('dist/asset-integrity.json', JSON.stringify({schemaVersion: 1, builder: 'vite', files}, null, 2) + '\n');
+console.log(`Static publication: Vite module graph; ${generated.length} compiled assets; base ${config.BASE_PATH}.`);

@@ -14,6 +14,10 @@ with tempfile.TemporaryDirectory(prefix='report-control-') as temp:
     for name in set(filter(None,files)):
         src=R/name
         if src.is_file():dst=target/name;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
+    # Build verification uses the same npm-ci toolchain, without network or a mutable
+    # install in the temporary control tree. Source and generated reports stay isolated.
+    assert (R/'node_modules/vite').is_dir(), 'Run npm ci before report reproduction'
+    (target/'node_modules').symlink_to(R/'node_modules',target_is_directory=True)
     def run(args,ok=True):
         r=subprocess.run(args,cwd=target,text=True,capture_output=True)
         assert (r.returncode==0)==ok, r.stdout[-2000:]+r.stderr[-2000:]

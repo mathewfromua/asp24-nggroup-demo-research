@@ -2,7 +2,7 @@
 
 Два українські аналітичні огляди про вибір обладнання. **ASP24** — пошук, порівняння й підготовка закупівлі. **NG Group** — виконання виробу, технічний документ і предметна консультація. Демо дає змогу перевірити запропоновані механізми на умовних даних.
 
-Ця гілка готує **3.2.0-rc.2 — preview with limitations**. Кандидат ще не прийнято в main. [Чинний публічний сайт](https://mathewfromua.github.io/asp24-nggroup-demo-research/) залишається попередньою версією; адреси Pages не видаються за preview гілки.
+Ця гілка містить **Modern Experience** — окремий експеримент на базі технічно перевіреного [RC2 `0034b000`](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/7). Release-кандидат і модернізація ще не прийняті в main. [Чинний публічний сайт](https://mathewfromua.github.io/asp24-nggroup-demo-research/) залишається попередньою версією; адреси Pages не видаються за preview гілки.
 
 | Огляд | PDF цієї гілки | Повний адаптивний HTML |
 |---|---|---|
@@ -28,16 +28,18 @@ PDF мають текстовий шар, але ще не логічне тег
 
 ## Запуск
 
-Node.js 24; npm-залежностей у браузері й builder немає. Готові PDF/HTML включені.
+Node.js 24; Vite 8, strict TypeScript і ліниво завантажуваний React Comparison Workbench. Готові PDF/HTML включені. Версії закріплені в lockfile.
 
 ```sh
+npm ci
+npm run typecheck
 npm test
 npm run build
 npm run verify
 npm run preview -- --host 127.0.0.1 --port 8000
 ```
 
-Відкрийте `http://127.0.0.1:8000/asp24-nggroup-demo-research/`. Початкова сторінка не завантажує каталог. Повне демо — `demo.html`; старі `#/asp/...` і `#/ng/...` збережені. Для кореневого розміщення: `BASE_PATH=/ npm run build`. `file://` придатний для standalone-читання, але не для інтерактивного ESM-демо.
+Відкрийте `http://127.0.0.1:8000/asp24-nggroup-demo-research/`. Початкова сторінка не завантажує каталог. Повне демо — `demo.html`; React-простір — `demo.html#/asp/compare?experience=modern` (для NG замініть `asp` на `ng`). Посилання на нього є у порівнянні; старі `#/asp/...` і `#/ng/...` збережені. Для кореневого розміщення: `BASE_PATH=/ npm run build`. `file://` придатний для standalone-читання, але не для інтерактивного ESM-демо.
 
 ## Джерела й відтворення
 
