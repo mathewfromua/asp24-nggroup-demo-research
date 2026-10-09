@@ -29,7 +29,19 @@ def figure(kind):
             pair=[r for r in rows if r['sku']==sku];assert len(pair)==2
             for r in pair:
                 date=r['capture_utc'][:10].split('-'); data.append([r['model']+' · '+sku,'.'.join(reversed(date)),r['technical_rows']])
-        return table(['Модель / артикул','Дата знімка','Технічних рядків'],data,'Парні історичні вимірювання: 16 → 9, 14 → 0, 30 → 0. Нуль означає відсутність предметних рядків у вибраній таблиці, а не всієї інформації про товар.')
+        # Keep the shared contour/filled-bar caption meaningful in HTML too;
+        # the following semantic table provides every exact value and date.
+        svg='<svg viewBox="0 0 700 300" role="img" aria-label="Кількість предметних рядків у вибраних архівних таблицях: 16 до 9, 14 до 0, 30 до 0. Контур — раніший стан, заповнена смуга — пізніший. Точні дати та значення наведено в таблиці.">'
+        for i in range(3):
+            earlier,later=data[2*i:2*i+2]
+            y=28+i*96
+            model,sku=earlier[0].split(' · ')
+            svg+=f'<text x="0" y="{y}">{html.escape(model)}</text><text x="0" y="{y+23}" font-size="13">{sku}</text>'
+            for j,row in enumerate([earlier,later]):
+                count=int(row[2]);by=y-15+j*32;bar_width=count/30*280
+                svg+=f'<text x="205" y="{by+14}" font-size="14">{row[1]}</text><rect x="330" y="{by}" width="{bar_width}" height="18" stroke="var(--accent)" fill="{"none" if j==0 else "var(--accent)"}"/><text x="{338+bar_width}" y="{by+14}">{count}</text>'
+        svg+='</svg>'
+        return svg+table(['Модель / артикул','Дата знімка','Технічних рядків'],data,'Парні історичні вимірювання: 16 → 9, 14 → 0, 30 → 0. Нуль означає відсутність предметних рядків у вибраній таблиці, а не всієї інформації про товар.')
     rows=[r for r in records('nominal_autonomy.csv') if 5<=float(r['load_w'])<=20]
     assert all(abs(float(r['ideal_hours'])-57.72/float(r['load_w']))<1e-5 for r in rows)
     points=' '.join(f'{45+(float(r["load_w"])-5)/15*465:.2f},{215-float(r["ideal_hours"])/12*185:.2f}' for r in rows)
