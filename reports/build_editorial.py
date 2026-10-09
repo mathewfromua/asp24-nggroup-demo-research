@@ -1,3 +1,4 @@
+from build_inputs import inventory
 """Rebuild every body page; retain only the unchanged original covers.
 Requires Python 3.12+, reportlab, pypdf, Pillow. No network or PyMuPDF.
 """
@@ -122,12 +123,12 @@ def build():
     elif kind=='link':p.p(f'<link href="{html.escape(args[1],quote=True)}" color="{p.colors[0]}"><u>{args[0]}</u></link>',11.4,16.5,'Bold')
     elif kind=='source':p.p(*args,10.4,14.8,space=7)
    writer.add_page(PdfReader(io.BytesIO(p.finish())).pages[0])
-  writer.add_metadata({'/Title':f'{brand} — огляд сайту','/Subject':'Пошук, технічний вибір і підготовка закупівлі'})
+  writer.add_metadata({'/Title':f'{"NG Group" if brand == "NGGroup" else brand} — огляд сайту','/Subject':'Технічний каталог, документи й консультація' if brand == 'NGGroup' else 'Пошук, технічний вибір і підготовка закупівлі'})
   writer._root_object[NameObject('/Lang')]=TextStringObject('uk-UA')
   # This engine does not create a validated structure tree. Do not claim PDF/UA.
   dest=OUT/f'{brand}_Огляд.pdf'
   with dest.open('wb') as f:writer.write(f)
-  manifest.append({'file':dest.name,'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL,'pages':len(writer.pages),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'retained_pages':[1],'regenerated_pages':list(range(2,len(writer.pages)+1))})
+  manifest.append({'file':dest.name,'input_digest':inventory()['digest'],'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL,'pages':len(writer.pages),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'retained_pages':[1],'regenerated_pages':list(range(2,len(writer.pages)+1))})
   shutil.copy2(dest,ROOT/'public/reports'/('ASP24_Review.pdf' if brand=='ASP24' else 'NGGroup_Review.pdf'))
  (HERE/'pdf-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n');(HERE/'layout-check.json').write_text(json.dumps(LAYOUT,ensure_ascii=False,indent=2)+'\n')
  fd=HERE/'figures';fd.mkdir(exist_ok=True)

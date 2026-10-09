@@ -38,3 +38,20 @@ npm run verify
 Після редагування слід перевірити відповідність обох форматів джерелу, посилання, обсяг, рендери зачеплених сторінок та актуальні manifests. Табличні альтернативи графіків у HTML можуть містити пояснювальні рядки, яких немає серед декоративних підписів PDF; буквальний пошук кожного рядка не замінює змістовної звірки.
 
 PDF: `Lang=uk-UA`; надійне структурне тегування не підтверджене. HTML містить семантичні заголовки, таблиці, підписи й альтернативи зображень. PDF/UA та повної WCAG-сертифікації немає.
+
+## Контрольне складання кандидата
+
+Python 3.12.14 і точні версії requirements потрібні для побайтового контролю. Шрифти можна відтворити з офіційних архівів LibreOffice; URLs, hashes архівів та ліцензії зафіксовано в `reports/fonts/downloads.json`, hashes кожного шрифту — у `provenance.json`.
+
+```sh
+python scripts/fetch-report-fonts.py /tmp/report-fonts
+export REPORT_FONT_DIR=/tmp/report-fonts
+python reports/build_editorial.py
+python reports/build_html.py
+python reports/export_standalone.py
+python reports/build_inputs.py --write
+python scripts/verify-reports.py
+python scripts/check-report-reproduction.py
+```
+
+`reports/input-manifest.json` охоплює джерело, шаблони, код генерації, CSV, ілюстрації, covers, deployment-конфігурацію, профіль шрифтів і pinned залежності. Нормалізовано лише час/ID ReportLab через invariant=1; manifests мають відносні шляхи. Різні байти за іншого renderer не називаються однаковими. Control generation створює outputs у тимчасовому дереві, зіставляє байти й перевіряє, що зміна тексту або шаблону без outputs відхиляється. Report integrity перевіряє структуру та узгодженість, а не правдивість джерел.

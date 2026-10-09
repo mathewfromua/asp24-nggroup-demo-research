@@ -11,6 +11,9 @@ const expectedPDFs=Object.fromEntries(pdfManifest.map(r=>[r.file.startsWith('ASP
 const sha=b=>createHash('sha256').update(b).digest('hex');
 assert.deepEqual(walk('public'),publicFiles,'Unapproved public file');
 const contentHash=sha(readFileSync('reports/content.json'));
+const reportInputs=JSON.parse(readFileSync('reports/input-manifest.json','utf8'));
+for (const [file,digest] of Object.entries(reportInputs.files)) assert.equal(sha(readFileSync(file)),digest,`Outdated report generator input: ${file}`);
+for (const report of [...pdfManifest,...JSON.parse(readFileSync('reports/html-manifest.json','utf8'))]) assert.equal(report.input_digest,reportInputs.digest,'Report input digest mismatch');
 assert.equal(pdfManifest.length,2,'Expected two report PDF records');
 for(const report of pdfManifest) assert.equal(report.content_sha256,contentHash,'PDF built from outdated content');
 for(const report of JSON.parse(readFileSync('reports/html-manifest.json','utf8'))){
