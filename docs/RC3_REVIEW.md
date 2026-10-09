@@ -1,3 +1,11 @@
+# Актуальний стан приймання RC3 Hardening
+
+**`c494b321fcb2f34a840956734c47d887078ed116` — ACCEPT_PREVIEW**, CI 37948200453 SUCCESS, PR #9 тепер має базу `main`. **Не злитий / не опублікований**: real-HTTPS validation має відбутися після дозволеного deployment. R42 `CLOSED_STRUCTURAL_TAGGING`, veraPDF PDF/UA-1 machine PASS; VoiceOver NOT_RUN. R34 OPEN_EXTERNAL_SOURCE; Safari/iPhone/Telegram/Android WebView NOT_RUN.
+
+Нижче збережено **історичну інструкцію перевірки первісного RC3 `b320abc…`**, у якій були інша база PR і нетеговані PDF. Для поточного кандидатського статусу використовуй [FINAL_HARDENING](FINAL_HARDENING.md) та [RELEASE_NOTES](RELEASE_NOTES.md).
+
+---
+
 # RC3: незалежне читання інтегрованого кандидата
 
 Версія `3.2.0-rc.3`, гілка `release/review-integrated-rc3`, база PR — `feat/modern-experience` на `a659d2f9e8d923a7bc64a3f91133cfed959e9181`. PR #7 і #8 — окремі контрольні точки. `main` та Pages не змінюються цим кандидатом.

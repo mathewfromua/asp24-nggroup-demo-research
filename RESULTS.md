@@ -1,24 +1,20 @@
-# RC3 hardening — поточне робоче дерево перед фінальним gate
+# RC3 Hardening — прийнятий передрелізний кандидат
 
-**PRE_GATE / PREVIEW_NOT_DEPLOYED.** Нові зміни ще не мають завершеного exact-SHA CI, нового artifact або остаточного рішення щодо release. Попередній `ACCEPT_PREVIEW` стосується лише контрольної бази `b320abc302ed895704db2437ce7dbe3a6964e603`: [PR #9](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/9), [CI 37929590198](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37929590198), artifact `11614914429`. Це приймання не переноситься на змінений кандидат.
+**Підтверджений вихідний SHA:** `c494b321fcb2f34a840956734c47d887078ed116` · [PR №9](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/9) · [CI SUCCESS](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453) · [artifact 11624359601](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453/artifacts/11624359601).
 
-Робота триває в `release/review-integrated-rc3`. Прийнятий рукопис `reports/content.json`, E01/E02, історичні межі джерел, моделі, одиниці та умовність розрахунків збережено. Main, Pages, Settings, merge і deployment не змінено. Обсяг і короткий нативний smoke-test — у [FINAL_HARDENING](docs/FINAL_HARDENING.md).
+**Рішення незалежного приймання:** `ACCEPT_PREVIEW` для цього SHA. **Публікація:** `PREVIEW_NOT_DEPLOYED`. Будь-яка наступна зміна документації чи коду повинна пройти адресне приймання. До merge реальний Pages може показувати старий комплект.
 
-| Блок | Фактичний стан до спільного gate |
+| Перевірка | Відомий результат для c494b321 |
 |---|---|
-| P0 — структуровані PDF | ASP24 — 14 сторінок; NG Group — 16. WeasyPrint 70.0 формує логічну структуру зі спільного HTML/рукопису; початкові векторні й текстові обкладинки збережено та семантично позначено. Це не растрова заміна обкладинок. |
-| Незалежна PDF-перевірка | Переглянуто всі 30 сторінок; звірено текст, числа, одиниці, назви, посилання, порядок читання, таблиці й альтернативи Figure. Структурна перевірка та veraPDF 1.30.3 з явним профілем PDF/UA-1 — машинний PASS для обох поточних PDF. |
-| R42 | Закрито щодо структурного тегування після перевірки обох PDF. Допоміжне читання/VoiceOver — NOT_RUN; машинний PASS не є повною користувацькою перевіркою доступності чи безумовною заявою PDF/UA. |
-| P1 — browser fallbacks | JSON/TXT мають точну текстову копію на сторінці навіть за мовчазного блокування download; Clipboard має ручну альтернативу. Відмова storage не маскується успішним збереженням, жива чернетка доступна для експорту. При React load failure доступні класичне порівняння, каталог, документи й огляди. Адресні Chromium-перевірки виконано з увімкненим sandbox. |
-| P2 — порівняння | Збережено контекст довгих таблиць, додано desktop-подання активної пари без втрати інших кандидатів, покращено допоміжні підписи. Адресно перевірено перший технічний рядок, reflow, keyboard focus і збільшення тексту; результати ще мають пройти спільний exact-SHA gate. |
-| P3 — початкове завантаження | Наявні project/lab UI та CSS завантажуються за потреби; доменні правила залишаються спільними. Modern chunk починає завантажуватися раніше лише для відповідного маршруту. Порівняння з b320 виконується за однакових умов; польове прискорення не заявляється. |
-| Контракти | `perspective-demo-v1`, schema 4, project import version 1, stable ID, шість кандидатів/пара та ізоляція кейсів збережені. Експорт локальної копії не означає її автоматичний імпорт або підтверджений download. |
-| Нативні середовища | Safari macOS/iOS, фізичний iPhone, Chrome Android, Telegram iOS/Android, потрібні WKWebView/Android WebView, екранна клавіатура й VoiceOver — NOT_RUN. Linux Chromium або Playwright WebKit не підтверджують ці середовища. |
-| R34 | OPEN_EXTERNAL_SOURCE. Початок відліку сервісних строків і включення початкової діагностики не встановлені; одне питання підготовлено, не надіслано. |
+| Node/TS/build | 127 PASS, 0 FAIL, 2 історичні SKIP; typecheck/build/verify PASS |
+| Chromium, Firefox, Playwright WebKit | по 60 PASS; нативні Safari/iPhone/Telegram/Android WebView — NOT_RUN |
+| PDF/HTML | 14+16 сторінок; структурні H/P/TH/TD/Figure/Alt, векторні обкладинки, veraPDF PDF/UA-1 machine PASS |
+| Демо | Шість кандидатів/пара, undo, збереження стану, чотири кейси та aliases, fallback — перевірено у CI |
+| Продуктивність | Initial comparison JS/CSS gzip 181 549 → 170 082 байти; п'ять лабораторних пар, загального прискорення не заявлено |
+| Межі | R34 OPEN_EXTERNAL_SOURCE; R42 CLOSED_STRUCTURAL_TAGGING; VoiceOver і native zoom NOT_RUN |
+| Public HTTPS | Для RC3 після merge — NOT_RUN; потрібне окреме звіряння реальних URL, MIME та доставлених SHA-256 |
 
-Наступний повний gate: typecheck/Node, структурна PDF-перевірка та veraPDF UA-1, відтворення звітів і негативні stale-output перевірки, root/Pages build, дев’ять browser suites у Chromium/Firefox/WebKit над тим самим dist, порівнювані performance-виміри й exact-SHA packaging. Кількість PASS визначається фактичними результатами нового запуску; історичні `122` і `46 × 3` не є результатами цього дерева. Для побайтового PDF-контролю потрібні також однакові native-бібліотеки рендерингу, а не лише Python requirements і шрифти.
-
-До завершення цього gate новий SHA, CI run і artifact — **ще не підтверджені**. Після нього потрібне адресне незалежне приймання змінених PDF і функцій. Merge та публікація не виконуються.
+Результати перевірки структури PDF та відповідні хеші: [hardening-pdf-acceptance.json](reports/hardening-pdf-acceptance.json). Повний контекст — [FINAL_HARDENING](docs/FINAL_HARDENING.md); [release notes](docs/RELEASE_NOTES.md). Попередні стани та їхні валідації наведено нижче **лише як історію**, а не як поточний release-status.
 
 ---
 

@@ -1,3 +1,16 @@
+# RC3 Hardening — прийнятий preview · 09.10.2026
+
+**SHA `c494b321fcb2f34a840956734c47d887078ed116`**; PR #9, [CI SUCCESS](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453), artifact 11624359601. Статус `ACCEPT_PREVIEW / PREVIEW_NOT_DEPLOYED`.
+
+- Структуровані PDF ASP24 14 с. і NG Group 16 с. із векторними обкладинками; veraPDF PDF/UA-1 machine PASS. R42 `CLOSED_STRUCTURAL_TAGGING`; VoiceOver NOT_RUN.
+- HTML, `reports/content.json`, E01/E02 і доказові межі залишені без редакційних змін.
+- Sticky-контекст, активна пара A/B, краща мобільна типографіка, відновлення позицій та fallback для export/clipboard/storage/lazy loading; Node 127 PASS і по 60 PASS у трьох рушіях.
+- R34 `OPEN_EXTERNAL_SOURCE`; native Safari/iPhone, Android Chrome, Telegram/WebView та native zoom NOT_RUN.
+
+Розділи нижче описують **історичні** RC3/RC2; їхні старі R42 OPEN і PRE_GATE більше не характеризують чинний прийнятий RC3 Hardening.
+
+---
+
 # 3.2.0-rc.3 — інтегрований кандидат для незалежного читання
 
 Огляди уточнюють п’ять DC-виходів окремо від USB, розбіжність опублікованих діапазонів FHP12A та застосовність документів до виконання виробу. Нова атрибуція розділяє історичну вторинну опору і конкретне отримання PDF з actual hashes, датою, сторінками та межами. Два PDF і два HTML відтворено з одного рукопису; обкладинки й frozen section IDs збережено.

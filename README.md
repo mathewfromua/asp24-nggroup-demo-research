@@ -1,8 +1,8 @@
-# ASP24 / NG Group — Demo & Research
+# ASP24 / NG Group — дослідження та демонстраційні приклади
 
 Два українські аналітичні огляди про вибір обладнання. **ASP24** — пошук, порівняння й підготовка закупівлі. **NG Group** — виконання виробу, технічний документ і предметна консультація. Демо дає змогу перевірити запропоновані механізми на умовних даних.
 
-Ця гілка містить **Modern Experience** — окремий експеримент на базі технічно перевіреного [RC2 `0034b000`](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/7). Release-кандидат і модернізація ще не прийняті в main. [Чинний публічний сайт](https://mathewfromua.github.io/asp24-nggroup-demo-research/) залишається попередньою версією; адреси Pages не видаються за preview гілки.
+**Прийнятий preview:** RC3 Hardening [`c494b321`](https://github.com/mathewfromua/asp24-nggroup-demo-research/commit/c494b321fcb2f34a840956734c47d887078ed116), [PR №9](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/9), [успішний exact-SHA CI](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453). Це кандидат `ACCEPT_PREVIEW`, **не опублікований RC3**. До дозволеного merge [GitHub Pages](https://mathewfromua.github.io/asp24-nggroup-demo-research/) показує попередній `main`; нові кейси можуть бути недоступними. Наступні cleanup-коміти потребують адресної перевірки, а не автоматичного перенесення приймання.
 
 | Огляд | PDF цієї гілки | Повний адаптивний HTML |
 |---|---|---|
@@ -24,7 +24,7 @@ GitHub показує HTML як код. Для читання завантажт
 
 384 синтетичні моделі, 13 умовних виробників, вісім категорій. Ціни не є реальними пропозиціями. Замовлення, платежі й звернення не надсилаються; інтеграцій із робочими системами компаній немає. Огляди не встановлюють трафіку, конверсії або репрезентативної частоти проблем.
 
-PDF мають текстовий шар, але ще не логічне тегування — [R42 / #4](https://github.com/mathewfromua/asp24-nggroup-demo-research/issues/4). Семантичний HTML є повним альтернативним поданням. Стабільний Safari та фізичний iPhone — [окреме приймання #1](https://github.com/mathewfromua/asp24-nggroup-demo-research/issues/1); Cloud WebKit його не замінює.
+Обидва фінальні PDF **структурно теговані** (14/16 сторінок, векторні обкладинки) та пройшли veraPDF PDF/UA-1 **machine validation**; [R42](reports/TAGGED_PDF.md) закрито щодо тегування. Фактичне читання VoiceOver, нативний Safari/iPhone і Telegram/Android WebView — **NOT_RUN**; Playwright WebKit їх не замінює. Семантичний HTML залишається доступною альтернативою.
 
 ## Запуск
 
@@ -43,6 +43,6 @@ npm run preview -- --host 127.0.0.1 --port 8000
 
 ## Джерела й відтворення
 
-[Рукопис](reports/content.json) → два генератори → PDF/HTML. [Карта джерел](reports/claim-map-editorial.json), [нове читання PDF](research/editorial-source-register.json), [рішення R01–R44](research/editorial-decisions.json), [прийняті E01/E02](research/ACCEPTED_DECISIONS_UA.md). [DEVELOPMENT](docs/DEVELOPMENT.md) містить команди точної генерації й негативні перевірки застарілих outputs; [Cloud-процес](docs/CLOUD_WORKFLOW.md) — межі середовища та публікації.
+[Рукопис](reports/content.json) → два генератори → PDF/HTML. [Карта джерел](reports/claim-map-editorial.json), [нове читання PDF](research/editorial-source-register.json), [рішення R01–R44](research/editorial-decisions.json), [прийняті E01/E02](research/ACCEPTED_DECISIONS_UA.md). [DEVELOPMENT](docs/DEVELOPMENT.md) містить команди точної генерації й негативні перевірки застарілих outputs; [Контракт публікації](docs/PUBLICATION_CONTRACT.md) — стабільні маршрути, стани та післярелізна перевірка.
 
 `public/` містить лише дозволені web-активи; `dist/` генерується. `reports/` — рукопис, шаблони й manifests; `research/` — очищена карта доказів; `tests/` і `scripts/` — регресії та перевірки. Зовнішні шрифти й приватні архіви не входять до Git або bundle. [Атрибуція](THIRD_PARTY_NOTICES.md) зберігає права на сторонні матеріали.
