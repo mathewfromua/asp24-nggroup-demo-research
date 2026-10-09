@@ -38,6 +38,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p rc3-build/build-evidence rc3-build/pages rc3-build/root
+          # Checkout's temporary HOME differs from this container step's HOME.
+          # Trust only the Actions-owned checkout, never a wildcard directory.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           python scripts/install-report-runtime.py --output rc3-build/build-evidence/native-renderer.json
           npm ci | tee rc3-build/build-evidence/npm-ci.txt
