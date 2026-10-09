@@ -1,3 +1,4 @@
+from build_inputs import inventory
 """Semantic adaptive reports from the same content.json used for PDF."""
 from pathlib import Path
 import csv, hashlib, html, json, re, shutil
@@ -67,7 +68,7 @@ for brand,pages in REPORTS.items():
     subtitles={'ASP24':'Від пошуку до підготовки закупівлі','NGGroup':'Від технічної інформації до вибору рішення'}
     document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><title>{title}</title><style>:root{{--accent:{palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>Огляд сайту</h1><p>{subtitles[brand]}</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До демо</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — Demo &amp; Research — демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
     dest=OUT/f'{brand}_Review.html';dest.write_text(document)
-    manifest.append({'brand':brand,'html':dest.relative_to(ROOT).as_posix(),'sections':len(pages),'blocks':block_count,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL})
+    manifest.append({'brand':brand,'html':dest.relative_to(ROOT).as_posix(),'sections':len(pages),'blocks':block_count,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'input_digest':inventory()['digest'],'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL})
 (HERE/'html-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(manifest,ensure_ascii=False,indent=2))
 

@@ -52,3 +52,9 @@ GitHub Mobile придатний для перегляду файлів, Issues,
 - Rulesets: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
 
 Звірено 09.10.2026. Доступність у конкретному акаунті підтверджується окремо.
+
+## Новий Cloud і Legacy
+
+Цей прохід виконується прямою активною задачею нового Cloud, не onboarding і не Mac. Поля нового Environment — **Install script** (залежності) та **Start skill** (короткі інструкції). Зміна reusable setup потребує Save/Republish; чинна задача не отримує її автоматично. Setup не редагує репозиторій і не перегенеровує звіти на кожний запит.
+
+Наявні GitHub `@codex` workflows можуть використовувати Legacy Environment. Вони не є вимогою створити ще одне середовище для цього проходу. AGENTS задають правила, але не встановлюють пакети й не надають account permissions. Кореневі інструкції доповнюються адресними reports/research; спосіб їх завантаження й доступний ліміт залежать від tool surface, однакове читання всіма інтеграціями не заявляється.
