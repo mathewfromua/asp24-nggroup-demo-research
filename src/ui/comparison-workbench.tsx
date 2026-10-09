@@ -104,11 +104,13 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
   function table(models: Product[], variant: 'full'|'pair') {
     const rows = comparisonRows(models, s.differences && models.length > 1);
     return <div className={`wb-table-wrap wb-${variant}`} data-wb-focus={`table-${variant}`} role="region" tabIndex={0} aria-label={`Параметри: ${variant === 'pair' ? 'активна пара' : 'усі кандидати'}`} aria-describedby={`wb-scroll-help-${variant}`} onFocusCapture={event => {
-      // Native focus can scroll both the region and the page. After it settles,
-      // retain the model headings and keep targets clear of both sticky axes.
+      // Correct keyboard focus after native scrolling. Pointer focus must not
+      // move its target between pointerdown and pointerup and cancel the click.
       const target = event.target;
       const region = event.currentTarget;
       if (target === region || workbenchRef.current?.dataset.restoringView === 'true') return;
+      // Older WebViews without this selector retain native focus scrolling.
+      try { if (!target.matches(':focus-visible')) return; } catch { return; }
       requestAnimationFrame(() => {
         if (!region.isConnected || document.activeElement !== target) return;
         const bounds = region.getBoundingClientRect();

@@ -172,25 +172,27 @@ def reading_return(page):
     focus.evaluate('e=>e.focus({preventScroll:true})'); page.keyboard.press('Enter')
     page.locator('#modal a[href*="/product/"]').click()
     page.locator('.return-comparison').click()
-    def restored():
+    restored_stages = []
+    def restored(stage):
         expect(page.get_by_test_id('wb-pair-focus')).to_have_attribute('aria-pressed', 'true')
         try:
             page.wait_for_function('''expected=>{const root=document.querySelector('.comparison-workbench'),table=root?.querySelector('.wb-pair');return root&&!root.dataset.restoringView&&Math.abs(table.scrollTop-expected.y)<2&&Math.abs(table.scrollLeft-expected.x)<2&&Math.abs(scrollY-expected.window)<2;}''', arg=before)
         except Exception:
             actual = page.evaluate('''() => ({window:scrollY,root:document.querySelector('.comparison-workbench')?.dataset,table:[...document.querySelectorAll('.wb-table-wrap')].map(e=>({class:e.className,x:e.scrollLeft,y:e.scrollTop})),focus:document.activeElement.outerHTML})''')
-            raise AssertionError({'expected':before,'actual':actual,'saved':state(page)['view']['pages'].get('#/asp/compare?experience=modern')})
+            raise AssertionError({'stage':stage,'expected':before,'actual':actual,'saved':state(page)['view']['pages'].get('#/asp/compare?experience=modern'),'completed_stages':restored_stages})
         assert selection(page) == content
         expect(page.locator(f'[data-wb-focus="model-pair-{ids[-2]}"]')).to_be_focused()
-    restored()
+        restored_stages.append({'stage':stage,'position':table.evaluate('e=>({x:e.scrollLeft,y:e.scrollTop,window:scrollY})')})
+    restored('card-return')
     page.locator(f'[data-wb-focus="model-pair-{ids[-2]}"]').press('Enter')
     page.locator('#modal').get_by_role('link', name='Документ D1', exact=True).click()
     expect(page.locator('.document-page')).to_be_visible()
-    page.locator('.return-comparison').click(); restored()
+    page.locator('.return-comparison').click(); restored('document-return')
     page.go_back(wait_until='networkidle'); expect(page.locator('.document-page')).to_be_visible()
-    page.go_forward(wait_until='networkidle'); restored()
-    page.reload(wait_until='networkidle'); restored()
+    page.go_forward(wait_until='networkidle'); restored('history-forward')
+    page.reload(wait_until='networkidle'); restored('reload')
     page.screenshot(path=str(a.output / 'pair-reading-context-restored.png'))
-    return {'before': before, 'after': table.evaluate('e=>({x:e.scrollLeft,y:e.scrollTop,window:scrollY})'), 'page_view': state(page)['view']['pages']['#/asp/compare?experience=modern']}
+    return {'before': before, 'after': table.evaluate('e=>({x:e.scrollLeft,y:e.scrollTop,window:scrollY})'), 'restored_stages':restored_stages,'page_view': state(page)['view']['pages']['#/asp/compare?experience=modern']}
 
 
 checks = [('compact-case-first-technical-row-readable-helpers', compact_readability),
@@ -211,6 +213,7 @@ with sync_playwright() as pw:
         results['browser_version'] = browser.version
         for title, check in checks:
             context = browser.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce')
+            context.tracing.start(screenshots=True, snapshots=True, sources=True)
             errors = []
             def local_only(route):
                 if urlsplit(route.request.url).netloc == urlsplit(base).netloc: route.continue_()
@@ -222,9 +225,11 @@ with sync_playwright() as pw:
                 details = check(page); assert not errors, errors
             except Exception as error:
                 page.screenshot(path=str(a.output / (title + '-failure.png')), full_page=True)
+                context.tracing.stop(path=str(a.output / (title + '.zip')))
                 results['checks'].append({'name': title, 'status': 'FAIL', 'error': str(error), 'traceback': traceback.format_exc(), 'console_errors': errors})
                 print('FAIL', title, error, flush=True)
             else:
+                context.tracing.stop()
                 results['checks'].append({'name': title, 'status': 'PASS', 'details': details}); print('PASS', title, flush=True)
             finally: context.close()
         browser.close()
