@@ -43,8 +43,19 @@ def safe_file(path, base):
         '.zip', '.tar', '.gz', '.7z', '.har', '.bundle',
     }, relative
     assert not any(part in {'node_modules', '__pycache__', '.venv', '.git', '.auth',
-                           'private', 'backups', 'inbox', '.aws', '.openai'} for part in relative.parts), relative
+                           'private', 'backups', '.aws', '.openai'} for part in relative.parts), relative
+    # This tracked, public README describes the intake policy. No submitted
+    # material or other inbox file is permitted in the review bundle.
+    assert 'inbox' not in relative.parts or relative.as_posix() == 'source/research/inbox/README.md', relative
     assert not path.name.startswith(('.env', 'cookies', 'storage-state', 'storageState')), relative
+
+
+def selected_browser_evidence(relative):
+    """Keep every result/log and the screenshots addressing RC3's changed views."""
+    return relative.suffix.lower() in {'.json', '.log', '.txt'} or (
+        relative.suffix.lower() == '.png' and len(relative.parts) >= 3
+        and relative.parts[1] in {'rc3', 'reports-rc3'}
+    )
 
 
 def main():
@@ -114,7 +125,11 @@ def main():
     shutil.copytree(pages_dist, bundle / 'dist')
     shutil.copytree(standalone, bundle / 'reports')
     shutil.copytree(args.build / 'build-evidence', bundle / 'evidence/build')
-    shutil.copytree(args.evidence, bundle / 'evidence/browser')
+    for path in sorted(args.evidence.rglob('*')):
+        if path.is_file() and selected_browser_evidence(path.relative_to(args.evidence)):
+            destination = bundle / 'evidence/browser' / path.relative_to(args.evidence)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, destination)
     editorial = bundle / 'evidence/editorial'
     editorial.mkdir()
     for name in ['reports/rc3-visual-review.json', 'reports/editorial-validation.json',
@@ -149,6 +164,11 @@ HTTPS-публікацію. До дозволеної публікації ко�
 потрібні Node 24, npm ci, pinned Python 3.12.14/packages і перевірені зовнішні шрифти.
 Шрифти, кеші, приватний handoff-архів і профілі браузерів не включені.
 `evidence/` — фактичні build/HTTP/Node/report/browser результати та скриншоти.
+Усі JSON-результати й журнали шести suites збережені. Компактний пакет включає
+всі скриншоти нових перевірок `rc3/` і `reports-rc3/`; повні скриншоти попередніх
+suites доступні в артефактах `rc3-browser-<engine>-{sha}` точного CI-запуску:
+{build['run_url']}
+Звужено лише склад зображень пакета; gates для всіх шести suites залишаються повними.
 Коренева збірка перевірена окремо; її SHA inventory є в evidence/build.
 `rc3-manifest.json` містить SHA-256 файлів. Контроль суми доводить байти, а не істинність джерел.
 
@@ -167,6 +187,14 @@ WebKit не замінює ці перевірки. Performance PASS означ�
         'baseline_sha': BASELINE, 'status': 'READY_FOR_INDEPENDENT_REVIEW',
         'publication': 'PREVIEW_NOT_DEPLOYED', 'independent_review': 'PENDING',
         'build': build, 'browsers': browsers,
+        'evidence_scope': {
+            'included': 'All build evidence; all browser JSON/results/logs; all rc3 and reports-rc3 PNG screenshots for each engine',
+            'complete_browser_screenshots': {
+                'run_url': build['run_url'],
+                'artifact_names': [f'rc3-browser-{browser}-{sha}' for browser in ['chromium', 'firefox', 'webkit']],
+            },
+            'gates': 'All six suites per engine must pass on this SHA before any evidence selection; no failures are omitted or reclassified',
+        },
         'report_version': read(ROOT / 'publication.json')['reportVersion'],
         'report_input_digest': read(ROOT / 'reports/input-manifest.json')['digest'],
         'report_source_sha256': digest(ROOT / 'reports/content.json'),
