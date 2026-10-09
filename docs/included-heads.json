@@ -11,12 +11,12 @@
     {
       "branch": "feat/report-demo-paths",
       "pr": 6,
-      "head": "66ce143228488e77c7cc28a6d23aa557a9a41145"
+      "head": "712ca62248c7ae31d4ec3db1b2076ccc3a903546"
     },
     {
       "branch": "fix/prerelease-integrity",
       "pr": 5,
-      "head": "cfc46ab3e64769ab7fd7528cca570d36ab74ec85"
+      "head": "dfe591ae6580b63767b4a3c38768ca092c085eac"
     }
   ]
 }
