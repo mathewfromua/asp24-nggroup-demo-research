@@ -413,7 +413,9 @@ def touch_interactions(browser,brand,width):
     context.route('**/*',local_only);page=context.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
     def control(element):
         expect(element).to_be_visible();element.scroll_into_view_if_needed();paint=interaction_paint(page,element);box=element.bounding_box()
-        assert box and box['height']>=43.5 and float(paint['opacity'])>0,{'brand':brand,'width':width,'control':element.get_attribute('data-testid'),'bounds':box,'paint':paint}
+        live_media=page.evaluate('() => ({hoverNone:matchMedia("(hover:none)").matches,coarse:matchMedia("(pointer:coarse)").matches})')
+        assert live_media['hoverNone'] and live_media['coarse'],{'brand':brand,'width':width,'control':element.inner_text(),'media':live_media}
+        assert box and box['height']>=43.5 and float(paint['opacity'])>0,{'brand':brand,'width':width,'control':element.get_attribute('data-testid'),'bounds':box,'paint':paint,'media':live_media}
         assert element.evaluate('e=>{const r=e.getBoundingClientRect(),p=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !!p&&(e===p||e.contains(p));}'),element.inner_text()
     try:
         initial=state(True);initial['compareByGroup']['ups']=ids[:3]
@@ -429,7 +431,9 @@ def touch_interactions(browser,brand,width):
         assert media['delivered_touchstarts']>0,media
         for pid in ids[:3]:
             for action in ['replace','remove']:control(page.get_by_test_id('wb-'+action+'-'+pid))
-        page.evaluate('() => scrollTo(0,0)');page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-candidates.png'),full_page=True)
+        # Chromium full-page capture changes device metrics and can clear its
+        # touch media. Viewport capture preserves the device used by real taps.
+        page.evaluate('() => scrollTo(0,0)');page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-candidates.png'))
         page.get_by_test_id('wb-replace-'+ids[0]).tap();expect(page.get_by_test_id('wb-replace-target')).to_have_value(ids[0])
         control(page.locator('.wb-discovery-heading button'));page.locator('.wb-discovery-heading button').tap()
         page.get_by_test_id('wb-remove-'+ids[2]).tap()
@@ -453,7 +457,7 @@ def touch_interactions(browser,brand,width):
         page.locator('#modal [data-action="close"]').tap()
         summary.tap();page.evaluate('() => scrollTo(0,0)');no_overflow(page)
         first=page.locator('.wb-pair tbody tr[data-row]').first;box=first.bounding_box();assert box and 0<=box['y']<844,{'brand':brand,'width':width,'first_parameter':box}
-        page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch.png'),full_page=True)
+        page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch.png'))
         page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-viewport.png'))
         assert not errors,errors
         results.setdefault('interaction_evidence',[]).append({'brand':brand,'device':'touch','width':width,'media':media,'visible_actions':['replace','remove','undo','add','save','shortlist'],'first_parameter_y':box['y']})

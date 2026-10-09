@@ -2,11 +2,11 @@
 
 Гілка `feat/modern-experience` походить від завершеного технічного RC2 `0034b000bd1bad42f0c3ffb222a0ec58308a42bc`. [PR №7](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/7) та [artifact 11601089917](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37897909570/artifacts/11601089917) залишаються окремим результатом A: Chromium/Firefox/WebKit по 23 PASS, 111 Node PASS, перевірені PDF/HTML; незалежне приймання очікується.
 
-Реалізовано Vite 8.3.4, strict TypeScript 7.0.2, React 19.3.0 Comparison Workbench, спільну типізовану доменну логіку й адаптери. Legacy UI та імпорт збережено. Новий простір доступний на `demo.html#/asp/compare?experience=modern` і для бренду `ng`. Огляди й чотири початкові кейси не змінено.
+Реалізовано Vite 8.3.4, strict TypeScript 7.0.2, React 19.3.0 Comparison Workbench, спільну типізовану доменну логіку й адаптери. Legacy UI та імпорт збережено. Реалізовано також узгоджені hover/focus/pressed/selected/disabled стани, touch-цілі 44 px, видимі текстові підтвердження та правдивий відгук збереження. Новий простір доступний на `demo.html#/asp/compare?experience=modern` і для бренду `ng`. Огляди й чотири початкові кейси не змінено.
 
 Локально перед commit: typecheck/build/verify PASS, Node 116 PASS / 0 FAIL / 2 історичні SKIP. Незалежний адресний Node-probe зіставив із RC2 270 комбінацій пошуку/сортування та дії порівняння у восьми категоріях — PASS. Локальний захищений browser runtime недоступний; результат браузерів і швидкодії тут не вигаданий.
 
-Exact-SHA workflow `modern-preview.yml` перевіряє обидва base paths, три попередні suites та React-пілот у Chromium/Firefox/WebKit, повторні вимірювання RC2/new і Lighthouse. Manifest у HTTP-preview artifact містить фактичний SHA, результати й hashes; до завершення workflow готовність B не заявляється. Статус, результати вимірювань і найближча дія фіксуються в checkpoint тематичного draft PR.
+Exact-SHA workflow `modern-preview.yml` перевіряє обидва base paths, три попередні suites та React-пілот у Chromium/Firefox/WebKit, повторні вимірювання RC2/new і Lighthouse. Manifest у HTTP-preview artifact містить фактичний SHA, результати й hashes; пакування вимагає PASS усіх suites саме на цьому SHA. Статус готовності, результати вимірювань і найближча дія фіксуються у фінальному checkpoint [draft PR №8](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/8).
 
 Main, Pages, settings не змінено. R34/R42 і native Safari/iPhone/zoom/VoiceOver залишаються відкритими. Зміст прийнятих оглядів не адаптувався під новий дизайн.
 

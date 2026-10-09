@@ -82,6 +82,10 @@ python scripts/check-report-reproduction.py
 
 Після build і запуску preview додатковий suite: `python scripts/browser-modern.py --url http://127.0.0.1:8000/asp24-nggroup-demo-research/ --browser chromium --output /tmp/modern-checks` (або firefox/webkit). Він не замінює три попередні browser suites. Захищений Chromium може потребувати `--executable /usr/bin/google-chrome` у CI; sandbox не вимикається.
 
+Interaction polish зберігає видимі дії на touch: hover діє лише для fine pointer, переходи paint-токенів — 150 ms, focus-visible має окрему рамку, active pair і selected results залишаються позначеними без наведення. Reduced motion вимикає переходи. Закрите значення native select має ellipsis і власну стрілку; меню опцій, клавіатура та доступна назва залишаються нативними. Для coarse pointer основні кнопки/select/summary мають щонайменше 44 px висоти.
+
+Новий interaction check вимірює реальні hover/pressed/focus стани й незмінність геометрії, feedback після дій/відмови сховища та fresh touch contexts 390/320 в обох брендах. Він перевіряє доставлений `touchstart`; `navigator.maxTouchPoints` записується як спостереження, оскільки Firefox emulation може повертати 0. Компактний `modern-visual-review-*` CI artifact дозволяє перегляд рендерів при великих failure traces; фінальний HTTP artifact містить усі успішні evidence.
+
 `modern-preview.yml` будує обидва base paths, запускає всі suites і порівнює fixed RC2 із новою збіркою на одному runner. `scripts/performance-sample.py` робить п’ять почергових холодних запусків кожного сценарію та три Lighthouse-повтори. JSON зберігає середовище, сирі виміри, медіани, ресурси й обмеження. Це loopback-лабораторія, не польовий INP або швидкість на реальному мобільному інтернеті.
 
 HTTP-preview artifact містить вже перевірений dist, evidence, `modern-manifest.json` і мінімальний `node scripts/serve.mjs`; npm install для його перегляду не потрібний. Повна збірка з джерел вимагає Node 24 і npm ci. Release artifact RC2 залишається окремим checkpoint.

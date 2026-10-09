@@ -1,54 +1,54 @@
-# Performance: відтворюваний початковий вимір модернізації
+# Performance після виправлень Modern Experience
 
-Вимір 09.10.2026 порівнює RC2 `0034b000bd1bad42f0c3ffb222a0ec58308a42bc` з першим Modern Experience `3c289bf7c65400ea975427f8ed59721b97d77fe3`. Це **результат конкретного SHA**, до наступних виправлень reflow та резервування місця під лінивий компонент. Фінальний `modern-experience-preview-<SHA>` містить новий exact-SHA `evidence/performance/performance.json`; його не слід підміняти цими початковими числами.
+Вимір 09.10.2026: RC2 `0034b000bd1bad42f0c3ffb222a0ec58308a42bc` → Modern `1e1877624e0024666e4b8c5bce1b4672c1a7a66c`. Це результат точного SHA зі змінами інтерфейсу, а не висновок із факту встановлення Vite або React. [Workflow 37920434893](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37920434893) · [performance artifact 11611977052](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37920434893/artifacts/11611977052). JSON містить усі сирі спостереження, ресурси, середовище й Lighthouse-звіти.
 
-Докази: [workflow 37900710377](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37900710377), [performance artifact 11602697213](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37900710377/artifacts/11602697213). JSON містить усі 30 сирих спостережень, Resource Timing, навігацію, медіани, min/max та 12 Lighthouse-звітів. `PASS` означає завершений вимір, а не автоматично кращу швидкодію.
+Фінальний `modern-experience-preview-<SHA>` містить власний `evidence/performance/performance.json`. Якщо HEAD новіший, цей документ не підмінює його вимір; порівнюйте за SHA у manifest. `PASS` означає виконаний вимір і пройдені бюджети стабільності компонування, а не автоматичне прискорення.
 
 ## Умови
 
-Один Ubuntu 24.04 GitHub runner, Linux 6.17.0-1022-azure, Node 24.21.0, Python 3.12.14, Playwright 1.62.0, Chrome 154.0.8037.97. П'ять холодних контекстів на кожну версію і сценарій, порядок версій чергується. Розмір 1440 × 900 CSS px; reduced motion. Обидві незмінні root-збірки обслуговує одна реалізація HTTP без fallback, gzip level 9, `Cache-Control: no-store`. CPU і loopback-мережа без throttling. RC2 збирається з фіксованого `git archive`, поточна збірка завантажується з build-job без повторної генерації.
+Один Ubuntu 24.04 GitHub runner, `Linux-6.17.0-1022-azure-x86_64-with-glibc2.39`, Node `v24.21.0`, Python `3.12.14`, Playwright `1.62.0`, Chrome `154.0.8037.97`. П’ять холодних запусків кожної версії та кожного з трьох сценаріїв; порядок чергується — 30 спостережень. 1440 × 900 CSS px, reduced motion, loopback без CPU/мережевого throttling, однаковий HTTP/gzip level 9 і `Cache-Control: no-store`. RC2 збирається з фіксованого git archive; новий dist з build-job використовується без повторної збірки.
 
-Команда CI: `python scripts/performance-sample.py --baseline-dist "$RUNNER_TEMP/rc2-baseline/dist" --modern-dist modern-build/root/dist --output performance --repeats 5 --executable /usr/bin/google-chrome`. Chrome запускається із sandbox. Порівняння містить ті самі шість UPS-моделей і ту саму пару; дія — перемикання відмінностей до двох наступних animation frames.
+Команда: `python scripts/performance-sample.py --baseline-dist "$RUNNER_TEMP/rc2-baseline/dist" --modern-dist modern-build/root/dist --output performance --repeats 5 --executable /usr/bin/google-chrome`. Sandbox увімкнений. Порівняння має ті самі шість UPS-моделей і активну пару.
 
 ## Передані ресурси
 
-Нижче медіани; байти без округлення. Gzip — фактичні encoded body bytes браузерних ресурсів, без HTTP-заголовків. Raw — decoded bytes реально завантажених JS/CSS. «Початковий JS» включає лінивий компонент, якщо прямий URL уже відкриває workbench.
+Медіани; bytes без HTTP-заголовків. Raw — decoded body реально завантажених JS/CSS, gzip — encoded body, «початковий JS» охоплює й лінивий компонент при прямому вході на workbench.
 
-| Сценарій | JS/CSS raw, RC2 → Modern | JS/CSS gzip, RC2 → Modern | Різниця gzip | Запити RC2 → Modern |
-|---|---:|---:|---:|---:|
-| Hub | 2 032 → 1 873 B | 1 037 → 936 B | −101 B | 4 → 4 |
-| Demo/catalog | 1 281 402 → 993 475 B | 121 206 → 105 125 B | −16 081 B | 22 → 9 |
-| Comparison | 1 281 402 → 1 235 729 B | 121 206 → 178 862 B | +57 656 B | 22 → 11 |
+| Сценарій | JS/CSS raw, B | JS/CSS gzip, B | Запити |
+|---|---|---|---|
+| Hub | 2 032 → 1 873 | 1 037 → 936 | 4 → 4 |
+| Demo / каталог | 1 281 402 → 996 795 | 121 206 → 105 880 | 22 → 9 |
+| Comparison | 1 281 402 → 1 243 788 | 121 206 → 180 765 | 22 → 11 |
 
-| Сценарій | Початковий JS raw, RC2 → Modern | Початковий JS gzip, RC2 → Modern | Усі передані body bytes, RC2 → Modern |
-|---|---:|---:|---:|
-| Hub | 302 → 157 B | 216 → 140 B | 6 898 → 6 799 B |
-| Demo/catalog | 1 188 289 → 903 940 B | 99 626 → 87 643 B | 129 537 → 113 468 B |
-| Comparison | 1 188 289 → 1 134 820 B | 99 626 → 158 591 B | 129 537 → 187 205 B |
+| Сценарій | Початковий JS raw, B | Початковий JS gzip, B | Усі передані body bytes |
+|---|---|---|---|
+| Hub | 302 → 157 | 216 → 140 | 6 898 → 6 799 |
+| Demo / каталог | 1 188 289 → 904 177 | 99 626 → 87 871 | 129 537 → 114 220 |
+| Comparison | 1 188 289 → 1 135 986 | 99 626 → 159 148 | 129 537 → 189 105 |
 
-Повний набір JS/CSS файлів у dist, включно з лінивими: 1 283 434 → 1 237 602 raw B; 122 243 → 179 798 gzip B. Workbench додає React лише під час відкриття його маршруту. Hub завантажує малий legacy-hash redirect, без каталогу і React. Catalogue-сторінка має менше байтів та запитів; весь demo ще містить синтетичний каталог.
+Повний набір JS/CSS у dist, включно з лінивими: 1 283 434 → 1 245 661 raw B; 122 243 → 181 701 gzip B. Hub не завантажує каталог або React. React/CSS workbench завантажуються лише при відкритті його маршруту.
 
-## Час і стабільність компонування
+## Час і компонування
 
-| Сценарій | LCP, RC2 → Modern | Load event, RC2 → Modern | CLS, RC2 → Modern |
-|---|---:|---:|---:|
-| Hub | 88 → 92 ms | 45,3 → 47,7 ms | 0 → 0 |
-| Demo/catalog | 276 → 248 ms | 131,3 → 109,8 ms | 0 → 0 |
-| Comparison | 248 → 296 ms | 137,5 → 111,4 ms | 0 → 0,50408 |
+| Сценарій | LCP, ms | Load event, ms | CLS | Long-task proxy, ms |
+|---|---|---|---|---|
+| Hub | 84 → 88 | 43,9 → 52 | 0 → 0 | 0 → 0 |
+| Demo / каталог | 272 → 236 | 131,9 → 103,2 | 0 → 0 | 0 → 0 |
+| Comparison | 248 → 280 | 134 → 103 | 0 → 0 | 6 → 4 |
 
-Медіана дії порівняння: 16,9 → 9,7 ms; діапазони 13,1–18,1 і 9,0–10,3 ms. Це click-to-two-frames у лабораторії, **не INP**. Медіана long-task excess понад 50 ms: comparison 13 → 7 ms, hub/demo 0 → 0 ms; це окремий proxy, не Lighthouse TBT.
+Дія порівняння — click до двох animation frames: 16,1 → 10 ms. Діапазони: baseline 13,4–16,9 ms; modern 8,7–10,5 ms. Це лабораторний proxy, не INP. Long-task excess понад 50 ms теж не Lighthouse TBT.
 
-LCP-діапазони: hub RC2 84–524 / Modern 84–104 ms; demo 264–864 / 220–260 ms; comparison 244–268 / 284–352 ms. Викиди й малий loopback-час не дозволяють обіцяти таку саму різницю користувачам реальних мереж.
+LCP min–max: Hub 76–372/80–92 ms; Demo / каталог 268–472/232–268 ms; Comparison 236–252/268–300 ms.
 
-Перший вимір виявив суттєвий layout shift workbench: 0,50408 у всіх п'яти запусках. Малий placeholder перед завантаженням React не резервував простір повного інтерфейсу. Це конкретна підстава для виправлення компонування й повторного виміру. Додаткові gzip bytes на маршруті workbench — реальна вартість React pilot; вона не прихована за поліпшенням catalog. Загального твердження «сайт став швидшим» цей результат не обґрунтовує.
+Каталог передає на 15 326 gzip B менше; cold workbench передає на 59 559 B більше. Ціна React-пілота збережена у вимірі. Початковий Modern `3c289bf7c65400ea975427f8ed59721b97d77fe3` мав CLS 0,50408; резервування простору усунуло цей зафіксований дефект. Числа поточного SHA наведено вище. Загального твердження «сайт став швидшим» або обіцянки такого ж результату на реальній мережі немає.
 
 ## Lighthouse
 
-Lighthouse 13.5.0: три холодні запуски кожної версії для hub і demo, desktop preset, `throttling-method=provided`, той самий gzip HTTP. Усі 12 вимірів завершилися. Медіани:
+Lighthouse 13.5.0: три холодні запуски кожної версії для hub/demo, desktop preset, `throttling-method=provided`, той самий runner і gzip HTTP. Усі 12 запусків — PASS. Медіани:
 
-| Сценарій | LCP, RC2 → Modern | TBT, RC2 → Modern | CLS, RC2 → Modern | Speed Index, RC2 → Modern |
-|---|---:|---:|---:|---:|
-| Hub | 66,0 → 63,7 ms | 0 → 0 ms | 0 → 0 | 66 → 64 ms |
-| Demo/catalog | 230,7 → 187,2 ms | 0 → 0 ms | 0 → 0 | 177 → 148 ms |
+| Сценарій | LCP, ms | TBT, ms | CLS | Speed Index, ms |
+|---|---|---|---|---|
+| Hub | 64,0 → 62,3 | 0 → 0 | 0 → 0 | 64 → 63 |
+| Demo / каталог | 218,7 → 183,8 | 0 → 0 | 0 → 0 | 168 → 143 |
 
-Lighthouse не запускався для stateful comparison; його дані наведено у п'ятикратному браузерному вимірі вище. Це лабораторія без CPU/мережевого throttling, не польові Web Vitals, не оцінка конверсії і не доказ швидкості на фізичному iPhone. Native Safari, iPhone, zoom і VoiceOver лишаються NOT_RUN.
+Stateful comparison не вимірювався Lighthouse; для нього наведено п’ять браузерних повторів. Польовий INP, швидкість мобільної мережі, native Safari, фізичний iPhone, native zoom та VoiceOver — NOT_RUN. CSS text stress і WebKit не підмінюють ці перевірки.
