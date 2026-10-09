@@ -258,6 +258,40 @@ def layout_probe(page):
         print('LAYOUT_PROBE',name,'page',measured['pageScroll'],'labels',[x['self']['scroll'] for x in measured['labels']],'restored',restored,flush=True)
     results['layout_probe']={'interpretation':'Diagnostic observations only. Every temporary stylesheet is removed; regression status is reported by the separate full suite.','original':original,'fresh_320':fresh_320,'resized_again':resized_again,'probes':probes}
     page.screenshot(path=str(a.output/'restored-320.png'),full_page=True)
+    doubled=page.evaluate('''() => {
+      const nodes=[...document.querySelectorAll('body,body *')],sizes=nodes.map(e=>parseFloat(getComputedStyle(e).fontSize));
+      const cell=document.querySelector('.wb-pair tbody td'),before=parseFloat(getComputedStyle(cell).fontSize);
+      nodes.forEach((e,i)=>e.style.setProperty('font-size',sizes[i]*2+'px','important'));
+      return {before,after:parseFloat(getComputedStyle(cell).fontSize)};
+    }''')
+    assert abs(doubled['after']-doubled['before']*2)<0.1,doubled
+    inspect_text200='''() => {
+      const report=('''+inspect+''')();
+      const read=e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {tag:e.tagName,className:e.className,testid:e.dataset.testid,text:e.tagName==='SELECT'?e.selectedOptions[0]?.textContent:e.textContent.slice(0,80),left:r.left,right:r.right,top:r.top,width:r.width,height:r.height,client:e.clientWidth,scroll:e.scrollWidth,css:Object.fromEntries(['fontSize','display','position','width','minWidth','maxWidth','overflowX','overflowWrap','whiteSpace','textOverflow','appearance','contain','gridTemplateColumns','justifySelf','paddingLeft','paddingRight'].map(k=>[k,s[k]]))};};
+      return {...report,heading:[...document.querySelectorAll('.wb-heading,.wb-heading>div,#wb-title,.wb-heading-side>*')].map(read),nativeControls:[...document.querySelectorAll('.wb-toolbar .wb-field,.comparison-workbench select,.comparison-workbench input')].filter(e=>e.getClientRects().length).map(read)};
+    }'''
+    page.evaluate(settle);enlarged_original=page.evaluate(inspect_text200);enlarged_probes=[]
+    enlarged_changes=[
+      ('all-select-appearance-none','.comparison-workbench select{appearance:none!important;-webkit-appearance:none!important}'),
+      ('all-select-overflow-ellipsis','.comparison-workbench select{overflow:hidden!important;text-overflow:ellipsis!important}'),
+      ('all-select-auto-stretch','.comparison-workbench select{width:auto!important;justify-self:stretch!important}'),
+      ('all-select-zero-min-percent','.comparison-workbench select{width:0!important;min-width:100%!important;max-width:100%!important}'),
+      ('all-select-inline-size-containment','.comparison-workbench select{contain:inline-size!important}'),
+      ('controls-wrapper-clip-diagnostic','.wb-field,.wb-pair-select{overflow:clip!important}'),
+      ('heading-wrap-anywhere','.wb-heading h1,.wb-heading-side{overflow-wrap:anywhere!important}'),
+      ('appearance-none-and-heading-wrap','.comparison-workbench select{appearance:none!important;-webkit-appearance:none!important}.wb-heading h1,.wb-heading-side{overflow-wrap:anywhere!important}'),
+      ('select-overflow-and-heading-wrap','.comparison-workbench select{overflow:hidden!important;text-overflow:ellipsis!important}.wb-heading h1,.wb-heading-side{overflow-wrap:anywhere!important}'),
+      ('wrapper-clip-and-heading-wrap-diagnostic','.wb-field,.wb-pair-select{overflow:clip!important}.wb-heading h1,.wb-heading-side{overflow-wrap:anywhere!important}'),
+    ]
+    print('TEXT200_LAYOUT_PROBE','original','page',enlarged_original['pageScroll'],flush=True)
+    for name,css in enlarged_changes:
+        style=page.add_style_tag(content=css);page.evaluate(settle);measured=page.evaluate(inspect_text200)
+        style.evaluate('(element)=>element.remove()');page.evaluate(settle)
+        restored=page.evaluate('document.documentElement.scrollWidth')
+        enlarged_probes.append({'name':name,'css':css,'measurement':measured,'restored_page_scroll':restored})
+        print('TEXT200_LAYOUT_PROBE',name,'page',measured['pageScroll'],'native',[x['scroll'] for x in measured['nativeControls']],'restored',restored,flush=True)
+    results['layout_probe']['text_200']={'actual_doubled_sizes':doubled,'original':enlarged_original,'probes':enlarged_probes}
+    page.screenshot(path=str(a.output/'restored-320-text-200.png'),full_page=True)
 
 
 def interaction_paint(page,element):
@@ -385,9 +419,14 @@ def touch_interactions(browser,brand,width):
         initial=state(True);initial['compareByGroup']['ups']=ids[:3]
         seed(page,initial,demo+f'#/{brand}/compare?experience=modern')
         media=page.evaluate('() => ({touch:navigator.maxTouchPoints,hoverNone:matchMedia("(hover:none)").matches,coarse:matchMedia("(pointer:coarse)").matches})')
-        assert media['touch']>0 and media['hoverNone'] and media['coarse'],media
+        # Firefox's has_touch emulation changes input/media while preserving the
+        # host's maxTouchPoints. Require real touch delivery below in every engine.
+        assert media['hoverNone'] and media['coarse'],media
+        page.evaluate('() => {window.__interactionTouchStarts=0;document.addEventListener("touchstart",()=>window.__interactionTouchStarts++,{passive:true});}')
         no_overflow(page);expect(page.get_by_test_id('wb-pair-a')).to_be_visible();expect(page.get_by_test_id('wb-pair-b')).to_be_visible()
         summary=page.locator('.wb-candidates > summary');control(summary);summary.tap()
+        media['delivered_touchstarts']=page.evaluate('window.__interactionTouchStarts')
+        assert media['delivered_touchstarts']>0,media
         for pid in ids[:3]:
             for action in ['replace','remove']:control(page.get_by_test_id('wb-'+action+'-'+pid))
         page.evaluate('() => scrollTo(0,0)');page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-candidates.png'),full_page=True)

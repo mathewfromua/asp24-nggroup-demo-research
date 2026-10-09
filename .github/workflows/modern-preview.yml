@@ -81,7 +81,11 @@ jobs:
           BROWSER: ${{ matrix.browser }}
         run: |
           python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt
-          python -m playwright install --with-deps "$BROWSER"
+          if [ "$BROWSER" = chromium ] && command -v google-chrome >/dev/null; then
+            google-chrome --version
+          else
+            python -m playwright install --with-deps "$BROWSER"
+          fi
       - name: Observe WebKit native layout before the full regression gate
         if: matrix.browser == 'webkit'
         shell: bash
@@ -166,7 +170,11 @@ jobs:
           node scripts/verify-build.mjs
       - run: |
           python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt
-          python -m playwright install --with-deps chromium
+          if command -v google-chrome >/dev/null; then
+            google-chrome --version
+          else
+            python -m playwright install --with-deps chromium
+          fi
       - name: Five paired cold runs plus repeated Lighthouse on the same runner
         shell: bash
         run: |
