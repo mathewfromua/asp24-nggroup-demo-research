@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "reportVersion": "3.2.0-rc.2",
+  "sectionPolicy": "Existing IDs are frozen semantic locators, independent of future physical pagination; never renumber.",
+  "indexing": "hub, HTML reports, cases and synthetic catalog remain noindex,nofollow for this unaccepted candidate",
+  "cases": [
+    {"caseId":"six-candidates","caseVersion":1,"title":"Пара з шести кандидатів","reportId":"ASP24","sectionId":"asp24-09","purpose":"Змініть ліву й праву модель, приберіть кандидата та поверніть його. Повний добір лишається доступним.","route":"#/asp/compare","seed":{"group":"ups","candidates":["u01","u02","u03","u04","u05","u06"],"pair":["u05","u06"]}},
+    {"caseId":"unknown-and-difference","caseVersion":1,"title":"Прогалина поруч із відмінністю","reportId":"ASP24","sectionId":"asp24-05","purpose":"Зіставте масу DEMO-U01, U02 і U03: невідоме, 520 г і 860 г. Режим відмінностей має зберегти видиму прогалину.","route":"#/asp/compare","seed":{"group":"ups","candidates":["u01","u02","u03"],"pair":["u01","u02"],"differences":true}},
+    {"caseId":"two-reels","caseVersion":1,"title":"Дві бухти — 610 метрів","reportId":"ASP24","sectionId":"asp24-07","purpose":"Перевірте 2 бухти по 305 м та 10 380 грн; разом із трьома DEMO-U02 по 2 190 грн — 16 950 грн. Усі ціни умовні.","route":"#/asp/cart","seed":{"cart":{"u02":3,"c04":2}}},
+    {"caseId":"model-document","caseVersion":1,"title":"Документ тієї самої моделі","reportId":"NGGroup","sectionId":"nggroup-09","purpose":"Прочитайте демонстраційний опис DEMO-U02, виконання D1. Відкрийте чернетку запитання й поверніться до моделі, зберігши її позначення.","route":"#/ng/document/u02","seed":{"drafts":{"u02":{"purpose":"Сумісність","quantity":"","question":"Які умови підключення слід уточнити для виконання D1?"}}}}
+  ]
+}

@@ -4,9 +4,9 @@
   "created_at": "2026-10-08",
   "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
   "manuscript_file": "reports/content.json",
-  "manuscript_sha256": "d55bed011b54741983f8614f1daa13c103023e20444fa41904b8881951f27e46",
-  "baseline": "3.1.1-rc.1 Checkpoint03, preserving E01/E02. Migration changes project name, demo URLs and public packaging only.",
-  "scope": "E01/E02 accepted editorial changes; broader SEO/competitor research pending separate review. No new interactive competitor audit.",
+  "manuscript_sha256": "42b46ba1b84cfe0db9d96e6a3e3b07845d93cdc34f4ed3461789184cb3c031d0",
+  "baseline": "Checkpoint03 після E01/E02; редакція R01–R44 09.10.2026.",
+  "scope": "Адресна редакція та нове читання визначених сторінок 11 PDF; історичні дії не повторено. Широке SEO очікує окремого приймання.",
   "verification": {
     "scripts": [
       "evidence/recovered_sources/recompute_source_measures.py",
@@ -1366,7 +1366,7 @@
       "pdf_page": 7,
       "html_anchor": "nggroup-07",
       "section": "Документація",
-      "title": "Назва файла має пояснювати його призначення",
+      "title": "Назва й опис документа мають пояснювати його призначення",
       "source_ids": [
         "NGGroup:6",
         "NGGroup:7"
@@ -1376,7 +1376,8 @@
         {
           "file": "reports/assets/NGGroup-p4-2.png",
           "caption": "Фрагмент с. 2 інструкції з попереднього огляду. Це запис документа; апаратної перевірки сумісності не проводили. [6]",
-          "crop": null
+          "crop": null,
+          "alt": "GPON та EPON: SC/PC, SC/APC. XPON Stick вставляється в SFP/SFP+; порт налаштовують на 1 або 2,5 Gbps. Для SFP+ інструкція вказує перехід з 10 на 1 Gbps."
         }
       ],
       "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"
@@ -2657,7 +2658,7 @@
     "Editorial decision received and E01/E02 accepted; pasted DR text rejected as direct evidence; broader research pending separate review."
   ],
   "final_pdf_manifest": "reports/pdf-manifest.json",
-  "final_pdf_review": "reports/migration-review.json",
+  "final_pdf_review": "reports/editorial-validation.json",
   "final_pdf_structural_check": "scripts/verify-acceptance-pdfs.py",
   "secondary_document_identity": {
     "ASP24": {
@@ -2711,8 +2712,8 @@
   },
   "acceptance": {
     "editorial": "E01_E02_ACCEPTED_BROAD_RESEARCH_PENDING",
-    "all_30_pages_rendered_and_reviewed": false,
-    "native_browser": "NOT_RUN_BY_REPORT_MIGRATION",
+    "all_30_pages_rendered_and_reviewed": true,
+    "native_browser": "See exact-commit candidate-manifest.json and Actions artifacts; old beta Safari not inherited",
     "public_release": "NOT_VERIFIED_BY_REPORT_BUILD",
     "pdf_ua": "NOT_CLAIMED",
     "figure_data": [
@@ -2737,9 +2738,9 @@
         "unchanged_in_this_pass": true
       }
     ],
-    "current_visual_review": "All 30 pages rendered. Each of 14 changed pages inspected individually; 16 unchanged PNG hashes, including both covers, match Checkpoint03."
+    "current_visual_review": "reports/editorial-validation.json: final 30 pages rendered; 22 changed and 8 identical against main, covers identical. Implementation review, independent acceptance pending."
   },
-  "local_version": "3.1.1-rc.1",
+  "local_version": "3.2.0-rc.1",
   "file_catalog_missing": [
     "evidence/recovered_sources/asp24-20260910/asp-search-exact.txt",
     "evidence/recovered_sources/asp24-20260910/asp-search-kp1.txt",
@@ -2842,5 +2843,7 @@
   "public_evidence_summary": "docs/RESEARCH.md",
   "deployment_configuration": "deployment.config.json",
   "file_catalog_missing_meaning": "Not distributed in the public repo. This list does not newly disprove or authenticate the inherited observations.",
-  "deployment_configuration_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0"
+  "deployment_configuration_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
+  "current_editorial_decisions": "research/editorial-decisions.json",
+  "current_direct_source_reading": "research/editorial-source-register.json"
 }

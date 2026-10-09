@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-09",
+  "scope": "RC2 targeted corrections only: NG Group warranty repair condition (p11), meaningful XPON image alternative (HTML p7); no general rewrite.",
+  "candidate_version": "3.2.0-rc.2",
+  "visual_review": {
+    "method": "Poppler pdftoppm -png -scale-to 1100; rendered all 30 baseline and 30 RC2 pages with identical command. Compared every PNG byte; visually inspected RC1/RC2 NG p11 and RC2 NG p7 plus source illustration.",
+    "baseline_commit": "435e99440e4070371476a672d1e7a582638d8d12",
+    "pages": {
+      "ASP24": 14,
+      "NGGroup": 16
+    },
+    "observed": "Only NG p11 changed visually, with no clipping, collisions or reduction in typography. All other 29 page renders identical, including both covers and NG p7 (new text alternative is an HTML accessibility annotation of the existing image).",
+    "comparison_file": "reports/page-render-comparison.json",
+    "reviewer": "Implementation agent; not independent release acceptance"
+  },
+  "text_parity": "All manuscript text blocks and table cells found in their PDF pages and semantic HTML; explicit image alternative verified separately in generated HTML.",
+  "r34": "OPEN: restored warranty-equipment scope; start event and relationship between service periods require external support.",
+  "r42": "Untagged final PDF; no PDF/UA claim.",
+  "fonts": "Exact provenance hashes; existing external font cache checked by build_inputs.verify_environment.",
+  "source_reading": "research/editorial-source-register.json#rc2_targeted_followup",
+  "content_sha256": "42b46ba1b84cfe0db9d96e6a3e3b07845d93cdc34f4ed3461789184cb3c031d0",
+  "input_digest": "a32d32fe666bc1b8781cf1903bb7d05d969080ee8bdbed1b37dd742a71da3b21",
+  "pdf_sha256": {
+    "ASP24": "ea3332fff90516512a9afceba644720ffcb2c85ca4aa3d7de56cd61430c6aca7",
+    "NGGroup": "2bff88177656bc320cc1fee207c8972363441860a3de6ff55986172e5d2d49ba"
+  },
+  "html_sha256": {
+    "ASP24": "44c1bd753cf3a4d5ea3e45ac82088359095a9d9cf733eab0433f1eb14e16db44",
+    "NGGroup": "3e7e7d8e5f518f448fd4f131246dd4ecde0ee166af9d7a6db180e58763420612"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "reportlab": "4.4.9",
+      "pypdf": "6.10.0",
+      "Pillow": "12.3.0"
+    }
+  },
+  "checks": [
+    {
+      "command": "python reports/build_editorial.py; python reports/build_html.py; python reports/export_standalone.py; python reports/build_inputs.py --write",
+      "result": "PASS: final 14+16 PDF/HTML outputs and manifests generated from reports/content.json."
+    },
+    {
+      "command": "python scripts/verify-reports.py",
+      "result": "PASS: source/output text and explicit alternative; HTTP omitted here and checked by full candidate suite."
+    },
+    {
+      "command": "REPORT_FONT_DIR=/workspace/cloud-onboarding/fonts python scripts/check-report-reproduction.py",
+      "result": "PASS: clean temporary-tree reproduction byte-identical; stale manuscript and stale HTML template each rejected."
+    }
+  ],
+  "limitations": [
+    "This working-tree report is bound by input/content/output hashes; exact commit verification is performed by candidate CI.",
+    "Report integrity is not independent proof of source truth.",
+    "Native PDF assistive-technology checks NOT_RUN."
+  ]
+}

@@ -1,29 +1,31 @@
-# ASP24 / NG Group — Demo & Research
+# ASP24 / NG Group — кандидат 3.2.0-rc.2
 
-Версія 3.1.1-demo.1 · міграція з Checkpoint 03. **PUBLISHED_DEMO_VERIFIED — GitHub і HTTPS-демо опубліковано.**
+**Preview with limitations; незалежне приймання очікується. Main і чинний GitHub Pages не оновлено.** Гілка `release/reports-first-rc`, контрольний RC1 — `435e99440e4070371476a672d1e7a582638d8d12`. Точний новий SHA, усі результати та hashes outputs записує `candidate-manifest.json` у [Actions artifact](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/workflows/candidate.yml); поточний checkpoint і посилання на artifact — у PR #7.
 
-[Репозиторій](https://github.com/mathewfromua/asp24-nggroup-demo-research) · [Демо](https://mathewfromua.github.io/asp24-nggroup-demo-research/) · [Перша успішна публікація](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37863652491)
+## Що виправлено після незалежного читання RC1
 
-| Напрям | Фактичний результат |
-|---|---|
-| ENVIRONMENT | PASS: локальні команди й файли працюють; 725 вхідних записів звірено; дерево й доступну Sites Git-історію збережено окремо. |
-| CONTENT | E01/E02 збережені. Змінені лише поточне найменування та активні демопосилання, без нової редактури фактів. |
-| RESEARCH | EDITORIAL_DECISION=RECEIVED; RECEIVED_DR_TEXT=REJECTED_AS_DIRECT_EVIDENCE; VERIFIED_DELTA=PARTIAL_ACCEPTED; BROAD_SEO_COMPETITOR_RESEARCH=PENDING_REVIEW. |
-| UNIT | 87 PASS, 0 FAIL, 2 SKIP. Сім нових міграційних перевірок: root/subpath HTTP, URL/redirect, outdated PDF hash, імпорт старого формату, назва й шрифтові запити. |
-| BUILD | PASS: native ESM, один deployment.config.json, HTML/CSS/JS і report-manifest. Подання / і /asp24-nggroup-demo-research/ перевірені через HTTP; у dist лише дозволені активи. |
-| REPORTS | ASP24 — 14 сторінок, NG Group — 16; PDF/HTML зі спільного джерела. 14 змінених сторінок переглянуті; 16 PNG незмінні, включно з обкладинками. Джерела, E01/E02, /Lang=uk-UA збережені. PDF/UA не заявлено. |
-| DESKTOP / RESPONSIVE | PARTIAL_PASS: Codex In-app Browser; реальні HTTP/ESM/UI/reload. Пара зі шести, обидва вибори, remove/undo, заміна й режими; чернетка проєкту, Save/reload, 6570+10380=16950. Контрольна геометрія порівняння 320/375/390/430/1440 без переповнення сторінки; Back/Forward пройдено. Це не повне мобільне приймання. |
-| SIMULATOR_SAFARI | BLOCKED: Xcode27.0, iOS27.0 runtime встановлений, але CoreSimulatorService відхиляє з’єднання. Safari у симуляторі не запускався. |
-| SAFARI_MAC | NOT_RUN для цієї збірки. Встановлений Safari27.2/macOS27.2 beta; історичні часткові PASS не повторно зараховані. |
-| PHYSICAL_IPHONE | NOT_RUN. Відсутність телефона не блокує дозволений демонстраційний preview. |
-| PUBLICATION | PASS для демонстраційного preview: публічний GitHub, main, Pages через Actions; build/deploy/verify-publication успішні. SHA-256 усіх 33 HTTPS-файлів, PDF-сигнатури та MIME підтверджені журналом Actions і незалежним curl-читанням. Перший коміт 55a4e2515d0bf1b5c94ad99449bf8f8ee125ec08 прочитано з GitHub. |
-| PUBLIC_UI | PARTIAL_PASS: у Codex In-app Browser на кінцевому HTTPS-origin додано шість моделей, обрано U05/U06, увімкнено відмінності й виконано справжній reload; пара, шість кандидатів і режим збережені. Обидва HTML відкриті; NG HTML на ширині 390 без глобального переповнення, повернення до демо зберегло шість кандидатів. |
-| GITHUB_CLONE | PASS: незалежний clone з GitHub на коміті 55a4e25; 121 запис початкового manifest збігається. Без npm install: 87 PASS/0 FAIL/2 SKIP, build і verify успішні. |
+- Відмова sessionStorage більше не означає успішне збереження. Статуси читання, запису, очищення й роботи лише в пам’яті відокремлено; українське доступне повідомлення пояснює ризик reload. Поточний стан прикладу можна явно експортувати в JSON із його версією та schema 4. Невдале очищення не перезавантажує сторінку. Особистий `perspective-demo-v1` не використовується адаптером кейсу.
+- NG Group, `nggroup-11`: строк до 14 календарних днів віднесено до діагностики й ремонту гарантійного обладнання. Пояснення початку відліку й співвідношення строків R34 залишається відкритим.
+- NG Group, `nggroup-07`: суттєві параметри показаного XPON-фрагмента передано текстом; це запис документа, а не нова перевірка апаратної сумісності.
 
-Публічне дерево очищено від приватного досьє, абсолютних шляхів Mac, LAN-адрес, архівів, шрифтових файлів та старих повних PDF. Чотири повні WebP без встановленої підстави розповсюдження виключено з хешами; застосовано наявні піктограми. Історичний Sites не змінено.
+## Як перевіряється кандидат
 
-Файлові/clipboard/storage fault-сценарії, реальний zoom і повний keyboard-only/VoiceOver цього проходу не завершені. Докладні факти: docs/qa-local-browser.json, docs/simulator-environment.json, reports/migration-review.json, docs/PUBLICATION.md. Результати кінцевої адреси записані окремо у docs/qa-published-browser.json та docs/published-byte-check-ci.json; локальні журнали не перейменовані на публічне приймання.
+Node-тести, build і verify з кореневим та Pages base path; генерація обох PDF/HTML зі спільного рукопису; source/output integrity; контрольна побайтова генерація та негативні stale-output перевірки. Огляди зберігають 14 + 16 сторінок, прийняті обкладинки й E01/E02. Адресні зміни та порівняння рендерів записано в `reports/editorial-validation.json`.
 
-Межі залишаються: стабільний Safari/macOS, фізичний iPhone, попередня цільова OS та повний набір файлових/clipboard/storage-сценаріїв. Ширший DR очікує редакційного приймання. Вони не приховані статусом опублікованого демо.
+Candidate workflow будує dist один раз. Chromium, Firefox і WebKit завантажують саме цей dist та виконують попередні regression/cases suites і новий case-storage suite. Він перевіряє успішний запис, quota, недоступний sessionStorage, getItem/removeItem exceptions, подальше редагування, точний JSON-експорт, reload, повторний вхід, Back/Forward та незмінність особистого стану. Packaging вимагає PASS кожного suite на тому самому SHA; історичний RC1 PASS не зараховується.
 
-Відкриті завдання: [Safari та iPhone](https://github.com/mathewfromua/asp24-nggroup-demo-research/issues/1), [редакційне приймання ширшого дослідження](https://github.com/mathewfromua/asp24-nggroup-demo-research/issues/2).
+Локально 09.10.2026 перед фіксацією RC2, Node 24.19.0 / Python 3.12.14: `npm test` — 111 PASS, 0 FAIL, 2 збережені історичні SKIP; build/verify — PASS; контрольна генерація та два негативні stale-output тести — PASS. Нових SKIP немає.
+
+Фактичні результати цього SHA — лише в manifest і CI-журналах. Локальні перевірки до commit є попередньою валідацією, а не незалежним прийманням. Нездатність захищеного браузера запуститися в Cloud позначається BLOCKED; sandbox не вимикається.
+
+## Межі preview
+
+- R34: потрібне пояснення власника сервісного процесу.
+- R42: обидва фінальні PDF untagged. HTML — альтернатива; окремий tagged pilot не закриває залишок і не доводить PDF/UA.
+- Stable Safari/macOS, фізичний iPhone, native zoom, VoiceOver та повне читання PDF допоміжною технологією — NOT_RUN без окремих фактичних результатів. CSS text resize і WebKit не підміняють ці перевірки.
+- Каталог синтетичний, реальних замовлень/звернень чи інтеграцій немає. Широке дослідження #2 не включене; integrity не доводить правдивості джерел.
+- NOT_DEPLOYED. Нові абсолютні PDF/standalone HTML URLs налаштовані на майбутню публікацію; до неї користуйтеся HTML з HTTP-preview artifact. Main, Pages і settings не змінено.
+
+[Критерії незалежного читання](docs/REVIEW_CANDIDATE.md) · [Release notes](docs/RELEASE_NOTES.md) · [Відтворення](docs/DEVELOPMENT.md).
+
+Наступна дія для RC2 — незалежне приймання exact-SHA artifact. Модернізація після технічного PASS розробляється окремо й автоматично в цю гілку не інтегрується.

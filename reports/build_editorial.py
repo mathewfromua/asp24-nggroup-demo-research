@@ -1,3 +1,4 @@
+from build_inputs import inventory
 """Rebuild every body page; retain only the unchanged original covers.
 Requires Python 3.12+, reportlab, pypdf, Pillow. No network or PyMuPDF.
 """
@@ -49,7 +50,7 @@ class Page:
   data=[[Paragraph(glyphs(v),sh) for v in headers]]+[[Paragraph(glyphs(v),ss) for v in row] for row in rows]
   t=Table(data,colWidths=widths,hAlign='LEFT');t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),HexColor(self.colors[1])),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7),('ROWBACKGROUNDS',(0,1),(-1,-1),[HexColor('#ffffff'),HexColor(self.colors[2])]),('LINEBELOW',(0,1),(-1,-1),.5,HexColor(self.colors[2]))]))
   _,h=t.wrap(CW,1100);self.check(h,'table');t.drawOn(self.c,M,self.y-h);self.y-=h+9
- def image(self,name,height,caption,crop=None):
+ def image(self,name,height,caption,crop=None,alt=None):
   path=HERE/name;im=Image.open(path);im.load()
   if crop:im=im.crop(tuple(crop))
   w,h=im.size;hh=min(height,CW*h/w);ww=hh*w/h;self.check(hh,'image');self.c.drawImage(ImageReader(im),M+(CW-ww)/2,self.y-hh,ww,hh,mask='auto');self.y-=hh+6
@@ -122,12 +123,12 @@ def build():
     elif kind=='link':p.p(f'<link href="{html.escape(args[1],quote=True)}" color="{p.colors[0]}"><u>{args[0]}</u></link>',11.4,16.5,'Bold')
     elif kind=='source':p.p(*args,10.4,14.8,space=7)
    writer.add_page(PdfReader(io.BytesIO(p.finish())).pages[0])
-  writer.add_metadata({'/Title':f'{brand} — огляд сайту','/Subject':'Пошук, технічний вибір і підготовка закупівлі'})
+  writer.add_metadata({'/Title':f'{"NG Group" if brand == "NGGroup" else brand} — огляд сайту','/Subject':'Технічний каталог, документи й консультація' if brand == 'NGGroup' else 'Пошук, технічний вибір і підготовка закупівлі'})
   writer._root_object[NameObject('/Lang')]=TextStringObject('uk-UA')
   # This engine does not create a validated structure tree. Do not claim PDF/UA.
   dest=OUT/f'{brand}_Огляд.pdf'
   with dest.open('wb') as f:writer.write(f)
-  manifest.append({'file':dest.name,'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL,'pages':len(writer.pages),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'retained_pages':[1],'regenerated_pages':list(range(2,len(writer.pages)+1))})
+  manifest.append({'file':dest.name,'input_digest':inventory()['digest'],'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL,'pages':len(writer.pages),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'retained_pages':[1],'regenerated_pages':list(range(2,len(writer.pages)+1))})
   shutil.copy2(dest,ROOT/'public/reports'/('ASP24_Review.pdf' if brand=='ASP24' else 'NGGroup_Review.pdf'))
  (HERE/'pdf-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n');(HERE/'layout-check.json').write_text(json.dumps(LAYOUT,ensure_ascii=False,indent=2)+'\n')
  fd=HERE/'figures';fd.mkdir(exist_ok=True)

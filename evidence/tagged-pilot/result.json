@@ -1,0 +1,33 @@
+{
+  "status": "EXPERIMENTAL_NOT_ACCEPTED",
+  "renderer": "WeasyPrint 70.0",
+  "input": "public/reports/NGGroup_Review.html",
+  "section": "nggroup-06",
+  "source_sha256": "4894ac28b09b3c94f7e6b5c3e4bfd7833c37462a338cdd96dbea9d486fad45f1",
+  "pdf_sha256": "24a2c738c6ed6a01c85672d290b901a9b9527d59589d45220e711cc10b885d91",
+  "pages": 2,
+  "structure_tags": {
+    "/Document": 1,
+    "/Part": 2,
+    "/Sect": 2,
+    "/P": 6,
+    "/Span": 49,
+    "/H2": 1,
+    "/Div": 3,
+    "/Table": 3,
+    "/THead": 2,
+    "/TR": 11,
+    "/TH": 13,
+    "/TBody": 2,
+    "/TD": 9,
+    "/NonStruct": 3,
+    "/Figure": 1,
+    "/Caption": 1,
+    "/H3": 1
+  },
+  "lang": "uk-UA",
+  "pdf_ua_validator": "NOT_RUN",
+  "assistive_reading": "NOT_RUN",
+  "cover_merge": "NOT_TESTED",
+  "limit": "One semantic section only; final ReportLab reports remain untagged. Tag presence is not logical reading order, figure alternatives or PDF/UA acceptance."
+}

@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "purpose": "Reviewer locators plus separate actual reacquisition and bounded reading log, 2026-10-09",
+  "review_date": "2026-10-09",
+  "review_input_sha256": "36cf3c2a3a3749f034dea18d83e0258ab08e5099a190ed63446a5878622f89c0",
+  "verification_state": "REACQUIRED_11_PDFS_TARGET_PAGES_READ",
+  "rules": [
+    "Preserve reviewer-reported hashes; record subsequent actual hashes separately.",
+    "A new download does not prove identity with an earlier historical file.",
+    "Read the relevant pages before upgrading a claim to direct evidence; otherwise preserve explicit secondary attribution.",
+    "Do not redistribute full third-party PDFs without a justified basis; link and retain minimal public-safe evidence."
+  ],
+  "pdfs": [
+    {
+      "id": "Д02",
+      "name": "FHP12SeriesMiniPowerMeter.pdf",
+      "url": "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20201102/FHP12SeriesMiniPowerMeter.pdf",
+      "pages": 1,
+      "reading_scope": "physical page 1, printed page 31; reviewer reports visual reading",
+      "reported_sha256": "bce58f5e48ae251f703ae5d568077411d7a29b6cc7c48f9215480dc18b9b6970",
+      "relevant_claim": "FHP12-A: -70…+10 dBm; applicability to a particular supplied variant unestablished",
+      "actual_sha256": "bce58f5e48ae251f703ae5d568077411d7a29b6cc7c48f9215480dc18b9b6970",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 326637,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1
+        ],
+        "method": "visual",
+        "tool": "Poppler PNG + visual reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д03",
+      "name": "FHP12.pdf",
+      "url": "https://www.grandwaytelecom.com/Public/Uploads/uploadfile/files/20260730/FHP12.pdf",
+      "pages": 1,
+      "reading_scope": "physical page 1, printed page 71; reviewer reports visual reading",
+      "reported_sha256": "b8bc82d214f8131fcef0eab3cf6c213c0ccc02d4c1488f2f86e53814552ae08b",
+      "relevant_claim": "850 nm: -60…+10; other listed wavelengths: -65…+10 dBm. URL date is not an established revision date",
+      "actual_sha256": "b8bc82d214f8131fcef0eab3cf6c213c0ccc02d4c1488f2f86e53814552ae08b",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 907108,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д04",
+      "name": "NG OPTICS PLC",
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/NG_OPTICS_PLC_Splitters_DIN_ABS_SCUPC_SCAPC_ukr.pdf",
+      "pages": 2,
+      "reading_scope": "both pages; parameter table on page 2",
+      "reported_sha256": "0f39542292088586d148148e390c805a3a73da746a845a2692dcec16d5ba8438",
+      "relevant_claim": "DIN cassette 130×100×25 mm; 1×8 maximum 10.2 dB without connectors. Does not explain another card's 125 mm or 10.7 dB",
+      "actual_sha256": "0f39542292088586d148148e390c805a3a73da746a845a2692dcec16d5ba8438",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 427894,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          2
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д05",
+      "name": "XPON_Stick.pdf",
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf",
+      "pages": 10,
+      "reading_scope": "text of all ten pages; relevant pages 2,4,9,10",
+      "reported_sha256": "19f02d8b3d388b04a9e277519116f1ea8adefcd81992ff35d0d8ff0c71322150",
+      "relevant_claim": "Interfaces, OLT registration, backup and update instructions; not hardware compatibility testing",
+      "actual_sha256": "19f02d8b3d388b04a9e277519116f1ea8adefcd81992ff35d0d8ff0c71322150",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 1806635,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          2,
+          4,
+          9,
+          10
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д06",
+      "name": "twisted.pdf",
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/twisted.pdf",
+      "pages": 2,
+      "reading_scope": "both pages visually examined by reviewer",
+      "reported_sha256": "0c3f78c690a9c3d392db01361f12dbe787367ab5f85b13ac047b5df38a3487a9",
+      "relevant_claim": "13.06.2025 ends printed interval 14.06.2024–13.06.2025. Historical label 13.16.2025 remains a separate observation; no additional legal conclusion",
+      "actual_sha256": "0c3f78c690a9c3d392db01361f12dbe787367ab5f85b13ac047b5df38a3487a9",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 1209377,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1,
+          2
+        ],
+        "method": "visual",
+        "tool": "Poppler PNG + visual reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д07",
+      "name": "_2024_.pdf",
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/_2024_.pdf",
+      "pages": 3,
+      "reading_scope": "all three pages visually examined by reviewer",
+      "reported_sha256": "8b117786e185654eafe1cd80f90c879a52c70a2d66a47055dd8edbb5433a8868",
+      "relevant_claim": "NG POWER set of conformity documents, not a technical specification; no claim of legal sufficiency for a particular supply",
+      "actual_sha256": "8b117786e185654eafe1cd80f90c879a52c70a2d66a47055dd8edbb5433a8868",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 1331515,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1,
+          2,
+          3
+        ],
+        "method": "visual",
+        "tool": "Poppler PNG + visual reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д08",
+      "name": "CU-8.pdf",
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/CU-8.pdf",
+      "pages": 1,
+      "reading_scope": "only physical page, visual reading",
+      "reported_sha256": "9de383b814d712699ba0ae8a1f6e803413fad91794c1aa7654b0327bfb4d100b",
+      "relevant_claim": "87.7 m, Pass for stated test; not all batches or lengths",
+      "actual_sha256": "9de383b814d712699ba0ae8a1f6e803413fad91794c1aa7654b0327bfb4d100b",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 117391,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д09",
+      "name": "CCAG.pdf",
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/CCAG.pdf",
+      "pages": 1,
+      "reading_scope": "physical page 1, printed page 4; whole accessible file, original set completeness unknown",
+      "reported_sha256": "32804873908431359be234dd6fb15856df15f0a5130c75b055300a763b060c35",
+      "relevant_claim": "16.1 m, Pass, 30.10.2024, TIA Cat 5e Permanent Link; bounded test sample",
+      "actual_sha256": "32804873908431359be234dd6fb15856df15f0a5130c75b055300a763b060c35",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 115729,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д13",
+      "name": "FoxGate SFP 1SM 1550 1310nm 3 SC LC",
+      "url": "https://deps.ua/downloads/Documentation/FoxGate/SFP_1SM_1550_1310nm_3_SC_LC.pdf",
+      "pages": 12,
+      "reading_scope": "pages 1–2 for conclusion, not all twelve pages",
+      "reported_sha256": "732e5275aeb8e65914a5f1eaa6dead76ef0e9cc39cd92245cb6a569a43b7610b",
+      "relevant_claim": "Order codes, wavelengths and connection types within described series",
+      "actual_sha256": "732e5275aeb8e65914a5f1eaa6dead76ef0e9cc39cd92245cb6a569a43b7610b",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 623049,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1,
+          2
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д15",
+      "name": "Datasheet MultiPlus-II inverter charger EN",
+      "url": "https://deps.ua/downloads/Documentation/Victron-Energy/Datasheet-MultiPlus-II-inverter-charger-EN.pdf",
+      "pages": 2,
+      "reading_scope": "internal title on physical page 1 for identity",
+      "reported_sha256": "914e71e16b168583f65fc43064345d2b41a21d8870d2ef20affcfad6a30b78b2",
+      "relevant_claim": "Link-label mismatch must be supported jointly by current source HTML and the file title",
+      "actual_sha256": "914e71e16b168583f65fc43064345d2b41a21d8870d2ef20affcfad6a30b78b2",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 600522,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    },
+    {
+      "id": "Д16",
+      "name": "Datasheet Quattro-II inverter charger EN",
+      "url": "https://deps.ua/downloads/Documentation/Victron-Energy/Datasheet-Quattro-II-inverter-charger-EN.pdf",
+      "pages": 2,
+      "reading_scope": "internal title on physical page 1 for identity",
+      "reported_sha256": "c366e8c1406eb4b01d5b2c4ec36c05c8938a5db670f7a32d9f59ef135c2a9b04",
+      "relevant_claim": "Neighbouring link gives Quattro-II document; not an audit of all competitor documents",
+      "actual_sha256": "c366e8c1406eb4b01d5b2c4ec36c05c8938a5db670f7a32d9f59ef135c2a9b04",
+      "status": "READ_TARGET_PAGES",
+      "bytes": 613809,
+      "read_at": "2026-10-09",
+      "actual_reading": {
+        "physical_pages": [
+          1
+        ],
+        "method": "text",
+        "tool": "pypdf text extraction + reading",
+        "reported_hash_match": true,
+        "limit": "Current file only; no historical identity, equipment test or supply applicability established."
+      }
+    }
+  ],
+  "related_web_sources": [
+    {
+      "id": "Д01",
+      "url": "https://www.grandwaytelecom.com/products/instrument/optical-laser-source-power-meter/1128.html",
+      "scope": "FHP12-A parameter table; reviewer reports -65…+10 dBm"
+    },
+    {
+      "id": "Д10",
+      "url": "https://nggroup.ua/service",
+      "scope": "Published service preparation and time wording, no actual repairs tested"
+    },
+    {
+      "id": "Д11",
+      "url": "https://nggroup.ua/warranty",
+      "scope": "Manufacturer-transfer time wording; no legal conclusion"
+    },
+    {
+      "id": "Д12",
+      "url": "https://developers.google.com/analytics/devguides/collection/ga4/reference/events?hl=en",
+      "scope": "add_to_cart value and items, methodological source not proof of received ASP24 events"
+    },
+    {
+      "id": "Д14",
+      "url": "https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html",
+      "scope": "Quattro-II labels, exact hrefs and document titles must be checked together"
+    },
+    {
+      "id": "Д17",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview",
+      "scope": "Sitemap does not guarantee indexing"
+    },
+    {
+      "id": "Д18",
+      "url": "https://developers.google.com/search/docs/crawling-indexing/robots/intro",
+      "scope": "Crawling rules are not actual indexing results"
+    },
+    {
+      "id": "Д19",
+      "url": "https://developers.google.com/crawling/docs/faceted-navigation",
+      "scope": "Faceted URL decisions depend on intended indexing"
+    },
+    {
+      "id": "Д20",
+      "url": "https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html",
+      "scope": "Published modification table, not a new interactive filter pass"
+    },
+    {
+      "id": "Д21",
+      "url": "https://deps.ua/ua/service-center/check-order-status.html",
+      "scope": "Public code field; no real service code entered"
+    },
+    {
+      "id": "Д22",
+      "url": "https://romsat.ua/optichniy-podilnik-optolink-plc-lgx-1x8-sc-upc/",
+      "scope": "Model/code and public inquiry text; no new post-click state"
+    },
+    {
+      "id": "Д23",
+      "url": "https://romsat.ua/company/partnership.php",
+      "scope": "Reviewer did not confirm retrieval in the new pass; not evidence of outage"
+    }
+  ],
+  "rc2_targeted_followup": {
+    "date": "2026-10-09",
+    "scope": "Only two independent RC1 review findings; no new general research.",
+    "xpon": {
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf",
+      "sha256": "19f02d8b3d388b04a9e277519116f1ea8adefcd81992ff35d0d8ff0c71322150",
+      "bytes": 1806635,
+      "physical_page": 2,
+      "method": "Fresh HTTPS retrieval; pypdf text reading of physical p2 and visual reading of existing reports/assets/NGGroup-p4-2.png crop.",
+      "verified": "GPON and EPON: SC/PC, SC/APC; XPON Stick in SFP/SFP+; port 1 or 2.5 Gbps; SFP+10→1Gbps.",
+      "limit": "Document instructions only; no hardware or compatibility test."
+    },
+    "service": {
+      "url": "https://nggroup.ua/service",
+      "sha256": "cd2e01b371f3c8656fed70bf880fe911e1a7e958a6c64a27147dd313c70e3f9e",
+      "method": "Fresh HTTPS HTML retrieval and reading of warranty repair condition.",
+      "locator": "Правила прийому обладнання до Сервісного центру, first bullet",
+      "verified": "Діагностика та ремонт гарантійного обладнання, виконується в строк до 14 календарних днів.",
+      "limit": "Restores scope only. R34 timing start and relationship to manufacturer transfer remain unresolved; not evidence of actual repair performance."
+    }
+  }
+}

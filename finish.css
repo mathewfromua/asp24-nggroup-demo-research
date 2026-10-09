@@ -227,3 +227,6 @@ body[data-brand=ng] .card-buttons .btn {white-space:normal;}
  .research-toolbar .add-candidate{order:6;flex:0 0 auto;white-space:nowrap;font-size:13px;padding:8px 10px;}
  .research-toolbar .expand-toggle{order:7;position:absolute;right:0;top:100%;width:44px;height:44px;}
 }
+
+/* Missing data and known inequality may apply to the same comparison row. */
+.incomplete-label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:4px}

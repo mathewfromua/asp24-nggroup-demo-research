@@ -3,14 +3,18 @@ import {readdirSync,readFileSync,existsSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {resolve,dirname} from 'node:path';
 import assert from 'node:assert/strict';
+import {publicationFiles} from './build-publication.mjs';
 import {normalizeBasePath} from './deployment-config.mjs';
 const walk=(dir,base='')=>readdirSync(dir,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(`${dir}/${x.name}`,`${base}${x.name}/`):[`${base}${x.name}`]).sort();
-const publicFiles=['assets/asp24-original.webp','assets/ng-original.svg','design-tokens.css','favicon.svg','reports/ASP24_Review.pdf','reports/NGGroup_Review.pdf',...JSON.parse(readFileSync('reports/html-public-assets.json','utf8'))].sort();
+const publicFiles=['assets/research-social.png','assets/asp24-original.webp','assets/ng-original.svg','design-tokens.css','favicon.svg','reports/ASP24_Review.pdf','reports/NGGroup_Review.pdf',...JSON.parse(readFileSync('reports/html-public-assets.json','utf8'))].sort();
 const pdfManifest=JSON.parse(readFileSync('reports/pdf-manifest.json','utf8'));
 const expectedPDFs=Object.fromEntries(pdfManifest.map(r=>[r.file.startsWith('ASP24')?'ASP24_Review.pdf':'NGGroup_Review.pdf',r.sha256]));
 const sha=b=>createHash('sha256').update(b).digest('hex');
 assert.deepEqual(walk('public'),publicFiles,'Unapproved public file');
 const contentHash=sha(readFileSync('reports/content.json'));
+const reportInputs=JSON.parse(readFileSync('reports/input-manifest.json','utf8'));
+for (const [file,digest] of Object.entries(reportInputs.files)) assert.equal(sha(readFileSync(file)),digest,`Outdated report generator input: ${file}`);
+for (const report of [...pdfManifest,...JSON.parse(readFileSync('reports/html-manifest.json','utf8'))]) assert.equal(report.input_digest,reportInputs.digest,'Report input digest mismatch');
 assert.equal(pdfManifest.length,2,'Expected two report PDF records');
 for(const report of pdfManifest) assert.equal(report.content_sha256,contentHash,'PDF built from outdated content');
 for(const report of JSON.parse(readFileSync('reports/html-manifest.json','utf8'))){
@@ -25,10 +29,10 @@ const deploy=JSON.parse(readFileSync('dist/build-config.json','utf8'));
 assert.equal(normalizeBasePath(deploy.BASE_PATH), deploy.BASE_PATH);
 assert.equal(new URL(deploy.PUBLIC_BASE_URL).pathname, deploy.BASE_PATH);
 assert.equal(new URL(deploy.PUBLIC_BASE_URL).protocol, 'https:');
-const generated=/^assets\/(app|asset-url|data|catalog-expanded|validation|logic|orders|presentation|catalog-ui|science|scenarios|lab|style|finish|catalog)-[a-f0-9]{12}\.(js|css)$/;
-assert.deepEqual(files.filter(p=>!['index.html','build-config.json'].includes(p)&&!generated.test(p)),publicFiles,'Unexpected deployed file');
-for(const name of ['app','asset-url','data','catalog-expanded','validation','logic','orders','presentation','catalog-ui','science','scenarios','lab'])assert.equal(files.filter(p=>new RegExp(`^assets/${name}-[a-f0-9]{12}\\.js$`).test(p)).length,1,`Module ${name}`);
-for(const name of ['style','finish','catalog','science'])assert.equal(files.filter(p=>new RegExp(`^assets/${name}-[a-f0-9]{12}\\.css$`).test(p)).length,1,`Stylesheet ${name}`);
+const generated=/^assets\/(demo-entry|case-context|legacy-entry|hub|app|asset-url|data|catalog-expanded|validation|logic|orders|presentation|catalog-ui|science|scenarios|lab|style|finish|catalog)-[a-f0-9]{12}\.(js|css)$/;
+assert.deepEqual(files.filter(p=>!['index.html','build-config.json',...publicationFiles(JSON.parse(readFileSync('publication.json','utf8')))].includes(p)&&!generated.test(p)),publicFiles,'Unexpected deployed file');
+for(const name of ['demo-entry','case-context','legacy-entry','app','asset-url','data','catalog-expanded','validation','logic','orders','presentation','catalog-ui','science','scenarios','lab'])assert.equal(files.filter(p=>new RegExp(`^assets/${name}-[a-f0-9]{12}\\.js$`).test(p)).length,1,`Module ${name}`);
+for(const name of ['style','finish','catalog','science','hub'])assert.equal(files.filter(p=>new RegExp(`^assets/${name}-[a-f0-9]{12}\\.css$`).test(p)).length,1,`Stylesheet ${name}`);
 for(const f of publicFiles)assert.equal(sha(readFileSync(`public/${f}`)),sha(readFileSync(`dist/${f}`)),f);
 for(const [f,hash]of Object.entries(expectedPDFs)){const pdf=readFileSync(`dist/reports/${f}`);assert.equal(pdf.subarray(0,5).toString(),'%PDF-',f);assert.equal(sha(pdf),hash,f);}
 for(const f of files.filter(x=>generated.test(x))){
@@ -39,6 +43,13 @@ const pkg=JSON.parse(readFileSync('package.json')),lock=JSON.parse(readFileSync(
 assert.equal(pkg.version,lock.version);assert.equal(pkg.version,lock.packages[''].version);
 assert.equal(Object.keys(pkg.dependencies||{}).length,0);assert.equal(Object.keys(pkg.devDependencies||{}).length,0);
 const html=readFileSync('dist/index.html','utf8');
+assert.ok(!html.includes('catalog-expanded'),'Hub must not load catalog');
+const registry=JSON.parse(readFileSync('dist/publication.json','utf8'));
+for(const c of registry.cases){
+ const report=readFileSync(`dist/reports/${c.reportId}_Review.html`,'utf8');
+ assert.ok(report.includes(`id="${c.sectionId}"`),'Missing stable return section');
+ assert.equal(c.entryURL,new URL(`cases/${c.caseId}/v${c.caseVersion}/`,deploy.PUBLIC_BASE_URL).href);
+}
 const build=html.match(/name="app-build" content="([^"]+)"/)?.[1];
 assert.ok(build,'Missing build identity');
 assert.ok(html.includes(`name="app-base-path" content="${deploy.BASE_PATH}"`),'Wrong runtime base path');
