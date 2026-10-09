@@ -10,12 +10,13 @@ export function seedCase(record) {
   return state;
 }
 export function isolatedStorage(backing,key,seed) {
-  let memory=JSON.stringify(seed);
+  let memory=JSON.stringify(seed),discardWrites=false;
   try{const saved=backing?.getItem(key);if(saved&&JSON.parse(saved)?.version===4)memory=saved;}catch{}
   return {
     getItem(name){if(name!==STATE_KEY)return null;return memory;},
-    setItem(name,value){if(name!==STATE_KEY)throw new Error('Unexpected storage key');try{backing?.setItem(key,value);}catch{}memory=value;},
-    reset(){memory=JSON.stringify(seed);try{backing?.removeItem(key);}catch{}}
+    setItem(name,value){if(name!==STATE_KEY)throw new Error('Unexpected storage key');if(discardWrites)return;try{backing?.setItem(key,value);}catch{}memory=value;},
+    // Ignore pagehide/hashchange saves from the old app instance until reload.
+    reset(){discardWrites=true;memory=JSON.stringify(seed);try{backing?.removeItem(key);}catch{}}
   };
 }
 export async function prepareCase() {
