@@ -2,9 +2,11 @@
 
 ## Демо
 
-Node.js 22 або новіший; runtime npm-залежностей немає. Активний builder — `scripts/build-static.mjs`; звичайна збірка використовує готові огляди з `public/reports/`.
+Node.js 24; точні Vite 8.3.4, TypeScript 7.0.2, React/ReactDOM 19.3.0 зафіксовані в lockfile. `scripts/build-static.mjs` викликає Vite для графа модулів і додає статичний hub/кейси через чинний publication builder. Звичайна збірка використовує готові огляди з `public/reports/`.
 
 ```sh
+npm ci
+npm run typecheck
 npm test
 npm run build
 npm run verify
@@ -58,7 +60,7 @@ python scripts/check-report-reproduction.py
 
 ## Браузерні регресії
 
-`python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt` встановлює Playwright 1.62.0 поза публічним dist; потім `python -m playwright install --with-deps chromium firefox webkit`. Playwright має ліцензію Apache-2.0; pyee — MIT, greenlet — MIT/PSF, typing_extensions — PSF-2.0. Вартість підтримки — оновлення pins/hashes та трьох browser jobs. Простіша перевірка HTTP зберігається, але не доводить кліків, фокуса й reload. Npm-залежностей застосунку не додано.
+`python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt` встановлює Playwright 1.62.0 поза публічним dist; потім `python -m playwright install --with-deps chromium firefox webkit`. Playwright має ліцензію Apache-2.0; pyee — MIT, greenlet — MIT/PSF, typing_extensions — PSF-2.0. Вартість підтримки — оновлення pins/hashes та трьох browser jobs. Простіша перевірка HTTP зберігається, але не доводить кліків, фокуса й reload. У Modern Experience React завантажується окремим chunk лише для нового простору порівняння; Playwright залишається Python-інструментом CI, поза dist.
 
 Після build/preview: `python scripts/browser-regression.py --url http://127.0.0.1:8000/asp24-nggroup-demo-research/ --browser firefox --output /tmp/browser-results`. Для оболонки з окремим демо додайте `--demo-path demo.html`. Chromium запускається з увімкненим sandbox; `--executable` може вказати встановлений системний Chrome. Нездатність запустити захищений браузер дає BLOCKED, а не PASS. CI перевіряє кожний PR без path filters; job має лише contents:read, traces/screenshots зберігаються за помилок. Усі дані сценаріїв синтетичні.
 
@@ -69,3 +71,17 @@ python scripts/check-report-reproduction.py
 `bash scripts/run-browser-checks.sh chromium /tmp/rc2-chromium` запускає всі три suites проти вже побудованого dist: загальний regression, маршрути кейсів і `browser-case-storage.py`. Для Firefox/WebKit змініть перший аргумент. Новий suite працює з синтетичним особистим fixture, примусовими помилками sessionStorage та реальним JSON-download; результати в `case-storage/results.json` входять у candidate manifest. Не запускайте тестові fault injection у профілі з особистими даними.
 
 У кейсі кнопка «Експортувати стан прикладу (JSON)» зберігає поточний навчальний стан із case ID/version та schema 4. Це окремий формат `asp24-nggroup-case-state` exportVersion 1; він не передається до імпорту особистих проєктів. У разі memory-only збережіть файл перед reload/закриттям. Успіх очищення є передумовою автоматичного reload; за відмови поточний стан залишається доступним для експорту.
+
+## Modern Experience
+
+Новий React-простір відкривається з посилання у порівнянні або через `demo.html#/asp/compare?experience=modern`; для NG — `#/ng/compare?experience=modern`. Старий і новий UI читають одну schema 4. `src/domain` не залежить від DOM, React чи storage; `logic.js` зберігає сумісний API старих Node-тестів. Нові TS/TSX-модулі перевіряються в strict mode, старий UI JS переноситься поступово.
+
+Для повної перевірки зміни: `npm ci`, `npm run typecheck`, `npm test`, `npm run build`, `npm run verify`. `BASE_PATH=/ npm run build` дає кореневий dist; стандартний build — Pages subpath. Preview навмисно не використовує SPA fallback: вкладені кейси мають власний index.html. Вихідний Vite manifest і SHA-256 inventory також перевіряються. React і його CSS — окремі dynamic chunks; hub не імпортує каталог.
+
+Контрольна генерація звітів копіює tracked source до тимчасового дерева та використовує вже встановлений lockfile toolchain через локальне посилання на node_modules. Перед нею виконайте `npm ci`; нові вхідні файли мають бути tracked. Прийняті PDF/HTML залишаються побайтово відтворюваними.
+
+Після build і запуску preview додатковий suite: `python scripts/browser-modern.py --url http://127.0.0.1:8000/asp24-nggroup-demo-research/ --browser chromium --output /tmp/modern-checks` (або firefox/webkit). Він не замінює три попередні browser suites. Захищений Chromium може потребувати `--executable /usr/bin/google-chrome` у CI; sandbox не вимикається.
+
+`modern-preview.yml` будує обидва base paths, запускає всі suites і порівнює fixed RC2 із новою збіркою на одному runner. `scripts/performance-sample.py` робить п’ять почергових холодних запусків кожного сценарію та три Lighthouse-повтори. JSON зберігає середовище, сирі виміри, медіани, ресурси й обмеження. Це loopback-лабораторія, не польовий INP або швидкість на реальному мобільному інтернеті.
+
+HTTP-preview artifact містить вже перевірений dist, evidence, `modern-manifest.json` і мінімальний `node scripts/serve.mjs`; npm install для його перегляду не потрібний. Повна збірка з джерел вимагає Node 24 і npm ci. Release artifact RC2 залишається окремим checkpoint.

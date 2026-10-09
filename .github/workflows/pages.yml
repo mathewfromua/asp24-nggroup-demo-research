@@ -29,6 +29,10 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Install locked toolchain
+        run: npm ci
+      - name: Check strict TypeScript
+        run: npm run typecheck
       - name: Прочитати конфігурацію наявного GitHub Pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         id: pages
@@ -85,6 +89,10 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Install locked toolchain
+        run: npm ci
+      - name: Check strict TypeScript
+        run: npm run typecheck
       - run: npm run build
       - name: Звірити реальні HTTPS-файли, MIME, PDF-сигнатури й SHA-256
         env:

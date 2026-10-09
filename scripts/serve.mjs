@@ -14,7 +14,7 @@ const config = JSON.parse(readFileSync(resolve(root, 'build-config.json'), 'utf8
 const basePath = normalizeBasePath(option('--base-path') || config.BASE_PATH);
 if (basePath !== config.BASE_PATH) throw new Error('Preview path must match the build; rebuild with BASE_PATH first');
 if (!Number.isInteger(port) || port < 1 || port > 65535 || !['127.0.0.1', '0.0.0.0', 'localhost'].includes(host)) throw new Error('Invalid preview host or port');
-const types = {'.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.webp':'image/webp', '.png':'image/png', '.pdf':'application/pdf', '.json':'application/json; charset=utf-8'};
+const types = {'.txt':'text/plain; charset=utf-8','.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.webp':'image/webp', '.png':'image/png', '.pdf':'application/pdf', '.json':'application/json; charset=utf-8'};
 http.createServer(async (req, res) => {
   try {
     if (!['GET', 'HEAD'].includes(req.method)) {res.writeHead(405); res.end(); return;}

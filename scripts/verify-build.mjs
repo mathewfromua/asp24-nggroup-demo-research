@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import {publicationFiles} from './build-publication.mjs';
 import {normalizeBasePath} from './deployment-config.mjs';
 const walk=(dir,base='')=>readdirSync(dir,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(`${dir}/${x.name}`,`${base}${x.name}/`):[`${base}${x.name}`]).sort();
-const publicFiles=['assets/research-social.png','assets/asp24-original.webp','assets/ng-original.svg','design-tokens.css','favicon.svg','reports/ASP24_Review.pdf','reports/NGGroup_Review.pdf',...JSON.parse(readFileSync('reports/html-public-assets.json','utf8'))].sort();
+const publicFiles=['vendor-licenses.txt','assets/research-social.png','assets/asp24-original.webp','assets/ng-original.svg','design-tokens.css','favicon.svg','reports/ASP24_Review.pdf','reports/NGGroup_Review.pdf',...JSON.parse(readFileSync('reports/html-public-assets.json','utf8'))].sort();
 const pdfManifest=JSON.parse(readFileSync('reports/pdf-manifest.json','utf8'));
 const expectedPDFs=Object.fromEntries(pdfManifest.map(r=>[r.file.startsWith('ASP24')?'ASP24_Review.pdf':'NGGroup_Review.pdf',r.sha256]));
 const sha=b=>createHash('sha256').update(b).digest('hex');
@@ -29,19 +29,60 @@ const deploy=JSON.parse(readFileSync('dist/build-config.json','utf8'));
 assert.equal(normalizeBasePath(deploy.BASE_PATH), deploy.BASE_PATH);
 assert.equal(new URL(deploy.PUBLIC_BASE_URL).pathname, deploy.BASE_PATH);
 assert.equal(new URL(deploy.PUBLIC_BASE_URL).protocol, 'https:');
-const generated=/^assets\/(demo-entry|case-context|legacy-entry|hub|app|asset-url|data|catalog-expanded|validation|logic|orders|presentation|catalog-ui|science|scenarios|lab|style|finish|catalog)-[a-f0-9]{12}\.(js|css)$/;
-assert.deepEqual(files.filter(p=>!['index.html','build-config.json',...publicationFiles(JSON.parse(readFileSync('publication.json','utf8')))].includes(p)&&!generated.test(p)),publicFiles,'Unexpected deployed file');
-for(const name of ['demo-entry','case-context','legacy-entry','app','asset-url','data','catalog-expanded','validation','logic','orders','presentation','catalog-ui','science','scenarios','lab'])assert.equal(files.filter(p=>new RegExp(`^assets/${name}-[a-f0-9]{12}\\.js$`).test(p)).length,1,`Module ${name}`);
-for(const name of ['style','finish','catalog','science','hub'])assert.equal(files.filter(p=>new RegExp(`^assets/${name}-[a-f0-9]{12}\\.css$`).test(p)).length,1,`Stylesheet ${name}`);
+// Vite bundles several source modules into chunks; validate the emitted graph and
+// cryptographic bytes instead of requiring the former one-file-per-source layout.
+const generated=/^assets\/[A-Za-z0-9_-]+-[a-f0-9]{12}\.(js|css)$/;
+const viteManifest=JSON.parse(readFileSync('dist/vite-manifest.json','utf8'));
+const integrity=JSON.parse(readFileSync('dist/asset-integrity.json','utf8'));
+assert.equal(integrity.schemaVersion,1);assert.equal(integrity.builder,'vite');
+const compiled=files.filter(p=>generated.test(p));
+assert.deepEqual(Object.keys(integrity.files).sort(),compiled,'Compiled asset inventory');
+assert.deepEqual(files.filter(p=>!['index.html','build-config.json','vite-manifest.json','asset-integrity.json',...publicationFiles(JSON.parse(readFileSync('publication.json','utf8')))].includes(p)&&!generated.test(p)),publicFiles,'Unexpected deployed file');
+for(const name of ['index.html','legacy-entry.js','hub.css'])assert.equal(viteManifest[name]?.isEntry,true,`Compiled entry ${name}`);
+assert.equal(viteManifest['app.js']?.isDynamicEntry,true,'Demo application stays a dynamic entry');
+assert.ok(viteManifest['index.html'].css?.length,'Compiled demo styles');
+const workbench='src/ui/comparison-workbench.tsx';
+assert.equal(viteManifest[workbench]?.isDynamicEntry,true,'React workbench is a lazy entry');
+assert.ok(viteManifest[workbench].css?.length,'Workbench styles stay with the lazy component');
+const initialDependencies=new Set();
+function visitInitial(name){
+ if(initialDependencies.has(name))return;
+ initialDependencies.add(name);
+ for(const dependency of viteManifest[name]?.imports||[])visitInitial(dependency);
+}
+visitInitial('index.html');visitInitial('app.js');
+assert.ok(!initialDependencies.has(workbench),'Catalog startup must not preload the React workbench');
+assert.deepEqual(viteManifest['legacy-entry.js'].imports||[],[],'Report hub must not preload demo dependencies');
+assert.deepEqual(viteManifest['legacy-entry.js'].dynamicImports||[],[],'Report hub must not load a catalog chunk');
+const manifestFiles=new Set();
+for(const [name,record] of Object.entries(viteManifest)){
+ for(const file of [record.file,...(record.css||[]),...(record.assets||[])]){
+  assert.ok(generated.test(file),`Unexpected compiled resource: ${file}`);
+  assert.ok(files.includes(file),`Missing compiled resource: ${file}`);manifestFiles.add(file);
+ }
+ for(const dependency of [...(record.imports||[]),...(record.dynamicImports||[])])assert.ok(viteManifest[dependency],`Broken module graph: ${name} → ${dependency}`);
+}
+assert.deepEqual([...manifestFiles].sort(),compiled,'Unreferenced compiled output');
 for(const f of publicFiles)assert.equal(sha(readFileSync(`public/${f}`)),sha(readFileSync(`dist/${f}`)),f);
 for(const [f,hash]of Object.entries(expectedPDFs)){const pdf=readFileSync(`dist/reports/${f}`);assert.equal(pdf.subarray(0,5).toString(),'%PDF-',f);assert.equal(sha(pdf),hash,f);}
-for(const f of files.filter(x=>generated.test(x))){
- const bytes=readFileSync(`dist/${f}`); assert.ok(f.includes(sha(bytes).slice(0,12)),`Fingerprint ${f}`);
- if(f.endsWith('.js'))for(const match of bytes.toString().matchAll(/\bfrom\s*['"](\.[^'"]+)['"]/g))assert.ok(existsSync(resolve(dirname(`dist/${f}`),match[1])),`Broken import in ${f}`);
+for(const f of compiled){
+ const bytes=readFileSync(`dist/${f}`),expected=integrity.files[f];
+ assert.equal(bytes.length,expected.bytes,`Asset byte length ${f}`);
+ assert.equal(sha(bytes),expected.sha256,`Asset integrity ${f}`);
+ // Covers static imports, dynamic imports and Vite's rewritten chunk references.
+ if(f.endsWith('.js'))for(const match of bytes.toString().matchAll(/["'](\.\.?\/[^"']+\.(?:js|css))["']/g))assert.ok(existsSync(resolve(dirname(`dist/${f}`),match[1])),`Broken import in ${f}: ${match[1]}`);
 }
 const pkg=JSON.parse(readFileSync('package.json')),lock=JSON.parse(readFileSync('package-lock.json'));
 assert.equal(pkg.version,lock.version);assert.equal(pkg.version,lock.packages[''].version);
-assert.equal(Object.keys(pkg.dependencies||{}).length,0);assert.equal(Object.keys(pkg.devDependencies||{}).length,0);
+for(const kind of ['dependencies','devDependencies']){
+ assert.deepEqual(pkg[kind],lock.packages[''][kind],`Lockfile ${kind}`);
+ for(const [name,version] of Object.entries(pkg[kind]||{})){
+  assert.match(version,/^\d+\.\d+\.\d+$/,`Dependency must be pinned: ${name}`);
+  assert.equal(lock.packages[`node_modules/${name}`]?.version,version,`Locked version ${name}`);
+ }
+}
+assert.match(pkg.devDependencies.vite,/^8\./,'Supported Vite 8 toolchain');
+assert.ok(pkg.scripts.typecheck.includes('tsc'),'Separate TypeScript check');
 const html=readFileSync('dist/index.html','utf8');
 assert.ok(!html.includes('catalog-expanded'),'Hub must not load catalog');
 const registry=JSON.parse(readFileSync('dist/publication.json','utf8'));

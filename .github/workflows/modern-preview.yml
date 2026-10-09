@@ -1,0 +1,231 @@
+name: Modern Experience preview
+on:
+  push:
+    branches: [feat/modern-experience]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - run: npm ci
+      - name: Verify both static base paths and preserve the tested bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p modern-build/build-evidence modern-build/pages modern-build/root
+          npm run typecheck | tee modern-build/build-evidence/typecheck.txt
+          npm test | tee modern-build/build-evidence/node-tests.txt
+          BASE_PATH=/asp24-nggroup-demo-research/ npm run build | tee modern-build/build-evidence/pages-build.txt
+          npm run verify | tee modern-build/build-evidence/pages-verify.txt
+          cp -R dist modern-build/pages/dist
+          BASE_PATH=/ npm run build | tee modern-build/build-evidence/root-build.txt
+          npm run verify | tee modern-build/build-evidence/root-verify.txt
+          cp -R dist modern-build/root/dist
+          python - <<'PY'
+          import hashlib,json,os,platform,subprocess
+          from pathlib import Path
+          evidence=Path('modern-build/build-evidence')
+          for base in ['pages','root']:
+              directory=Path('modern-build')/base/'dist'
+              hashes={p.relative_to(directory).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(directory.rglob('*')) if p.is_file()}
+              (evidence/(base+'-sha256.json')).write_text(json.dumps(hashes,indent=2)+'\n')
+          result={'status':'PASS','commit':os.environ['GITHUB_SHA'],'run_url':f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}",'python':platform.python_version(),'node':subprocess.check_output(['node','--version'],text=True).strip(),'checks':['npm ci','npm run typecheck','npm test (including both static HTTP base paths)','BASE_PATH=/asp24-nggroup-demo-research/ npm run build + npm run verify','BASE_PATH=/ npm run build + npm run verify'],'environment':'Ubuntu 24.04 GitHub Actions, exact checkout; each dist retained without rebuilding in downstream jobs'}
+          (evidence/'build-result.json').write_text(json.dumps(result,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: modern-build-${{ github.sha }}
+          path: modern-build/
+          if-no-files-found: error
+          retention-days: 30
+  browser:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: modern-build-${{ github.sha }}
+          path: modern-build
+      - run: cp -R modern-build/pages/dist dist
+      - env:
+          BROWSER: ${{ matrix.browser }}
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt
+          python -m playwright install --with-deps "$BROWSER"
+      - name: Run all previous suites and the React workbench through HTTP
+        env:
+          BROWSER: ${{ matrix.browser }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=0
+          bash scripts/run-browser-checks.sh "$BROWSER" browser-artifacts || status=$?
+          npm run preview -- --host 127.0.0.1 --port 8000 > browser-artifacts/modern-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          preview_url=http://127.0.0.1:8000/asp24-nggroup-demo-research/
+          for attempt in {1..50}; do
+            if curl --fail --silent --output /dev/null "$preview_url"; then break; fi
+            sleep 0.2
+          done
+          curl --fail --silent --output /dev/null "$preview_url"
+          browser_args=()
+          if [ "$BROWSER" = chromium ] && command -v google-chrome >/dev/null; then
+            browser_args+=(--executable "$(command -v google-chrome)")
+          fi
+          python scripts/browser-modern.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts/modern "${browser_args[@]}" || status=$?
+          exit "$status"
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: modern-browser-${{ matrix.browser }}-${{ github.sha }}
+          path: browser-artifacts/
+          if-no-files-found: error
+          retention-days: 30
+  performance:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: modern-build-${{ github.sha }}
+          path: modern-build
+      - name: Prepare the fixed RC2 baseline without modifying its source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/rc2-baseline"
+          git archive 0034b000bd1bad42f0c3ffb222a0ec58308a42bc | tar -x -C "$RUNNER_TEMP/rc2-baseline"
+          cd "$RUNNER_TEMP/rc2-baseline"
+          BASE_PATH=/ node scripts/build-static.mjs
+          node scripts/verify-build.mjs
+      - run: |
+          python -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-browser.txt
+          python -m playwright install --with-deps chromium
+      - name: Five paired cold runs plus repeated Lighthouse on the same runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          browser_args=()
+          if command -v google-chrome >/dev/null; then browser_args+=(--executable "$(command -v google-chrome)"); fi
+          python scripts/performance-sample.py --baseline-dist "$RUNNER_TEMP/rc2-baseline/dist" --modern-dist modern-build/root/dist --output performance --repeats 5 "${browser_args[@]}"
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: modern-performance-${{ github.sha }}
+          path: performance/
+          if-no-files-found: error
+          retention-days: 30
+  package:
+    needs: [build, browser, performance]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: modern-build-${{ github.sha }}
+          path: modern-build
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: modern-browser-*-${{ github.sha }}
+          path: browser-downloads
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: modern-performance-${{ github.sha }}
+          path: evidence/performance
+      - name: Package the exact tested dist, manifests and actual evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -R modern-build/pages/dist dist
+          cp -R modern-build/build-evidence evidence/build
+          for browser in chromium firefox webkit; do
+            mv "browser-downloads/modern-browser-$browser-$GITHUB_SHA" "evidence/$browser"
+          done
+          python scripts/package-modern.py --evidence evidence --output output/modern-preview
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: modern-experience-preview-${{ github.sha }}
+          path: output/modern-preview/
+          if-no-files-found: error
+          retention-days: 30
+  tagged-experiment:
+    # R42 research starts only after all critical browser scenarios pass.
+    # Its experimental PDFs never enter the accepted-report dist or package gate.
+    needs: browser
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12.14'
+      - name: Install pinned experiment dependencies and verified report fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y poppler-utils libpango-1.0-0 libharfbuzz-subset0
+          python -m pip install -r scripts/requirements-tagged-pilot.txt
+          python scripts/fetch-report-fonts.py "$RUNNER_TEMP/report-fonts"
+      - name: Generate and inspect both experimental structured PDFs
+        env:
+          REPORT_FONT_DIR: ${{ runner.temp }}/report-fonts
+        run: python scripts/tagged-reports-experiment.py
+      - if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: tagged-reports-experiment-${{ github.sha }}
+          path: output/tagged-full/
+          if-no-files-found: error
+          retention-days: 30

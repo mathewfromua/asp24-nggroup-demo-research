@@ -1,93 +1,17 @@
-import {isIsoTimestamp} from './validation.js';
 import { products, groups, money, display, numericValue, reelLength } from './data.js';
 import { filterProducts, plural } from './logic.js';
 import { labNotes, renderConnectorAtlas } from './lab.js';
 import { scenarios } from './scenarios.js';
 
-export const SCIENCE_LIMITS = Object.freeze({projects:30,candidates:64,references:30,name:100,note:1500,title:160,url:1000,quantity:999,importBytes:262144});
+import {SCIENCE_LIMITS, safeReferenceUrl, validateProject, mergeProjectCandidates, normalizeScience, createProject, duplicateProject, projectCart, projectText, validProjectQuantity as validQuantity, projectIdList as idList} from './src/domain/projects.ts';
+import {exportProject, importProject} from './src/adapters/project-json.ts';
+export {SCIENCE_LIMITS, safeReferenceUrl, validateProject, mergeProjectCandidates, normalizeScience, createProject, duplicateProject, projectCart, projectText, exportProject, importProject};
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
-const known = (catalog, id) => typeof id === 'string' && catalog.some(p => p.id === id);
-const clone = value => value === undefined ? null : JSON.parse(JSON.stringify(value));
-const validQuantity = q => Number.isInteger(q) && q >= 1 && q <= SCIENCE_LIMITS.quantity;
-const validId = id => typeof id === 'string' && /^project-[1-9]\d{0,8}$/.test(id);
-const dateValid = isIsoTimestamp;
-const specialKeys = new Set(['__proto__','constructor','prototype','toString']);
-const idList = (ids,catalog) => Array.isArray(ids) && ids.length <= SCIENCE_LIMITS.candidates && new Set(ids).size === ids.length && ids.every(id => known(catalog,id));
 const product = id => products.find(p => p.id === id);
 const link = (brand,page,id='') => `#/${brand === 'ng' ? 'ng':'asp'}/${page}${id ? '/'+encodeURIComponent(id):''}`;
 const productLink = (brand,id) => link(brand==='ng'&&!product(id)?.ng?'asp':brand,'product',id);
 const productBrandLabel = (brand,id) => brand==='ng'&&!product(id)?.ng?' <small class="science-brand-label">ASP24</small>':'';
 const heading = (title,body='') => `<div class="modal-title"><h2 id="dialog-title">${esc(title)}</h2><button class="close" data-action="close" aria-label="Закрити">×</button></div>${body}`;
-const hasUnsafeKeys = obj => !!obj && typeof obj === 'object' && Object.keys(obj).some(key => specialKeys.has(key) || hasUnsafeKeys(obj[key]));
-
-export function safeReferenceUrl(value,catalog=products) {
- if(typeof value !== 'string' || value.length > SCIENCE_LIMITS.url) return false;
- const local = /^#\/(asp|ng)\/(product|document)\/([a-z0-9-]+)$/.exec(value);
- if(local){const p=catalog.find(p=>p.id===local[3]);return !!p&&(local[1]!=='ng'||p.ng)&&(local[2]!=='document'||(local[1]==='ng'&&p.ng));}
- try {const u=new URL(value);return u.protocol==='https:' && !u.username && !u.password && !!u.hostname;} catch{return false;}
-}
-export function validateProject(value,catalog=products) {
- if(!isRecord(value) || hasUnsafeKeys(value)) return 'Неприпустима структура проєкту.';
- if(!validId(value.id)) return 'Неприпустимий ідентифікатор проєкту.';
- if(typeof value.name!=='string' || !value.name.trim() || value.name.length>SCIENCE_LIMITS.name) return 'Назва має містити 1–100 символів.';
- if(typeof value.note!=='string' || value.note.length>SCIENCE_LIMITS.note) return 'Примітка має містити до 1500 символів.';
- if(Array.isArray(value.candidates)&&value.candidates.length>SCIENCE_LIMITS.candidates) return 'До 64 кандидатів у проєкті. Поточний склад не змінено.';
- if(!idList(value.candidates,catalog) || !idList(value.chosen,catalog) || value.chosen.some(id=>!value.candidates.includes(id))) return 'Кандидати або вибрані моделі не відповідають каталогу.';
- if(!isRecord(value.quantities) || Object.keys(value.quantities).some(id=>!value.candidates.includes(id)) || value.candidates.some(id=>!validQuantity(value.quantities[id]))) return 'Кількість кожного кандидата: ціле число від 1 до 999.';
- if(!Array.isArray(value.references) || value.references.length>SCIENCE_LIMITS.references || value.references.some(r=>!isRecord(r)||typeof r.title!=='string'||!r.title.trim()||r.title.length>SCIENCE_LIMITS.title||!safeReferenceUrl(r.url,catalog)||(r.productId!==undefined&&!value.candidates.includes(r.productId)))) return 'Перевірте назву, адресу й модель документа.';
- if(!dateValid(value.createdAt)||!dateValid(value.updatedAt)) return 'Некоректний час створення або зміни.';
- return null;
-}
-function cleanProject(p) {return {id:p.id,name:p.name,note:p.note,candidates:[...p.candidates],chosen:[...p.chosen],quantities:{...p.quantities},references:p.references.map(r=>({title:r.title,url:r.url,...(r.productId?{productId:r.productId}:{})})),createdAt:p.createdAt,updatedAt:p.updatedAt};}
-// Validate the complete next project before changing any live field.
-export function mergeProjectCandidates(project, ids, catalog=products) {
- const next={...project,candidates:[...new Set([...project.candidates,...ids])],quantities:{...project.quantities}};
- for(const id of next.candidates)if(!project.candidates.includes(id))next.quantities[id]=1;
- const error=validateProject(next,catalog);if(error)throw new Error(error);
- project.candidates=next.candidates;project.quantities=next.quantities;
-}
-export function normalizeScience(raw,catalog=products) {
- const result={version:1,projects:[],activeProjectId:null,nextProjectSeq:1,quarantine:[]};
- if(raw==null || (isRecord(raw)&&!Object.keys(raw).length)) return result;
- if(!isRecord(raw)||raw.version!==1){result.quarantine.push({reason:'Невідома версія даних проєктів.',raw:clone(raw)});return result;}
- if(Array.isArray(raw.quarantine)) result.quarantine=clone(raw.quarantine);
- if(!Array.isArray(raw.projects)){result.quarantine.push({reason:'Список проєктів пошкоджено.',raw:clone(raw)});return result;}
- const seen=new Set();
- for(const p of raw.projects){const error=validateProject(p,catalog);if(error||seen.has(p.id)||result.projects.length>=SCIENCE_LIMITS.projects){result.quarantine.push({reason:error||'Повторений ID або перевищено ліміт проєктів.',raw:clone(p)});continue;}result.projects.push(cleanProject(p));seen.add(p.id);}
- const next=Math.max(0,...result.projects.map(p=>Number(p.id.slice(8))))+1;
- result.nextProjectSeq=Number.isSafeInteger(raw.nextProjectSeq)&&raw.nextProjectSeq>=next&&raw.nextProjectSeq<999999999?raw.nextProjectSeq:next;
- result.activeProjectId=seen.has(raw.activeProjectId)?raw.activeProjectId:result.projects[0]?.id||null;
- return result;
-}
-export function createProject(science,{name='Новий проєкт',note='',candidates=[],quantities={},references=[]}={},catalog=products,now=new Date().toISOString()) {
- if(science.projects.length>=SCIENCE_LIMITS.projects) throw new Error('Досягнуто межу: 30 проєктів. Відредагуйте наявний проєкт. Експорт створює резервну копію, але не звільняє місце.');
- const ids=[...new Set(candidates)].filter(id=>known(catalog,id));
- const p={id:`project-${science.nextProjectSeq}`,name,note,candidates:ids,chosen:[],quantities:Object.fromEntries(ids.map(id=>[id,validQuantity(quantities[id])?quantities[id]:1])),references:clone(references),createdAt:now,updatedAt:now};
- const error=validateProject(p,catalog);if(error)throw new Error(error);
- science.nextProjectSeq++;science.projects.push(p);science.activeProjectId=p.id;return p;
-}
-export function duplicateProject(science,id,catalog=products,now=new Date().toISOString()) {
- const source=science.projects.find(p=>p.id===id);if(!source)throw new Error('Проєкт не знайдено.');
- const p=createProject(science,{...source,name:`${source.name.slice(0,92)} · копія`},catalog,now);p.chosen=[...source.chosen];return p;
-}
-export function exportProject(project) {return JSON.stringify({format:'perspektyva-project',version:1,project:cleanProject(project)},null,2);}
-export function importProject(text,size,catalog=products) {
- const bytes=new TextEncoder().encode(String(text)).length;
- if(typeof text!=='string'||!Number.isFinite(size)||size<0||size>SCIENCE_LIMITS.importBytes||bytes>SCIENCE_LIMITS.importBytes) throw new Error('JSON-файл має бути не більшим за 256 КБ.');
- let payload;try{payload=JSON.parse(text.replace(/^\uFEFF/,''),(key,value)=>{if(specialKeys.has(key))throw new Error('special');return value;});}catch{throw new Error('Неприпустимий JSON або службові ключі.');}
- if(!isRecord(payload)||payload.format!=='perspektyva-project'||payload.version!==1)throw new Error('Потрібен формат perspektyva-project, версія 1.');
- const error=validateProject(payload.project,catalog);if(error)throw new Error(error);return cleanProject(payload.project);
-}
-export function projectCart(project,catalog=products) {
- const unavailable=project.chosen.filter(id=>!catalog.find(p=>p.id===id)?.available);
- if(unavailable.length) throw new Error('Серед вибраних моделей є недоступні. Приберіть їх із вибраного перед перенесенням.');
- return Object.fromEntries(project.chosen.map(id=>[id,project.quantities[id]]));
-}
-export function projectText(p,catalog=products) {
- const rows=p.candidates.map(id=>{const m=catalog.find(x=>x.id===id),q=p.quantities[id];return `${p.chosen.includes(id)?'[Вибрано]':'[Кандидат]'} ${m.name} · ${m.sku}\n${q} × ${m.unit} · ${money(m.price*q)}${m.group==='cable'?` · ${q*reelLength(m)} м`:''}`;});
- return `${p.name}\n${p.note}\n\n${rows.join('\n\n')}\n\nДокументи\n${p.references.map(r=>`${r.title}: ${r.url}`).join('\n')}\n\nУмовний склад. Нічого не надіслано компанії.`;
-}
 const pageTitle=(title,description)=>`<div class="science-title"><h1>${title}</h1><p>${description}</p></div>`;
 function projectsPage(s,brand) {
  return pageTitle('Мої проєкти','Задача, кандидати й документи — окремо від кошика.')+`<div class="science-actions"><button class="btn" data-action="science-create">＋ Новий проєкт</button><label class="btn secondary science-import-label">Імпортувати JSON<input type="file" accept=".json,application/json" data-science-import aria-label="Імпортувати проєкт JSON"></label></div>${s.quarantine.length?`<div class="notice" role="status">Записи, що потребують відновлення: ${s.quarantine.length}. Початкові дані доступні для експорту.<button class="text-btn" data-action="science-recovery">Завантажити дані відновлення</button></div>`:''}<div class="science-project-grid">${s.projects.map(p=>`<article class="science-project-card"><span class="eyebrow">${p.candidates.length} ${p.candidates.length%100>=11&&p.candidates.length%100<=14?'кандидатів':p.candidates.length%10===1?'кандидат':p.candidates.length%10>=2&&p.candidates.length%10<=4?'кандидати':'кандидатів'} · ${p.chosen.length} вибрано</span><h2><a href="${link(brand,'project',p.id)}">${esc(p.name)}</a></h2><p>${esc(p.note||'Додайте коротку примітку до задачі.')}</p><a class="text-link" href="${link(brand,'project',p.id)}">Відкрити проєкт →</a></article>`).join('')||'<div class="science-empty"><h2>Почніть із задачі</h2><p>Створіть власний проєкт або візьміть готовий сценарій як основу.</p></div>'}</div>`;
