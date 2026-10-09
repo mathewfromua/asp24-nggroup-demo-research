@@ -305,5 +305,11 @@
   },
   "pdf_manifest": "reports/pdf-manifest.json",
   "html_manifest": "reports/html-manifest.json",
-  "note": "The prior filename, page numbering, and source evidence were not rewritten as new research. Only the public name, active URLs, exact source-image cropping, source-map linkage, and current-build verification were changed."
+  "note": "The prior filename, page numbering, and source evidence were not rewritten as new research. Only the public name, active URLs, exact source-image cropping, source-map linkage, and current-build verification were changed.",
+  "publication_followup": {
+    "status": "PUBLISHED_DEMO_VERIFIED",
+    "evidence": "docs/published-byte-check-ci.json",
+    "ui_evidence": "docs/qa-published-browser.json",
+    "note": "Later verification; the original rendering review below retains its own method and limits."
+  }
 }

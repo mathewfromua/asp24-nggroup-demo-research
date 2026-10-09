@@ -1,7 +1,7 @@
 {
   "project": "ASP24 / NG Group — Demo & Research",
   "version": "3.1.1-demo.1",
-  "publication": "BLOCKED_GITHUB_AUTH",
+  "publication": "PUBLISHED_DEMO_VERIFIED",
   "content_sha256": "d55bed011b54741983f8614f1daa13c103023e20444fa41904b8881951f27e46",
   "self_hash_note": "manifest excludes itself; commit identity supplied by Git",
   "files": [
@@ -22,18 +22,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 1477,
-      "sha256": "3b7d36451f640d16af7e46196867d865ee77dea3ae73e97f90eeff3d96a275d2"
+      "bytes": 2059,
+      "sha256": "97ff4c2355895dd02d60694a6133799b5b4e25c8d88c1481b24873fa0783ccb5"
     },
     {
       "path": "README.md",
-      "bytes": 6062,
-      "sha256": "0c53238940aeef098804a3ba94d7f20c0b389e9589debe392b0211f1ef042a99"
+      "bytes": 6750,
+      "sha256": "80f85f4b207726ee7b2f49c7167559a9149e030e4854b66aac309aff53341a5d"
     },
     {
       "path": "RESULTS.md",
-      "bytes": 4193,
-      "sha256": "847d09cfdaa8afbeb04d168469d99d274df215597b79471953fabb01e5c3e3ab"
+      "bytes": 5894,
+      "sha256": "c75e36bd9d1fdfc4248a9ddb95d698aafde612683e834abb6c4aae934b4d1d69"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -82,13 +82,13 @@
     },
     {
       "path": "docs/PUBLICATION.md",
-      "bytes": 1419,
-      "sha256": "d172e8aee6008dff32b9d9bb72e8a7ff2e5a1db216c10e60fff0b7c169c21c35"
+      "bytes": 3613,
+      "sha256": "0a8ede6bd4e1fae6a2dc67d08a6c77d0911e0bd15fad65a2d0854d15fbf52398"
     },
     {
       "path": "docs/PUBLICATION_REVIEW.md",
-      "bytes": 1070,
-      "sha256": "9142f372687ece384a2bfbecefc02d53152d4c5be64ac6b5535e1a1649cc4e78"
+      "bytes": 1316,
+      "sha256": "018fbdccbed45e9f32d539e480c9eb81332d92d8cbd86b669ba3b2027313a4a8"
     },
     {
       "path": "docs/RESEARCH.md",
@@ -97,13 +97,33 @@
     },
     {
       "path": "docs/TESTING.md",
-      "bytes": 4705,
-      "sha256": "be80ec7e6a492456938348023111f2f80152ea231d15d2bd8acb89c2c885d3a6"
+      "bytes": 4707,
+      "sha256": "9c41c60050c99ad765263887679703c41d26113f2a8f52a411fabaaf77fb1bb9"
+    },
+    {
+      "path": "docs/github-clone-check.json",
+      "bytes": 614,
+      "sha256": "a977e1f01b1b0e3ba2eee935fa89c804f136defc1993030d2f5135756aecbd15"
+    },
+    {
+      "path": "docs/published-byte-check-ci.json",
+      "bytes": 15729,
+      "sha256": "60941eeb2e2bd84d605a7bf64f4f41efd2b33b374fd84dc56cb581c612a53190"
+    },
+    {
+      "path": "docs/published-byte-check.json",
+      "bytes": 16978,
+      "sha256": "683585293928aade9ffcb617ed252a98ab0b69db34832615a670162935e515ee"
     },
     {
       "path": "docs/qa-local-browser.json",
       "bytes": 2808,
       "sha256": "aad122801955aa81581e5929ae621ac290eb9afc8face452ba74351def892c5e"
+    },
+    {
+      "path": "docs/qa-published-browser.json",
+      "bytes": 2776,
+      "sha256": "6139f5be03350a80905f4b38e7147f058a3ec756698638ea8991331a42705817"
     },
     {
       "path": "docs/report-checks/http-assets.json",
@@ -417,8 +437,8 @@
     },
     {
       "path": "reports/migration-review.json",
-      "bytes": 13153,
-      "sha256": "043ca14faf6181bf1508376e03c6519ba1fbca56bc9948197f93455a5429aabd"
+      "bytes": 13438,
+      "sha256": "96a6643df5b60f164d5aa3effcabc1bc92ee6bd5ab453a33dcdc4d63c184d4ec"
     },
     {
       "path": "reports/page-render-comparison.json",
@@ -610,5 +630,15 @@
       "bytes": 325,
       "sha256": "9968f0f1e45a17083a718e8e56bc45b6441951dd1c08718ac705bde4b4caa4a8"
     }
-  ]
+  ],
+  "verification": {
+    "first_deployed_commit": "55a4e2515d0bf1b5c94ad99449bf8f8ee125ec08",
+    "actions_run": "https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37863652491",
+    "public_files": 33,
+    "evidence": [
+      "docs/published-byte-check-ci.json",
+      "docs/published-byte-check.json",
+      "docs/qa-published-browser.json"
+    ]
+  }
 }

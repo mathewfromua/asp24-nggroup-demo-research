@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-09",
+  "scope": "PUBLISHED_HTTPS_UI_SMOKE",
+  "base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
+  "source_commit": "55a4e2515d0bf1b5c94ad99449bf8f8ee125ec08",
+  "build_id": "asp24-nggroup-demo-research-3.1.1-demo.1",
+  "app_sha256": "a7e1442ade2dda2d9e4bd23133de54959380c43066b3a92ffe3cfae013b92a23",
+  "environment": {
+    "browser": "Codex In-app Browser",
+    "browser_version": "NOT_EXPOSED_IN_THIS_RUN",
+    "method": "Native HTTPS page with ESM; UI buttons and actual reload; no offline mount or injected application state",
+    "safari": false,
+    "physical_iphone": false
+  },
+  "checks": [
+    {
+      "id": "catalog-native",
+      "status": "PASS",
+      "steps": "Open deployed HTTPS root",
+      "expected": "Renamed catalogue loads with intact counts",
+      "actual": "ASP24 / NG Group; 384 models and first24 positions; brand asset and native controls present"
+    },
+    {
+      "id": "six-pair-reload",
+      "status": "PASS",
+      "viewport_css": [
+        390,
+        844
+      ],
+      "steps": "Add U01–U06 through catalogue; select U05 left/U06 right; enable differences; reload",
+      "expected": "Six candidates, both positions and mode survive",
+      "actual": "2 of6; VOLTYN N48 / VOLTYN N60 Arc; differences checked after actual reload",
+      "evidence_type": "Browser DOM and visually reviewed screenshot; no screenshot file retained"
+    },
+    {
+      "id": "report-links",
+      "status": "PASS",
+      "steps": "Open reports dialog and ASP24 HTML; separately open observed NG HTML URL",
+      "expected": "Project-prefixed paths, correct titles and PDF page counts",
+      "actual": "ASP24 14pages, NG16pages; both HTML titles/contents rendered; ASP24 contains both E01 SKUs; lang=uk"
+    },
+    {
+      "id": "ng-html-return",
+      "status": "PASS",
+      "steps": "Report viewport390; follow To demo",
+      "expected": "No global horizontal overflow, correct return and preserved comparison",
+      "actual": "layoutWidth=390, scrollWidth=390; returned catalogue comparison count6"
+    },
+    {
+      "id": "project-sums-published",
+      "status": "BLOCKED",
+      "steps": "Attempt My projects after report return",
+      "actual": "Browser control lost tab/session during locator and native-element attempts; project scenario not completed on public origin. Earlier local HTTP pass remains local only."
+    }
+  ],
+  "limits": [
+    "No complete Safari/macOS or physical iPhone acceptance",
+    "Lazy report images below viewport not all scrolled into view; their published bytes verified separately",
+    "No fresh full file/clipboard/storage fault, VoiceOver or real zoom protocol",
+    "Temporary browser-tab cleanup/control errors are not classified as application defects"
+  ]
+}

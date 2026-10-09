@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-09",
+  "method": "Independent actual clone from GitHub; no npm install",
+  "repository": "https://github.com/mathewfromua/asp24-nggroup-demo-research.git",
+  "commit": "55a4e2515d0bf1b5c94ad99449bf8f8ee125ec08",
+  "working_tree": "CLEAN",
+  "manifest_entries": 121,
+  "manifest_mismatches": 0,
+  "node": "v22.23.3",
+  "npm": "11.14.1",
+  "tests": {
+    "pass": 87,
+    "fail": 0,
+    "skip": 2,
+    "total": 89
+  },
+  "build": "PASS",
+  "verify": "PASS",
+  "public_files": 33,
+  "fingerprinted_sources": 16,
+  "app_sha256": "a7e1442ade2dda2d9e4bd23133de54959380c43066b3a92ffe3cfae013b92a23"
+}

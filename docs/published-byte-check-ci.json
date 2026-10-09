@@ -1,0 +1,344 @@
+{
+  "at": "2026-10-09T00:14:00.595913+00:00",
+  "base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
+  "files": [
+    {
+      "path": "assets/app-a7e1442ade2d.js",
+      "expected_sha256": "a7e1442ade2dda2d9e4bd23133de54959380c43066b3a92ffe3cfae013b92a23",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/app-a7e1442ade2d.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "a7e1442ade2dda2d9e4bd23133de54959380c43066b3a92ffe3cfae013b92a23",
+      "bytes": 85656,
+      "match": true
+    },
+    {
+      "path": "assets/asp24-original.webp",
+      "expected_sha256": "239569042b9c6c6a4cee30474488030f36f7573fd126d2d828c65f325b748aa5",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/asp24-original.webp",
+      "content_type": "image/webp",
+      "actual_sha256": "239569042b9c6c6a4cee30474488030f36f7573fd126d2d828c65f325b748aa5",
+      "bytes": 3628,
+      "match": true
+    },
+    {
+      "path": "assets/asset-url-8a2056570dc5.js",
+      "expected_sha256": "8a2056570dc5be119e8e3ccf0e38cd1a124438a9f287735540fa4cd5471a7aac",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/asset-url-8a2056570dc5.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "8a2056570dc5be119e8e3ccf0e38cd1a124438a9f287735540fa4cd5471a7aac",
+      "bytes": 621,
+      "match": true
+    },
+    {
+      "path": "assets/catalog-87d665393f6d.css",
+      "expected_sha256": "87d665393f6d7a4151535994855812a437b1aab8ce7b5e931f1c763ffc8fd2de",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/catalog-87d665393f6d.css",
+      "content_type": "text/css",
+      "actual_sha256": "87d665393f6d7a4151535994855812a437b1aab8ce7b5e931f1c763ffc8fd2de",
+      "bytes": 17627,
+      "match": true
+    },
+    {
+      "path": "assets/catalog-expanded-a844dd652b00.js",
+      "expected_sha256": "a844dd652b000bbbe4bdebd671f8d01e6990d1a7623ba233c81b6783189f1212",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/catalog-expanded-a844dd652b00.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "a844dd652b000bbbe4bdebd671f8d01e6990d1a7623ba233c81b6783189f1212",
+      "bytes": 827118,
+      "match": true
+    },
+    {
+      "path": "assets/catalog-ui-c4aca3c73a60.js",
+      "expected_sha256": "c4aca3c73a60a4705fdd12cf65c2ec039602844e6f9742c03c49b37f33ef695e",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/catalog-ui-c4aca3c73a60.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "c4aca3c73a60a4705fdd12cf65c2ec039602844e6f9742c03c49b37f33ef695e",
+      "bytes": 10610,
+      "match": true
+    },
+    {
+      "path": "assets/data-03c68e635594.js",
+      "expected_sha256": "03c68e6355944b5ed9ea4eb22f3b043f59c1f81689687e7e720f72bf13c53298",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/data-03c68e635594.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "03c68e6355944b5ed9ea4eb22f3b043f59c1f81689687e7e720f72bf13c53298",
+      "bytes": 162127,
+      "match": true
+    },
+    {
+      "path": "assets/finish-2e5ec56d460a.css",
+      "expected_sha256": "2e5ec56d460ac7fb8a143b9a8fe575daa2eba3d6a04b237da89ace1df453cc56",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/finish-2e5ec56d460a.css",
+      "content_type": "text/css",
+      "actual_sha256": "2e5ec56d460ac7fb8a143b9a8fe575daa2eba3d6a04b237da89ace1df453cc56",
+      "bytes": 16242,
+      "match": true
+    },
+    {
+      "path": "assets/lab-bfdc476972b1.js",
+      "expected_sha256": "bfdc476972b15183dea546b85701c83079fe00f074c85e21261630bca4d36422",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/lab-bfdc476972b1.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "bfdc476972b15183dea546b85701c83079fe00f074c85e21261630bca4d36422",
+      "bytes": 20356,
+      "match": true
+    },
+    {
+      "path": "assets/logic-6082b105e977.js",
+      "expected_sha256": "6082b105e9776188661be41c57f6ee9e050229639bf1f0e0ee2def55f51f7cd2",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/logic-6082b105e977.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "6082b105e9776188661be41c57f6ee9e050229639bf1f0e0ee2def55f51f7cd2",
+      "bytes": 15182,
+      "match": true
+    },
+    {
+      "path": "assets/ng-original.svg",
+      "expected_sha256": "7de9307b5caad8396130dd643f33976a0092217f66316d98d85f3d0a655a578c",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/ng-original.svg",
+      "content_type": "image/svg+xml",
+      "actual_sha256": "7de9307b5caad8396130dd643f33976a0092217f66316d98d85f3d0a655a578c",
+      "bytes": 36597,
+      "match": true
+    },
+    {
+      "path": "assets/orders-fde12f085572.js",
+      "expected_sha256": "fde12f085572fb32c88297a5928c36ac67b08a933523b606278582bc1170c5c6",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/orders-fde12f085572.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "fde12f085572fb32c88297a5928c36ac67b08a933523b606278582bc1170c5c6",
+      "bytes": 10244,
+      "match": true
+    },
+    {
+      "path": "assets/presentation-d41a6c1e4f53.js",
+      "expected_sha256": "d41a6c1e4f5366a49315934b2f07e54ca6acf9754d956c871063708319e2164a",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/presentation-d41a6c1e4f53.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "d41a6c1e4f5366a49315934b2f07e54ca6acf9754d956c871063708319e2164a",
+      "bytes": 660,
+      "match": true
+    },
+    {
+      "path": "assets/scenarios-7cb2b1de24d1.js",
+      "expected_sha256": "7cb2b1de24d1bd38d210cf8f79560835da69213927c73269363b67b8e915febb",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/scenarios-7cb2b1de24d1.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "7cb2b1de24d1bd38d210cf8f79560835da69213927c73269363b67b8e915febb",
+      "bytes": 2611,
+      "match": true
+    },
+    {
+      "path": "assets/science-8ba5d4a00924.css",
+      "expected_sha256": "8ba5d4a00924a1bfb58a56e5023720d7130c1f37acdc9a49bfc84aa6a499078c",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/science-8ba5d4a00924.css",
+      "content_type": "text/css",
+      "actual_sha256": "8ba5d4a00924a1bfb58a56e5023720d7130c1f37acdc9a49bfc84aa6a499078c",
+      "bytes": 11473,
+      "match": true
+    },
+    {
+      "path": "assets/science-cb4be5cd7aa0.js",
+      "expected_sha256": "cb4be5cd7aa0a2ffcf010abef350eeb1de3392be8985bedf10f00e5ae1d5b29a",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/science-cb4be5cd7aa0.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "cb4be5cd7aa0a2ffcf010abef350eeb1de3392be8985bedf10f00e5ae1d5b29a",
+      "bytes": 38535,
+      "match": true
+    },
+    {
+      "path": "assets/style-0dcd671612eb.css",
+      "expected_sha256": "0dcd671612eb7669367d49edc27e46f933287fa5679c43a5f8001ff361dcd767",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/style-0dcd671612eb.css",
+      "content_type": "text/css",
+      "actual_sha256": "0dcd671612eb7669367d49edc27e46f933287fa5679c43a5f8001ff361dcd767",
+      "bytes": 46784,
+      "match": true
+    },
+    {
+      "path": "assets/validation-9968f0f1e45a.js",
+      "expected_sha256": "9968f0f1e45a17083a718e8e56bc45b6441951dd1c08718ac705bde4b4caa4a8",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/assets/validation-9968f0f1e45a.js",
+      "content_type": "application/javascript",
+      "actual_sha256": "9968f0f1e45a17083a718e8e56bc45b6441951dd1c08718ac705bde4b4caa4a8",
+      "bytes": 325,
+      "match": true
+    },
+    {
+      "path": "build-config.json",
+      "expected_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/build-config.json",
+      "content_type": "application/json",
+      "actual_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
+      "bytes": 135,
+      "match": true
+    },
+    {
+      "path": "design-tokens.css",
+      "expected_sha256": "19df13687030a9669a467f8ef07af2453027c41fc948a9d451aad521ffdcc3a1",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/design-tokens.css",
+      "content_type": "text/css",
+      "actual_sha256": "19df13687030a9669a467f8ef07af2453027c41fc948a9d451aad521ffdcc3a1",
+      "bytes": 810,
+      "match": true
+    },
+    {
+      "path": "favicon.svg",
+      "expected_sha256": "024b0d811d334270557967762d486c3a55c087f5aa15aace937906ed22b0889d",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/favicon.svg",
+      "content_type": "image/svg+xml",
+      "actual_sha256": "024b0d811d334270557967762d486c3a55c087f5aa15aace937906ed22b0889d",
+      "bytes": 5024,
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "expected_sha256": "46da97cd5ae66a7f7b95c6a7a76dbeaaf40e8d0045f04053f458f6fab6f90c05",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/index.html",
+      "content_type": "text/html",
+      "actual_sha256": "46da97cd5ae66a7f7b95c6a7a76dbeaaf40e8d0045f04053f458f6fab6f90c05",
+      "bytes": 1443,
+      "match": true
+    },
+    {
+      "path": "reports/ASP24_Review.html",
+      "expected_sha256": "b9f703576e720bffe2a413f670449a1fbf26a008049253414e9c09e3b8506173",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/ASP24_Review.html",
+      "content_type": "text/html",
+      "actual_sha256": "b9f703576e720bffe2a413f670449a1fbf26a008049253414e9c09e3b8506173",
+      "bytes": 47783,
+      "match": true
+    },
+    {
+      "path": "reports/ASP24_Review.pdf",
+      "expected_sha256": "935a796d65b5288232b28d1e9980c376b0ca856b09847d69e41eb554c8e7ef14",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/ASP24_Review.pdf",
+      "content_type": "application/pdf",
+      "actual_sha256": "935a796d65b5288232b28d1e9980c376b0ca856b09847d69e41eb554c8e7ef14",
+      "bytes": 1121425,
+      "match": true,
+      "pdf_signature": true
+    },
+    {
+      "path": "reports/NGGroup_Review.html",
+      "expected_sha256": "1dca1a71a7bd03b7b5f9a02f396bde3b0981279b6e9b0666337c4879fcf77383",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/NGGroup_Review.html",
+      "content_type": "text/html",
+      "actual_sha256": "1dca1a71a7bd03b7b5f9a02f396bde3b0981279b6e9b0666337c4879fcf77383",
+      "bytes": 57162,
+      "match": true
+    },
+    {
+      "path": "reports/NGGroup_Review.pdf",
+      "expected_sha256": "5a593ae974ae596486e94ed76708130c20243eb81539658031f9f21a9acd4a22",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/NGGroup_Review.pdf",
+      "content_type": "application/pdf",
+      "actual_sha256": "5a593ae974ae596486e94ed76708130c20243eb81539658031f9f21a9acd4a22",
+      "bytes": 951321,
+      "match": true,
+      "pdf_signature": true
+    },
+    {
+      "path": "reports/assets/ASP24-asp24-04-4.png",
+      "expected_sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/ASP24-asp24-04-4.png",
+      "content_type": "image/png",
+      "actual_sha256": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
+      "bytes": 82467,
+      "match": true
+    },
+    {
+      "path": "reports/assets/ASP24-asp24-06-1.png",
+      "expected_sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/ASP24-asp24-06-1.png",
+      "content_type": "image/png",
+      "actual_sha256": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
+      "bytes": 74960,
+      "match": true
+    },
+    {
+      "path": "reports/assets/ASP24-asp24-12-3.png",
+      "expected_sha256": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/ASP24-asp24-12-3.png",
+      "content_type": "image/png",
+      "actual_sha256": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
+      "bytes": 22871,
+      "match": true
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-04-4.png",
+      "expected_sha256": "8ad16689ef02fdd49184247b2da6596657e085fad1da8103d2c9d8a54508a77c",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/NGGroup-nggroup-04-4.png",
+      "content_type": "image/png",
+      "actual_sha256": "8ad16689ef02fdd49184247b2da6596657e085fad1da8103d2c9d8a54508a77c",
+      "bytes": 25099,
+      "match": true
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-07-1.png",
+      "expected_sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/NGGroup-nggroup-07-1.png",
+      "content_type": "image/png",
+      "actual_sha256": "14b6640f6bd7a6bf1b0b1a4002b2a28200123dac772917784573c0a95eae4f2e",
+      "bytes": 44675,
+      "match": true
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-08-1.png",
+      "expected_sha256": "c81bde45170c688427a3b30797423aca0d2cd83ba0be54bfec33a01a85ef808a",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/NGGroup-nggroup-08-1.png",
+      "content_type": "image/png",
+      "actual_sha256": "c81bde45170c688427a3b30797423aca0d2cd83ba0be54bfec33a01a85ef808a",
+      "bytes": 12824,
+      "match": true
+    },
+    {
+      "path": "reports/assets/NGGroup-nggroup-14-3.png",
+      "expected_sha256": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
+      "status": 200,
+      "resolved_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/assets/NGGroup-nggroup-14-3.png",
+      "content_type": "image/png",
+      "actual_sha256": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
+      "bytes": 21778,
+      "match": true
+    }
+  ],
+  "passed": true,
+  "provenance": {
+    "method": "GitHub Actions verify-published.py after deploy; parsed from authenticated downloaded run log",
+    "run_url": "https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37863652491",
+    "commit": "55a4e2515d0bf1b5c94ad99449bf8f8ee125ec08"
+  }
+}

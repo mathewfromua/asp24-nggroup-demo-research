@@ -6,16 +6,18 @@ ASP24 показує шлях від запиту й добору до порі�
 
 **Це демо.** Каталог містить 384 синтетичні моделі, 13 умовних виробників і вісім категорій. Ціни та характеристики слугують сценаріям інтерфейсу. Замовлення й запитання не надсилаються компаніям; записи зберігаються у браузері.
 
+[Відкрити демо](https://mathewfromua.github.io/asp24-nggroup-demo-research/) · [Випуски та комплект файлів](https://github.com/mathewfromua/asp24-nggroup-demo-research/releases)
+
 ## Огляди
 
 | Сайт | PDF | Адаптивний HTML |
 |---|---|---|
-| ASP24 | [Огляд, 14 сторінок](public/reports/ASP24_Review.pdf) | [Читати](public/reports/ASP24_Review.html) |
-| NG Group | [Огляд, 16 сторінок](public/reports/NGGroup_Review.pdf) | [Читати](public/reports/NGGroup_Review.html) |
+| ASP24 | [Огляд, 14 сторінок](https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/ASP24_Review.pdf) | [Читати](https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/ASP24_Review.html) |
+| NG Group | [Огляд, 16 сторінок](https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/NGGroup_Review.pdf) | [Читати](https://mathewfromua.github.io/asp24-nggroup-demo-research/reports/NGGroup_Review.html) |
 
-Обидва формати створюються зі спільного [джерела тексту](reports/content.json). Посилання вище ведуть на файли репозиторію; HTML інтерактивно читається через локальний preview або опублікований сайт. Підтверджені адреси й статус поточної публікації фіксуються в [RESULTS.md](RESULTS.md).
+Обидва формати створюються зі спільного [джерела тексту](reports/content.json). Посилання вище ведуть на опубліковані PDF та адаптивні HTML-огляди. Їхні байти звірено з поточною збіркою. Метод і межі перевірки — у [RESULTS.md](RESULTS.md).
 
-Стани розмежовано: підготовлений локальний код; завантажений у GitHub коміт; перевірена публічна HTTPS-збірка. Наразі авторизований запис GitHub не підтверджено; локальна готовність не означає виконаний push або Pages deployment.
+**Публічний демонстраційний випуск 3.1.1-demo.1.** Код збережено в GitHub, GitHub Pages опубліковано, усі 33 HTTPS-файли звірено за SHA-256 після deployment. Це preview з відкритими межами Apple-приймання та окремим незавершеним дослідженням, а не заява про повну підтримку Safari/iPhone.
 
 ## Локальний запуск
 
@@ -48,3 +50,5 @@ npm run preview -- --host 127.0.0.1 --port 8000
 Історичні проходи Safari/macOS beta не засвідчують підтримку стабільної Safari або фізичного iPhone. Нові результати мають власну дату, середовище й ідентичність збірки. PDF мають `Lang=uk-UA`, але надійне тегування не підтверджене; семантичний HTML доповнює їх. Сертифікації PDF/UA або повної WCAG-відповідності не заявлено.
 
 Цей репозиторій починає окрему публічну Git-історію з підготовленого дерева. Це імпорт чинного результату, а не перенесення повної історії попереднього середовища.
+
+Незавершені етапи мають окремі [завдання Apple-приймання](https://github.com/mathewfromua/asp24-nggroup-demo-research/issues/1) та [приймання дослідження](https://github.com/mathewfromua/asp24-nggroup-demo-research/issues/2).
