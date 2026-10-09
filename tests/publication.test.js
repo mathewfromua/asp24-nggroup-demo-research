@@ -31,5 +31,5 @@ test('case state survives reload separately; reset and write failure never read 
  assert.equal(entries.get(STATE_KEY),'personal cart, drafts, projects');assert.ok(access.every(([,k])=>k===key));
  assert.throws(()=>store.setItem('other','x'));
  const denied=isolatedStorage({getItem(){throw Error('denied')},setItem(){throw Error('denied')}},key,seed);
- assert.ok(writeState(denied,s));assert.equal(readState(denied).state.note,'case only');
+ assert.equal(writeState(denied,s),false);assert.equal(readState(denied).state.note,'case only');
 });

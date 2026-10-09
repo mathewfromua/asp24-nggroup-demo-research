@@ -2,6 +2,7 @@ from pathlib import Path
 import json,hashlib,re,urllib.request,sys
 from pypdf import PdfReader
 from html.parser import HTMLParser
+from html import escape
 from argparse import ArgumentParser
 R=Path(__file__).resolve().parent.parent
 parser=ArgumentParser(description='Verify same-source reports and actual preview HTTP bytes.')
@@ -34,6 +35,9 @@ for brand,pages in d.items():
  for i,page in enumerate(pages,2):
   assert plain(page['title']) in ph,(brand,i,'title');pt=plain(pdf.pages[i-1].extract_text());assert '\ufffd' not in pt
   for block in page['blocks']:
+   if block[0]=='image' and len(block)>5:
+    assert f'alt="{escape(block[5],quote=True)}"' in ht,(brand,i,'Explicit image alternative missing')
+    assert plain(block[5])!=plain(block[3]),(brand,i,'Image alternative duplicates caption')
    for t in texts(block):
     assert plain(t) in ph,(brand,i,t[:60])
     compact=lambda v:re.sub(r'\s+','',plain(v))

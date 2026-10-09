@@ -38,31 +38,7 @@ jobs:
         env:
           BROWSER: ${{ matrix.browser }}
         shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p browser-artifacts
-          preview_path=$(node -p "JSON.parse(require('node:fs').readFileSync('dist/build-config.json','utf8')).BASE_PATH")
-          preview_url="http://127.0.0.1:8000${preview_path}"
-          npm run preview -- --host 127.0.0.1 --port 8000 > browser-artifacts/preview.log 2>&1 &
-          preview_pid=$!
-          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
-          for attempt in {1..50}; do
-            if curl --fail --silent --output /dev/null "$preview_url"; then break; fi
-            sleep 0.2
-          done
-          curl --fail --silent --output /dev/null "$preview_url"
-          browser_args=()
-          if [ -f dist/demo.html ]; then browser_args+=(--demo-path demo.html); fi
-          # The runner's Chrome has its installed sandbox helper. Never disable it.
-          if [ "$BROWSER" = chromium ] && command -v google-chrome >/dev/null; then
-            browser_args+=(--executable "$(command -v google-chrome)")
-          fi
-          browser_status=0
-          python scripts/browser-regression.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts "${browser_args[@]}" || browser_status=$?
-          if [ -f dist/publication.json ]; then
-            python scripts/browser-cases.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts/cases "${browser_args[@]}" || browser_status=$?
-          fi
-          exit "$browser_status"
+        run: bash scripts/run-browser-checks.sh "$BROWSER" browser-artifacts
       - name: Retain browser results and sanitized failure traces
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0

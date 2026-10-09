@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "reportVersion": "3.2.0-rc.1",
+  "reportVersion": "3.2.0-rc.2",
   "sectionPolicy": "Existing IDs are frozen semantic locators, independent of future physical pagination; never renumber.",
   "indexing": "hub, HTML reports, cases and synthetic catalog remain noindex,nofollow for this unaccepted candidate",
   "cases": [

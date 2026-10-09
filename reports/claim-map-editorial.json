@@ -4,7 +4,7 @@
   "created_at": "2026-10-08",
   "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
   "manuscript_file": "reports/content.json",
-  "manuscript_sha256": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
+  "manuscript_sha256": "42b46ba1b84cfe0db9d96e6a3e3b07845d93cdc34f4ed3461789184cb3c031d0",
   "baseline": "Checkpoint03 після E01/E02; редакція R01–R44 09.10.2026.",
   "scope": "Адресна редакція та нове читання визначених сторінок 11 PDF; історичні дії не повторено. Широке SEO очікує окремого приймання.",
   "verification": {
@@ -1366,7 +1366,7 @@
       "pdf_page": 7,
       "html_anchor": "nggroup-07",
       "section": "Документація",
-      "title": "Назва файла має пояснювати його призначення",
+      "title": "Назва й опис документа мають пояснювати його призначення",
       "source_ids": [
         "NGGroup:6",
         "NGGroup:7"
@@ -1376,7 +1376,8 @@
         {
           "file": "reports/assets/NGGroup-p4-2.png",
           "caption": "Фрагмент с. 2 інструкції з попереднього огляду. Це запис документа; апаратної перевірки сумісності не проводили. [6]",
-          "crop": null
+          "crop": null,
+          "alt": "GPON та EPON: SC/PC, SC/APC. XPON Stick вставляється в SFP/SFP+; порт налаштовують на 1 або 2,5 Gbps. Для SFP+ інструкція вказує перехід з 10 на 1 Gbps."
         }
       ],
       "proposal_status": "Recommendations; no measured user benefit or new live mobile audit"

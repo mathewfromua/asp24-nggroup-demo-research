@@ -322,5 +322,26 @@
       "url": "https://romsat.ua/company/partnership.php",
       "scope": "Reviewer did not confirm retrieval in the new pass; not evidence of outage"
     }
-  ]
+  ],
+  "rc2_targeted_followup": {
+    "date": "2026-10-09",
+    "scope": "Only two independent RC1 review findings; no new general research.",
+    "xpon": {
+      "url": "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf",
+      "sha256": "19f02d8b3d388b04a9e277519116f1ea8adefcd81992ff35d0d8ff0c71322150",
+      "bytes": 1806635,
+      "physical_page": 2,
+      "method": "Fresh HTTPS retrieval; pypdf text reading of physical p2 and visual reading of existing reports/assets/NGGroup-p4-2.png crop.",
+      "verified": "GPON and EPON: SC/PC, SC/APC; XPON Stick in SFP/SFP+; port 1 or 2.5 Gbps; SFP+10→1Gbps.",
+      "limit": "Document instructions only; no hardware or compatibility test."
+    },
+    "service": {
+      "url": "https://nggroup.ua/service",
+      "sha256": "cd2e01b371f3c8656fed70bf880fe911e1a7e958a6c64a27147dd313c70e3f9e",
+      "method": "Fresh HTTPS HTML retrieval and reading of warranty repair condition.",
+      "locator": "Правила прийому обладнання до Сервісного центру, first bullet",
+      "verified": "Діагностика та ремонт гарантійного обладнання, виконується в строк до 14 календарних днів.",
+      "limit": "Restores scope only. R34 timing start and relationship to manufacturer transfer remain unresolved; not evidence of actual repair performance."
+    }
+  }
 }

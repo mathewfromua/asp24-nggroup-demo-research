@@ -19,10 +19,10 @@ actual={p.relative_to(ROOT/'dist').as_posix():hashfile(p) for p in sorted((ROOT/
 assert actual==read(a.evidence/'build/dist-sha256.json'), 'Downloaded dist differs from tested build'
 browsers={}
 for browser in ['chromium','firefox','webkit']:
- regression=read(a.evidence/browser/'results.json');cases=read(a.evidence/browser/'cases/results.json')
- for result in [regression,cases]:
+ regression=read(a.evidence/browser/'results.json');cases=read(a.evidence/browser/'cases/results.json');case_storage=read(a.evidence/browser/'case-storage/results.json')
+ for result in [regression,cases,case_storage]:
   assert result['commit']==sha and result['status']=='PASS',(browser,result)
- browsers[browser]={'regression':regression,'cases':cases}
+ browsers[browser]={'regression':regression,'cases':cases,'case_storage':case_storage}
 # Standalone generation only embeds existing local images; never rebuilds dist or PDFs.
 subprocess.run(['python','reports/export_standalone.py'],cwd=ROOT,check=True)
 assert not subprocess.check_output(['git','diff','--name-only'],cwd=ROOT), 'Standalone manifest unexpectedly changed'

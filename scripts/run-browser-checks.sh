@@ -22,4 +22,5 @@ fi
 browser_status=0
 python scripts/browser-regression.py --url "$preview_url" --browser "$browser" --output "$output" "${browser_args[@]}" || browser_status=$?
 python scripts/browser-cases.py --url "$preview_url" --browser "$browser" --output "$output/cases" "${browser_args[@]}" || browser_status=$?
+python scripts/browser-case-storage.py --url "$preview_url" --browser "$browser" --output "$output/case-storage" "${browser_args[@]}" || browser_status=$?
 exit "$browser_status"

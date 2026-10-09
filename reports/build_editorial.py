@@ -50,7 +50,7 @@ class Page:
   data=[[Paragraph(glyphs(v),sh) for v in headers]]+[[Paragraph(glyphs(v),ss) for v in row] for row in rows]
   t=Table(data,colWidths=widths,hAlign='LEFT');t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),HexColor(self.colors[1])),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7),('ROWBACKGROUNDS',(0,1),(-1,-1),[HexColor('#ffffff'),HexColor(self.colors[2])]),('LINEBELOW',(0,1),(-1,-1),.5,HexColor(self.colors[2]))]))
   _,h=t.wrap(CW,1100);self.check(h,'table');t.drawOn(self.c,M,self.y-h);self.y-=h+9
- def image(self,name,height,caption,crop=None):
+ def image(self,name,height,caption,crop=None,alt=None):
   path=HERE/name;im=Image.open(path);im.load()
   if crop:im=im.crop(tuple(crop))
   w,h=im.size;hh=min(height,CW*h/w);ww=hh*w/h;self.check(hh,'image');self.c.drawImage(ImageReader(im),M+(CW-ww)/2,self.y-hh,ww,hh,mask='auto');self.y-=hh+6

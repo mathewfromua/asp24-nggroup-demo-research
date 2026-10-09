@@ -75,7 +75,7 @@ for brand,pages in REPORTS.items():
                 if len(a)>3 and a[3]:im=im.crop(tuple(a[3]))
                 name=f'{brand}-{page["id"]}-{bi}.png';im.save(ASSETS/name)
                 assets.append(f'reports/assets/{name}')
-                cap=inline(a[2]);alt=html.escape(re.sub('<[^>]+>','',a[2]),quote=True)
+                cap=inline(a[2]);alt=html.escape(re.sub('<[^>]+>','',a[4] if len(a)>4 else a[2]),quote=True)
                 parts.append(f'<figure><img src="assets/{name}" width="{im.width}" height="{im.height}" alt="{alt}" loading="lazy"><figcaption>{cap}</figcaption></figure>')
             else:raise ValueError(kind)
         parts.append('</section>');body.append(''.join(parts))
