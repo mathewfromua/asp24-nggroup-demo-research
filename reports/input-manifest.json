@@ -18,7 +18,7 @@
     "reports/assets/compare-report-crop.png": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
     "reports/assets/document-report-crop.png": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
     "reports/build_editorial.py": "4a7f03511a4ed86ca3432968b5aeb45b64d00c77519326be56e78399f5acef57",
-    "reports/build_html.py": "276f1707e1579b75998f7dac2f72ef7e06a2f17666043fbdf657a144e6e2576c",
+    "reports/build_html.py": "6b72289e2c6b2b6d1ef9d052f1cfc771a0545119f58bc5832072c61b74e5e932",
     "reports/build_inputs.py": "d76b21b0c5e9239e1b7d3fce9dc9ef4e3dbb14da4e3f9bca3c89116f060b484f",
     "reports/content.json": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
     "reports/content.py": "73ff61d03689d9b5401665be70c6409d67a26aa314a5e44c130f701689697b37",
@@ -30,5 +30,5 @@
     "reports/fonts/provenance.json": "3ea81860ad8a673426703f2dfa41a86297e9532bb7b71e37158579712a19363c",
     "reports/requirements.txt": "40b14b63562432bfa42d682317efacc2835ff92d9b76c56696645edf5ed20976"
   },
-  "digest": "476f6c551d4127d93ee619e295ba5ae2d34600475c63df55c32daa7cb7d0cce7"
+  "digest": "44295211fd70f21b99a3fba33fe5f02d3a2a53fc1573f91d27a0e0bf4a1a3187"
 }
