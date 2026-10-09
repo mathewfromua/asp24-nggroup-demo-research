@@ -71,6 +71,16 @@ def overflow(page):
     assert dimensions['scroll'] <= dimensions['width'] + 1, dimensions
 
 
+def expect_product_ids(page, expected):
+    # Facet changes schedule rendering through hashchange. Assert the exact IDs
+    # after that render, rather than sampling the previous result synchronously.
+    page.wait_for_function('''expected => {
+        const actual = [...document.querySelectorAll('.technical-item')].map(el => el.dataset.productId);
+        return JSON.stringify(actual) === JSON.stringify(expected);
+    }''', arg=expected, timeout=5000)
+    assert page.locator('.technical-item').evaluate_all('(els)=>els.map(el=>el.dataset.productId)')==expected
+
+
 def exact_and_facets(page):
     seed(page,fresh_state())
     page.locator('#search-form input[name=q]').fill('DEMO-U02')
@@ -84,13 +94,13 @@ def exact_and_facets(page):
     # Assert the displayed quantity matches the actual OR result through the source facet key.
     facet_key=next(k for k,v in by_id['u02']['props'].items() if v=='36 Вт')
     expected=[p['id'] for p in products if p['group']=='ups' and p['props'][facet_key] in ['18 Вт','36 Вт']]
-    assert page.locator('.technical-item').evaluate_all('(els)=>els.map(el=>el.dataset.productId)')==expected[:24]
+    expect_product_ids(page,expected[:24])
     page.locator('[data-action=remove-filter][data-value="18 Вт"]').click()
-    assert page.locator('[data-multi-filter=f0][value="36 Вт"]').is_checked()
-    assert not page.locator('[data-multi-filter=f0][value="18 Вт"]').is_checked()
+    expect(page.locator('[data-multi-filter=f0][value="36 Вт"]')).to_be_checked()
+    expect(page.locator('[data-multi-filter=f0][value="18 Вт"]')).not_to_be_checked()
     page.goto(demo+'#/asp/catalog?cat=ups&sort=price-down&view=list&page=2',wait_until='networkidle')
     expected=sorted([p for p in products if p['group']=='ups'],key=lambda p:p['price'],reverse=True)
-    assert page.locator('.technical-item').evaluate_all('(els)=>els.map(el=>el.dataset.productId)')==[p['id'] for p in expected[24:48]]
+    expect_product_ids(page,[p['id'] for p in expected[24:48]])
 
 
 def comparison(page):
