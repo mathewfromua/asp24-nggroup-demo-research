@@ -1,12 +1,12 @@
 [
   {
     "file": "ASP24_Огляд.pdf",
-    "input_digest": "cf1d374292af000f417176376a95804863291459381bee06ba8ed88539481ae7",
-    "content_sha256": "35f18a56e1ec4df15df80b3045dc89e993f7f825a08fce78b2a60e57c9da5b44",
+    "input_digest": "476f6c551d4127d93ee619e295ba5ae2d34600475c63df55c32daa7cb7d0cce7",
+    "content_sha256": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
     "pages": 14,
-    "sha256": "7dec62281705c2288bb85619f45e6e6d628e0acd1e76a3e1d240c93e7d7ec71e",
+    "sha256": "ea3332fff90516512a9afceba644720ffcb2c85ca4aa3d7de56cd61430c6aca7",
     "retained_pages": [
       1
     ],
@@ -28,12 +28,12 @@
   },
   {
     "file": "NGGroup_Огляд.pdf",
-    "input_digest": "cf1d374292af000f417176376a95804863291459381bee06ba8ed88539481ae7",
-    "content_sha256": "35f18a56e1ec4df15df80b3045dc89e993f7f825a08fce78b2a60e57c9da5b44",
+    "input_digest": "476f6c551d4127d93ee619e295ba5ae2d34600475c63df55c32daa7cb7d0cce7",
+    "content_sha256": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
     "pages": 16,
-    "sha256": "37ac62a69815560bb6e77ae4e780c327af37182bd1d0b85815f240aa06242b57",
+    "sha256": "ac342f4d9bc550197f5996a1cb5510b11ccedc8a4271d779924e6f8f7f475560",
     "retained_pages": [
       1
     ],

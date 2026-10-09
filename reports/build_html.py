@@ -12,6 +12,8 @@ def inline(s):
     # Source permits only controlled report-format inline tags and HTTPS links.
     s=re.sub(r'<link href="([^"]+)"(?: color="[^"]+")?>',r'<a href="\1">',str(s))
     return s.replace('</link>','</a>').replace('<br/>','<br>')
+def active_link(url):
+    return '../'+url[len(PUBLIC_BASE_URL):] if url.startswith(PUBLIC_BASE_URL) else url
 def table(headers,rows,caption=''):
     cap=f'<caption>{inline(caption)}</caption>' if caption else ''
     return '<div class="table-scroll" tabindex="0" role="region" aria-label="Таблиця, доступна для горизонтального прокручування"><table>'+cap+'<thead><tr>'+''.join('<th scope="col">'+inline(v)+'</th>' for v in headers)+'</tr></thead><tbody>'+''.join('<tr>'+''.join(('<th scope="row">'+inline(v)+'</th>') if i==0 else '<td>'+inline(v)+'</td>' for i,v in enumerate(row))+'</tr>' for row in rows)+'</tbody></table></div>'
@@ -53,7 +55,7 @@ for brand,pages in REPORTS.items():
             elif kind=='h':parts.append('<h3>'+inline(a[0])+'</h3>')
             elif kind=='box':parts.append('<aside class="callout"><h3>'+inline(a[0])+'</h3><p>'+inline(a[1])+'</p></aside>')
             elif kind=='table':parts.append(table(a[0],a[1]))
-            elif kind=='link':parts.append(f'<p><a class="action" href="{html.escape(a[1],quote=True)}">{inline(a[0])}</a></p>')
+            elif kind=='link':parts.append(f'<p><a class="action" href="{html.escape(active_link(a[1]),quote=True)}">{inline(a[0])}</a></p>')
             elif kind=='figure':parts.append('<figure>'+figure(a[0])+'</figure>')
             elif kind=='image':
                 im=Image.open(HERE/a[0]);im.load()
@@ -66,7 +68,7 @@ for brand,pages in REPORTS.items():
         parts.append('</section>');body.append(''.join(parts))
     title=brandlabel+' · Огляд сайту'
     subtitles={'ASP24':'Від пошуку до підготовки закупівлі','NGGroup':'Від технічної інформації до вибору рішення'}
-    document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><title>{title}</title><style>:root{{--accent:{palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>Огляд сайту</h1><p>{subtitles[brand]}</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До демо</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — Demo &amp; Research — демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
+    document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><meta name="description" content="{subtitles[brand]}. Повний український огляд із джерелами та прикладами."><meta property="og:type" content="article"><meta property="og:title" content="{title}"><meta property="og:description" content="{subtitles[brand]}"><meta property="og:url" content="{PUBLIC_BASE_URL}reports/{brand}_Review.html"><meta property="og:image" content="{PUBLIC_BASE_URL}assets/research-social.png"><link rel="canonical" href="{PUBLIC_BASE_URL}reports/{brand}_Review.html"><title>{title}</title><style>:root{{--accent:{palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>Огляд сайту</h1><p>{subtitles[brand]}</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До оглядів і прикладів</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — Demo &amp; Research — демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
     dest=OUT/f'{brand}_Review.html';dest.write_text(document)
     manifest.append({'brand':brand,'html':dest.relative_to(ROOT).as_posix(),'sections':len(pages),'blocks':block_count,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'input_digest':inventory()['digest'],'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL})
 (HERE/'html-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')

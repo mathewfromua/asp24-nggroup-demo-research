@@ -24,7 +24,7 @@ http.createServer(async (req, res) => {
     }
     const pathname = decodeURIComponent(url.pathname);
     if (!pathname.startsWith(basePath)) throw new Error('Outside deployment path');
-    const relative = pathname.slice(basePath.length) || 'index.html';
+    const relative = (pathname.slice(basePath.length) || '') + (pathname.endsWith('/') ? 'index.html' : '');
     const path = await realpath(resolve(root, relative));
     if (!path.startsWith(root + '/') || !(await stat(path)).isFile()) throw new Error('Invalid public file');
     const bytes = await readFile(path);

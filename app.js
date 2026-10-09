@@ -1,3 +1,4 @@
+import {caseContext} from './case-context.js';
 import {assetUrl} from './asset-url.js';
 import {renderCatalog,catalogPage} from './catalog-ui.js';
 import {renderScience,handleScience,normalizeScience} from './science.js';
@@ -17,7 +18,7 @@ Object.assign(icons,{
 });
 const icon=n=>`<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[n]||icons.grid}</svg>`;
 const KEY=STATE_KEY;const withScience=s=>({...s,science:normalizeScience(s.science)});const initial=()=>withScience(initialState());
-let storage;try{storage=window.localStorage;}catch{}
+let storage=caseContext.storage;if(!caseContext.active)try{storage=window.localStorage;}catch{}
 const loaded=readState(storage);
 let removedCandidate=null,pickerReplace='',pickerQuery='',modalFocusKey='',restoringResearch=false;
 let state=withScience(loaded.state),storageOk=loaded.status==='ok',storageStatus=loaded.status,route,toastTimer,returnFocus,synchronizing=false;
@@ -229,7 +230,7 @@ document.addEventListener('submit',e=>{if(e.target.matches('[data-catalog-range]
 let viewTimer;window.addEventListener('scroll',()=>{clearTimeout(viewTimer);viewTimer=setTimeout(()=>{captureView();save();},160);},{passive:true});
 document.addEventListener('toggle',e=>{if(e.target.matches('#main details')){captureView();save();}},true);
 window.addEventListener('pagehide',()=>{captureView();save();});
-window.addEventListener('storage',e=>{if(e.key!==KEY)return;try{state=withScience(migrateState(e.newValue?JSON.parse(e.newValue):null));synchronizing=true;render(false);}catch{}finally{synchronizing=false;}});
+window.addEventListener('storage',e=>{if(caseContext.active||e.key!==KEY)return;try{state=withScience(migrateState(e.newValue?JSON.parse(e.newValue):null));synchronizing=true;render(false);}catch{}finally{synchronizing=false;}});
 document.querySelector('.skip').addEventListener('click',e=>{e.preventDefault();$('#main').focus();$('#main').scrollIntoView();});
 function openOrder(focus=''){openModal(modalTitle('Порядок моделей')+comparisonOrder(compareIds().map(byId)));if(focus){const target=$('#modal').querySelector(focus);if(target&&!target.disabled)target.focus();else $('#modal .close').focus();}}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').open&&route.page==='compare'&&state.view.expanded){e.preventDefault();toggleExpanded();}});
