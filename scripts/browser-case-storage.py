@@ -133,8 +133,12 @@ def warning(page, kind):
     expect(status).to_have_attribute('data-storage-kind', kind)
     expect(status).to_contain_text(re.compile('перезавантаж', re.I))
     expect(status).to_contain_text(re.compile('експорт', re.I))
-    if page.locator('[data-save-status]').count():
-        for message in page.locator('[data-save-status]').all_inner_texts():
+    for label in page.locator('[data-save-status]').all():
+        # Closed <dialog> content remains in DOM but is hidden from users and AT.
+        # Its label describes the last draft write, before the later reset action.
+        if label.is_visible():
+            expect(label).to_contain_text('Лише в пам’яті')
+            message = label.inner_text()
             assert not re.search(r'(?:^|\s)(?:збережено|зберігається|зберігаються)\s+(?:в|у)\s+', message, re.I), message
 
 
@@ -252,6 +256,9 @@ def clear_failure(page):
     page.evaluate("window.__sameCaseDocument='no-reload-on-clear-failure'")
     page.locator('.case-banner').get_by_role('button', name='Почати приклад спочатку', exact=True).click()
     warning(page, 'clear-error')
+    expect(page.locator('#case-reset-status')).to_be_visible()
+    expect(page.locator('#case-reset-status')).to_have_attribute('role', 'status')
+    expect(page.locator('#case-reset-status')).to_contain_text('Приклад не скинуто')
     assert page.evaluate('window.__sameCaseDocument') == 'no-reload-on-clear-failure'
     assert backing(page) == before
     export_case(page, draft_b, 'clear-failure-export.json')
