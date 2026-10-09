@@ -62,7 +62,8 @@ def no_overflow(page):
           const pseudo=[];for(const e of nodes)for(const kind of ['::before','::after']){const s=getComputedStyle(e,kind);if(s.content&&!['none','normal','""'].includes(s.content))pseudo.push({node:label(e),kind,content:s.content,width:s.width,position:s.position,left:s.left,right:s.right,transform:s.transform});}
           const probes=[];for(const [name,css] of [
             ['caption-block-clip','caption.sr-only{display:block!important;clip-path:inset(50%)!important;margin:-1px!important}'],
-            ['closed-details-grid','.wb-candidates:not([open])>.wb-candidate-grid{display:none!important}']
+            ['closed-details-grid','.wb-candidates:not([open])>.wb-candidate-grid{display:none!important}'],
+            ['native-select-grid','.wb-pair-select{display:grid!important;grid-template-columns:23px minmax(0,1fr)!important}']
           ]){const style=document.createElement('style');style.textContent=css;document.head.append(style);probes.push({name,scroll:document.documentElement.scrollWidth});style.remove();}
           return {widths,ranges:ranges.slice(0,30),pseudo:pseudo.slice(0,20),probes,restoredScroll:document.documentElement.scrollWidth};
         }''')
