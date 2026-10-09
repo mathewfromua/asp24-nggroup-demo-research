@@ -29,7 +29,7 @@ for brand,pages in d.items():
  f=R/f'public/reports/{brand}_Review.pdf';pdf=PdfReader(f);ht=(R/f'public/reports/{brand}_Review.html').read_text();ph=plain(ht);assert len(pdf.pages)==len(pages)+1
  assert pdf.trailer['/Root']['/Lang']=='uk-UA';assert not pdf.trailer['/Root'].get('/StructTreeRoot')
  assert '{{PUBLIC_BASE_URL}}' not in ht and 'perspektyva.mathew-from-ua.chatgpt.site' not in ht
- assert 'href="../">До демо' in ht
+ assert 'href="../">До оглядів і прикладів' in ht
  htext=[]
  for i,page in enumerate(pages,2):
   assert plain(page['title']) in ph,(brand,i,'title');pt=plain(pdf.pages[i-1].extract_text());assert '\ufffd' not in pt

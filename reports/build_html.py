@@ -12,6 +12,8 @@ def inline(s):
     # Source permits only controlled report-format inline tags and HTTPS links.
     s=re.sub(r'<link href="([^"]+)"(?: color="[^"]+")?>',r'<a href="\1">',str(s))
     return s.replace('</link>','</a>').replace('<br/>','<br>')
+def active_link(url):
+    return '../'+url[len(PUBLIC_BASE_URL):] if url.startswith(PUBLIC_BASE_URL) else url
 def table(headers,rows,caption=''):
     cap=f'<caption>{inline(caption)}</caption>' if caption else ''
     return '<div class="table-scroll" tabindex="0" role="region" aria-label="Таблиця, доступна для горизонтального прокручування"><table>'+cap+'<thead><tr>'+''.join('<th scope="col">'+inline(v)+'</th>' for v in headers)+'</tr></thead><tbody>'+''.join('<tr>'+''.join(('<th scope="row">'+inline(v)+'</th>') if i==0 else '<td>'+inline(v)+'</td>' for i,v in enumerate(row))+'</tr>' for row in rows)+'</tbody></table></div>'
@@ -27,7 +29,20 @@ def figure(kind):
             pair=[r for r in rows if r['sku']==sku];assert len(pair)==2
             for r in pair:
                 date=r['capture_utc'][:10].split('-'); data.append([r['model']+' · '+sku,'.'.join(reversed(date)),r['technical_rows']])
-        return table(['Модель / артикул','Дата знімка','Технічних рядків'],data,'Парні історичні вимірювання: 16 → 9, 14 → 0, 30 → 0. Нуль означає відсутність предметних рядків у вибраній таблиці, а не всієї інформації про товар.')
+        # Keep the shared contour/filled-bar caption meaningful in HTML too;
+        # the following semantic table provides every exact value and date.
+        svg='<svg viewBox="0 0 700 300" role="img" aria-label="Кількість предметних рядків у вибраних архівних таблицях: 16 до 9, 14 до 0, 30 до 0. Контур — раніший стан, заповнена смуга — пізніший. Точні дати та значення наведено в таблиці.">'
+        for i in range(3):
+            earlier,later=data[2*i:2*i+2]
+            y=28+i*96
+            model,sku=earlier[0].split(' · ')
+            model={'MED001988':'RG-EW1200G Pro','MED005534':'XPON Stick','MED000715':'Cu-кабель'}[sku]
+            svg+=f'<text x="0" y="{y}">{html.escape(model)}</text><text x="0" y="{y+23}" font-size="13">{sku}</text>'
+            for j,row in enumerate([earlier,later]):
+                count=int(row[2]);by=y-15+j*32;bar_width=count/30*280
+                svg+=f'<text x="205" y="{by+14}" font-size="14">{row[1]}</text><rect x="330" y="{by}" width="{bar_width}" height="18" stroke="var(--accent)" fill="{"none" if j==0 else "var(--accent)"}"/><text x="{338+bar_width}" y="{by+14}">{count}</text>'
+        svg+='</svg>'
+        return svg+table(['Модель / артикул','Дата знімка','Технічних рядків'],data,'Парні історичні вимірювання: 16 → 9, 14 → 0, 30 → 0. Нуль означає відсутність предметних рядків у вибраній таблиці, а не всієї інформації про товар.')
     rows=[r for r in records('nominal_autonomy.csv') if 5<=float(r['load_w'])<=20]
     assert all(abs(float(r['ideal_hours'])-57.72/float(r['load_w']))<1e-5 for r in rows)
     points=' '.join(f'{45+(float(r["load_w"])-5)/15*465:.2f},{215-float(r["ideal_hours"])/12*185:.2f}' for r in rows)
@@ -53,7 +68,7 @@ for brand,pages in REPORTS.items():
             elif kind=='h':parts.append('<h3>'+inline(a[0])+'</h3>')
             elif kind=='box':parts.append('<aside class="callout"><h3>'+inline(a[0])+'</h3><p>'+inline(a[1])+'</p></aside>')
             elif kind=='table':parts.append(table(a[0],a[1]))
-            elif kind=='link':parts.append(f'<p><a class="action" href="{html.escape(a[1],quote=True)}">{inline(a[0])}</a></p>')
+            elif kind=='link':parts.append(f'<p><a class="action" href="{html.escape(active_link(a[1]),quote=True)}">{inline(a[0])}</a></p>')
             elif kind=='figure':parts.append('<figure>'+figure(a[0])+'</figure>')
             elif kind=='image':
                 im=Image.open(HERE/a[0]);im.load()
@@ -66,7 +81,7 @@ for brand,pages in REPORTS.items():
         parts.append('</section>');body.append(''.join(parts))
     title=brandlabel+' · Огляд сайту'
     subtitles={'ASP24':'Від пошуку до підготовки закупівлі','NGGroup':'Від технічної інформації до вибору рішення'}
-    document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><title>{title}</title><style>:root{{--accent:{palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>Огляд сайту</h1><p>{subtitles[brand]}</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До демо</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — Demo &amp; Research — демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
+    document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><meta name="description" content="{subtitles[brand]}. Повний український огляд із джерелами та прикладами."><meta property="og:type" content="article"><meta property="og:title" content="{title}"><meta property="og:description" content="{subtitles[brand]}"><meta property="og:url" content="{PUBLIC_BASE_URL}reports/{brand}_Review.html"><meta property="og:image" content="{PUBLIC_BASE_URL}assets/research-social.png"><link rel="canonical" href="{PUBLIC_BASE_URL}reports/{brand}_Review.html"><title>{title}</title><style>:root{{--accent:{palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>Огляд сайту</h1><p>{subtitles[brand]}</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До оглядів і прикладів</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — Demo &amp; Research — демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
     dest=OUT/f'{brand}_Review.html';dest.write_text(document)
     manifest.append({'brand':brand,'html':dest.relative_to(ROOT).as_posix(),'sections':len(pages),'blocks':block_count,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'input_digest':inventory()['digest'],'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL})
 (HERE/'html-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
