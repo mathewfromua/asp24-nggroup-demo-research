@@ -50,6 +50,22 @@ def pair(page):return [page.get_by_test_id('wb-pair-a').input_value(),page.get_b
 def no_overflow(page):
     bounds=page.evaluate('''() => ({width:innerWidth,scroll:document.documentElement.scrollWidth,
       overflow:[...document.querySelectorAll('body *')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,id:e.id,class:e.className,testid:e.dataset.testid,left:r.left,right:r.right,width:r.width,scroll:e.scrollWidth};}).filter(e=>e.right>innerWidth+1||e.left< -1).slice(0,25)})''')
+    if bounds['scroll']>bounds['width']+1:
+        # Keep the original failure. Temporary browser-only probes isolate native
+        # layout boxes, then restore every style; they never turn overflow PASS.
+        bounds['diagnostic']=page.evaluate('''() => {
+          const label=e=>e.tagName+(e.id?'#'+e.id:'')+'.'+String(e.className?.baseVal??e.className??'').replaceAll(' ','.');
+          const nodes=[...document.querySelectorAll('body *')];
+          const widths=nodes.map(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {node:label(e),client:e.clientWidth,scroll:e.scrollWidth,left:r.left,right:r.right,width:r.width,display:s.display,overflow:s.overflowX};}).filter(x=>x.scroll>x.client+1).slice(0,35);
+          const ranges=[],walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+          while(walker.nextNode()){const n=walker.currentNode;if(!n.textContent.trim())continue;const range=document.createRange();range.selectNodeContents(n);const r=range.getBoundingClientRect();if(r.width&&r.height&&(r.right>innerWidth+1||r.left< -1))ranges.push({parent:label(n.parentElement),text:n.textContent.slice(0,160),left:r.left,right:r.right,top:r.top});}
+          const pseudo=[];for(const e of nodes)for(const kind of ['::before','::after']){const s=getComputedStyle(e,kind);if(s.content&&!['none','normal','""'].includes(s.content))pseudo.push({node:label(e),kind,content:s.content,width:s.width,position:s.position,left:s.left,right:s.right,transform:s.transform});}
+          const probes=[];for(const [name,css] of [
+            ['caption-block-clip','caption.sr-only{display:block!important;clip-path:inset(50%)!important;margin:-1px!important}'],
+            ['closed-details-grid','.wb-candidates:not([open])>.wb-candidate-grid{display:none!important}']
+          ]){const style=document.createElement('style');style.textContent=css;document.head.append(style);probes.push({name,scroll:document.documentElement.scrollWidth});style.remove();}
+          return {widths,ranges:ranges.slice(0,30),pseudo:pseudo.slice(0,20),probes,restoredScroll:document.documentElement.scrollWidth};
+        }''')
     assert bounds['scroll']<=bounds['width']+1,bounds
 
 def search_add(page,pid):
@@ -113,10 +129,12 @@ def responsive_keyboard(page):
     for brand in ['asp','ng']:
         page.goto(demo+f'#/{brand}/compare?experience=modern',wait_until='networkidle')
         for width,height in [(320,844),(390,844),(430,844),(1440,900)]:
-            page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(100);no_overflow(page)
+            page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(100)
+            page.evaluate('() => { scrollTo(0,0); return new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))); }')
+            no_overflow(page)
             expect(page.get_by_test_id('wb-pair-a')).to_be_visible();expect(page.get_by_test_id('wb-pair-b')).to_be_visible()
             first=page.get_by_test_id('comparison-workbench').locator('tbody tr[data-row]:visible').first
-            expect(first).to_be_visible();box=first.bounding_box();assert box['y']<height,{'brand':brand,'width':width,'first_parameter_y':box['y']}
+            expect(first).to_be_visible();box=first.bounding_box();assert 0<=box['y']<height,{'brand':brand,'width':width,'first_parameter_y':box['y']}
             expected_cells={(row['key'],cell['productId']):cell['text'] for row in fixture['rows'] for cell in row['cells']}
             for row in page.get_by_test_id('comparison-workbench').locator('tbody tr[data-row]:visible').all():
                 for cell in row.locator('td[data-product-id]').all():
@@ -153,6 +171,7 @@ def responsive_keyboard(page):
         assert abs(doubled['after']-doubled['before']*2)<0.1,doubled
         for width,height in [(320,844),(390,844),(430,844),(1440,900)]:
             page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(100);no_overflow(page)
+            page.evaluate('() => { scrollTo(0,0); return new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))); }')
             header_bounds=page.locator('.research-global').evaluate('''header => {
               const h=header.getBoundingClientRect();
               return [...header.querySelectorAll('a,button')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return {text:e.textContent,top:r.top,bottom:r.bottom,headerTop:h.top,headerBottom:h.bottom};});

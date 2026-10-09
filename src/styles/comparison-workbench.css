@@ -75,3 +75,7 @@ body:has(.comparison-workbench) .footer button {max-width:100%;white-space:norma
 .wb-footer>div {flex-wrap:wrap}
 .wb-footer [role=status] {flex:1 1 12rem;max-width:none;overflow-wrap:normal}
 @media(max-width:700px) {.wb-footer>div {align-items:start}.wb-footer [role=status] {flex-basis:12rem}}
+/* Keep visually hidden table captions out of WebKit's anonymous table layout. */
+.wb-table caption.sr-only {display:block;clip-path:inset(50%);margin:-1px}
+/* Explicitly match native closed-details visibility across rendering engines. */
+.wb-candidates:not([open])>.wb-candidate-grid {display:none}
