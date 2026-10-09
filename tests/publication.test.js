@@ -26,6 +26,8 @@ test('case state survives reload separately; reset and write failure never read 
  const store=isolatedStorage(backing,key,seed),s=readState(store).state;s.note='case only';assert.ok(writeState(store,s));
  assert.equal(readState(isolatedStorage(backing,key,seed)).state.note,'case only');
  store.reset();assert.equal(readState(store).state.note,'');
+ // The old app flushes on pagehide during reset's reload. It must not restore stale state.
+ writeState(store,s);assert.equal(readState(isolatedStorage(backing,key,seed)).state.note,'');
  assert.equal(entries.get(STATE_KEY),'personal cart, drafts, projects');assert.ok(access.every(([,k])=>k===key));
  assert.throws(()=>store.setItem('other','x'));
  const denied=isolatedStorage({getItem(){throw Error('denied')},setItem(){throw Error('denied')}},key,seed);
