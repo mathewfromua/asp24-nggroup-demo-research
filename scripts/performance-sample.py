@@ -207,7 +207,16 @@ try:
         before, after = report['summary'][scenario]['baseline'], report['summary'][scenario]['modern']
         report['summary'][scenario]['delta_modern_minus_baseline'] = {key:after[key]['median']-before[key]['median'] for key in before if key in after}
     report['lighthouse'] = lighthouse_samples(bases)
-    report['status'] = 'PASS'
+    # The first paired measurement exposed a repeatable 0.50 CLS caused by the
+    # lazy workbench placeholder. Retain every observation and gate recurrence.
+    budget_checks=[{'scenario':sample['scenario'],'repeat':sample['repeat'],'cls':sample['metrics']['cls'],
+                    'status':'PASS' if sample['metrics']['cls']<=0.1 else 'FAIL'}
+                   for sample in report['samples'] if sample['version']=='modern']
+    report['budgets']={'rule':'Every candidate navigation sample has CLS <= 0.1',
+                       'threshold':0.1,'checks':budget_checks,
+                       'status':'PASS' if all(check['status']=='PASS' for check in budget_checks) else 'FAIL'}
+    report['status'] = report['budgets']['status']
+    print('PERFORMANCE',report['status'],'CLS budget',report['budgets']['status'],flush=True)
 except Exception as error:
     import traceback
     report['error'] = str(error); report['traceback'] = traceback.format_exc()

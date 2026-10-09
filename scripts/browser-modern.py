@@ -48,7 +48,9 @@ def stored(page):return page.evaluate('(key)=>JSON.parse(localStorage.getItem(ke
 def selected(page):return page.locator('[data-testid^="wb-candidate-"]').evaluate_all('(els)=>els.map(el=>el.dataset.testid.slice("wb-candidate-".length))')
 def pair(page):return [page.get_by_test_id('wb-pair-a').input_value(),page.get_by_test_id('wb-pair-b').input_value()]
 def no_overflow(page):
-    bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})');assert bounds['scroll']<=bounds['width']+1,bounds
+    bounds=page.evaluate('''() => ({width:innerWidth,scroll:document.documentElement.scrollWidth,
+      overflow:[...document.querySelectorAll('body *')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,id:e.id,class:e.className,testid:e.dataset.testid,left:r.left,right:r.right,width:r.width,scroll:e.scrollWidth};}).filter(e=>e.right>innerWidth+1||e.left< -1).slice(0,25)})''')
+    assert bounds['scroll']<=bounds['width']+1,bounds
 
 def search_add(page,pid):
     field=page.get_by_test_id('wb-search')
@@ -124,13 +126,20 @@ def responsive_keyboard(page):
         page.set_viewport_size({'width':390,'height':844})
         page.get_by_test_id('wb-pair-a').focus();expect(page.get_by_test_id('wb-pair-a')).to_be_focused()
         page.keyboard.press('ArrowDown');page.keyboard.press('Tab')
-        # Every focused control is real, visible, named and retains a visible outline.
-        for _ in range(12):
+        expect(page.get_by_test_id('wb-pair-b')).to_be_focused()
+        # Walk the workbench through its explicit final Save control. A fixed Tab
+        # count can legitimately leave the document for browser chrome after the
+        # footer, especially when an unavailable product disables its cart button.
+        visited=[]
+        for _ in range(30):
             page.keyboard.press('Tab')
-            focus=page.evaluate('''() => {const e=document.activeElement,s=getComputedStyle(e),r=e.getBoundingClientRect();return {tag:e.tagName,name:e.getAttribute('aria-label')||e.labels?.[0]?.textContent||e.textContent||e.title,outline:s.outlineStyle,outlineWidth:s.outlineWidth,width:r.width,height:r.height};}''')
-            assert focus['tag']!='BODY' and focus['width']>0 and focus['height']>0,focus
+            focus=page.evaluate('''() => {const e=document.activeElement,s=getComputedStyle(e),r=e.getBoundingClientRect();return {testid:e.dataset.testid,insideWorkbench:!!e.closest('[data-testid=comparison-workbench]'),tag:e.tagName,name:e.getAttribute('aria-label')||e.labels?.[0]?.textContent||e.textContent||e.title,outline:s.outlineStyle,outlineWidth:s.outlineWidth,width:r.width,height:r.height};}''')
+            assert focus['insideWorkbench'] and focus['tag']!='BODY' and focus['width']>0 and focus['height']>0,focus
             assert focus['name'].strip(),focus
             assert focus['outline']!='none' and float(focus['outlineWidth'].replace('px',''))>0,focus
+            visited.append(focus.get('testid'))
+            if focus.get('testid')=='wb-save':break
+        assert visited[-1]=='wb-save' and 'wb-differences' in visited,visited
         # Double actual computed text, including explicit px sizes. Snapshot all
         # values before applying overrides to avoid inherited compound doubling.
         doubled=page.evaluate('''() => {
@@ -144,6 +153,12 @@ def responsive_keyboard(page):
         assert abs(doubled['after']-doubled['before']*2)<0.1,doubled
         for width,height in [(320,844),(390,844),(430,844),(1440,900)]:
             page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(100);no_overflow(page)
+            header_bounds=page.locator('.research-global').evaluate('''header => {
+              const h=header.getBoundingClientRect();
+              return [...header.querySelectorAll('a,button')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return {text:e.textContent,top:r.top,bottom:r.bottom,headerTop:h.top,headerBottom:h.bottom};});
+            }''')
+            for control in header_bounds:
+                assert control['top']>=-1 and control['top']>=control['headerTop']-1 and control['bottom']<=control['headerBottom']+1,control
             page.screenshot(path=str(a.output/f'{brand}-{width}-text-200.png'),full_page=True)
         page.reload(wait_until='networkidle')
 

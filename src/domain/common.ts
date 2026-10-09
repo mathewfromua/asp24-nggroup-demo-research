@@ -13,4 +13,3 @@ export const modelCount = (n: number): string => `${n} ${plural(n, 'модель
 export const quantity = (value: unknown): number | null => /^\d+$/.test(String(value).trim()) && Number(value) >= 1 && Number(value) <= 999 ? Number(value) : null;
 export const normalizeSearch = (s: unknown): string => String(s ?? '').toLocaleLowerCase('uk').replace(/[\s\-–]/g, '');
 export const isExact = (p: Product, q: string): boolean => !!q && [p.name, p.sku, ...(p.aliases || [])].some(s => normalizeSearch(s) === normalizeSearch(q));
-

@@ -66,3 +66,12 @@ body[data-brand="ng"] .comparison-workbench {--wb-ink:#38213f;--wb-accent:#693b7
 }
 @media (max-width:350px) {body[data-page="compare"] .workspace:has(.comparison-workbench) {padding-inline:8px}.wb-heading h1 {font-size:19px}.wb-heading-side {max-width:78px}.wb-table :is(th,td) {padding:9px 5px}.wb-table th:first-child {width:27%}.wb-modes label {font-size:11px}.wb-modes>button {font-size:9px}}
 @media (prefers-reduced-motion:reduce) {.comparison-workbench * {scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+/* Shared page chrome must reflow with enlarged text as well as the pilot. */
+body:has(.comparison-workbench) .research-global {height:auto;min-height:44px;flex-wrap:wrap;gap:8px 20px;padding-block:0}
+body:has(.comparison-workbench) .research-global>a {min-width:0;max-width:100%}
+body:has(.comparison-workbench) .research-global>.text-btn {flex-shrink:0;white-space:normal;max-width:100%}
+body:has(.comparison-workbench) .footer>div {min-width:0;max-width:100%;flex-wrap:wrap}
+body:has(.comparison-workbench) .footer button {max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.wb-footer>div {flex-wrap:wrap}
+.wb-footer [role=status] {flex:1 1 12rem;max-width:none;overflow-wrap:normal}
+@media(max-width:700px) {.wb-footer>div {align-items:start}.wb-footer [role=status] {flex-basis:12rem}}

@@ -106,6 +106,17 @@ def source_copy(source, cover_png, cover_text, public_url):
         return opening + ('<title>' + html.escape(html.unescape(label[1])) + '</title>' if label else '')
 
     result = re.sub(r'<svg\b[^>]*>', svg_title, result)
+    palette = dict(re.findall(r'--(accent|ink):([^;}]+)', source))
+
+    def svg_colors(match):
+        # SVG presentation attributes are not CSS declaration values in the
+        # renderer. Resolve the existing brand variables only inside SVG.
+        drawing = match.group(0)
+        for name, value in palette.items():
+            drawing = drawing.replace(f"var(--{name})", value)
+        return drawing.replace("currentColor", palette["ink"])
+
+    result = re.sub(r'<svg\b.*?</svg>', svg_colors, result, flags=re.S)
 
     def absolute_link(match):
         href = html.unescape(match[1])
@@ -319,6 +330,7 @@ def main():
         "working_tree_dirty": bool(command(["git", "-C", str(ROOT), "status", "--porcelain"]).strip()),
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "renderer": "WeasyPrint " + weasyprint_version,
+        "experiment_script_sha256": sha(Path(__file__)),
         "python": command(["python", "--version"]).strip(),
         "poppler": subprocess.run(["pdftoppm", "-v"], capture_output=True, text=True).stderr.splitlines()[0],
         "font_sha256": {name: sha(args.font_dir / name) for name in ("NotoSans-Regular.ttf", "NotoSans-Bold.ttf")},
@@ -380,6 +392,7 @@ def main():
         result = {
             "output": str(pdf.relative_to(args.output)), "pdf_sha256": sha(pdf),
             "source_sha256": sha(source_path),
+            "print_html_sha256": sha(out / "print.html"), "print_css_sha256": sha(out / "print.css"),
             "pages": len(reader.pages), "accepted_pages": len(PdfReader(accepted_pdf).pages),
             "structure": structure_result, "content": content,
             "bookmarks": outline_titles, "pdf_ua_validator": validator,
@@ -389,6 +402,12 @@ def main():
                       "limit": "Rasterization preserves artwork composition but loses vector text sharpness and cover text selection. H1 contains Figure rather than text. Not approved as a final cover replacement."},
             "body_render_comparison": "Both complete render sets emitted. HTML tables add accessible figure data and can change pagination; body render equality is not claimed.",
         }
+        result["content_structure_checks"] = "PASS" if not any((
+            content["missing_or_out_of_order_logical_blocks"], content["missing_links"],
+            content["missing_figure_alternatives"], structure_result["figures_without_alternative"],
+            structure_result["data_cells_without_headers"], structure_result["unresolved_header_references"],
+            structure_result["language"] != "uk-UA",
+        )) else "FAIL"
         (out / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
         results["reports"][brand] = result
         print(json.dumps({"report": brand, "pages": result["pages"], "accepted_pages": result["accepted_pages"],
@@ -397,6 +416,8 @@ def main():
     results["accepted_inputs_unchanged"] = all(sha(ROOT / name) == digest for name, digest in accepted.items())
     (args.output / "result.json").write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n")
     assert results["accepted_inputs_unchanged"], "Accepted inputs changed during experiment."
+    assert all(report["content_structure_checks"] == "PASS" for report in results["reports"].values()), \
+        "Content/structure regression; inspect result.json. This is not a PDF/UA check."
 
 
 if __name__ == "__main__":
