@@ -9,6 +9,7 @@
     "evidence/figure_data/filter_paths.csv": "1555b92861117db9d649071f9c5ffde0bc8f21746db94551cb0236117179ffc0",
     "evidence/figure_data/nominal_autonomy.csv": "cf641e027cb6a67d974f193c8771c0ab0e6d92c822199a3d9390f0f5741dcaae",
     "evidence/figure_data/technical_rows.csv": "eccff9876f97279954ca817bc8d0470094ae0ac723e955e6c047dc1598215a2d",
+    "publication.json": "5effed0274ffedf112fd8f2d110adaea307f55362d0f4d79f84ee911d7bf1d2d",
     "reports/assets/ASP24-p4-0.png": "d739063c738ed3d3db2570eca2c52d8567a6d15729055202402ccfc87b510b25",
     "reports/assets/ASP24-p4-1.png": "0ad669571d09fd4c9ad3643feeea4b4cb1058e487ffba47e0830741261b9e907",
     "reports/assets/NGGroup-p4-0.jpg": "47564e97da2b26c623f143241cc896d5b4d9175e799b6131c1d80ff4e68dad24",
@@ -17,17 +18,17 @@
     "reports/assets/compare-report-crop.png": "14cdd345e09dd8fc66d4c55d2f3ead27c4349bf1494b0b79bed97cc3c1c6a3b9",
     "reports/assets/document-report-crop.png": "3752c7719c12afff68080e9c70da7cebc75f49c9beb1b28aa8aa825648ddcafb",
     "reports/build_editorial.py": "4a7f03511a4ed86ca3432968b5aeb45b64d00c77519326be56e78399f5acef57",
-    "reports/build_html.py": "64de307aa8abaa3e21ac3513676f31432d331bbf5f809c65c1f7930686fc4bed",
+    "reports/build_html.py": "276f1707e1579b75998f7dac2f72ef7e06a2f17666043fbdf657a144e6e2576c",
     "reports/build_inputs.py": "d76b21b0c5e9239e1b7d3fce9dc9ef4e3dbb14da4e3f9bca3c89116f060b484f",
-    "reports/content.json": "35f18a56e1ec4df15df80b3045dc89e993f7f825a08fce78b2a60e57c9da5b44",
-    "reports/content.py": "461af87a5ffdfd2b2775e3ff2b2ae82eae2f079c9de5f1cd7584ad884a48a9f0",
+    "reports/content.json": "543dfd4f46cc5ea58a6aadfbca4cfc2be32f54c25156d732aa5c91e8480729f2",
+    "reports/content.py": "73ff61d03689d9b5401665be70c6409d67a26aa314a5e44c130f701689697b37",
     "reports/covers/ASP24.pdf": "7d4b08f8b7d481f032a9cb1b530347636bf1a02e531daa7eff0975911ed920ea",
     "reports/covers/NGGroup.pdf": "9f6e512c9e785c0a06bf85655b7b1b0e74a42ae3930442da54b62e4a7f6a0185",
     "reports/covers/provenance.json": "ab67e722b25141abceab2f346d46962514ff714786a3752f53f1c8b30a2fac90",
-    "reports/export_standalone.py": "304ea60a0ca6eab3c172f2138444b606a89c99fa1a0900615f1ba60f62a40569",
+    "reports/export_standalone.py": "21f40d39d199cecc6b577a0b1534dfb3c966abff951358a1128454f1ac96a2e9",
     "reports/fonts/downloads.json": "ba61ea8afbd6375a46416ea4ae9cc0196f536120896e0aadb0a2470d1692d83e",
     "reports/fonts/provenance.json": "3ea81860ad8a673426703f2dfa41a86297e9532bb7b71e37158579712a19363c",
     "reports/requirements.txt": "40b14b63562432bfa42d682317efacc2835ff92d9b76c56696645edf5ed20976"
   },
-  "digest": "cf1d374292af000f417176376a95804863291459381bee06ba8ed88539481ae7"
+  "digest": "476f6c551d4127d93ee619e295ba5ae2d34600475c63df55c32daa7cb7d0cce7"
 }

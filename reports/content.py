@@ -12,9 +12,15 @@ if url.scheme != "https" or not url.netloc or url.path != BASE_PATH or not BASE_
     raise ValueError("PUBLIC_BASE_URL must be HTTPS and match the trailing-slash BASE_PATH")
 
 
+PUBLICATION = json.loads((ROOT / "publication.json").read_text(encoding="utf-8"))
+CASES = {c["caseId"]: c for c in PUBLICATION["cases"]}
+
 def resolve(value):
     if isinstance(value, str):
-        return value.replace("{{PUBLIC_BASE_URL}}", PUBLIC_BASE_URL)
+        value = value.replace("{{PUBLIC_BASE_URL}}", PUBLIC_BASE_URL)
+        for id,c in CASES.items():
+            value=value.replace("{{CASE:"+id+"}}", PUBLIC_BASE_URL+f'cases/{id}/v{c["caseVersion"]}/')
+        return value
     if isinstance(value, list):
         return [resolve(item) for item in value]
     if isinstance(value, dict):
