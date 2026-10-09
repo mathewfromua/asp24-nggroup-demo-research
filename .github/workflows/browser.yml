@@ -57,7 +57,12 @@ jobs:
           if [ "$BROWSER" = chromium ] && command -v google-chrome >/dev/null; then
             browser_args+=(--executable "$(command -v google-chrome)")
           fi
-          python scripts/browser-regression.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts "${browser_args[@]}"
+          browser_status=0
+          python scripts/browser-regression.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts "${browser_args[@]}" || browser_status=$?
+          if [ -f dist/publication.json ]; then
+            python scripts/browser-cases.py --url "$preview_url" --browser "$BROWSER" --output browser-artifacts/cases "${browser_args[@]}" || browser_status=$?
+          fi
+          exit "$browser_status"
       - name: Retain browser results and sanitized failure traces
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
