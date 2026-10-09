@@ -46,6 +46,21 @@ def overflow(page):
     assert geometry['scroll']<=geometry['width']+1,geometry
 
 
+def capture_viewports(page,name,enabled=True,section=None):
+    """Keep passing visual evidence as well as traces for a failing interaction."""
+    for width,height in [(320,844),(390,844),(430,844),(1440,900)]:
+        page.set_viewport_size({'width':width,'height':height})
+        page.wait_for_timeout(180)  # Allow the application's debounced resize restore.
+        overflow(page)
+        if enabled and width in [390,1440]:
+            filename=f'{name}-{width}.png'
+            if section:page.locator(section).screenshot(path=str(args.output/filename))
+            else:page.screenshot(path=str(args.output/filename),full_page=True)
+            results.setdefault('screenshots',[]).append(filename)
+    page.set_viewport_size({'width':390,'height':844})
+    page.wait_for_timeout(180)
+
+
 def assert_case(page,case,changed=False):
     expect(page.locator('.case-banner')).to_contain_text(case['title'])
     if case['caseId']=='six-candidates':
@@ -74,9 +89,7 @@ def hub(page):
         expect(page.locator(f'a[href$="reports/{report}_Review.html"]')).to_be_visible()
         expect(page.locator(f'a[href$="reports/{report}_Review.pdf"]')).to_be_visible()
     assert not any(re.search(r'/assets/(app|data|catalog-expanded)-',path) for path in requested),requested
-    for width in [320,390,430,1440]:
-        page.set_viewport_size({'width':width,'height':900});overflow(page)
-    page.set_viewport_size({'width':390,'height':844})
+    capture_viewports(page,'hub')
     page.add_style_tag(content='html{font-size:200% !important}body{font-size:200% !important}')
     overflow(page)
     # All historical hash URLs remain a real navigation to the same stable model.
@@ -96,11 +109,21 @@ def make_case_check(case,filled):
         expect(entry).to_be_visible();entry.click();page.wait_for_load_state('networkidle')
         expect(page.locator('h1')).to_have_text(case['title'])
         assert_personal(page,original)
-        for width in [320,390,430,1440]:
-            page.set_viewport_size({'width':width,'height':900});overflow(page)
-        page.set_viewport_size({'width':390,'height':844})
+        capture_viewports(page,case['caseId']+'-landing',not filled)
         page.get_by_role('link',name='Відкрити приклад',exact=True).click();page.wait_for_load_state('networkidle')
         assert_case(page,case);assert_personal(page,original)
+        capture_viewports(page,case['caseId']+'-active',not filled)
+        if case['caseId']=='model-document':
+            # Document and card must retain the same stable model; the draft stays in the case.
+            page.locator('[data-action=consult][data-id=u02]').click()
+            expect(page.locator('#consult-form [name=question]')).to_have_value(case['seed']['drafts']['u02']['question'])
+            page.locator('#consult-form [name=question]').fill('Синтетичне уточнення виконання D1')
+            page.locator('#modal [data-action=close]').click()
+            page.locator('a.back[href="#/ng/product/u02"]').click()
+            expect(page.locator('h1')).to_have_text('VOLTYN N36')
+            page.locator('a[href="#/ng/document/u02"]').click()
+            expect(page.locator('.document-page')).to_contain_text('DEMO-U02')
+            assert_personal(page,original)
         # A storage event from the personal workspace must not replace case state.
         page.evaluate('([key,fixture])=>window.dispatchEvent(new StorageEvent("storage",{key,newValue:JSON.stringify(fixture),storageArea:localStorage}))',[key,fixture])
         assert_case(page,case);assert_personal(page,original)
@@ -110,10 +133,13 @@ def make_case_check(case,filled):
         page.reload(wait_until='networkidle');assert_case(page,case,changed);assert_personal(page,original)
         stored=page.evaluate('(key)=>sessionStorage.getItem(key)',f'asp24-nggroup-case:{case["caseId"]}:v{case["caseVersion"]}')
         assert stored is not None and json.loads(stored)['version']==4
+        if case['caseId']=='model-document':
+            assert json.loads(stored)['drafts']['u02']['question']=='Синтетичне уточнення виконання D1'
         return_link=page.locator('.case-banner').get_by_role('link',name='Повернутися до розділу огляду',exact=True)
         assert return_link.get_attribute('href').endswith(f'reports/{case["reportId"]}_Review.html#{case["sectionId"]}')
         return_link.click();page.wait_for_load_state('networkidle')
         assert page.url==report;expect(page.locator('#'+case['sectionId'])).to_be_visible();assert_personal(page,original)
+        capture_viewports(page,case['caseId']+'-report-return',not filled,'#'+case['sectionId'])
         page.go_back(wait_until='networkidle');assert_case(page,case,changed);assert_personal(page,original)
         page.go_forward(wait_until='networkidle');assert page.url==report;assert_personal(page,original)
         page.goto(demo+f'?case={case["caseId"]}&v={case["caseVersion"]}'+case['route'],wait_until='networkidle')
