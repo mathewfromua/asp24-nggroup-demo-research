@@ -136,7 +136,7 @@ export function repeatOrder(cart, order, catalog = products) {
   return { cart: next, skipped, clamped, renamed, changedStatus };
 }
 export function orderText(order) {
-  return ['ПЕРСПЕКТИВА — ДЕМОЗАМОВЛЕННЯ', order.id.toUpperCase(),
+  return ['ASP24 / NG Group — ДЕМОЗАМОВЛЕННЯ', order.id.toUpperCase(),
     'Лише локальна демонстрація. Нічого не надіслано, не оплачено й не зарезервовано.',
     `Створено: ${order.createdAt}`, `Етап симуляції: ${stageLabel(order.status)}`,
     `Псевдонім: ${order.checkout.alias}`, `Об’єкт: ${order.project || '—'}`,

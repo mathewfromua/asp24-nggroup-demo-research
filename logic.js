@@ -25,8 +25,13 @@ export function semantic(value) {
   text = text.replace(/(\d) (?=\d{3}(?:\D|$))/g, '$1').replace(/\d+(?:[.,]\d+)?/g, n => String(Number(n.replace(',', '.'))));
   return `value:${text.replace(/\s*([/×·])\s*/g, '$1').replace(/(\d)\s+(?=[a-zа-яіїєґ])/g, '$1')}`;
 }
-export const differs = (ps, key) => new Set(ps.map(p => semantic(p.props[key]))).size > 1;
-export const comparisonKeys = (ps, only = false) => ps.length && isGroup(ps[0].group) ? groups[ps[0].group].keys.filter(k => !only || differs(ps, k)) : [];
+// A gap does not prove inequality; a row can also contain both at once.
+export function comparisonStatus(ps, key) {
+  const values = ps.map(p => p.props[key]);
+  return {different: new Set(values.filter(value => value != null).map(semantic)).size > 1, incomplete: values.some(value => value == null)};
+}
+export const differs = (ps, key) => comparisonStatus(ps, key).different;
+export const comparisonKeys = (ps, only = false) => ps.length && isGroup(ps[0].group) ? groups[ps[0].group].keys.filter(k => !only || (ps.length > 1 && Object.values(comparisonStatus(ps, k)).some(Boolean))) : [];
 
 export function filterProducts(brand, params = new URLSearchParams(), catalog = products) {
   const q = params.get('q') || '', cat = catalogCategory(params);
@@ -205,11 +210,11 @@ export function addCartItem(state, id, catalog = products) {
   return 'ok';
 }
 export function listText(state, catalog = products) {
-  return ['ПЕРСПЕКТИВА — ДЕМОНСТРАЦІЙНИЙ СПИСОК', state.listName, 'Усі ціни й дані умовні. Нічого не замовлено.', '', ...Object.entries(state.cart).map(([id, q]) => {
+  return ['ASP24 / NG Group — ДЕМОНСТРАЦІЙНИЙ СПИСОК', state.listName, 'Усі ціни й дані умовні. Нічого не замовлено.', '', ...Object.entries(state.cart).map(([id, q]) => {
     const p = catalog.find(p => p.id === id);
     return `${p.name} | ${p.sku} | ${quantityLabel(p, q)} | ${money(p.price)} / ${p.unit} | ${money(p.price * q)}`;
   }), '', `Разом: ${money(cartTotal(state.cart, catalog))}`, `Примітка: ${state.note || '—'}`].join('\n');
 }
 export function consultationText(p, draft) {
-  return ['ПЕРСПЕКТИВА — ЛОКАЛЬНИЙ ПРИКЛАД ЗАПИТУ', `${p.name} | ${p.sku} | виконання ${p.revision}`, `Мета: ${draft.purpose}`, `Кількість: ${draft.quantity || 'Не визначена'}`, draft.question.trim(), '', 'Нічого не надіслано. Умовна модель.'].join('\n');
+  return ['ASP24 / NG Group — ЛОКАЛЬНИЙ ПРИКЛАД ЗАПИТУ', `${p.name} | ${p.sku} | виконання ${p.revision}`, `Мета: ${draft.purpose}`, `Кількість: ${draft.quantity || 'Не визначена'}`, draft.question.trim(), '', 'Нічого не надіслано. Умовна модель.'].join('\n');
 }
