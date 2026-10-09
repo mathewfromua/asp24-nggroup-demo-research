@@ -260,8 +260,220 @@ def layout_probe(page):
     page.screenshot(path=str(a.output/'restored-320.png'),full_page=True)
 
 
+def interaction_paint(page,element):
+    # Exercise the real 150ms transition, then inspect the painted frame.
+    page.wait_for_timeout(180)
+    page.evaluate('() => new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))')
+    return element.evaluate('''e => {const s=getComputedStyle(e);return Object.fromEntries(
+      ['backgroundColor','color','borderTopColor','boxShadow','filter','outlineStyle','outlineWidth',
+       'textDecorationLine','textDecorationColor','opacity','cursor','transitionDuration'].map(k=>[k,s[k]]));}''')
+
+
+def interaction_bounds(element):
+    return element.evaluate('''target => {
+      const rect=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};
+      const landmarks=[...document.querySelectorAll('.product,.wb-heading,.wb-toolbar,.wb-pair-controls,.wb-candidate-grid article,.wb-results article,.wb-table-wrap,.wb-footer,.research-global')].filter(e=>e.getClientRects().length);
+      return {target:rect(target),landmarks:landmarks.map((e,i)=>({key:i+':'+e.tagName+':'+e.className+':'+(e.dataset.testid||''),rect:rect(e)})),scrollWidth:document.documentElement.scrollWidth};
+    }''')
+
+
+def stable_interaction_bounds(before,after,label):
+    assert before['scrollWidth']==after['scrollWidth'],{'target':label,'before':before,'after':after}
+    assert [e['key'] for e in before['landmarks']]==[e['key'] for e in after['landmarks']],label
+    pairs=[('target',before['target'],after['target'])]+[(b['key'],b['rect'],c['rect']) for b,c in zip(before['landmarks'],after['landmarks'])]
+    for name,b,c in pairs:
+        assert all(abs(b[k]-c[k])<=0.5 for k in ['x','y','width','height']),{'interaction':label,'element':name,'before':b,'after':c}
+
+
+def hover_interaction(page,element,brand,label):
+    element.scroll_into_view_if_needed();page.mouse.move(1,1)
+    page.evaluate('() => document.activeElement?.blur()')
+    before=interaction_paint(page,element);bounds=interaction_bounds(element)
+    element.hover();after=interaction_paint(page,element)
+    assert element.evaluate('e=>e.matches(":hover")'),label
+    changed={k:{'before':before[k],'hover':after[k]} for k in ['backgroundColor','color','borderTopColor','boxShadow','filter','textDecorationLine','textDecorationColor'] if before[k]!=after[k]}
+    assert changed,{'brand':brand,'target':label,'before':before,'hover':after}
+    stable_interaction_bounds(bounds,interaction_bounds(element),brand+':hover:'+label)
+    results.setdefault('interaction_evidence',[]).append({'brand':brand,'device':'desktop','target':label,'hover_changed':changed,'stable_bounds':bounds['target'],'stable_landmarks':len(bounds['landmarks'])})
+    return before
+
+
+def disabled_interaction(page,element,touch=False):
+    expect(element).to_be_disabled();element.scroll_into_view_if_needed()
+    before={'selection':selected(page),'pair':pair(page),'cart':stored(page)['cart'],'message':page.locator('.wb-action-status').inner_text()}
+    box=element.bounding_box();assert box and box['width']>0 and box['height']>0
+    if touch:page.touchscreen.tap(box['x']+box['width']/2,box['y']+box['height']/2)
+    else:page.mouse.click(box['x']+box['width']/2,box['y']+box['height']/2)
+    paint=interaction_paint(page,element)
+    assert paint['cursor']=='not-allowed' and paint['boxShadow']=='none' and paint['filter']=='none',paint
+    assert {'selection':selected(page),'pair':pair(page),'cart':stored(page)['cart'],'message':page.locator('.wb-action-status').inner_text()}==before
+
+
+def interaction_feedback(page,brand):
+    status=page.locator('.wb-action-status');original=stored(page)
+    page.get_by_test_id('wb-add').click();page.get_by_test_id('wb-search').fill(by_id[ids[3]]['sku'])
+    page.get_by_test_id('wb-add-'+ids[3]).click()
+    expect(status).to_have_text(by_id[ids[3]]['name']+': додано до порівняння.')
+    expect(page.get_by_test_id('wb-result-'+ids[3])).to_have_attribute('data-selected','true')
+    disabled_interaction(page,page.get_by_test_id('wb-add-'+ids[3]))
+    page.mouse.move(1,1);page.evaluate('() => document.activeElement?.blur()')
+    chosen=interaction_paint(page,page.get_by_test_id('wb-result-'+ids[3]))
+    active=interaction_paint(page,page.get_by_test_id('wb-candidate-'+ids[0]))
+    assert chosen['backgroundColor']==active['backgroundColor'],{'result':chosen,'active_pair':active}
+    page.locator('.wb-discovery-heading button').click()
+    page.get_by_test_id('wb-remove-'+ids[2]).click()
+    expect(status).to_have_text(by_id[ids[2]]['name']+': прибрано. Дію можна скасувати.')
+    page.get_by_test_id('wb-undo').click();expect(status).to_have_text('Видаленого кандидата повернуто.')
+    assert selected(page)==ids[:4] and pair(page)==ids[:2]
+    disabled_interaction(page,page.locator('.wb-full').get_by_role('button',name='До кошика: '+by_id[ids[2]]['name'],exact=True))
+    page.locator('.wb-full').get_by_role('button',name='До кошика: '+by_id[ids[0]]['name'],exact=True).click()
+    expect(status).to_have_text(by_id[ids[0]]['name']+': додано 1 '+by_id[ids[0]]['unit']+' до поточного кошика.')
+    cart={**original['cart'],ids[0]:1};assert stored(page)['cart']==cart
+    # Block only this test's state write. A changed pair must remain visibly in
+    # memory, with exact failure feedback and no false success or stored change.
+    persisted=page.evaluate('(key)=>localStorage.getItem(key)',key)
+    page.evaluate('''key => {window.__interactionSetItem=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(this===localStorage&&k===key)throw new DOMException('Intentional interaction quota probe','QuotaExceededError');return window.__interactionSetItem.call(this,k,v);};}''',key)
+    try:
+        page.get_by_test_id('wb-pair-a').select_option(ids[2]);page.get_by_test_id('wb-save').click()
+        expect(status).to_have_text('Вибір лише в пам’яті цієї сторінки. Перезавантаження може його втратити; збережіть JSON-експорт.')
+        expect(page.get_by_test_id('wb-save-status')).to_have_text('Лише в пам’яті сторінки. Збережіть експорт.')
+        assert 'Вибір збережено.' not in status.inner_text()
+        assert page.evaluate('(key)=>localStorage.getItem(key)',key)==persisted
+        assert pair(page)[0]==ids[2] and stored(page)['view']['pairs']['ups'][0]==ids[0]
+        page.screenshot(path=str(a.output/f'{brand}-1440-interaction-save-failure.png'),full_page=True)
+    finally:page.evaluate('() => {Storage.prototype.setItem=window.__interactionSetItem;delete window.__interactionSetItem;}')
+    page.get_by_test_id('wb-pair-a').select_option(ids[0]);page.get_by_test_id('wb-save').click()
+    expect(status).to_have_text('Вибір збережено. Він доступний після перезавантаження.')
+    expect(page.get_by_test_id('wb-save-status')).to_have_text('Збережено в цьому браузері.')
+    page.get_by_test_id('wb-shortlist').click()
+    expect(page.locator('#modal')).to_be_visible()
+    page.locator('#modal [data-action="comparison-save-to-project"][data-target="new"]').click()
+    expect(page.locator('.science-project-line')).to_have_count(4)
+    expect(page.locator('#toast')).to_have_text('Кандидатів збережено в проєкті.')
+    project=stored(page)['science']['projects'][-1];assert project['candidates']==ids[:4]
+    quantity=page.locator('[data-project-model="'+ids[0]+'"] input[data-field="quantity"]')
+    quantity.fill('4');quantity.press('Tab')
+    expect(quantity).to_have_value('4');expect(page.locator('#toast')).to_have_text(by_id[ids[0]]['name']+': 4 '+by_id[ids[0]]['unit']+'.')
+    assert stored(page)['science']['projects'][-1]['quantities'][ids[0]]==4
+    quantity.fill('0');quantity.press('Tab')
+    expect(quantity).to_have_value('4');expect(quantity).to_have_attribute('aria-invalid','true')
+    expect(page.locator('.quantity-error[role=status]')).to_have_text('Введіть ціле число від 1 до 999. Залишено попередню кількість.')
+    assert stored(page)['science']['projects'][-1]['quantities'][ids[0]]==4
+    quantity.fill('5');expect(quantity).not_to_have_attribute('aria-invalid','true')
+    expect(page.locator('.quantity-error')).to_have_count(0);quantity.press('Tab')
+    expect(page.locator('#toast')).to_have_text(by_id[ids[0]]['name']+': 5 '+by_id[ids[0]]['unit']+'.')
+    with page.expect_download() as event:page.locator('[data-action="science-export"][data-format="json"]').click()
+    export=a.output/f'{brand}-interaction-project.json';event.value.save_as(export);payload=json.loads(export.read_text())
+    expect(page.locator('#toast')).to_have_text('Експорт поточного проєкту підготовлено.')
+    current=stored(page);assert payload['format']=='perspektyva-project' and payload['version']==1 and payload['project']==current['science']['projects'][-1]
+    assert current['cart']==cart and current['drafts']==original['drafts']
+
+
+def touch_interactions(browser,brand,width):
+    context=browser.new_context(viewport={'width':width,'height':844},has_touch=True,accept_downloads=True,reduced_motion='no-preference')
+    context.set_default_timeout(12000);context.tracing.start(screenshots=True,snapshots=True,sources=True)
+    errors=[]
+    def local_only(route):
+        if urlsplit(route.request.url).netloc==urlsplit(base).netloc:route.continue_()
+        else:errors.append('Unexpected outbound request: '+route.request.url);route.abort()
+    context.route('**/*',local_only);page=context.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
+    def control(element):
+        expect(element).to_be_visible();element.scroll_into_view_if_needed();paint=interaction_paint(page,element);box=element.bounding_box()
+        assert box and box['height']>=43.5 and float(paint['opacity'])>0,{'brand':brand,'width':width,'control':element.get_attribute('data-testid'),'bounds':box,'paint':paint}
+        assert element.evaluate('e=>{const r=e.getBoundingClientRect(),p=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !!p&&(e===p||e.contains(p));}'),element.inner_text()
+    try:
+        initial=state(True);initial['compareByGroup']['ups']=ids[:3]
+        seed(page,initial,demo+f'#/{brand}/compare?experience=modern')
+        media=page.evaluate('() => ({touch:navigator.maxTouchPoints,hoverNone:matchMedia("(hover:none)").matches,coarse:matchMedia("(pointer:coarse)").matches})')
+        assert media['touch']>0 and media['hoverNone'] and media['coarse'],media
+        no_overflow(page);expect(page.get_by_test_id('wb-pair-a')).to_be_visible();expect(page.get_by_test_id('wb-pair-b')).to_be_visible()
+        summary=page.locator('.wb-candidates > summary');control(summary);summary.tap()
+        for pid in ids[:3]:
+            for action in ['replace','remove']:control(page.get_by_test_id('wb-'+action+'-'+pid))
+        page.evaluate('() => scrollTo(0,0)');page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-candidates.png'),full_page=True)
+        page.get_by_test_id('wb-replace-'+ids[0]).tap();expect(page.get_by_test_id('wb-replace-target')).to_have_value(ids[0])
+        control(page.locator('.wb-discovery-heading button'));page.locator('.wb-discovery-heading button').tap()
+        page.get_by_test_id('wb-remove-'+ids[2]).tap()
+        expect(page.locator('.wb-action-status')).to_have_text(by_id[ids[2]]['name']+': прибрано. Дію можна скасувати.')
+        control(page.get_by_test_id('wb-undo'));page.get_by_test_id('wb-undo').tap()
+        expect(page.locator('.wb-action-status')).to_have_text('Видаленого кандидата повернуто.')
+        control(page.get_by_test_id('wb-add'));page.get_by_test_id('wb-add').tap();page.get_by_test_id('wb-search').fill(by_id[ids[3]]['sku'])
+        control(page.get_by_test_id('wb-add-'+ids[3]));page.get_by_test_id('wb-add-'+ids[3]).tap()
+        expect(page.locator('.wb-action-status')).to_have_text(by_id[ids[3]]['name']+': додано до порівняння.')
+        expect(page.get_by_test_id('wb-result-'+ids[3])).to_have_attribute('data-selected','true')
+        page.locator('.wb-discovery-heading button').tap()
+        assert selected(page)==ids[:4] and pair(page)==ids[:2]
+        expect(page.get_by_test_id('wb-candidate-'+ids[0])).to_have_attribute('data-pair','A')
+        expect(page.get_by_test_id('wb-candidate-'+ids[0]).locator('.wb-candidate-pair')).to_have_text('A · активна пара')
+        page.get_by_test_id('wb-pair-b').select_option(ids[2])
+        disabled_interaction(page,page.locator('.wb-pair').get_by_role('button',name='До кошика: '+by_id[ids[2]]['name'],exact=True),touch=True)
+        page.get_by_test_id('wb-pair-b').select_option(ids[1])
+        control(page.get_by_test_id('wb-save'));page.get_by_test_id('wb-save').tap()
+        expect(page.locator('.wb-action-status')).to_have_text('Вибір збережено. Він доступний після перезавантаження.')
+        control(page.get_by_test_id('wb-shortlist'));page.get_by_test_id('wb-shortlist').tap();expect(page.locator('#modal')).to_be_visible()
+        page.locator('#modal [data-action="close"]').tap()
+        summary.tap();page.evaluate('() => scrollTo(0,0)');no_overflow(page)
+        first=page.locator('.wb-pair tbody tr[data-row]').first;box=first.bounding_box();assert box and 0<=box['y']<844,{'brand':brand,'width':width,'first_parameter':box}
+        page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch.png'),full_page=True)
+        page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-viewport.png'))
+        assert not errors,errors
+        results.setdefault('interaction_evidence',[]).append({'brand':brand,'device':'touch','width':width,'media':media,'visible_actions':['replace','remove','undo','add','save','shortlist'],'first_parameter_y':box['y']})
+    except Exception:
+        page.screenshot(path=str(a.output/f'{brand}-{width}-interaction-touch-failure.png'),full_page=True)
+        context.tracing.stop(path=str(a.output/f'{brand}-{width}-interaction-touch.zip'));raise
+    else:context.tracing.stop()
+    finally:context.close()
+
+
+def actual_interactions(page):
+    page.emulate_media(reduced_motion='no-preference')
+    assert page.evaluate('() => matchMedia("(hover:hover) and (pointer:fine)").matches')
+    for brand in ['asp','ng']:
+        seed(page,state(),demo+f'#/{brand}/compare?experience=modern')
+        page.goto(demo+f'#/{brand}/catalog?cat=ups',wait_until='networkidle')
+        card=page.locator('.product[data-product-id="'+ids[0]+'"]');expect(card).to_be_visible()
+        hover_interaction(page,card,brand,'catalog-card')
+        for selector,label in [('.favorite','catalog-favorite'),('.compare-toggle','catalog-compare'),('h3 a','catalog-model-link'),('.card-buttons .btn','catalog-button')]:
+            hover_interaction(page,card.locator(selector).first,brand,label)
+        compare=card.locator('.compare-toggle');page.mouse.move(1,1);page.evaluate('() => document.activeElement?.blur()')
+        unselected=interaction_paint(page,compare);compare.click();expect(compare).to_have_attribute('aria-pressed','true')
+        page.mouse.move(1,1);page.evaluate('() => document.activeElement?.blur()');persistent=interaction_paint(page,compare)
+        assert persistent['backgroundColor']!=unselected['backgroundColor'] and ids[0] in stored(page)['compareByGroup']['ups']
+        expect(compare).to_contain_text('Додано')
+        initial=state(True);initial['compareByGroup']['ups']=ids[:3]
+        seed(page,initial,demo+f'#/{brand}/compare?experience=modern')
+        disabled_interaction(page,page.get_by_test_id('wb-undo'))
+        hover_interaction(page,page.get_by_test_id('wb-add'),brand,'primary-button')
+        primary=page.get_by_test_id('wb-add');before=interaction_paint(page,primary);bounds=interaction_bounds(primary);box=primary.bounding_box()
+        page.mouse.move(box['x']+box['width']/2,box['y']+box['height']/2);page.mouse.down()
+        try:
+            active=interaction_paint(page,primary);assert primary.evaluate('e=>e.matches(":active")')
+            assert active['backgroundColor']!=before['backgroundColor'] or active['boxShadow']!=before['boxShadow'],{'normal':before,'active':active}
+            stable_interaction_bounds(bounds,interaction_bounds(primary),brand+':active:primary-button')
+        finally:page.mouse.move(1,1);page.mouse.up()
+        for element,label in [(page.get_by_test_id('wb-save'),'secondary-button'),(page.get_by_test_id('wb-group'),'category-select'),(page.get_by_test_id('wb-candidate-'+ids[0]),'selected-candidate'),(page.get_by_test_id('wb-candidate-'+ids[2]),'candidate'),(page.get_by_test_id('wb-replace-'+ids[0]),'candidate-action'),(page.locator('.wb-full .wb-model-title').first,'table-model-button')]:
+            hover_interaction(page,element,brand,label)
+        page.get_by_test_id('wb-add').click();page.get_by_test_id('wb-search').fill(by_id[ids[3]]['sku'])
+        for element,label in [(page.get_by_test_id('wb-result-'+ids[3]),'search-result'),(page.get_by_test_id('wb-add-'+ids[3]),'search-add-button'),(page.get_by_test_id('wb-search'),'search-input')]:
+            hover_interaction(page,element,brand,label)
+        page.evaluate('() => scrollTo(0,0)');page.get_by_test_id('wb-add-'+ids[3]).hover();interaction_paint(page,page.get_by_test_id('wb-add-'+ids[3]))
+        page.screenshot(path=str(a.output/f'{brand}-1440-interaction-hover.png'),full_page=True)
+        page.locator('.wb-discovery-heading button').click();primary.scroll_into_view_if_needed();page.mouse.move(1,1)
+        page.get_by_test_id('wb-group').focus();bounds=interaction_bounds(primary);page.keyboard.press('Tab');expect(primary).to_be_focused()
+        focus=interaction_paint(page,primary);assert primary.evaluate('e=>e.matches(":focus-visible")') and focus['outlineStyle']!='none' and float(focus['outlineWidth'].replace('px',''))>=3,focus
+        stable_interaction_bounds(bounds,interaction_bounds(primary),brand+':keyboard-focus')
+        page.keyboard.press('Enter');expect(page.get_by_test_id('wb-search')).to_be_focused()
+        page.keyboard.press('Shift+Tab');expect(page.locator('.wb-discovery-heading button')).to_be_focused()
+        page.keyboard.press('Enter');expect(primary).to_be_focused();expect(primary).to_have_attribute('aria-expanded','false')
+        page.emulate_media(reduced_motion='reduce');assert interaction_paint(page,primary)['transitionDuration']=='0s'
+        page.emulate_media(reduced_motion='no-preference')
+        interaction_feedback(page,brand)
+    for brand in ['asp','ng']:
+        for width in [390,320]:touch_interactions(page.context.browser,brand,width)
+
+
 checks=[('search-six-pair-replace-remove-undo-shortlist-save-reload',flow),('legacy-pilot-share-schema4-pair-drafts-back-forward',legacy_parity),
- ('both-brands-320-390-430-1440-keyboard-focus-text200',responsive_keyboard),('modern-case-memory-warning-export-isolation-return-history',case_isolation_failure),('full-capacity-undo-is-truthful-and-keeps-current-selection',undo_full_capacity)]
+ ('both-brands-320-390-430-1440-keyboard-focus-text200',responsive_keyboard),('modern-case-memory-warning-export-isolation-return-history',case_isolation_failure),('full-capacity-undo-is-truthful-and-keeps-current-selection',undo_full_capacity),('actual-hover-active-focus-stable-bounds-feedback-and-fresh-touch-both-brands',actual_interactions)]
 if a.probe_only:checks=[('reversible-native-layout-diagnostic',layout_probe)]
 with sync_playwright() as pw:
     try:

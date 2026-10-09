@@ -79,7 +79,7 @@ function comparisonOrder(ps){return `<ol class="order-list">${ps.map((p,i)=>`<li
 function modernComparisonActive(){return route?.page==='compare'&&route.params.get('experience')==='modern';}
 function modernSnapshot(){return {brand:route.brand,group:state.view.group,groups:Object.entries(groups).map(([id,g])=>({id,name:g.name,count:state.compareByGroup[id].length})),candidates:compareIds().map(byId),pair:visiblePair(compareIds(),state.view.pairs[state.view.group]),differences:state.view.differences,undoAvailable:!!removedCandidate,saveLabel:saveLabel(),storageWarning:storageMessage(),catalogHref:catalogLink(),legacyHref:href(route.brand,'compare'),cart:{...state.cart}};}
 function updateModernWorkbench(){modernWorkbench?.update(modernSnapshot());}
-function saveModernWorkbench(){captureView();save();updateModernWorkbench();}
+function saveModernWorkbench(){captureView();const persisted=save();updateModernWorkbench();return persisted;}
 function mountModernWorkbench(){
  const element=$('#modern-comparison'),epoch=modernMountEpoch;if(!element)return;
  modernWorkbenchModule??=import('./src/ui/comparison-workbench.tsx');
@@ -95,9 +95,9 @@ function mountModernWorkbench(){
    group(id){if(!isGroup(id))return;state.view.group=id;saveModernWorkbench();},
    differences(enabled){state.view.differences=enabled;saveModernWorkbench();},
    details(id){comparisonDetails(id);},
-   cart(id){const result=addCartItem(state,id);if(result!=='ok'){toast(result==='limit'?'Максимум — 999 одиниць.':'Модель не додано: немає в наявності.');return;}saveModernWorkbench();toast(`${byId(id).name}: додано ${quantityLabel(byId(id),1)}.`);},
+   cart(id){const result=addCartItem(state,id);if(result!=='ok'){toast(result==='limit'?'Максимум — 999 одиниць.':'Модель не додано: немає в наявності.');return false;}saveModernWorkbench();toast(`${byId(id).name}: додано ${quantityLabel(byId(id),1)}.`);return true;},
    shortlist(ids){handleScience('comparison-save-to-project',{ids,brand:route.brand},state,scienceHelpers());},
-   save(){saveModernWorkbench();}
+   save(){return saveModernWorkbench();}
   });
   const view=state.view.pages[route.hash];if(view?.focus){let target;try{target=document.querySelector(view.focus);}catch{}target?.focus({preventScroll:true});}
  }).catch(()=>{if(epoch===modernMountEpoch&&element.isConnected)element.innerHTML=`<p role="alert">Не вдалося завантажити робочий простір. Поточний добір не змінено.</p><a href="${href(route.brand,'compare')}">Відкрити класичне порівняння</a>`;});

@@ -1,5 +1,5 @@
 import { products, groups, money, display, numericValue, reelLength } from './data.js';
-import { filterProducts, plural } from './logic.js';
+import { filterProducts, plural, quantityLabel } from './logic.js';
 import { labNotes, renderConnectorAtlas } from './lab.js';
 import { scenarios } from './scenarios.js';
 
@@ -71,7 +71,7 @@ export function handleScience(action,dataset,state,helpers) {
   else if(action==='science-field'){
    if(dataset.field==='map-category'){if(!Object.hasOwn(groups,dataset.value))throw new Error('Категорію не знайдено.');helpers.go(link(brand,'model-map')+'?'+modelMapQuery(dataset.query,{cat:dataset.value}));}
    else if(dataset.field==='map-facet'){if(!Object.hasOwn(groups,dataset.group)||(groups[dataset.group].numericFacetDefinitions||[]).every(d=>d[0]!==dataset.value))throw new Error('Параметр не знайдено.');helpers.go(link(brand,'model-map')+'?'+modelMapQuery(dataset.query,{cat:dataset.group,facet:dataset.value}));}
-   else {if(!p||!p.candidates.includes(dataset.id))throw new Error('Кандидата не знайдено.');if(dataset.field==='chosen')p.chosen=dataset.checked?[...new Set([...p.chosen,dataset.id])]:p.chosen.filter(id=>id!==dataset.id);else if(dataset.field==='quantity'){if(!/^\d+$/.test(String(dataset.value))||!validQuantity(Number(dataset.value)))throw new Error('Кількість: ціле число від 1 до 999.');p.quantities[dataset.id]=Number(dataset.value);}changed('');}
+   else {if(!p||!p.candidates.includes(dataset.id))throw new Error('Кандидата не знайдено.');if(dataset.field==='chosen')p.chosen=dataset.checked?[...new Set([...p.chosen,dataset.id])]:p.chosen.filter(id=>id!==dataset.id);else if(dataset.field==='quantity'){if(!/^\d+$/.test(String(dataset.value))||!validQuantity(Number(dataset.value)))throw new Error('Кількість: ціле число від 1 до 999.');p.quantities[dataset.id]=Number(dataset.value);}changed(dataset.field==='quantity'?`${product(dataset.id).name}: ${quantityLabel(product(dataset.id),p.quantities[dataset.id])}.`:'');}
   }
   else if(action==='science-submit'){
    const values=dataset.values||{};
@@ -84,7 +84,7 @@ export function handleScience(action,dataset,state,helpers) {
   }
   else if(action==='science-document'){if(!p||!p.candidates.includes(dataset.id)||!product(dataset.id)?.ng)throw new Error('Документ не знайдено.');const m=product(dataset.id),url=link('ng','document',m.id);if(!p.references.some(r=>r.url===url)){if(p.references.length>=SCIENCE_LIMITS.references)throw new Error('До 30 посилань у проєкті.');p.references.push({title:`${m.name} · документ ${m.revision||'D1'}`,url,productId:m.id});changed('Документ додано.');}else helpers.toast('Цей документ уже у проєкті.');}
   else if(action==='science-remove-reference'){if(!p||!/^\d+$/.test(String(dataset.index))||!p.references[Number(dataset.index)])throw new Error('Посилання не знайдено.');p.references.splice(Number(dataset.index),1);changed('Посилання прибрано.');}
-  else if(action==='science-export'){if(!p)throw new Error('Проєкт не знайдено.');helpers.downloadText(dataset.format==='json'?exportProject(p):projectText(p),`${p.id}.${dataset.format==='json'?'json':'txt'}`);}
+  else if(action==='science-export'){if(!p)throw new Error('Проєкт не знайдено.');helpers.downloadText(dataset.format==='json'?exportProject(p):projectText(p),`${p.id}.${dataset.format==='json'?'json':'txt'}`);helpers.toast('Експорт поточного проєкту підготовлено.');}
   else if(action==='science-recovery'){helpers.downloadText(JSON.stringify({format:'perspektyva-recovery',version:1,quarantine:s.quarantine},null,2),'projects-recovery.json');}
   else if(action==='science-import'){const imported=importProject(dataset.text,Number(dataset.size??dataset.filesize));p=createProject(s,imported);p.chosen=[...imported.chosen];syncSave(helpers,state,'Імпортовано окремий проєкт.');helpers.go(link(brand,'project',p.id));}
   else if(action==='science-cart'){if(!p||!p.chosen.length)throw new Error('Спочатку виберіть моделі для кошика.');projectCart(p);helpers.openModal(heading('Перенести вибраний склад',`<p>${p.chosen.length} ${plural(p.chosen.length,'модель','моделі','моделей')} із проєкту «${esc(p.name)}». Що зробити з поточним кошиком?</p><div class="modal-actions"><button class="btn" data-action="science-transfer" data-project="${p.id}" data-mode="add">Додати до поточного</button><button class="btn secondary" data-action="science-transfer" data-project="${p.id}" data-mode="replace">Замінити кошик</button><button class="text-btn" data-action="close">Скасувати</button></div>`));}

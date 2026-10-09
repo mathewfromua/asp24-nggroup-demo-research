@@ -3,6 +3,7 @@ import {createRoot, type Root} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {money} from '../data/catalog.ts';
 import {comparisonRows} from '../domain/comparison.ts';
+import {quantityLabel} from '../domain/cart.ts';
 import type {Brand, GroupId, Product} from '../domain/types.ts';
 import '../styles/comparison-workbench.css';
 
@@ -29,9 +30,9 @@ export interface WorkbenchActions {
   group(id: GroupId): void;
   differences(enabled: boolean): void;
   details(id: string): void;
-  cart(id: string): void;
+  cart(id: string): boolean;
   shortlist(ids: string[]): void;
-  save(): void;
+  save(): boolean;
 }
 const price = (p: Product) => money(p.price);
 const name = (p: Product) => `${p.name} · ${p.sku}`;
@@ -62,12 +63,19 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
     } else setMessage('Добір не змінено. Перевірте ліміт і вибір моделі для заміни.');
   }
   function remove(p: Product) {a.remove(p.id);setMessage(`${p.name}: прибрано. Дію можна скасувати.`);requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('[data-testid="wb-undo"]')?.focus());}
+  function undo() {setMessage(a.undo() ? 'Видаленого кандидата повернуто.' : 'Немає місця для повернення. Поточний добір не змінено.');}
+  function cart(p: Product) {setMessage(a.cart(p.id) ? `${p.name}: додано ${quantityLabel(p,1)} до поточного кошика.` : 'Кошик не змінено. Перевірте наявність і кількість.');}
+  function saveSelection() {
+    const persisted = a.save();
+    setMessage('');
+    requestAnimationFrame(() => setMessage(persisted ? 'Вибір збережено. Він доступний після перезавантаження.' : 'Вибір лише в пам’яті цієї сторінки. Перезавантаження може його втратити; збережіть JSON-експорт.'));
+  }
   function table(models: Product[], variant: 'full'|'pair') {
     const rows = comparisonRows(models, s.differences && models.length > 1);
     return <div className={`wb-table-wrap wb-${variant}`} tabIndex={0} aria-label={`Параметри: ${variant === 'pair' ? 'активна пара' : 'усі кандидати'}`}>
       <table className="wb-table">
         <caption className="sr-only">{activeGroup}. {variant === 'pair' ? 'Активна пара' : 'Усі кандидати'}. {s.differences ? 'Відмінності та неповні дані' : 'Усі параметри'}</caption>
-        <thead><tr><th scope="col" className="wb-parameter-heading">Параметр<span>Значення для конкретного виконання</span></th>{models.map(p => <th scope="col" key={p.id}>
+        <thead><tr><th scope="col" className="wb-parameter-heading">Параметр<span>Значення для конкретного виконання</span></th>{models.map(p => <th scope="col" key={p.id} data-pair={s.pair[0] === p.id ? 'A' : s.pair[1] === p.id ? 'B' : undefined}>
           <button type="button" className="wb-model-title" onClick={() => a.details(p.id)} aria-label={`Докладніше: ${p.name}`}>{p.name}</button>
           <span className="wb-sku">{p.sku} · {p.revision}</span>
           <span className="wb-pair-marker">{s.pair[0] === p.id ? 'A · активна пара' : s.pair[1] === p.id ? 'B · активна пара' : 'Кандидат'}</span>
@@ -80,7 +88,7 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
           </tr>)}
           {!rows.length && <tr><td colSpan={models.length + 1}>Відомих відмінностей і прогалин у технічних параметрах немає.</td></tr>}
         </tbody>
-        <tfoot><tr><th scope="row">Короткий список</th>{models.map(p => <td key={p.id}><button type="button" className="wb-secondary" onClick={() => a.shortlist([p.id])} aria-label={`У проєкт: ${p.name}`}>У проєкт</button><button type="button" className="wb-text" disabled={!p.available} onClick={() => a.cart(p.id)} aria-label={`До кошика: ${p.name}`}>До кошика{s.cart[p.id] ? ` · ${s.cart[p.id]} ${p.unit}` : ''}</button></td>)}</tr></tfoot>
+        <tfoot><tr><th scope="row">Короткий список</th>{models.map(p => <td key={p.id}><button type="button" className="wb-secondary" onClick={() => a.shortlist([p.id])} aria-label={`У проєкт: ${p.name}`}>У проєкт</button><button type="button" className="wb-text" disabled={!p.available} onClick={() => cart(p)} aria-label={`До кошика: ${p.name}`}>До кошика{s.cart[p.id] ? ` · ${s.cart[p.id]} ${p.unit}` : ''}</button></td>)}</tr></tfoot>
       </table>
     </div>;
   }
@@ -91,16 +99,16 @@ function Workbench({snapshot: s, actions: a}: {snapshot: WorkbenchSnapshot; acti
       <div className="wb-discovery-controls"><label className="wb-field">Пошук у категорії<input type="search" ref={searchRef} data-testid="wb-search" id="wb-search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Модель, артикул або виробник" autoComplete="off"/></label><label className="wb-field">Дія<select value={replaceId} data-testid="wb-replace-target" onChange={event => setReplaceId(event.target.value)}><option value="">Додати нового кандидата</option>{s.candidates.map(p => <option key={p.id} value={p.id}>Замість {name(p)}</option>)}</select></label></div>
       {s.candidates.length >= 6 && !replaceId && <p className="wb-notice">У доборі вже шість моделей. Оберіть, кого замінити: решта кандидатів збережеться.</p>}
       <p className="wb-result-count" role="status">{results.length} моделей за запитом · категорія {activeGroup}</p>
-      <div className="wb-results">{results.map(p => {const selected = s.candidates.some(item => item.id === p.id);return <article key={p.id} data-testid={`wb-result-${p.id}`}><div><h3>{p.name}</h3><p className="wb-sku">{p.sku} · виконання {p.revision}</p><p>{p.available ? 'В наявності' : 'Немає в наявності'} · {price(p)} / {p.unit}</p></div><button type="button" className="wb-secondary" data-testid={`wb-add-${p.id}`} disabled={selected || s.candidates.length >= 6 && !replaceId} onClick={() => add(p)}>{selected ? 'Додано' : replaceId ? 'Замінити' : 'Додати'}</button></article>;})}{!results.length && <p>Моделей не знайдено. Уточніть назву або артикул.</p>}</div>
+      <div className="wb-results">{results.map(p => {const selected = s.candidates.some(item => item.id === p.id);return <article key={p.id} data-testid={`wb-result-${p.id}`} data-selected={selected}><div><h3>{p.name}</h3><p className="wb-sku">{p.sku} · виконання {p.revision}</p><p>{p.available ? 'В наявності' : 'Немає в наявності'} · {price(p)} / {p.unit}</p></div><button type="button" className="wb-secondary" data-testid={`wb-add-${p.id}`} disabled={selected || s.candidates.length >= 6 && !replaceId} onClick={() => add(p)}>{selected ? 'Додано' : replaceId ? 'Замінити' : 'Додати'}</button></article>;})}{!results.length && <p>Моделей не знайдено. Уточніть назву або артикул.</p>}</div>
     </section>}
     {!!s.candidates.length && <>
-      <div className="wb-pair-controls" role="group" aria-label="Активна пара"><span>Активна пара</span>{[0,1].map(slot => <label key={slot} className="wb-pair-select"><span aria-hidden="true">{slot === 0 ? 'A' : 'B'}</span><span className="sr-only">Модель {slot === 0 ? 'A' : 'B'}</span><select data-testid={slot === 0 ? 'wb-pair-a' : 'wb-pair-b'} value={s.pair[slot] || ''} onChange={event => a.pair(slot,event.target.value)}>{!s.pair[slot] && <option value="">Додайте другу модель</option>}{s.candidates.map(p => <option key={p.id} value={p.id}>{name(p)}</option>)}</select></label>)}</div>
-      <details className="wb-candidates" ref={candidateDetails} open={!mobile.current}><summary>Керувати кандидатами · {s.candidates.length} із 6</summary><div className="wb-candidate-grid">{s.candidates.map(p => <article key={p.id} data-testid={`wb-candidate-${p.id}`}><strong>{p.name}</strong><span className="wb-sku">{p.sku}</span><div><button type="button" className="wb-text" data-testid={`wb-replace-${p.id}`} onClick={() => openDiscovery(p.id)}>Замінити</button><button type="button" className="wb-text" data-testid={`wb-remove-${p.id}`} aria-label={`Прибрати ${p.name}`} onClick={() => remove(p)}>Прибрати</button></div></article>)}</div></details>
-      <div className="wb-modes"><label><input type="checkbox" data-testid="wb-differences" checked={s.differences} onChange={event => a.differences(event.target.checked)}/> Лише відмінності</label><span>{s.differences ? 'Відмінності та неповні дані' : 'Усі параметри'}</span><button type="button" className="wb-text" data-testid="wb-undo" disabled={!s.undoAvailable} onClick={() => {setMessage(a.undo() ? 'Видаленого кандидата повернуто.' : 'Немає місця для повернення. Поточний добір не змінено.');}}>↶ Скасувати видалення</button></div>
+      <div className="wb-pair-controls" role="group" aria-label="Активна пара"><span>Активна пара</span>{[0,1].map(slot => <label key={slot} className="wb-pair-select"><span aria-hidden="true">{slot === 0 ? 'A' : 'B'}</span><span className="sr-only">Модель {slot === 0 ? 'A' : 'B'}</span><select data-testid={slot === 0 ? 'wb-pair-a' : 'wb-pair-b'} value={s.pair[slot] || ''} onChange={event => {a.pair(slot,event.target.value);setMessage(`Модель ${slot === 0 ? 'A' : 'B'}: ${s.candidates.find(p => p.id === event.target.value)?.name || 'не вибрано'}.`);}}>{!s.pair[slot] && <option value="">Додайте другу модель</option>}{s.candidates.map(p => <option key={p.id} value={p.id}>{name(p)}</option>)}</select></label>)}</div>
+      <details className="wb-candidates" ref={candidateDetails} open={!mobile.current}><summary>Керувати кандидатами · {s.candidates.length} із 6</summary><div className="wb-candidate-grid">{s.candidates.map(p => <article key={p.id} data-testid={`wb-candidate-${p.id}`} data-pair={s.pair[0] === p.id ? 'A' : s.pair[1] === p.id ? 'B' : undefined}><strong>{p.name}</strong><span className="wb-sku">{p.sku}</span>{s.pair.includes(p.id) && <span className="wb-candidate-pair">{s.pair[0] === p.id ? 'A' : 'B'} · активна пара</span>}<div><button type="button" className="wb-text" data-testid={`wb-replace-${p.id}`} onClick={() => openDiscovery(p.id)}>Замінити</button><button type="button" className="wb-text" data-testid={`wb-remove-${p.id}`} aria-label={`Прибрати ${p.name}`} onClick={() => remove(p)}>Прибрати</button></div></article>)}</div></details>
+      <div className="wb-modes"><label><input type="checkbox" data-testid="wb-differences" checked={s.differences} onChange={event => a.differences(event.target.checked)}/> Лише відмінності</label><span>{s.differences ? 'Відмінності та неповні дані' : 'Усі параметри'}</span><button type="button" className="wb-text" data-testid="wb-undo" disabled={!s.undoAvailable} onClick={undo}>↶ Скасувати видалення</button></div>
       {table(s.candidates,'full')}{table(pair,'pair')}
     </>}
-    {!s.candidates.length && <div className="wb-empty"><span aria-hidden="true">A ↔ B</span><h2>Знайдіть обладнання для свого завдання</h2><p>Додайте до шести моделей однієї категорії. Виберіть активну пару, зіставте параметри та збережіть потрібні позиції в проєкті.</p><button type="button" className="wb-primary" onClick={() => openDiscovery()}>Обрати першу модель</button>{s.undoAvailable && <button type="button" className="wb-secondary" data-testid="wb-undo" onClick={() => a.undo()}>Скасувати видалення</button>}</div>}
-    <div className="wb-footer"><p>Невідоме значення не дорівнює нулю. «Не уточнено» / «Параметр відсутній» / «Не застосовується» позначено окремо; суперечності не приховано.</p><div><button type="button" className="wb-secondary" data-testid="wb-save" onClick={() => a.save()}>Зберегти вибір</button><span data-save-status data-testid="wb-save-status" role="status" aria-live="polite">{s.saveLabel}</span></div></div>
+    {!s.candidates.length && <div className="wb-empty"><span aria-hidden="true">A ↔ B</span><h2>Знайдіть обладнання для свого завдання</h2><p>Додайте до шести моделей однієї категорії. Виберіть активну пару, зіставте параметри та збережіть потрібні позиції в проєкті.</p><button type="button" className="wb-primary" onClick={() => openDiscovery()}>Обрати першу модель</button>{s.undoAvailable && <button type="button" className="wb-secondary" data-testid="wb-undo" onClick={undo}>Скасувати видалення</button>}</div>}
+    <div className="wb-footer"><p>Невідоме значення не дорівнює нулю. «Не уточнено» / «Параметр відсутній» / «Не застосовується» позначено окремо; суперечності не приховано.</p><div><button type="button" className="wb-secondary" data-testid="wb-save" onClick={saveSelection}>Зберегти вибір</button><span data-save-status data-testid="wb-save-status" role="status" aria-live="polite">{s.saveLabel}</span></div></div>
     <p className="wb-action-status" role="status" aria-live="polite">{message}</p>
   </section>;
 }

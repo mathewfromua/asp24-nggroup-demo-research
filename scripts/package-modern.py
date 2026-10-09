@@ -69,7 +69,7 @@ The root-domain build is independently checked in build evidence; this dist uses
 its recorded Pages subpath. Rebuilding source requires npm ci and the lockfile.
 
 Final reports are the RC2 14/16-page PDFs and matching HTML. R34 remains open;
-R42 remains open (untagged accepted PDFs). Any tagged export experiment is separate.
+R42 remains open (untagged current PDFs). Any tagged export experiment is separate.
 Native Safari, physical iPhone, native zoom and VoiceOver are NOT_RUN.
 WebKit and CSS text stress do not stand for those native checks.
 ''')
