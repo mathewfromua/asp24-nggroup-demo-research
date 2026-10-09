@@ -51,7 +51,8 @@ def stored(page):
 
 
 def seed(page, state, route='#/asp/catalog'):
-    page.goto(demo + '#/asp/catalog', wait_until='networkidle')
+    # Seed on a static document: an existing app writes its live state on pagehide.
+    page.goto(base + 'reports/ASP24_Review.html', wait_until='networkidle')
     page.evaluate('([key,state])=>localStorage.setItem(key,JSON.stringify(state))',[key,state])
     page.goto(demo + route, wait_until='networkidle')
     page.reload(wait_until='networkidle')
