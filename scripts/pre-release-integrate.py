@@ -200,7 +200,7 @@ handoff='''# F migration handoff — curated snapshot, no history
 compressed='eNp9lcFugzAMQO_7Fibh2Alw7ErWommAylapp_7_X4yVdmUQ3hFe7ZgX290N_WueSzbEfdfWu9Pl-tZ9t3Wss15edjfosv7UfP6iczw1783I2q6Nd6oUaino7tBTZKDIAisqKW8FUHI4VISgo7SadX1sn88pK8_6hbxIIFgQJC1SZfVo8hzr6_4Y9x__CnI56XaC1FHihRhnUKIjLS5MmWa5Czq4JLh28bhmzaEGlex46buvYxyaYZZPcX6U5kdtIyW5UGoRLaCLlVpEq3QtRk4Mm8PQjJEZMwz1y3awsKq-PRw2Nt8Mb8z1BJWgEfR8aqDYjRucYEmR1YazG5XElD8iRYA5zKpIDalHGtIzPMHib7NMz-XiGVWMC2879bjvADqCOuvK6Q1-v_Or34fte3AFXP248OggtKE5UvlvVmlilCZGaWJ05UIDzMG45pLjruhB0YOhB1t4MPJg5MEMPsw8RZISo_6wMu3LqvR7jy786p_wB6mvtm4='
 rows=zlib.decompress(base64.urlsafe_b64decode(compressed)).decode().splitlines()
 assert len(rows)==97
-out=io.StringIO();w=csv.writer(out);w.writerow(['claim_id','review_A_classification','A_priority','integration_disposition','new_primary_evidence'])
+out=io.StringIO();w=csv.writer(out,lineterminator="\n");w.writerow(['claim_id','review_A_classification','A_priority','integration_disposition','new_primary_evidence'])
 choices={'PRIMARY_VERIFIED':'RETAIN_REVIEW_A_ASSESSED','SECONDARY_BOUNDED':'RETAIN_WITH_HISTORICAL_ATTRIBUTION','OPEN':'REMAIN_OPEN_EXTERNAL_OR_PROVENANCE','DERIVED_CHECKED':'RETAIN_WITH_EXPLICIT_ASSUMPTIONS','HYPOTHESIS':'RETAIN_AS_HYPOTHESIS_ONLY'}
 for row in rows:
     ident,cls,priority=row.split(',');w.writerow([ident,cls,priority,choices[cls],'NO_NEW_PRIMARY_CAPTURE'])
