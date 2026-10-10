@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "date": "2026-10-10",
+  "status": "PASS_INTEGRATOR_VISUAL_INSPECTION",
+  "baseline_sha": "65ff5d270328a8842da22e524713d3a7ad3f9a1e",
+  "source_commit_at_review": "a665ce80ed26f7bf637cc5208a79c97369bd98b7",
+  "report_source_sha256": "7bd2b644fa8d2ad7cd3a8a8faa11414fa989c1d1569ba065bab9f9c1e20e26e2",
+  "pdf_sha256": {
+    "ASP24": "4df68a435d5f5c207f08ff5cd72acc76e35f80ded2489c4f37357ce7bfdc3aab",
+    "NGGroup": "f173f8f1cf0931c4d0b7fe2487ace1e9c79d29b92eecbf950886bd22b658531c"
+  },
+  "html_sha256": {
+    "ASP24": "664fa647683572705fbce2c247b38cae947918a67095a5e7437a4bc76877d370",
+    "NGGroup": "e44384a167f139f0acaeff04d4148e0705879c86b333333d95f64228bf70201e"
+  },
+  "renderer": "Poppler pdftoppm -png -scale-to 1150; RGB pixel comparison",
+  "pages": 30,
+  "changed_pages": {
+    "ASP24": [
+      2,
+      5,
+      7,
+      11
+    ],
+    "NGGroup": [
+      5,
+      6,
+      7,
+      12,
+      15,
+      16
+    ]
+  },
+  "unchanged_pages": {
+    "ASP24": [
+      1,
+      3,
+      4,
+      6,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14
+    ],
+    "NGGroup": [
+      1,
+      2,
+      3,
+      4,
+      8,
+      9,
+      10,
+      11,
+      13,
+      14
+    ]
+  },
+  "text_spans_outside_pages": 0,
+  "source_of_page_png_digest": "SHA-256 of rendered pages retained in local F handoff (not in public source repo)",
+  "observations": "Two current full contact sheets inspected, 10 changed pages enlarged and critical pages inspected individually. No intentional source/data changes by visual check.",
+  "limits": [
+    "Machine geometry is not complete visual accessibility",
+    "Native assistive reading NOT_RUN"
+  ]
+}

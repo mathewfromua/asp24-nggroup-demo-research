@@ -1,3 +1,4 @@
+from build_inputs import inventory
 """Semantic adaptive reports from the same content.json used for PDF."""
 from pathlib import Path
 import csv, hashlib, html, json, re, shutil
@@ -7,13 +8,31 @@ from content import REPORTS, BASE_PATH, PUBLIC_BASE_URL
 ROOT=Path(__file__).resolve().parent.parent
 HERE=ROOT/'reports'; OUT=ROOT/'public/reports'; ASSETS=OUT/'assets'
 ASSETS.mkdir(exist_ok=True)
-def inline(s):
+SOURCE_IDS=set()
+def plain_label(s):return html.unescape(re.sub('<[^>]+>','',str(s)))
+def inline(s,link_citations=True):
     # Source permits only controlled report-format inline tags and HTTPS links.
     s=re.sub(r'<link href="([^"]+)"(?: color="[^"]+")?>',r'<a href="\1">',str(s))
-    return s.replace('</link>','</a>').replace('<br/>','<br>')
-def table(headers,rows,caption=''):
+    s=s.replace('</link>','</a>').replace('<br/>','<br>')
+    if not link_citations:return s
+    # Transform text nodes only: URL attributes and existing links stay intact.
+    parts=re.split(r'(<[^>]+>)',s);in_link=False
+    def citation(match):
+        return '['+re.sub(r'\d+',lambda n: f'<a class="citation" href="#source-{n[0]}" aria-label="Джерело {n[0]}">{n[0]}</a>' if n[0] in SOURCE_IDS else n[0],match[0][1:-1])+']'
+    for i,part in enumerate(parts):
+        if part.startswith('<'):
+            if re.match(r'<a\b',part):in_link=True
+            elif part.startswith('</a'):in_link=False
+        elif not in_link:parts[i]=re.sub(r'\[\d+(?:\s*,\s*\d+)*\]',citation,part)
+    return ''.join(parts)
+def active_link(url):
+    return '../'+url[len(PUBLIC_BASE_URL):] if url.startswith(PUBLIC_BASE_URL) else url
+def table(headers,rows,caption='',label=''):
     cap=f'<caption>{inline(caption)}</caption>' if caption else ''
-    return '<div class="table-scroll" tabindex="0" role="region" aria-label="Таблиця, доступна для горизонтального прокручування"><table>'+cap+'<thead><tr>'+''.join('<th scope="col">'+inline(v)+'</th>' for v in headers)+'</tr></thead><tbody>'+''.join('<tr>'+''.join(('<th scope="row">'+inline(v)+'</th>') if i==0 else '<td>'+inline(v)+'</td>' for i,v in enumerate(row))+'</tr>' for row in rows)+'</tbody></table></div>'
+    name=html.escape(plain_label(label or caption or ' · '.join(headers)),quote=True)
+    return f'<div class="table-scroll" tabindex="0" role="region" aria-label="{name}"><table>'+cap+'<thead><tr>'+''.join('<th scope="col">'+inline(v)+'</th>' for v in headers)+'</tr></thead><tbody>'+''.join('<tr>'+''.join(('<th scope="row">'+inline(v)+'</th>') if i==0 else '<td>'+inline(v)+'</td>' for i,v in enumerate(row))+'</tr>' for row in rows)+'</tbody></table></div>'
+def chart(svg,kind,label):
+    return f'<div class="chart-scroll {kind}" tabindex="0" role="region" aria-label="{html.escape(label,quote=True)}">{svg}</div>'
 def records(name):return list(csv.DictReader((ROOT/'evidence/figure_data'/name).open()))
 def figure(kind):
     if kind=='filter':
@@ -26,7 +45,20 @@ def figure(kind):
             pair=[r for r in rows if r['sku']==sku];assert len(pair)==2
             for r in pair:
                 date=r['capture_utc'][:10].split('-'); data.append([r['model']+' · '+sku,'.'.join(reversed(date)),r['technical_rows']])
-        return table(['Модель / артикул','Дата знімка','Технічних рядків'],data,'Парні історичні вимірювання: 16 → 9, 14 → 0, 30 → 0. Нуль означає відсутність предметних рядків у вибраній таблиці, а не всієї інформації про товар.')
+        # Keep the shared contour/filled-bar caption meaningful in HTML too;
+        # the following semantic table provides every exact value and date.
+        svg='<svg viewBox="0 0 700 300" role="img" aria-label="Кількість предметних рядків у вибраних архівних таблицях: 16 до 9, 14 до 0, 30 до 0. Контур — раніший стан, заповнена смуга — пізніший. Точні дати та значення наведено в таблиці.">'
+        for i in range(3):
+            earlier,later=data[2*i:2*i+2]
+            y=28+i*96
+            model,sku=earlier[0].split(' · ')
+            model={'MED001988':'RG-EW1200G Pro','MED005534':'XPON Stick','MED000715':'Cu-кабель'}[sku]
+            svg+=f'<text x="0" y="{y}">{html.escape(model)}</text><text x="0" y="{y+23}">{sku}</text>'
+            for j,row in enumerate([earlier,later]):
+                count=int(row[2]);by=y-15+j*32;bar_width=count/30*280
+                svg+=f'<text x="205" y="{by+14}">{row[1]}</text><rect x="330" y="{by}" width="{bar_width}" height="18" stroke="var(--chart-accent)" fill="{"none" if j==0 else "var(--chart-accent)"}"/><text x="{338+bar_width}" y="{by+14}">{count}</text>'
+        svg+='</svg>'
+        return chart(svg,'history','Історичні технічні таблиці — графік із горизонтальним прокручуванням')+table(['Модель / артикул','Дата знімка','Технічних рядків'],data,'Парні історичні вимірювання: 16 → 9, 14 → 0, 30 → 0. Нуль означає відсутність предметних рядків у вибраній таблиці, а не всієї інформації про товар.')
     rows=[r for r in records('nominal_autonomy.csv') if 5<=float(r['load_w'])<=20]
     assert all(abs(float(r['ideal_hours'])-57.72/float(r['load_w']))<1e-5 for r in rows)
     points=' '.join(f'{45+(float(r["load_w"])-5)/15*465:.2f},{215-float(r["ideal_hours"])/12*185:.2f}' for r in rows)
@@ -34,40 +66,44 @@ def figure(kind):
     for p in [5,10,15,20]:svg+=f'<text x="{45+(p-5)/15*465}" y="235" text-anchor="middle">{p}</text>'
     for t in [0,4,8,12]:svg+=f'<text x="35" y="{220-t/12*185}" text-anchor="end">{t}</text>'
     svg+='</svg>'
-    return svg+table(['Стале навантаження, Вт','Умовний час, год'],[[r['load_w'].replace('.',','),f'{float(r["ideal_hours"]):.2f}'.replace('.',',')] for r in rows],'t = E/P; E = 57,72 Вт·год. Без втрат, старіння та зміни навантаження; це не результат випробування.')
+    return chart(svg,'autonomy','Умовний час роботи — графік із горизонтальним прокручуванням')+table(['Стале навантаження, Вт','Умовний час, год'],[[r['load_w'].replace('.',','),f'{float(r["ideal_hours"]):.2f}'.replace('.',',')] for r in rows],'t = E/P; E = 57,72 Вт·год. Без втрат, старіння та зміни навантаження; це не результат випробування.')
 
-CSS='''*{box-sizing:border-box}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.65}body{margin:0}a{color:var(--accent);text-underline-offset:.2em;overflow-wrap:anywhere}a:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.skip{position:absolute;left:1rem;top:-6rem;background:white;padding:1rem}.skip:focus{top:1rem}header,main,footer{max-width:60rem;margin:auto;padding:1.5rem clamp(1rem,4vw,3rem)}header{padding-top:3rem;border-bottom:3px solid var(--accent)}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.14;margin:.5em 0}h2{font-size:clamp(1.65rem,3vw,2.1rem);line-height:1.25}h3{font-size:1.2rem}p,li{font-size:1.1rem}section{padding:2rem 0;border-bottom:1px solid var(--soft)}section>p{max-width:76ch}.section-label{color:var(--accent);font-weight:650}.note,figcaption{font-size:1rem}.callout{border-left:4px solid var(--accent);background:var(--soft);padding:1rem 1.25rem;margin:1.5rem 0}.callout h3{margin-top:0}figure{margin:1.5rem 0}img,svg{max-width:100%;height:auto;display:block;margin:auto}svg{width:100%;font-size:16px}.table-scroll{overflow-x:auto;margin:1.5rem 0}table{width:100%;border-collapse:collapse;font-size:1rem}th,td{text-align:left;vertical-align:top;padding:.75rem;border-bottom:1px solid var(--soft);min-width:6rem;overflow-wrap:anywhere}thead{background:var(--ink);color:white}tbody tr:nth-child(even){background:var(--soft)}caption{text-align:left;font-weight:600;margin-bottom:.75rem}nav a,.action{display:inline-flex;align-items:center;min-height:44px;padding:.3rem .7rem;margin:.2rem .2rem .2rem 0;border:1px solid var(--accent);border-radius:.4rem}nav[aria-label="Зміст"] a{display:block;border:0;padding:.3rem 0}.source{font-size:1rem;overflow-wrap:anywhere}footer{font-size:1rem}@media(max-width:430px){th,td{padding:.6rem;font-size:.95rem}h2{overflow-wrap:anywhere}section{padding:1.3rem 0}}@media print{nav,.skip,.action{display:none}.table-scroll{overflow:visible}section{break-inside:avoid}}'''
+CSS='''*{box-sizing:border-box}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.65}body{margin:0}a{color:var(--accent);text-underline-offset:.2em;overflow-wrap:anywhere}a:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.skip{position:absolute;left:1rem;top:-6rem;background:white;padding:1rem}.skip:focus{top:1rem}header,main,footer{max-width:60rem;margin:auto;padding:1.5rem clamp(1rem,4vw,3rem)}header{padding-top:3rem;border-bottom:3px solid var(--accent)}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.14;margin:.5em 0}h2{font-size:clamp(1.65rem,3vw,2.1rem);line-height:1.25}h3{font-size:1.2rem}p,li{font-size:1.1rem}section{padding:2rem 0;border-bottom:1px solid var(--soft)}section>p{max-width:76ch}.section-label{color:var(--accent);font-weight:650}.note,figcaption{font-size:1rem}.callout{border-left:4px solid var(--accent);background:var(--soft);padding:1rem 1.25rem;margin:1.5rem 0}.callout h3{margin-top:0}figure{margin:1.5rem 0}img,svg{max-width:100%;height:auto;display:block;margin:auto}svg{width:100%;font-size:16px}.chart-scroll{max-width:100%;overflow-x:auto;margin:1rem 0}.chart-scroll svg{max-width:none;margin:0}.history svg{width:700px;min-width:700px}.autonomy svg{width:560px;min-width:560px}.table-scroll{overflow-x:auto;margin:1.5rem 0}table{width:100%;border-collapse:collapse;font-size:1rem}th,td{text-align:left;vertical-align:top;padding:.75rem;border-bottom:1px solid var(--soft);min-width:6rem;overflow-wrap:anywhere}thead{background:var(--ink);color:white}tbody tr:nth-child(even){background:var(--soft)}caption{text-align:left;font-weight:600;margin-bottom:.75rem}nav a,.action{display:inline-flex;align-items:center;min-height:44px;padding:.3rem .7rem;margin:.2rem .2rem .2rem 0;border:1px solid var(--accent);border-radius:.4rem}nav[aria-label="Зміст"] a{display:block;border:0;padding:.3rem 0}.source{font-size:1rem;overflow-wrap:anywhere;scroll-margin-top:1rem}.source:target{background:var(--soft);outline:2px solid var(--accent);outline-offset:5px}.citation{font-weight:600}footer{font-size:1rem}@media(max-width:430px){th,td{padding:.6rem;font-size:.95rem}h2{overflow-wrap:anywhere}section{padding:1.3rem 0}}@media print{nav,.skip,.action{display:none}.table-scroll{overflow:visible}.chart-scroll{overflow:visible}.chart-scroll svg{width:100%;min-width:0;max-width:100%}section{break-inside:avoid}}'''
 
 manifest=[]
 assets=[]
 for brand,pages in REPORTS.items():
     brandlabel='NG Group' if brand=='NGGroup' else brand
-    palette=('#be4b00','#2c211c','#fbefe3') if brand=='ASP24' else ('#753697','#251a31','#f1eaf6')
+    palette=('#a84000','#2c211c','#fbefe3') if brand=='ASP24' else ('#753697','#251a31','#f1eaf6')
+    SOURCE_IDS={re.search(r'\[(\d+)\]',block[1])[1] for page in pages for block in page['blocks'] if block[0]=='source'}
     body=[];block_count=0
     for page in pages:
         parts=[f'<section id="{page["id"]}" aria-labelledby="h-{page["id"]}"><p class="section-label">{inline(page["section"])}</p><h2 id="h-{page["id"]}">{inline(page["title"])}</h2>']
         for bi,b in enumerate(page['blocks']):
             kind,*a=b;block_count+=1
-            if kind in ['p','note','source']:parts.append(f'<p class="{kind}">{inline(a[0])}</p>')
+            if kind in ['p','note']:parts.append(f'<p class="{kind}">{inline(a[0])}</p>')
+            elif kind=='source':
+                source_id=re.search(r'\[(\d+)\]',a[0])[1]
+                parts.append(f'<p class="source" id="source-{source_id}" tabindex="-1">{inline(a[0],False)}</p>')
             elif kind=='h':parts.append('<h3>'+inline(a[0])+'</h3>')
             elif kind=='box':parts.append('<aside class="callout"><h3>'+inline(a[0])+'</h3><p>'+inline(a[1])+'</p></aside>')
-            elif kind=='table':parts.append(table(a[0],a[1]))
-            elif kind=='link':parts.append(f'<p><a class="action" href="{html.escape(a[1],quote=True)}">{inline(a[0])}</a></p>')
+            elif kind=='table':parts.append(table(a[0],a[1],label=page['title']+' · '+'; '.join(a[0])))
+            elif kind=='link':parts.append(f'<p><a class="action" href="{html.escape(active_link(a[1]),quote=True)}">{inline(a[0])}</a></p>')
             elif kind=='figure':parts.append('<figure>'+figure(a[0])+'</figure>')
             elif kind=='image':
                 im=Image.open(HERE/a[0]);im.load()
                 if len(a)>3 and a[3]:im=im.crop(tuple(a[3]))
                 name=f'{brand}-{page["id"]}-{bi}.png';im.save(ASSETS/name)
                 assets.append(f'reports/assets/{name}')
-                cap=inline(a[2]);alt=html.escape(re.sub('<[^>]+>','',a[2]),quote=True)
+                cap=inline(a[2]);alt=html.escape(re.sub('<[^>]+>','',a[4] if len(a)>4 else a[2]),quote=True)
                 parts.append(f'<figure><img src="assets/{name}" width="{im.width}" height="{im.height}" alt="{alt}" loading="lazy"><figcaption>{cap}</figcaption></figure>')
             else:raise ValueError(kind)
         parts.append('</section>');body.append(''.join(parts))
-    title=brandlabel+' · Огляд сайту'
     subtitles={'ASP24':'Від пошуку до підготовки закупівлі','NGGroup':'Від технічної інформації до вибору рішення'}
-    document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><title>{title}</title><style>:root{{--accent:{palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>Огляд сайту</h1><p>{subtitles[brand]}</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До демо</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — Demo &amp; Research — демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
+    title=brandlabel+' — '+subtitles[brand]
+    document=f'''<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="report-source-sha256" content="{hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest()}"><meta name="description" content="{subtitles[brand]}. Повний український огляд із джерелами та прикладами."><meta property="og:type" content="article"><meta property="og:title" content="{title}"><meta property="og:description" content="{subtitles[brand]}"><meta property="og:url" content="{PUBLIC_BASE_URL}reports/{brand}_Review.html"><meta property="og:image" content="{PUBLIC_BASE_URL}assets/research-social.png"><link rel="canonical" href="{PUBLIC_BASE_URL}reports/{brand}_Review.html"><title>{title}</title><style>:root{{--accent:{palette[0]};--chart-accent:{"#be4b00" if brand=="ASP24" else palette[0]};--ink:{palette[1]};--soft:{palette[2]};--paper:#fff}}{CSS}</style></head><body><a class="skip" href="#report">До тексту огляду</a><header><p class="section-label">{brandlabel}</p><h1>{title}</h1><p>Огляд сайту</p><nav aria-label="Подання огляду"><a href="{brand}_Review.pdf">Завантажити PDF · {len(pages)+1} сторінок</a><a href="../">До оглядів і прикладів</a></nav></header><main id="report"><nav aria-label="Зміст">{''.join(f'<a href="#{p["id"]}">{inline(p["title"])}</a>' for p in pages)}</nav>{''.join(body)}</main><footer>HTML і PDF сформовано з одного джерела тексту. ASP24 / NG Group — огляди сайтів і демонстрація на умовних даних; локальні дії не надсилаються компаніям.</footer></body></html>'''
     dest=OUT/f'{brand}_Review.html';dest.write_text(document)
-    manifest.append({'brand':brand,'html':dest.relative_to(ROOT).as_posix(),'sections':len(pages),'blocks':block_count,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL})
+    manifest.append({'brand':brand,'html':dest.relative_to(ROOT).as_posix(),'sections':len(pages),'blocks':block_count,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'input_digest':inventory()['digest'],'content_sha256':hashlib.sha256((HERE/'content.json').read_bytes()).hexdigest(),'deployment_config_sha256':hashlib.sha256((ROOT/'deployment.config.json').read_bytes()).hexdigest(),'public_base_url':PUBLIC_BASE_URL})
 (HERE/'html-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(manifest,ensure_ascii=False,indent=2))
 

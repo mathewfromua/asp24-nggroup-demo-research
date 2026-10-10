@@ -1,85 +1,17 @@
-import {isIsoTimestamp} from './validation.js';
 import { products, groups, money, display, numericValue, reelLength } from './data.js';
-import { filterProducts, plural } from './logic.js';
+import { filterProducts, plural, quantityLabel } from './logic.js';
 import { labNotes, renderConnectorAtlas } from './lab.js';
 import { scenarios } from './scenarios.js';
 
-export const SCIENCE_LIMITS = Object.freeze({projects:30,candidates:64,references:30,name:100,note:1500,title:160,url:1000,quantity:999,importBytes:262144});
+import {SCIENCE_LIMITS, safeReferenceUrl, validateProject, mergeProjectCandidates, normalizeScience, createProject, duplicateProject, projectCart, projectText, validProjectQuantity as validQuantity, projectIdList as idList} from './src/domain/projects.ts';
+import {exportProject, importProject} from './src/adapters/project-json.ts';
+export {SCIENCE_LIMITS, safeReferenceUrl, validateProject, mergeProjectCandidates, normalizeScience, createProject, duplicateProject, projectCart, projectText, exportProject, importProject};
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
-const known = (catalog, id) => typeof id === 'string' && catalog.some(p => p.id === id);
-const clone = value => value === undefined ? null : JSON.parse(JSON.stringify(value));
-const validQuantity = q => Number.isInteger(q) && q >= 1 && q <= SCIENCE_LIMITS.quantity;
-const validId = id => typeof id === 'string' && /^project-[1-9]\d{0,8}$/.test(id);
-const dateValid = isIsoTimestamp;
-const specialKeys = new Set(['__proto__','constructor','prototype','toString']);
-const idList = (ids,catalog) => Array.isArray(ids) && ids.length <= SCIENCE_LIMITS.candidates && new Set(ids).size === ids.length && ids.every(id => known(catalog,id));
 const product = id => products.find(p => p.id === id);
 const link = (brand,page,id='') => `#/${brand === 'ng' ? 'ng':'asp'}/${page}${id ? '/'+encodeURIComponent(id):''}`;
 const productLink = (brand,id) => link(brand==='ng'&&!product(id)?.ng?'asp':brand,'product',id);
 const productBrandLabel = (brand,id) => brand==='ng'&&!product(id)?.ng?' <small class="science-brand-label">ASP24</small>':'';
 const heading = (title,body='') => `<div class="modal-title"><h2 id="dialog-title">${esc(title)}</h2><button class="close" data-action="close" aria-label="Закрити">×</button></div>${body}`;
-const hasUnsafeKeys = obj => !!obj && typeof obj === 'object' && Object.keys(obj).some(key => specialKeys.has(key) || hasUnsafeKeys(obj[key]));
-
-export function safeReferenceUrl(value,catalog=products) {
- if(typeof value !== 'string' || value.length > SCIENCE_LIMITS.url) return false;
- const local = /^#\/(asp|ng)\/(product|document)\/([a-z0-9-]+)$/.exec(value);
- if(local){const p=catalog.find(p=>p.id===local[3]);return !!p&&(local[1]!=='ng'||p.ng)&&(local[2]!=='document'||(local[1]==='ng'&&p.ng));}
- try {const u=new URL(value);return u.protocol==='https:' && !u.username && !u.password && !!u.hostname;} catch{return false;}
-}
-export function validateProject(value,catalog=products) {
- if(!isRecord(value) || hasUnsafeKeys(value)) return 'Неприпустима структура проєкту.';
- if(!validId(value.id)) return 'Неприпустимий ідентифікатор проєкту.';
- if(typeof value.name!=='string' || !value.name.trim() || value.name.length>SCIENCE_LIMITS.name) return 'Назва має містити 1–100 символів.';
- if(typeof value.note!=='string' || value.note.length>SCIENCE_LIMITS.note) return 'Примітка має містити до 1500 символів.';
- if(!idList(value.candidates,catalog) || !idList(value.chosen,catalog) || value.chosen.some(id=>!value.candidates.includes(id))) return 'Кандидати або вибрані моделі не відповідають каталогу.';
- if(!isRecord(value.quantities) || Object.keys(value.quantities).some(id=>!value.candidates.includes(id)) || value.candidates.some(id=>!validQuantity(value.quantities[id]))) return 'Кількість кожного кандидата: ціле число від 1 до 999.';
- if(!Array.isArray(value.references) || value.references.length>SCIENCE_LIMITS.references || value.references.some(r=>!isRecord(r)||typeof r.title!=='string'||!r.title.trim()||r.title.length>SCIENCE_LIMITS.title||!safeReferenceUrl(r.url,catalog)||(r.productId!==undefined&&!value.candidates.includes(r.productId)))) return 'Перевірте назву, адресу й модель документа.';
- if(!dateValid(value.createdAt)||!dateValid(value.updatedAt)) return 'Некоректний час створення або зміни.';
- return null;
-}
-function cleanProject(p) {return {id:p.id,name:p.name,note:p.note,candidates:[...p.candidates],chosen:[...p.chosen],quantities:{...p.quantities},references:p.references.map(r=>({title:r.title,url:r.url,...(r.productId?{productId:r.productId}:{})})),createdAt:p.createdAt,updatedAt:p.updatedAt};}
-export function normalizeScience(raw,catalog=products) {
- const result={version:1,projects:[],activeProjectId:null,nextProjectSeq:1,quarantine:[]};
- if(raw==null || (isRecord(raw)&&!Object.keys(raw).length)) return result;
- if(!isRecord(raw)||raw.version!==1){result.quarantine.push({reason:'Невідома версія даних проєктів.',raw:clone(raw)});return result;}
- if(Array.isArray(raw.quarantine)) result.quarantine=clone(raw.quarantine);
- if(!Array.isArray(raw.projects)){result.quarantine.push({reason:'Список проєктів пошкоджено.',raw:clone(raw)});return result;}
- const seen=new Set();
- for(const p of raw.projects){const error=validateProject(p,catalog);if(error||seen.has(p.id)||result.projects.length>=SCIENCE_LIMITS.projects){result.quarantine.push({reason:error||'Повторений ID або перевищено ліміт проєктів.',raw:clone(p)});continue;}result.projects.push(cleanProject(p));seen.add(p.id);}
- const next=Math.max(0,...result.projects.map(p=>Number(p.id.slice(8))))+1;
- result.nextProjectSeq=Number.isSafeInteger(raw.nextProjectSeq)&&raw.nextProjectSeq>=next&&raw.nextProjectSeq<999999999?raw.nextProjectSeq:next;
- result.activeProjectId=seen.has(raw.activeProjectId)?raw.activeProjectId:result.projects[0]?.id||null;
- return result;
-}
-export function createProject(science,{name='Новий проєкт',note='',candidates=[],quantities={},references=[]}={},catalog=products,now=new Date().toISOString()) {
- if(science.projects.length>=SCIENCE_LIMITS.projects) throw new Error('Досягнуто межу: 30 проєктів. Відредагуйте наявний проєкт. Експорт створює резервну копію, але не звільняє місце.');
- const ids=[...new Set(candidates)].filter(id=>known(catalog,id));
- const p={id:`project-${science.nextProjectSeq}`,name,note,candidates:ids,chosen:[],quantities:Object.fromEntries(ids.map(id=>[id,validQuantity(quantities[id])?quantities[id]:1])),references:clone(references),createdAt:now,updatedAt:now};
- const error=validateProject(p,catalog);if(error)throw new Error(error);
- science.nextProjectSeq++;science.projects.push(p);science.activeProjectId=p.id;return p;
-}
-export function duplicateProject(science,id,catalog=products,now=new Date().toISOString()) {
- const source=science.projects.find(p=>p.id===id);if(!source)throw new Error('Проєкт не знайдено.');
- const p=createProject(science,{...source,name:`${source.name.slice(0,92)} · копія`},catalog,now);p.chosen=[...source.chosen];return p;
-}
-export function exportProject(project) {return JSON.stringify({format:'perspektyva-project',version:1,project:cleanProject(project)},null,2);}
-export function importProject(text,size,catalog=products) {
- const bytes=new TextEncoder().encode(String(text)).length;
- if(typeof text!=='string'||!Number.isFinite(size)||size<0||size>SCIENCE_LIMITS.importBytes||bytes>SCIENCE_LIMITS.importBytes) throw new Error('JSON-файл має бути не більшим за 256 КБ.');
- let payload;try{payload=JSON.parse(text.replace(/^\uFEFF/,''),(key,value)=>{if(specialKeys.has(key))throw new Error('special');return value;});}catch{throw new Error('Неприпустимий JSON або службові ключі.');}
- if(!isRecord(payload)||payload.format!=='perspektyva-project'||payload.version!==1)throw new Error('Потрібен формат perspektyva-project, версія 1.');
- const error=validateProject(payload.project,catalog);if(error)throw new Error(error);return cleanProject(payload.project);
-}
-export function projectCart(project,catalog=products) {
- const unavailable=project.chosen.filter(id=>!catalog.find(p=>p.id===id)?.available);
- if(unavailable.length) throw new Error('Серед вибраних моделей є недоступні. Приберіть їх із вибраного перед перенесенням.');
- return Object.fromEntries(project.chosen.map(id=>[id,project.quantities[id]]));
-}
-export function projectText(p,catalog=products) {
- const rows=p.candidates.map(id=>{const m=catalog.find(x=>x.id===id),q=p.quantities[id];return `${p.chosen.includes(id)?'[Вибрано]':'[Кандидат]'} ${m.name} · ${m.sku}\n${q} × ${m.unit} · ${money(m.price*q)}${m.group==='cable'?` · ${q*reelLength(m)} м`:''}`;});
- return `${p.name}\n${p.note}\n\n${rows.join('\n\n')}\n\nДокументи\n${p.references.map(r=>`${r.title}: ${r.url}`).join('\n')}\n\nУмовний склад. Нічого не надіслано компанії.`;
-}
 const pageTitle=(title,description)=>`<div class="science-title"><h1>${title}</h1><p>${description}</p></div>`;
 function projectsPage(s,brand) {
  return pageTitle('Мої проєкти','Задача, кандидати й документи — окремо від кошика.')+`<div class="science-actions"><button class="btn" data-action="science-create">＋ Новий проєкт</button><label class="btn secondary science-import-label">Імпортувати JSON<input type="file" accept=".json,application/json" data-science-import aria-label="Імпортувати проєкт JSON"></label></div>${s.quarantine.length?`<div class="notice" role="status">Записи, що потребують відновлення: ${s.quarantine.length}. Початкові дані доступні для експорту.<button class="text-btn" data-action="science-recovery">Завантажити дані відновлення</button></div>`:''}<div class="science-project-grid">${s.projects.map(p=>`<article class="science-project-card"><span class="eyebrow">${p.candidates.length} ${p.candidates.length%100>=11&&p.candidates.length%100<=14?'кандидатів':p.candidates.length%10===1?'кандидат':p.candidates.length%10>=2&&p.candidates.length%10<=4?'кандидати':'кандидатів'} · ${p.chosen.length} вибрано</span><h2><a href="${link(brand,'project',p.id)}">${esc(p.name)}</a></h2><p>${esc(p.note||'Додайте коротку примітку до задачі.')}</p><a class="text-link" href="${link(brand,'project',p.id)}">Відкрити проєкт →</a></article>`).join('')||'<div class="science-empty"><h2>Почніть із задачі</h2><p>Створіть власний проєкт або візьміть готовий сценарій як основу.</p></div>'}</div>`;
@@ -134,12 +66,12 @@ export function handleScience(action,dataset,state,helpers) {
   else if(action==='science-template'){const t=scenarios.find(x=>x.id===dataset.id);if(!t)throw new Error('Сценарій не знайдено.');p=createProject(s,{name:t.title,note:[t.purpose,'Потрібно уточнити:',...t.conditions].join('\n'),candidates:t.items.map(([id])=>id),quantities:Object.fromEntries(t.items),references:t.items.filter(([id])=>product(id)?.ng).map(([id])=>({title:`${product(id).name} · документ ${product(id).revision||'D1'}`,url:link('ng','document',id),productId:id}))});syncSave(helpers,state,'Сценарій створив проєкт. Кошик не змінено.');helpers.go(link(brand,'project',p.id));}
   else if(action==='science-duplicate'){if(!p)throw new Error('Проєкт не знайдено.');const copy=duplicateProject(s,p.id);syncSave(helpers,state,'Створено незалежну копію.');helpers.go(link(brand,'project',copy.id));}
   else if(action==='science-candidates'){if(!p)throw new Error('Проєкт не знайдено.');helpers.openModal(candidatePicker(p));}
-  else if(action==='science-add-candidate'){if(!p||!product(dataset.id))throw new Error('Модель або проєкт не знайдено.');if(!p.candidates.includes(dataset.id)){p.candidates.push(dataset.id);p.quantities[dataset.id]=1;changed('Кандидата додано.');}helpers.openModal(candidatePicker(p,String(dataset.query||'').slice(0,100),Object.hasOwn(groups,dataset.group)?dataset.group:'all'));}
+  else if(action==='science-add-candidate'){if(!p||!product(dataset.id))throw new Error('Модель або проєкт не знайдено.');if(!p.candidates.includes(dataset.id)){mergeProjectCandidates(p,[dataset.id]);changed('Кандидата додано.');}helpers.openModal(candidatePicker(p,String(dataset.query||'').slice(0,100),Object.hasOwn(groups,dataset.group)?dataset.group:'all'));}
   else if(action==='science-remove-candidate'){if(!p)throw new Error('Проєкт не знайдено.');p.candidates=p.candidates.filter(id=>id!==dataset.id);p.chosen=p.chosen.filter(id=>id!==dataset.id);delete p.quantities[dataset.id];p.references=p.references.filter(r=>r.productId!==dataset.id);changed('Кандидата прибрано.');}
   else if(action==='science-field'){
    if(dataset.field==='map-category'){if(!Object.hasOwn(groups,dataset.value))throw new Error('Категорію не знайдено.');helpers.go(link(brand,'model-map')+'?'+modelMapQuery(dataset.query,{cat:dataset.value}));}
    else if(dataset.field==='map-facet'){if(!Object.hasOwn(groups,dataset.group)||(groups[dataset.group].numericFacetDefinitions||[]).every(d=>d[0]!==dataset.value))throw new Error('Параметр не знайдено.');helpers.go(link(brand,'model-map')+'?'+modelMapQuery(dataset.query,{cat:dataset.group,facet:dataset.value}));}
-   else {if(!p||!p.candidates.includes(dataset.id))throw new Error('Кандидата не знайдено.');if(dataset.field==='chosen')p.chosen=dataset.checked?[...new Set([...p.chosen,dataset.id])]:p.chosen.filter(id=>id!==dataset.id);else if(dataset.field==='quantity'){if(!/^\d+$/.test(String(dataset.value))||!validQuantity(Number(dataset.value)))throw new Error('Кількість: ціле число від 1 до 999.');p.quantities[dataset.id]=Number(dataset.value);}changed('');}
+   else {if(!p||!p.candidates.includes(dataset.id))throw new Error('Кандидата не знайдено.');if(dataset.field==='chosen')p.chosen=dataset.checked?[...new Set([...p.chosen,dataset.id])]:p.chosen.filter(id=>id!==dataset.id);else if(dataset.field==='quantity'){if(!/^\d+$/.test(String(dataset.value))||!validQuantity(Number(dataset.value)))throw new Error('Кількість: ціле число від 1 до 999.');p.quantities[dataset.id]=Number(dataset.value);}changed(dataset.field==='quantity'?`${product(dataset.id).name}: ${quantityLabel(product(dataset.id),p.quantities[dataset.id])}.`:'');}
   }
   else if(action==='science-submit'){
    const values=dataset.values||{};
@@ -152,14 +84,14 @@ export function handleScience(action,dataset,state,helpers) {
   }
   else if(action==='science-document'){if(!p||!p.candidates.includes(dataset.id)||!product(dataset.id)?.ng)throw new Error('Документ не знайдено.');const m=product(dataset.id),url=link('ng','document',m.id);if(!p.references.some(r=>r.url===url)){if(p.references.length>=SCIENCE_LIMITS.references)throw new Error('До 30 посилань у проєкті.');p.references.push({title:`${m.name} · документ ${m.revision||'D1'}`,url,productId:m.id});changed('Документ додано.');}else helpers.toast('Цей документ уже у проєкті.');}
   else if(action==='science-remove-reference'){if(!p||!/^\d+$/.test(String(dataset.index))||!p.references[Number(dataset.index)])throw new Error('Посилання не знайдено.');p.references.splice(Number(dataset.index),1);changed('Посилання прибрано.');}
-  else if(action==='science-export'){if(!p)throw new Error('Проєкт не знайдено.');helpers.downloadText(dataset.format==='json'?exportProject(p):projectText(p),`${p.id}.${dataset.format==='json'?'json':'txt'}`);}
+  else if(action==='science-export'){if(!p)throw new Error('Проєкт не знайдено.');helpers.downloadText(dataset.format==='json'?exportProject(p):projectText(p),`${p.id}.${dataset.format==='json'?'json':'txt'}`);helpers.toast('Експорт поточного проєкту підготовлено.');}
   else if(action==='science-recovery'){helpers.downloadText(JSON.stringify({format:'perspektyva-recovery',version:1,quarantine:s.quarantine},null,2),'projects-recovery.json');}
   else if(action==='science-import'){const imported=importProject(dataset.text,Number(dataset.size??dataset.filesize));p=createProject(s,imported);p.chosen=[...imported.chosen];syncSave(helpers,state,'Імпортовано окремий проєкт.');helpers.go(link(brand,'project',p.id));}
   else if(action==='science-cart'){if(!p||!p.chosen.length)throw new Error('Спочатку виберіть моделі для кошика.');projectCart(p);helpers.openModal(heading('Перенести вибраний склад',`<p>${p.chosen.length} ${plural(p.chosen.length,'модель','моделі','моделей')} із проєкту «${esc(p.name)}». Що зробити з поточним кошиком?</p><div class="modal-actions"><button class="btn" data-action="science-transfer" data-project="${p.id}" data-mode="add">Додати до поточного</button><button class="btn secondary" data-action="science-transfer" data-project="${p.id}" data-mode="replace">Замінити кошик</button><button class="text-btn" data-action="close">Скасувати</button></div>`));}
   else if(action==='science-transfer'){if(!p||!['add','replace'].includes(dataset.mode))throw new Error('Перевірте проєкт і дію з кошиком.');const cart=projectCart(p);if(!Object.keys(cart).length)throw new Error('Вибраний склад порожній.');if(helpers.transferCart(cart,dataset.mode)!==false){helpers.closeModal();helpers.go(link('asp','cart'));}}
   else if(action==='science-compare'){if(!p||!Object.hasOwn(groups,dataset.group))throw new Error('Добір не знайдено.');const ids=p.candidates.filter(id=>product(id)?.group===dataset.group);if(ids.length>6){helpers.openModal(heading('Оберіть до 6 кандидатів',`<form data-science-form="compare-selection" data-project="${p.id}" data-group="${dataset.group}"><div class="science-compare-checkboxes">${ids.map(id=>`<label class="check"><input type="checkbox" name="ids" value="${id}">${esc(product(id).name)}</label>`).join('')}</div><button class="btn" type="submit">Відкрити порівняння</button></form>`));}else if(helpers.setComparison(ids,dataset.group)!==false)helpers.go(link(brand,'compare'));}
   else if(action==='science-map-compare'){const m=product(dataset.id);if(!m)throw new Error('Модель не знайдено.');const ids=state.compareByGroup?.[m.group]||[];if(!ids.includes(m.id)&&ids.length>=6){helpers.setComparison(ids,m.group);helpers.toast('У порівнянні вже 6 моделей. Натисніть «Додати модель», щоб замінити кандидата.');helpers.go(link(brand,'compare'));}else{if(helpers.setComparison([...new Set([...ids,m.id])],m.group)!==false){helpers.render(false);helpers.toast('Модель у порівнянні.');}}}
-  else if(action==='comparison-save-to-project'){const ids=Array.isArray(dataset.ids)?dataset.ids:String(dataset.ids||'').split(',').filter(Boolean);if(!idList(ids,products)||!ids.length)throw new Error('У порівнянні немає кандидатів.');if(!dataset.target){helpers.openModal(heading('Зберегти в проєкті',`<p>${ids.length} ${ids.length%100>=11&&ids.length%100<=14?'кандидатів':ids.length%10===1?'кандидат':ids.length%10>=2&&ids.length%10<=4?'кандидати':'кандидатів'}. Кошик не зміниться.</p><div class="science-project-targets"><button class="btn" data-action="comparison-save-to-project" data-target="new" data-ids="${ids.join(',')}">Створити новий проєкт</button>${s.projects.map(x=>`<button class="btn secondary" data-action="comparison-save-to-project" data-target="${x.id}" data-ids="${ids.join(',')}">${esc(x.name)}</button>`).join('')}</div>`));}else{p=dataset.target==='new'?createProject(s,{name:'Добір обладнання',candidates:ids}):s.projects.find(x=>x.id===dataset.target);if(!p)throw new Error('Проєкт не знайдено.');for(const id of ids)if(!p.candidates.includes(id)){p.candidates.push(id);p.quantities[id]=1;}syncSave(helpers,state,'Кандидатів збережено в проєкті.');helpers.closeModal();helpers.go(link(brand,'project',p.id));}}
+  else if(action==='comparison-save-to-project'){const ids=Array.isArray(dataset.ids)?dataset.ids:String(dataset.ids||'').split(',').filter(Boolean);if(!idList(ids,products)||!ids.length)throw new Error('У порівнянні немає кандидатів.');if(!dataset.target){helpers.openModal(heading('Зберегти в проєкті',`<p>${ids.length} ${ids.length%100>=11&&ids.length%100<=14?'кандидатів':ids.length%10===1?'кандидат':ids.length%10>=2&&ids.length%10<=4?'кандидати':'кандидатів'}. Кошик не зміниться.</p><div class="science-project-targets"><button class="btn" data-action="comparison-save-to-project" data-target="new" data-ids="${ids.join(',')}">Створити новий проєкт</button>${s.projects.map(x=>`<button class="btn secondary" data-action="comparison-save-to-project" data-target="${x.id}" data-ids="${ids.join(',')}">${esc(x.name)}</button>`).join('')}</div>`));}else{p=dataset.target==='new'?createProject(s,{name:'Добір обладнання',candidates:ids}):s.projects.find(x=>x.id===dataset.target);if(!p)throw new Error('Проєкт не знайдено.');mergeProjectCandidates(p,ids);p.updatedAt=new Date().toISOString();syncSave(helpers,state,'Кандидатів збережено в проєкті.');helpers.closeModal();helpers.go(link(brand,'project',p.id));}}
   return true;
  } catch(error){helpers.toast(error.message||'Не вдалося виконати дію.');return true;}
 }

@@ -1,0 +1,62 @@
+name: Report integrity
+on:
+  pull_request:
+  push:
+    branches: [release/reports-first-rc]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  report-integrity:
+    # RC3 includes this gate once, alongside its immutable build and browser evidence.
+    if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'release/review-integrated-rc3' && github.base_ref == 'feat/modern-experience') }}
+    # Tagged PDF byte reproducibility needs the accepted RC3 native renderer,
+    # not the changing native libraries on ubuntu-latest.
+    runs-on: ubuntu-24.04
+    container:
+      image: python:3.12.14-slim-trixie@sha256:44ff437bba879d4941b710a369a8f19266aea34b29002807f0c487fabc9eec9b
+    timeout-minutes: 25
+    steps:
+      - name: Install pinned Git for checkout in the renderer container
+        shell: sh
+        run: |
+          set -eu
+          apt-get update
+          apt-get install -y --no-install-recommends git=1:2.47.3-0+deb13u1 ca-certificates=20250419
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install locked toolchain
+        run: npm ci
+      - name: Check strict TypeScript
+        run: npm run typecheck
+      - name: Install the exact native PDF renderer used by RC3
+        env:
+          REPORT_RENDER_CONTAINER: '1'
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          python scripts/install-report-runtime.py --output output/verification/native-renderer.json
+      - run: python -m pip install -r reports/requirements.txt
+      - run: python scripts/fetch-report-fonts.py "$RUNNER_TEMP/report-fonts"
+      - name: Control generation and negative checks
+        env:
+          REPORT_FONT_DIR: ${{ runner.temp }}/report-fonts
+        run: python scripts/check-report-reproduction.py
+      - run: python scripts/verify-reports.py
+      - run: npm run build && npm run verify
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: reports-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            public/reports
+            reports/*manifest.json
+            research/editorial-decisions.json
+            research/editorial-source-register.json
+            output/verification
+          retention-days: 30

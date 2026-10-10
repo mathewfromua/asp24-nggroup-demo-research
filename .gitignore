@@ -45,3 +45,14 @@ test-results/
 .openai/
 *.bundle
 *.har
+
+# Generated CI evidence and immutable build downloads
+/modern-build/
+/browser-artifacts/
+/browser-downloads/
+/performance/
+/evidence/
+/candidate-evidence/
+/browser-probe/
+/rc3-build/
+/rc3-evidence/

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtempSync, cpSync, readdirSync, readFileSync, writeFileSync, rmSync, mkdirSync} from 'node:fs';
+import {mkdtempSync, cpSync, readdirSync, readFileSync, writeFileSync, rmSync, mkdirSync, symlinkSync, existsSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join, dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -32,12 +32,19 @@ test('asset paths preserve project directory and reject traversal or remote URLs
 function snapshot() {
   const dir = mkdtempSync(join(tmpdir(), 'asp24-pages-test-'));
   for (const entry of readdirSync(root)) {
-    if (/\.(js|css)$/.test(entry) || ['index.html','deployment.config.json','package.json','package-lock.json'].includes(entry)) cpSync(join(root,entry),join(dir,entry));
+    if (/\.(js|css)$/.test(entry) || ['index.html','publication.json','deployment.config.json','package.json','package-lock.json','vite.config.ts','tsconfig.json'].includes(entry)) cpSync(join(root,entry),join(dir,entry));
   }
+  // Reuse the installed, locked toolchain read-only; the tested source/dist remain isolated.
+  symlinkSync(join(root,'node_modules'),join(dir,'node_modules'),'dir');
+  if(existsSync(join(root,'src')))cpSync(join(root,'src'),join(dir,'src'),{recursive:true});
   cpSync(join(root,'public'),join(dir,'public'),{recursive:true});
   mkdirSync(join(dir,'scripts')); mkdirSync(join(dir,'reports'));
-  for (const name of ['build-static.mjs','verify-build.mjs','deployment-config.mjs','serve.mjs']) cpSync(join(root,'scripts',name),join(dir,'scripts',name));
+  for (const name of ['build-static.mjs','build-publication.mjs','verify-build.mjs','deployment-config.mjs','serve.mjs']) cpSync(join(root,'scripts',name),join(dir,'scripts',name));
   for (const name of ['content.json','pdf-manifest.json','html-manifest.json','html-public-assets.json']) cpSync(join(root,'reports',name),join(dir,'reports',name));
+  const inputs=JSON.parse(readFileSync(join(root,'reports/input-manifest.json'),'utf8'));
+  for(const name of ['reports/input-manifest.json',...Object.keys(inputs.files)]) {
+    mkdirSync(dirname(join(dir,name)),{recursive:true});cpSync(join(root,name),join(dir,name));
+  }
   return dir;
 }
 async function freePort() {
@@ -66,6 +73,13 @@ for (const base of ['/', '/asp24-nggroup-demo-research/']) {
       writeFileSync(manifestPath,JSON.stringify(stale));
       assert.throws(()=>execFileSync(process.execPath,['scripts/verify-build.mjs'],{cwd:dir,env,stdio:'pipe'}), /PDF built from outdated content/);
       writeFileSync(manifestPath,manifestText);
+      // Vite's hash labels are build-graph hashes; our SHA-256 inventory must reject altered bytes.
+      const asset=verified.files.find(file=>/^assets\/.*\.js$/.test(file.path));
+      const assetPath=join(dir,'dist',asset.path),assetBytes=readFileSync(assetPath);
+      writeFileSync(assetPath,Buffer.concat([assetBytes,Buffer.from('\n/* tampered */')]));
+      assert.throws(()=>execFileSync(process.execPath,['scripts/verify-build.mjs'],{cwd:dir,env,stdio:'pipe'}), /Asset byte length|Asset integrity/);
+      writeFileSync(assetPath,assetBytes);
+
 
       const port = await freePort();
       server = spawn(process.execPath,['scripts/serve.mjs','--port',String(port)],{cwd:dir,stdio:['ignore','pipe','pipe']});
@@ -88,6 +102,21 @@ for (const base of ['/', '/asp24-nggroup-demo-research/']) {
       assert.equal((await fetch(origin+base+'reports/ASP24_Review.pdf')).headers.get('content-type'),'application/pdf');
       assert.equal((await fetch(origin+base+'reports/NGGroup_Review.html')).headers.get('content-type'),'text/html; charset=utf-8');
       assert.equal((await fetch(origin+base+'package.json')).status,404);
+      assert.equal((await fetch(origin+base+'missing/route/')).status,404,'No SPA fallback');
+      const registry=JSON.parse(readFileSync(join(dir,'dist/publication.json'),'utf8'));
+      for(const entry of registry.cases){
+        for(const path of [`cases/${entry.caseId}/`,`cases/${entry.caseId}/v${entry.caseVersion}/`]){
+          const response=await fetch(origin+base+path);
+          assert.equal(response.status,200,`Direct nested entry ${path}`);
+          assert.equal(response.headers.get('content-type'),'text/html; charset=utf-8');
+          assert.ok((await response.text()).includes(`case=${entry.caseId}`));
+        }
+      }
+      const script=verified.files.find(file=>/^assets\/.*\.js$/.test(file.path));
+      const style=verified.files.find(file=>/^assets\/.*\.css$/.test(file.path));
+      assert.equal((await fetch(origin+base+script.path)).headers.get('content-type'),'text/javascript; charset=utf-8');
+      assert.equal((await fetch(origin+base+style.path)).headers.get('content-type'),'text/css; charset=utf-8');
+
       for (const excluded of ['mini-ups','network-cable','network-switch','optical-transceiver']) assert.equal((await fetch(origin+base+`assets/${excluded}.webp`)).status,404);
       assert.equal((await fetch(origin+base+'index.html',{method:'POST'})).status,405);
       if (base !== '/') {

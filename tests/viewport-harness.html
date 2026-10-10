@@ -1,5 +1,14 @@
 <!doctype html><html lang="uk"><meta charset="utf-8"><title>Local QA harness — excluded from deployment</title><style>body{margin:0;background:#dedee4;font:14px Arial}header{padding:8px;display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:0;background:white;z-index:10}iframe{border:0;display:block;height:844px;background:white}select,button,input{padding:7px}label{display:flex;gap:6px;align-items:center}</style><header><label>Viewport <select id="width"><option>360×800</option><option selected>390×844</option><option>430×932</option><option>844×390</option><option>960×768</option><option>1366×768</option><option>1440×900</option></select></label><label>Fixture <select id="fixture"><option value="normal">Звичайний код</option><option value="long">Довга назва + 25 рядків + сьомий кандидат</option></select></label><label>Початкові моделі <select id="seed"><option>0</option><option>1</option><option>2</option><option>3</option><option selected>6</option></select></label><button id="load">Відкрити fixture</button><button id="reload">Reload без пересівання</button></header><iframe title="Прототип" src="/#/asp/compare" style="width:390px"></iframe><script>
 const frame=document.querySelector('iframe');document.querySelector('#width').onchange=e=>{const [w,h]=e.target.value.split('×');frame.style.width=w+'px';frame.style.height=h+'px'};
-document.querySelector('#load').onclick=()=>{const long=document.querySelector('#fixture').value==='long';frame.src='/tests/research-fixture.html?seed='+document.querySelector('#seed').value+(long?'&long&seventh':'')+'#/asp/compare'};
+document.querySelector('#load').onclick=()=>{
+ const long=document.querySelector('#fixture').value==='long';
+ const requested=Number(document.querySelector('#seed').value);
+ const seed=[0,1,2,3,6].find(value=>value===requested);
+ if(seed===undefined)throw new Error('Unknown fixture seed');
+ const target=new URL('/tests/research-fixture.html',location.origin);
+ target.searchParams.set('seed',String(seed));
+ if(long){target.searchParams.set('long','');target.searchParams.set('seventh','');}
+ target.hash='/asp/compare';frame.src=target.href;
+};
 document.querySelector('#reload').onclick=()=>{const w=frame.contentWindow;w.history.replaceState(null,'',w.location.href.replace(/seed=\d+&?/,''));w.location.reload()};
 </script></html>

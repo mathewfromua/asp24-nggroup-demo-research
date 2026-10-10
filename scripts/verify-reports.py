@@ -2,6 +2,7 @@ from pathlib import Path
 import json,hashlib,re,urllib.request,sys
 from pypdf import PdfReader
 from html.parser import HTMLParser
+from html import escape
 from argparse import ArgumentParser
 R=Path(__file__).resolve().parent.parent
 parser=ArgumentParser(description='Verify same-source reports and actual preview HTTP bytes.')
@@ -15,8 +16,25 @@ d=REPORTS
 class Text(HTMLParser):
  def __init__(self):super().__init__();self.parts=[]
  def handle_data(self,s):self.parts.append(s)
+ def handle_starttag(self,tag,attrs):
+  if tag in {'p','div','section','header','footer','nav','main','h1','h2','h3','li','tr','th','td','caption','figcaption','br'}:self.parts.append(' ')
+ def handle_endtag(self,tag):
+  if tag in {'p','div','section','header','footer','nav','main','h1','h2','h3','li','tr','th','td','caption','figcaption'}:self.parts.append(' ')
 def plain(s):
- t=Text();t.feed(s);return re.sub(r'\s+',' ',' '.join(t.parts)).strip()
+ t=Text();t.feed(s);return re.sub(r'\s+',' ',''.join(t.parts)).strip()
+class Semantics(HTMLParser):
+ def __init__(self):
+  super().__init__();self.ids=[];self.citations=[];self.regions=[];self.headings=[];self.in_heading=False
+ def handle_starttag(self,tag,attrs):
+  a=dict(attrs)
+  if a.get('id'):self.ids.append(a['id'])
+  if tag=='h1':self.in_heading=True;self.headings.append('')
+  if tag=='a' and 'citation' in a.get('class','').split():self.citations.append(a)
+  if any(c in a.get('class','').split() for c in ['table-scroll','chart-scroll']):self.regions.append(a)
+ def handle_data(self,s):
+  if self.in_heading:self.headings[-1]+=s
+ def handle_endtag(self,tag):
+  if tag=='h1':self.in_heading=False
 def texts(block):
  k,*a=block
  if k in ['p','h','note','source','link']:return [a[0]]
@@ -26,17 +44,51 @@ def texts(block):
  return []
 records=[]
 for brand,pages in d.items():
- f=R/f'public/reports/{brand}_Review.pdf';pdf=PdfReader(f);ht=(R/f'public/reports/{brand}_Review.html').read_text();ph=plain(ht);assert len(pdf.pages)==len(pages)+1
- assert pdf.trailer['/Root']['/Lang']=='uk-UA';assert not pdf.trailer['/Root'].get('/StructTreeRoot')
+ f=R/f'public/reports/{brand}_Review.pdf';pdf=PdfReader(f);ht=(R/f'public/reports/{brand}_Review.html').read_text();ph=plain(ht)
+ assert len(pdf.pages)>1,(brand,'Cover and complete report required')
+ assert pdf.trailer['/Root']['/Lang']=='uk-UA'
+ assert pdf.trailer['/Root'].get('/StructTreeRoot'),(brand,'Logical structure missing')
+ marked=pdf.trailer['/Root'].get('/MarkInfo',{}).get('/Marked')
+ assert getattr(marked,'value',marked) is True,(brand,'Tagged document marker missing')
+ # Physical page numbers may change in the accessible export. Frozen section IDs,
+ # full text and section order remain the contract; the separate structured-PDF
+ # gate validates the actual tag tree, tables, alternatives and reading sequence.
+ compact=lambda v:re.sub(r'\s+','',plain(v).replace('\u00ad',''))
+ physical_text=[plain(page.extract_text()) for page in pdf.pages]
+ pdf_text=compact(' '.join(physical_text));last_title=-1
+ assert all('\ufffd' not in text and '\x00' not in text for text in physical_text)
  assert '{{PUBLIC_BASE_URL}}' not in ht and 'perspektyva.mathew-from-ua.chatgpt.site' not in ht
- assert 'href="../">До демо' in ht
+ assert 'href="../">До оглядів і прикладів' in ht
+ semantics=Semantics();semantics.feed(ht)
+ brandlabel='NG Group' if brand=='NGGroup' else brand
+ subject='Від пошуку до підготовки закупівлі' if brand=='ASP24' else 'Від технічної інформації до вибору рішення'
+ assert semantics.headings==[f'{brandlabel} — {subject}'],(brand,'Report heading must name its subject')
+ assert len(semantics.ids)==len(set(semantics.ids)),(brand,'Duplicate document anchors')
+ expected_sources={f'source-{re.search(r"\[(\d+)\]",block[1])[1]}' for page in pages for block in page['blocks'] if block[0]=='source'}
+ assert expected_sources.issubset(semantics.ids),(brand,'Source record anchors missing')
+ assert semantics.citations,(brand,'Citation navigation missing')
+ for citation in semantics.citations:
+  target=citation.get('href','').removeprefix('#')
+  assert target in expected_sources,(brand,'Unresolved citation',citation)
+  assert citation.get('aria-label')=='Джерело '+target.removeprefix('source-'),(brand,'Citation lacks a source name')
+ for region in semantics.regions:
+  assert region.get('role')=='region' and region.get('tabindex')=='0',(brand,'Scroll region is not keyboard accessible')
+  assert region.get('aria-label') and region['aria-label']!='Таблиця, доступна для горизонтального прокручування',(brand,'Scroll region lacks a subject')
  htext=[]
  for i,page in enumerate(pages,2):
-  assert plain(page['title']) in ph,(brand,i,'title');pt=plain(pdf.pages[i-1].extract_text());assert '\ufffd' not in pt
+  assert plain(page['title']) in ph,(brand,i,'title')
+  title_position=pdf_text.find(compact(page['title']),last_title+1)
+  assert title_position>last_title,(brand,i,'PDF section title/order',page['title'])
+  last_title=title_position
   for block in page['blocks']:
-   for t in texts(block):assert plain(t) in ph,(brand,i,t[:60])
-  htext.append({'page':i,'characters':len(pt),'annotations':len(pdf.pages[i-1].get('/Annots',[]))})
- records.append({'brand':brand,'pages':len(pdf.pages),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'lang':'uk-UA','struct_tree':False,'html_source_text_all_blocks':'PASS','body_pages':htext,'pdf_ua':'NOT_CLAIMED','reading_order':'Untagged PDF; visual review recorded separately in reports/migration-review.json'})
+   if block[0]=='image' and len(block)>5:
+    assert f'alt="{escape(block[5],quote=True)}"' in ht,(brand,i,'Explicit image alternative missing')
+    assert plain(block[5])!=plain(block[3]),(brand,i,'Image alternative duplicates caption')
+   for t in texts(block):
+    assert plain(t) in ph,(brand,i,t[:60])
+    assert compact(t) in pdf_text,(brand,i,'PDF text missing',t[:80])
+  htext.append({'section':page.get('id',page['title']),'title':page['title'],'all_source_blocks_present':True})
+ records.append({'brand':brand,'pages':len(pdf.pages),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'lang':'uk-UA','struct_tree':True,'html_source_text_all_blocks':'PASS','html_semantics':{'status':'PASS','citation_links':len(semantics.citations),'source_anchors':len(expected_sources),'named_scroll_regions':len(semantics.regions)},'sections':htext,'physical_pages':[{'page':i+1,'characters':len(text),'annotations':len(pdf.pages[i].get('/Annots',[]))} for i,text in enumerate(physical_text)],'pdf_ua':'NOT_CONFIRMED_BY_THIS_SCRIPT','reading_order':'Section text order checked here; tag sequence, table associations and alternatives require verify-structured-pdfs.py'})
 (E/'pdf-html-structure.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n')
 if not args.base_url:
  print('PASS same-source HTML blocks and PDF structural checks; HTTP NOT_RUN (no --base-url).')
