@@ -2,7 +2,7 @@
 The renderer/commit gate is kept separate and self-deleting after success.
 """
 from __future__ import annotations
-import base64,csv,io,json,re,zlib
+import base64,csv,hashlib,io,json,re,zlib
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -56,6 +56,16 @@ blocks.insert(index,blocks.pop(index+1))
 changes.append('nggroup-06:move-theoretical-caveat-before-chart')
 assert len(data['ASP24'])==13 and len(data['NGGroup'])==15
 p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+# Provenance map is a tracked, tested source pointer; update ONLY the current manuscript hash.
+# Historical primary captures remain absent; never rewrite their 2026-10-08 evidence claims as newly verified.
+claim_path=ROOT/'reports/claim-map-editorial.json'
+claim_map=json.loads(claim_path.read_text(encoding='utf-8'))
+assert claim_map['manuscript_sha256']=='2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7'
+claim_map['manuscript_sha256']=hashlib.sha256(p.read_bytes()).hexdigest()
+claim_map['updated_at']='2026-10-10'
+claim_map['integration_evidence_limit']={'audit_date':'2026-10-10','scope':'MANUSCRIPT_RECONCILIATION_ONLY','historical_raw_captures':'NOT_IN_PUBLIC_REPOSITORY','no_new_primary_reproduction':True,'claim_status_map':'research/claim-ledger-integration.csv'}
+claim_path.write_text(json.dumps(claim_map,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 # Engineering P1: include root npm ecosystem without disturbing existing schedules.
 dep=ROOT/'.github/dependabot.yml'
