@@ -1,0 +1,108 @@
+# One-time, self-deleting branch-only integration. Never deploy or merge.
+name: One-shot source/report pre-release integration
+on:
+  push:
+    branches: [release/review-integrated-rc3]
+    paths:
+      - 'scripts/pre-release-integrate.py'
+      - '.github/workflows/pre-release-one-time.yml'
+permissions:
+  contents: write
+concurrency:
+  group: prerelease-integration-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  integrate:
+    if: github.repository == 'mathewfromua/asp24-nggroup-demo-research' && github.ref == 'refs/heads/release/review-integrated-rc3'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: python:3.12.14-slim-trixie@sha256:44ff437bba879d4941b710a369a8f19266aea34b29002807f0c487fabc9eec9b
+    steps:
+      - name: Install pinned Git and CA before checkout
+        shell: sh
+        run: |
+          set -eu
+          apt-get update
+          apt-get install -y --no-install-recommends git=1:2.47.3-0+deb13u1 ca-certificates=20250419
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Preflight exact SHA; install pinned native report runtime
+        shell: bash
+        env:
+          REPORT_RENDER_CONTAINER: '1'
+        run: |
+          set -euo pipefail
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test -z "$(git status --porcelain)"
+          test -f scripts/pre-release-integrate.py
+          python scripts/install-report-runtime.py --output /tmp/prerelease-native-runtime.json
+          npm ci
+          python -m pip install -r reports/requirements.txt
+          python scripts/fetch-report-fonts.py "$RUNNER_TEMP/report-fonts"
+          python scripts/fetch-verapdf.py --output "$RUNNER_TEMP/verapdf"
+      - name: Integrate audited source; regenerate real tagged reports; verify artifacts
+        shell: bash
+        env:
+          REPORT_FONT_DIR: ${{ runner.temp }}/report-fonts
+        run: |
+          set -euo pipefail
+          python scripts/pre-release-integrate.py
+          python reports/build_editorial.py
+          python reports/build_html.py
+          python reports/export_standalone.py
+          python reports/build_inputs.py --write
+          python scripts/test-structured-pdfs.py
+          python scripts/verify-reports.py
+          python scripts/verify-structured-pdfs.py --pdf-dir public/reports --output output/verification/reports/structured-pdf-validation.json --verapdf "$RUNNER_TEMP/verapdf/verapdf"
+          python scripts/verify-acceptance-pdfs.py
+          npm run typecheck
+          npm test
+          python scripts/check-report-reproduction.py
+          BASE_PATH=/asp24-nggroup-demo-research/ npm run build
+          npm run verify
+          BASE_PATH=/ npm run build
+          npm run verify
+          BASE_PATH=/asp24-nggroup-demo-research/ npm run build
+          npm run verify
+      - name: Stage reviewed changes and push strictly fast-forward to PR branch
+        shell: bash
+        env:
+          PR_BRANCH: release/review-integrated-rc3
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git add -u
+          git add docs/RIGHTS_LICENSE_DECISION.md docs/MIGRATION_HANDOFF.md docs/INTEGRATION_LEDGER.md research/claim-ledger-integration.csv
+          git rm -- scripts/pre-release-integrate.py .github/workflows/pre-release-one-time.yml
+          git diff --cached --check
+          test -n "$(git diff --cached --name-only)"
+          # Compare the live remote branch before writing. Never force or rebase.
+          REMOTE_HEAD="$(git ls-remote origin "refs/heads/$PR_BRANCH" | cut -f1)"
+          test "$REMOTE_HEAD" = "$GITHUB_SHA" || { echo 'BLOCKED_CONCURRENT_BRANCH_WRITE'; exit 9; }
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Integrate review A-D and reproducibly regenerate both accessible reports'
+          git push origin "HEAD:refs/heads/$PR_BRANCH"
+          printf 'INTEGRATED_HEAD=%s\n' "$(git rev-parse HEAD)"
+      - name: Retain generated candidate and validation evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: prerelease-integration-${{ github.sha }}
+          path: |
+            public/reports/
+            reports/*manifest.json
+            output/verification/
+            docs/INTEGRATION_LEDGER.md
+            docs/RIGHTS_LICENSE_DECISION.md
+            docs/MIGRATION_HANDOFF.md
+            research/claim-ledger-integration.csv
+          if-no-files-found: warn
+          retention-days: 30
