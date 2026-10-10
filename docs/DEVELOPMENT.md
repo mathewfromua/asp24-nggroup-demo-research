@@ -27,7 +27,7 @@ npm run preview -- --host 127.0.0.1 --port 8000
 python3 -m venv .venv
 . .venv/bin/activate
 python3 -m pip install -r reports/requirements.txt
-export PERSPEKTYVA_FONT_DIR=/absolute/path/to/your/fonts
+export REPORT_FONT_DIR=/absolute/path/to/your/fonts
 python3 reports/build_editorial.py
 python3 reports/build_html.py
 python3 reports/export_standalone.py

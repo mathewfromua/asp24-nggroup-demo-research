@@ -1,20 +1,20 @@
 [
   {
     "html": "output/standalone/ASP24_Review.html",
-    "sha256": "a7166f354d65b2ae75075b0d3a220d2ac717a93f04d3e0743dd323080701d78a",
-    "public_html_sha256": "5e00977fb7559f6e9c2d9c83e68a89e3fbb9c45ef82fd25709e990fb53b3e49d",
-    "input_digest": "49db6ef82b245976e3d004726584c0861a96fc4fa9964d7fa3d0af2781a5e4d8",
-    "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
+    "sha256": "432240c6dffe87d727e88f8d4b0adaed02286911548ed2e908275fede1a8917a",
+    "public_html_sha256": "9f933ef719a031efd1021c45ec585c09d7c3d3856185e58add79aaf9078f7400",
+    "input_digest": "d1f6c971fe025991cdc0b8e4cbbbcf331104fc0afcd166d596a9cab14a25a306",
+    "content_sha256": "7a11a8b2bb3d24de104b0b40a5b577a76c08fbec3cab325d0e8ad2a10ce69813",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
     "derivation": "Identical generated text; local PNG images embedded for offline reading; home link points to the project origin."
   },
   {
     "html": "output/standalone/NGGroup_Review.html",
-    "sha256": "46dd58669ad2f1db104d8379a53524f0b2da368b45e3bf64512101bbe3114c0d",
-    "public_html_sha256": "b2d8896e70fd717f4156832107c5334de7a6bf28a336424f5f9e0eb0886ac9b3",
-    "input_digest": "49db6ef82b245976e3d004726584c0861a96fc4fa9964d7fa3d0af2781a5e4d8",
-    "content_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
+    "sha256": "b6d1923996476b9917bf6c784b4d0cf558af7721a5efe1c08fe7ec841d02af55",
+    "public_html_sha256": "b5c4d6a7cc2688f68484f9eb5fd2aac8ee40ab1b6dca72d905bad9446900d86b",
+    "input_digest": "d1f6c971fe025991cdc0b8e4cbbbcf331104fc0afcd166d596a9cab14a25a306",
+    "content_sha256": "7a11a8b2bb3d24de104b0b40a5b577a76c08fbec3cab325d0e8ad2a10ce69813",
     "deployment_config_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
     "public_base_url": "https://mathewfromua.github.io/asp24-nggroup-demo-research/",
     "derivation": "Identical generated text; local PNG images embedded for offline reading; home link points to the project origin."

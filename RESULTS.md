@@ -1,3 +1,9 @@
+# Пріоритетне оновлення 10.10.2026 — адресна інтеграція PR #9
+
+Цей документ нижче є **історією приймання попередніх SHA**, а не автоматичним PASS після зміни `reports/content.json`. Поточний кандидат слід ідентифікувати за actual PR #9 HEAD і exact run. Окремі статуси: evidence SECONDARY_BOUNDED, R34 OPEN_EXTERNAL_SOURCE, невідома ревізія FHP12A, license OWNER_DECISION, old Git history SENSITIVE_BLOCKER, new PDF/CI requires actual validation, public release HOLD. Нативний Safari, Telegram WebView і VoiceOver — NOT_RUN. `main`/Pages не змінювалися.
+
+---
+
 # RC3 Hardening — прийнятий передрелізний кандидат
 
 **Підтверджений вихідний SHA:** `c494b321fcb2f34a840956734c47d887078ed116` · [PR №9](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/9) · [CI SUCCESS](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453) · [artifact 11624359601](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453/artifacts/11624359601).

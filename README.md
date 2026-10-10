@@ -2,7 +2,7 @@
 
 Два українські аналітичні огляди про вибір обладнання. **ASP24** — пошук, порівняння й підготовка закупівлі. **NG Group** — виконання виробу, технічний документ і предметна консультація. Демо дає змогу перевірити запропоновані механізми на умовних даних.
 
-**Прийнятий preview:** RC3 Hardening [`c494b321`](https://github.com/mathewfromua/asp24-nggroup-demo-research/commit/c494b321fcb2f34a840956734c47d887078ed116), [PR №9](https://github.com/mathewfromua/asp24-nggroup-demo-research/pull/9), [успішний exact-SHA CI](https://github.com/mathewfromua/asp24-nggroup-demo-research/actions/runs/37948200453). Це кандидат `ACCEPT_PREVIEW`, **не опублікований RC3**. До дозволеного merge [GitHub Pages](https://mathewfromua.github.io/asp24-nggroup-demo-research/) показує попередній `main`; нові кейси можуть бути недоступними. Наступні cleanup-коміти потребують адресної перевірки, а не автоматичного перенесення приймання.
+**Передрелізна інтеграція 10.10.2026:** PR #9, гілка `release/review-integrated-rc3`. Попередній доказовий SHA `65ff5d270328a8842da22e524713d3a7ad3f9a1e`; поточний інтеграційний SHA беріть безпосередньо з PR/Actions. **HOLD_PUBLIC_RELEASE:** без нового independent exact-SHA gate, рішення щодо прав та remediated privacy old Git history публікація не дозволена. Успіх попередніх CI-run не переноситься на нові PDF/HTML; чинна GitHub Pages відображає `main`, не RC3. Вихідні докази мають межі `SECONDARY_BOUNDED`, а не незалежно відновлену історію.
 
 | Огляд | PDF цієї гілки | Повний адаптивний HTML |
 |---|---|---|
@@ -46,3 +46,8 @@ npm run preview -- --host 127.0.0.1 --port 8000
 [Рукопис](reports/content.json) → два генератори → PDF/HTML. [Карта джерел](reports/claim-map-editorial.json), [нове читання PDF](research/editorial-source-register.json), [рішення R01–R44](research/editorial-decisions.json), [прийняті E01/E02](research/ACCEPTED_DECISIONS_UA.md). [DEVELOPMENT](docs/DEVELOPMENT.md) містить команди точної генерації й негативні перевірки застарілих outputs; [Контракт публікації](docs/PUBLICATION_CONTRACT.md) — стабільні маршрути, стани та післярелізна перевірка.
 
 `public/` містить лише дозволені web-активи; `dist/` генерується. `reports/` — рукопис, шаблони й manifests; `research/` — очищена карта доказів; `tests/` і `scripts/` — регресії та перевірки. Зовнішні шрифти й приватні архіви не входять до Git або bundle. [Атрибуція](THIRD_PARTY_NOTICES.md) зберігає права на сторонні матеріали.
+
+
+## Передача незалежному розробнику
+
+Поточний маршрут: [архітектура](docs/ARCHITECTURE.md) → [розробка](docs/DEVELOPMENT.md) → [відтворення оглядів](reports/README.md) → [інтеграційний ledger](docs/INTEGRATION_LEDGER.md) → [рішення щодо прав](docs/RIGHTS_LICENSE_DECISION.md) → [migration handoff](docs/MIGRATION_HANDOFF.md). `manifest.json` є історичним 3.1.1 snapshot, на відміну від генерованого `publication.json`; current-vs-historical QA-перевірки не змішуються. Наявність notices для сторонніх компонентів не є OSS-ліцензією власного коду.

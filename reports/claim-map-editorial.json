@@ -4,7 +4,7 @@
   "created_at": "2026-10-08",
   "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
   "manuscript_file": "reports/content.json",
-  "manuscript_sha256": "2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7",
+  "manuscript_sha256": "7a11a8b2bb3d24de104b0b40a5b577a76c08fbec3cab325d0e8ad2a10ce69813",
   "baseline": "Checkpoint03 після E01/E02; редакція R01–R44 09.10.2026.",
   "scope": "RC3 targeted editorial reconciliation and independent reading of eight PDFs/two FHP12A pages; historic UI actions remain separately attributed. No wider SEO synthesis.",
   "verification": {
@@ -715,7 +715,7 @@
       "locators": [
         "research/editorial-source-register.json#rc3_reverification/readings/Д05"
       ],
-      "printed_source_note": "<b>[6]</b> XPON: повний зміст десятисторінкової інструкції описаний у попередньому огляді; збережено кадри, не весь первинний файл. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf\"><u>Інструкція</u></link> Додаткова текстова звірка вебпредставлення десяти сторінок — 08.10.2026, за редакційним дослідженням; без отримання PDF та повного візуального перегляду. Окремо 09.10.2026 отримано PDF: текстово прочитано с. 2, 4, 9, 10; не заявляємо нового читання всіх десяти сторінок.",
+      "printed_source_note": "<b>[6]</b> XPON: повний зміст десятисторінкової інструкції описаний у попередньому огляді; збережено кадри, не весь первинний файл. <link href=\"https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf\"><u>Інструкція</u></link>. Додаткова текстова звірка вебпредставлення десяти сторінок — 08.10.2026, за редакційним дослідженням; без отримання PDF та повного візуального перегляду. Окремо 09.10.2026 отримано PDF: текстово прочитано с. 2, 4, 9, 10; не заявляємо нового читання всіх десяти сторінок.",
       "external_urls": [
         "https://nggroup.ua/media/sparsh/product_attachment/XPON_Stick.pdf"
       ],
@@ -3117,11 +3117,18 @@
       "provenance": "reports/fonts/provenance.json"
     }
   },
-  "updated_at": "2026-10-09",
+  "updated_at": "2026-10-10",
   "public_evidence_summary": "docs/RESEARCH.md",
   "deployment_configuration": "deployment.config.json",
   "file_catalog_missing_meaning": "Not distributed in the public repo. This list does not newly disprove or authenticate the inherited observations.",
   "deployment_configuration_sha256": "feaac15eb174491e4498c2aed1cb55d6077d04bec541b44a7699c5b6f50d0fd0",
   "current_editorial_decisions": "research/editorial-decisions.json",
-  "current_direct_source_reading": "research/editorial-source-register.json#rc3_reverification"
+  "current_direct_source_reading": "research/editorial-source-register.json#rc3_reverification",
+  "integration_evidence_limit": {
+    "audit_date": "2026-10-10",
+    "scope": "MANUSCRIPT_RECONCILIATION_ONLY",
+    "historical_raw_captures": "NOT_IN_PUBLIC_REPOSITORY",
+    "no_new_primary_reproduction": true,
+    "claim_status_map": "research/claim-ledger-integration.csv"
+  }
 }
