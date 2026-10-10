@@ -63,6 +63,22 @@ claim_path=ROOT/'reports/claim-map-editorial.json'
 claim_map=json.loads(claim_path.read_text(encoding='utf-8'))
 assert claim_map['manuscript_sha256']=='2c0657d50528d2a049b2240271d022be27e3be8e78196a15d6c7da91160442c7'
 claim_map['manuscript_sha256']=hashlib.sha256(p.read_bytes()).hexdigest()
+# Printed source-note links are also asserted by Node provenance tests. Only one
+# editorial source note changed: NGGroup citation 6 punctuation/scope boundary.
+changed_source_notes=[]
+for brand, sections in data.items():
+    for section in sections:
+        for block in section['blocks']:
+            if block[0]!='source':continue
+            number=re.match(r'<b>\[(\d+)\]</b>',block[1])
+            assert number,(brand,section['id'])
+            key=f'{brand}:{number[1]}'
+            previous=claim_map['sources'][key]['printed_source_note']
+            if previous!=block[1]:
+                assert key=='NGGroup:6',(key,'unexpected source citation drift')
+                claim_map['sources'][key]['printed_source_note']=block[1]
+                changed_source_notes.append(key)
+assert changed_source_notes==['NGGroup:6'],changed_source_notes
 claim_map['updated_at']='2026-10-10'
 claim_map['integration_evidence_limit']={'audit_date':'2026-10-10','scope':'MANUSCRIPT_RECONCILIATION_ONLY','historical_raw_captures':'NOT_IN_PUBLIC_REPOSITORY','no_new_primary_reproduction':True,'claim_status_map':'research/claim-ledger-integration.csv'}
 claim_path.write_text(json.dumps(claim_map,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
