@@ -8,7 +8,7 @@
 |---|---|---|
 | PATCH-01 / EA-03 FHP12A | `reports/content.json` NG `nggroup-05` note now states URL path date ≠ document revision | Text clarification, **fixed in manuscript**; revision of actual delivered unit **OPEN** |
 | PATCH-02 / EA-02 historical `16→9, 14→0, 30→0` | ASP `asp24-05` caption no longer claims independent raw recomputation | **SECONDARY_BOUNDED**. Raw six history-v5 JSON/recompute not found across 8 tracked branch trees; numerators unchanged |
-| PATCH-03 / EA-01 legacy DOM/filter/search/cart and Quattro-II/MultiPlus-II | Retain existing historical wording; 97-ID A ledger explicitly distinguishes PRIMARY/SECONDARY/OPEN | **SECONDARY_BOUNDED** absent timestamped raw DOM/click-path/PDF bytes; no synthetic claim of direct replay |
+| PATCH-03 / EA-01 legacy DOM/filter/search/cart and Quattro-II/MultiPlus-II | Quattro-II/MultiPlus-II now explicitly attributed to prior DEPS review; 97-ID A ledger distinguishes PRIMARY/SECONDARY/OPEN | **SECONDARY_BOUNDED** absent timestamped raw DOM/click-path/PDF bytes; no synthetic claim of direct replay |
 | PATCH-04 FHP12A measurement scopes | Preserve all four different published ranges and model applicability caution | **OPEN_EXTERNAL_SOURCE**: serial/revision/datasheet shipment unknown |
 | PATCH-05 R34 service terms | Do not merge 14 calendar days and 2 weeks–3 months; keep source reading limitation | **OPEN_EXTERNAL_SOURCE** pending NG process owner |
 | PATCH-06 invalid historic date | NG `nggroup-07`: literal «13.16.2025» labeled invalid; printed 14.06.2024–13.06.2025 retained | **FIXED TEXT**; not a fabricated date |

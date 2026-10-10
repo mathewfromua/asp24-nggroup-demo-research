@@ -1437,7 +1437,7 @@
         [
           "box",
           "Контрприклад: Quattro-II / MultiPlus-II",
-          "У перевіреній картці DEPS підпис Quattro-II вів до PDF MultiPlus-II; сусіднє посилання відкривало правильний Quattro-II. Зручний перелік файлів сам по собі не гарантує відповідності. [11]"
+          "За попереднім оглядом DEPS підпис Quattro-II вів до PDF MultiPlus-II, а сусіднє посилання — до Quattro-II. Первинний click trace і обидва PDF тут не відновлено; це обмежене історичне спостереження. [11]"
         ],
         [
           "p",
@@ -1634,7 +1634,7 @@
         ],
         [
           "source",
-          "<b>[11]</b> DEPS: сторінки й текст PDF 04.10.2026. Quattro-II та помилково підписаний MultiPlus-II — окремі файли у протоколі. <link href=\"https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html\"><u>Quattro-II</u></link> · <link href=\"https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html\"><u>FoxGate</u></link> · <link href=\"https://deps.ua/ua/service-center/check-order-status.html\"><u>Ремонт</u></link>"
+          "<b>[11]</b> DEPS: за попереднім протоколом від 04.10.2026, Quattro-II і MultiPlus-II — окремі PDF; поточного повторного click-test не проводили. <link href=\"https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html\"><u>Quattro-II</u></link> · <link href=\"https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html\"><u>FoxGate</u></link> · <link href=\"https://deps.ua/ua/service-center/check-order-status.html\"><u>Ремонт</u></link>"
         ],
         [
           "source",

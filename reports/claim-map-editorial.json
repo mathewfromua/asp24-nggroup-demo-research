@@ -4,7 +4,7 @@
   "created_at": "2026-10-08",
   "path_base": "Repository root. File availability is explicit; original source hashes are not hashes of sanitized or regenerated files.",
   "manuscript_file": "reports/content.json",
-  "manuscript_sha256": "7a11a8b2bb3d24de104b0b40a5b577a76c08fbec3cab325d0e8ad2a10ce69813",
+  "manuscript_sha256": "7bd2b644fa8d2ad7cd3a8a8faa11414fa989c1d1569ba065bab9f9c1e20e26e2",
   "baseline": "Checkpoint03 після E01/E02; редакція R01–R44 09.10.2026.",
   "scope": "RC3 targeted editorial reconciliation and independent reading of eight PDFs/two FHP12A pages; historic UI actions remain separately attributed. No wider SEO synthesis.",
   "verification": {
@@ -991,7 +991,7 @@
         "Пошук ремонту за реальним кодом і фактичний сервіс не перевіряли."
       ],
       "locators": [],
-      "printed_source_note": "<b>[11]</b> DEPS: сторінки й текст PDF 04.10.2026. Quattro-II та помилково підписаний MultiPlus-II — окремі файли у протоколі. <link href=\"https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html\"><u>Quattro-II</u></link> · <link href=\"https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html\"><u>FoxGate</u></link> · <link href=\"https://deps.ua/ua/service-center/check-order-status.html\"><u>Ремонт</u></link>",
+      "printed_source_note": "<b>[11]</b> DEPS: за попереднім протоколом від 04.10.2026, Quattro-II і MultiPlus-II — окремі PDF; поточного повторного click-test не проводили. <link href=\"https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html\"><u>Quattro-II</u></link> · <link href=\"https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html\"><u>FoxGate</u></link> · <link href=\"https://deps.ua/ua/service-center/check-order-status.html\"><u>Ремонт</u></link>",
       "external_urls": [
         "https://deps.ua/ua/katalog/uninterruptible-power-supplies-220v/47516.html",
         "https://deps.ua/ua/katalog/sfp-wdm-cwdm-xfp-moduli/sfp-1gbps-wdm-foxgate.html",
@@ -3129,6 +3129,7 @@
     "scope": "MANUSCRIPT_RECONCILIATION_ONLY",
     "historical_raw_captures": "NOT_IN_PUBLIC_REPOSITORY",
     "no_new_primary_reproduction": true,
-    "claim_status_map": "research/claim-ledger-integration.csv"
+    "claim_status_map": "research/claim-ledger-integration.csv",
+    "quattro_link_experience": "HISTORICAL_REVIEW_ONLY_NO_RAW_CLICK_TRACE"
   }
 }

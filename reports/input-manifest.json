@@ -21,7 +21,7 @@
     "reports/build_html.py": "417933a197396ba686d5bb38ba72ae6bc4cd1ecff2b7ab7dbc420f0ec4537371",
     "reports/build_inputs.py": "9d0cb4d0a064faff20558ac944cddb2d7ec515bf7a4692c0230fcf1af526a3e3",
     "reports/build_tagged.py": "58a436c438a0beca9d20ae287fd391735259df8ac022af6f2bdeeadf6b3973b7",
-    "reports/content.json": "7a11a8b2bb3d24de104b0b40a5b577a76c08fbec3cab325d0e8ad2a10ce69813",
+    "reports/content.json": "7bd2b644fa8d2ad7cd3a8a8faa11414fa989c1d1569ba065bab9f9c1e20e26e2",
     "reports/content.py": "73ff61d03689d9b5401665be70c6409d67a26aa314a5e44c130f701689697b37",
     "reports/covers/ASP24.pdf": "7d4b08f8b7d481f032a9cb1b530347636bf1a02e531daa7eff0975911ed920ea",
     "reports/covers/NGGroup.pdf": "9f6e512c9e785c0a06bf85655b7b1b0e74a42ae3930442da54b62e4a7f6a0185",
@@ -33,5 +33,5 @@
     "reports/requirements.txt": "57e978e34c59ecb048131f1e4479cecdc14a78aa63da053991a52ba8f1675548",
     "scripts/install-report-runtime.py": "23aba619563a576040d4417b87def874a67632a93c08b5904d4b99faf451435a"
   },
-  "digest": "d1f6c971fe025991cdc0b8e4cbbbcf331104fc0afcd166d596a9cab14a25a306"
+  "digest": "a11fa9c561f844e529c2093a18fe2d3246e36a8746a39dff990c1e97b465d415"
 }
